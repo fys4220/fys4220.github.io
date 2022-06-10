@@ -1,0 +1,24 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+defaults:
+  titlesonly: false
+
+parts:
+  - caption: Module 0 - First Project
+    numbered: true
+    chapters:
+    - file: overview   
+    - url: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
+      title: FYS4220 official webpage
+  - caption: Module 2 - VHDL
+    numbered: True
+    chapters:
+    - file: module1-vhdl/vhdl_intro
+  #- caption: Module I - VHDL
+#chapters:
+#- file: markdown
+#- file: notebooks
+#- file: markdown-notebooks

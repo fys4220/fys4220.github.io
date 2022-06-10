@@ -1,0 +1,52 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title: Real-time and embedded data systems
+author: Ketil Røed
+logo: images/fys4220_logo.png
+only_build_toc_files : true
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: force
+
+# Define the name of the latex output file for PDF builds
+latex:
+  latex_documents:
+    targetname: fys4220.tex
+
+# Add a bibtex file so that we can create citations
+bibtex_bibfiles:
+  - references.bib
+
+# Information about where the book exists on the web
+repository:
+  url: https://github.com/executablebooks/jupyter-book  # Online location of your book
+  path_to_book: docs  # Optional path to your book, relative to the repository root
+  branch: master  # Which branch of the repository should be used when creating links (optional)
+
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  use_issues_button: true
+  use_repository_button: true
+  navbar_number_sections: true
+  html_admonition: true
+  use_multitoc_numbering: false # False: Continous numbering across parts/chaters True:restart for each part
+  extra_footer: 
+    <p> ... Add license info heres ... </p>
+
+sphinx:
+  config:
+    html_show_copyright: true
+    language: en
+    render_using_wavedrompy: true 
+
+  extra_extensions:
+    - sphinxcontrib.mermaid
+    - sphinxcontrib.wavedrom
+
+latex:
+  latex_engine: pdflatex
+  
