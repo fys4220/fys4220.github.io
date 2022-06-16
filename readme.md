@@ -10,5 +10,12 @@ Requirements:
 
 
 
+### Graphics
+Decided to generate all Mermaid graphics to files and include as figure in order to use figure numbering and caption. Was not able to figure out how to add this for inline Mermaid script.
 
+There is a problem converting from Mermaid script to SVG files if script contains line breaks (```<br>, <br/>, \n```). Using pdf instead, as this also is supported for Latex output (not supporting svg).
+
+```
+mmdc -i mermaid.mmd -o mermaid.pdf -f 100
+````
 
