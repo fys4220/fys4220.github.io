@@ -2,7 +2,9 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Real-time and embedded data systems
+title: ""
 author: Ketil Røed
+email: ketil.roed@fys.uio.no
 logo: images/fys4220_logo.png
 only_build_toc_files : true
 
@@ -15,7 +17,7 @@ execute:
 latex:
   latex_documents:
     targetname: fys4220.tex
-
+  
 # Add a bibtex file so that we can create citations
 bibtex_bibfiles:
   - references.bib
@@ -29,6 +31,9 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
+  announcement: "⚠️Under development!⚠️"
+  home_page_in_navbar: false
+  baseurl: https://fys4220.github.io
   use_issues_button: true
   use_repository_button: true
   navbar_number_sections: true
@@ -42,11 +47,8 @@ sphinx:
     html_show_copyright: true
     language: en
     render_using_wavedrompy: true 
+#    latex_logo: images/fys4220_logo.png
 
   extra_extensions:
     - sphinxcontrib.mermaid
     - sphinxcontrib.wavedrom
-
-latex:
-  latex_engine: pdflatex
-  

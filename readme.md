@@ -19,3 +19,15 @@ There is a problem converting from Mermaid script to SVG files if script contain
 mmdc -i mermaid.mmd -o mermaid.pdf -f 100
 ````
 
+
+
+## Progress
+- Design units
+    - Ex: button/sw to LED (single)
+- Objexts and data types
+    - ex: sw to LED (vector)
+- Operators:
+    - ex: adder? MV? 
+- Description styles:
+    - ex: MV as 
+

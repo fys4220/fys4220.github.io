@@ -6,35 +6,45 @@ root: index
 defaults:
   titlesonly: false
 
+
+
 parts:
   # - caption: Introduction
   #   numbered: false
   #   chapters:
   #   - file: index
-  - caption: Module 0 - Tools
-    numbered: false
+  - caption: General information
+    numbered: false 
     chapters:
-    - file: module0-tools/tools_intro
+    - file: part1-introduction/introduction_description
+    - file: part1-introduction/introduction_tools
+
     #- url: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
     #  title: FYS4220 official webpage
   - caption: Module 1 - VHDL
     numbered: false
     chapters:
-    - file: module1-vhdl/vhdl_intro
-  - caption: Module 2 - Soft core processor
+    - file: part2-vhdl/vhdl_intro
+    
+  - caption: Modul 2 - Soft core processor
     numbered: false
     chapters:
-    - file: module2-softcore/softcore_intro
+    - file: part3-softcore/softcore_intro
+  
   - caption: Module 3 - RTOS
     numbered: false
     chapters:
-    - file: module3-rtos/rtos_intro
+    - file: part4-rtos/rtos_intro
+
   - caption: Module 4 - Project
     numbered: false
     chapters:
-    - file: module4-project/project_intro
+    - file: part5-project/project_intro
   
-
+  - caption: References
+    numbered: False
+    chapters:
+    - file: references.md
 
 #chapters:
 #- file: markdown
