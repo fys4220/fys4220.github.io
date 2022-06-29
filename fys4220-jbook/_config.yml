@@ -38,7 +38,7 @@ html:
   use_repository_button: true
   navbar_number_sections: true
   html_admonition: true
-  use_multitoc_numbering: false # False: Continous numbering across parts/chaters True:restart for each part
+  use_multitoc_numbering: true # False: Continous numbering across parts/chaters True:restart for each part
   extra_footer: 
     <p> ... Add license info heres ... </p>
 
@@ -46,9 +46,9 @@ sphinx:
   config:
     html_show_copyright: true
     language: en
-    render_using_wavedrompy: true 
+#    render_using_wavedrompy: true 
 #    latex_logo: images/fys4220_logo.png
 
-  extra_extensions:
-    - sphinxcontrib.mermaid
-    - sphinxcontrib.wavedrom
+#  extra_extensions:
+#    - sphinxcontrib.mermaid
+#    - sphinxcontrib.wavedrom

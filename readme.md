@@ -6,7 +6,9 @@ Requirements:
 - Sphinxs extensions
     - pip install sphinxcontrib-mermaid
         - mermaid-cli needed for latex output: brew install mermaid-cli
-    - pip install sphinxcontrib-wavedrom
+				- or: npm install @mermaid-js/mermaid-cli (./node_modules/.bin/mmdc)
+				- or: npx -p @mermaid-js/mermaid-cli mmdc -i mermaid_top_level_system.mmd -o mermaid_top_level_system.pdf -f 100
+- pip install sphinxcontrib-wavedrom
 
 
 

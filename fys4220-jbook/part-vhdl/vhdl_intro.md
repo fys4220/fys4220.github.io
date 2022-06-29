@@ -3,14 +3,14 @@
 Why should we use a Hardware Description Language (HDL)? Today the various development tools may provide a possibility to draw and connect the logic building blocks by using a schematic editor through a graphical user interface like shown in {numref}`quartus_schematic`.
 
 
-<!-- ```{figure} docs/figures/quartus_schematic.png
+```{figure} ../images/quartus_schematic.png
 ---
 width: 100%
 align: center
 name: quartus_schematic
 ---
 Quartus Prime Lite schematic editor.
-``` -->
+```
 
 
 While this may provide a pleasing visual overview of your design, it comes with some disadvantages like lack of portability across platforms, lack of maintainability, and potentially a very complex diagram for large designs. The better solution is therefore to describe the design using a Hardware Description Languages (HDLs) like e.g. VHDL or Verilog. Using VHDL, the design in {numref}`quartus_schematic` can be described as shown below.

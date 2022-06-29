@@ -14,35 +14,46 @@ parts:
   #   chapters:
   #   - file: index
   - caption: General information
-    numbered: false 
+    numbered: true 
     chapters:
-    - file: part1-introduction/introduction_description
-    - file: part1-introduction/introduction_tools
+    - file: part-introduction/introduction_description
+    - file: part-introduction/introduction_tools
 
     #- url: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
     #  title: FYS4220 official webpage
-  - caption: Module 1 - VHDL
-    numbered: false
+  - caption: VHDL
+    numbered: true
     chapters:
-    - file: part2-vhdl/vhdl_intro
-    
-  - caption: Modul 2 - Soft core processor
-    numbered: false
-    chapters:
-    - file: part3-softcore/softcore_intro
-  
-  - caption: Module 3 - RTOS
-    numbered: false
-    chapters:
-    - file: part4-rtos/rtos_intro
+    - file: part-vhdl/vhdl_intro
+    - file: part-vhdl/vhdl_history
+    - file: part-vhdl/vhdl_design_units
+    - file: part-vhdl/vhdl_objects_data_types
+    - file: part-vhdl/vhdl_operators
+    - file: part-vhdl/vhdl_description_models
+    - file: part-vhdl/vhdl_process
+    - file: part-vhdl/vhdl_state_machines
+    - file: part-vhdl/vhdl_packages_subprograms
+    - file: part-vhdl/vhdl_generics
 
-  - caption: Module 4 - Project
-    numbered: false
+
+
+  - caption: Soft core processor
+    numbered: true
     chapters:
-    - file: part5-project/project_intro
+    - file: part-softcore/softcore_intro
+  
+  - caption: RTOS
+    numbered: true
+    chapters:
+    - file: part-rtos/rtos_intro
+
+  - caption: Project
+    numbered: true
+    chapters:
+    - file: part-project/project_intro
   
   - caption: References
-    numbered: False
+    numbered: true
     chapters:
     - file: references.md
 

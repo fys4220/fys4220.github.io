@@ -4,6 +4,22 @@
 ## Description
 This course gives an introduction to the design of digital and embedded systems using programmable logic (FPGA technology). This includes hardware description language (VHDL), verification and testing of digital designs, implementation of embedded systems in FPGAs, and the basic properties of Real-time operating systems.
 
+<!--div class="video-container">
+<iframe width="560" height="315"  src="https://www.youtube.com/embed/6rAz7lMBCqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen alt="test" position="aboslute" ></iframe>
+</div-->
+
+
+````{admonition} Here's your admonition alksdjføalkdjføaldkjføalkjdfølkajs adf asdf  asdfkljø adsfa asdfasdflkj adfaf asdfasfd?f
+:class: dropdown
+
+Here's the admonition content
+
+```{dropdown} Answer:
+And here's my dropdown content
+```
+
+````
+
 
 **Learning by doing!**
 
