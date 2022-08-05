@@ -1,9 +1,6 @@
 (vhdl-process)=
 # VHDL Process
 
-
-
-
 In VHDL a process can be used to model both
 - combinational logic,
 - and synchronous logic.
@@ -507,3 +504,33 @@ name: fig:vhdl-process-var-find-modelsim1
 ---
 
 ```
+
+
+## Supporting videos
+
+
+The following video gives an introduction to combinational processes in VHDL.
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/TvnNbY7dLQA" title="Combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=TvnNbY7dLQA](https://www.youtube.com/watch?v=TvnNbY7dLQA)
+
+The following video shows an example of how a combinational process in VHDL can be simulated.
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/kEU-dkICHxg" title="Example of combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+
+
+The following video gives and introduction to synchronous processes in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/xnml2JUfbWI" title="Synchronous process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+
+
+
+

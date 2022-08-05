@@ -480,6 +480,60 @@ There is no right or wrong choice when deciding on a choice of implementation, b
 
 The VHDL code for the examples including a simulation setup can be found [here](https://github.uio.no/FYS4220/statemachine_example).
 
+## Supporting videos
+
+
+The following video gives and introduction to state machines in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/OZn_fk95vvE" title="Introduction to FSM in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=OZn_fk95vvE](https://www.youtube.com/watch?v=OZn_fk95vvE)
+
+
+The following video demonstrates how to write a 1-process state machine in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/leF7IKnbN7s" title="vhdl 3process statemachine" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=leF7IKnbN7s](https://www.youtube.com/watch?v=leF7IKnbN7s)
+
+
+The following video demonstrates the simulation of a 1-process state machine.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/T81iE7mhdiA" title="vhdl 1process statemachine simulation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=T81iE7mhdiA](https://www.youtube.com/watch?v=T81iE7mhdiA)
+
+
+
+The following video demonstrates how to write a 2-process state machine in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/arDzr61HcGY" title="vhdl 2process statemachine" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=arDzr61HcGY](https://www.youtube.com/watch?v=arDzr61HcGY)
+
+
+The following video demonstrates the simulation of a 2-process state machine.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/IcDMVWBvxbA" title="vhdl 2process statemachine simulation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=IcDMVWBvxbA](https://www.youtube.com/watch?v=IcDMVWBvxbA)
+
+
+
+The following video demonstrates how to write and  simulation a 3-process state machine in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/leF7IKnbN7s" title="vhdl 3process statemachine" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=leF7IKnbN7s](https://www.youtube.com/watch?v=leF7IKnbN7s)
+
+
+
 
 %#A simple counter is an example of sequential logic. It can also be considered a state machine where the
 

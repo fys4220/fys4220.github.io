@@ -4,13 +4,23 @@
 ## Description
 This course gives an introduction to the design of digital and embedded systems using programmable logic (FPGA technology). This includes hardware description language (VHDL), verification and testing of digital designs, implementation of embedded systems in FPGAs, and the basic properties of Real-time operating systems.
 
-<!--div class="video-container">
+<div class="video-container">
 <iframe width="560" height="315"  src="https://www.youtube.com/embed/6rAz7lMBCqg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen alt="test" position="aboslute" ></iframe>
-</div-->
+</div>
 
+Link to relevant videos: https://www.youtube.com/watch?v=bXHUcLM0iy0
 
 ````{admonition} Here's your admonition alksdjføalkdjføaldkjføalkjdfølkajs adf asdf  asdfkljø adsfa asdfasdflkj adfaf asdfasfd?f
 :class: dropdown
+
+{card}
+DEFINITION
+^^^
+```{glossary}
+quantitative data
+    Numeric data. Quantitative data may be either discrete (such as the number of people in a family) or continuous (such as grade point average).
+```
+
 
 Here's the admonition content
 
@@ -21,10 +31,13 @@ And here's my dropdown content
 ````
 
 
+
+
 **Learning by doing!**
 
 You will learn these skills and concepts through hands-on experience – building a system to collect and present data from a sensor. 
 
+<!--
 ```{figure} ../graphics/mermaid_top_level_system.pdf
 ---
 width: 600px
@@ -33,7 +46,7 @@ name: fig:mermaid_top_level_system
 ---
 The embedded system will be implemented on an FPGA and will be used to control the readout of data from the sensor to the PC.
 ```
-
+-->
 While the main focus of you work will be to design, implement, and verify the embedded system on an FPGA, this will also require you to gain experience in other highly relevant areas such as: 
  - reading datasheets to understand how to interface the sensor,
  - writing basic Python-scripts to retrieve and present the data from the embedded system,
@@ -62,7 +75,7 @@ Required prerequisite knowledge: ??
 
 
 You are in principle free to choose the type of sensor to work with, 
-
+<!--
 ```{figure} ../images/de10-lite_layout_top.jpg 
 ---
 width: 600px
@@ -71,7 +84,7 @@ name: fig:assignment-de10-lite
 ---
 DE10-Lite board.
 ```
-
+-->
 
 
 

@@ -128,3 +128,14 @@ begin
 
 end architecture;
 ```
+
+## Supporting videos
+
+
+The following video briefly discusses the use of packages and sub-programs in VHDL.
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/e_4ejwJdO9M" title="vhdl package subprograms" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=e_4ejwJdO9M](https://www.youtube.com/watch?v=e_4ejwJdO9M)
+

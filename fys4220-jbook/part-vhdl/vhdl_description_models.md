@@ -52,7 +52,7 @@ A structural description is used when the architecture is used to interconnected
 
 %The reprogrammability of a PCB is also limited and the traces are fixed and the components are soldered on the board. A bread board could more easily be reprorammed by moving wires around and replacing the components, but
 
-```{figure} ../images/vhdl_cern_sat_readout_pcb.jpeg
+```{figure} ../images/vhdl_cern_sat_readout_pcb.jpg
 ---
 width: 60%
 align: center
@@ -416,3 +416,13 @@ RTL is the style of code that is required for a synthesis tool to translate the 
 %#| Function and procedure calls                        |
 %#| Assert statements                                   |
 %#|-----------------------|
+
+## Supporting video
+
+<div class="video-container">
+<iframe width="1012" height="759" src="https://www.youtube.com/embed/ZFT7vDt6U-U" title="VHDL description models" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=ZFT7vDt6U-U](https://www.youtube.com/watch?v=ZFT7vDt6U-U)
+
+ 

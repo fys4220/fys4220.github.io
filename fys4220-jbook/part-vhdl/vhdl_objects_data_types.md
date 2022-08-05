@@ -15,7 +15,7 @@ signal <identifier> : <type> [:= initial_value]
 
 An example of an internally declared signal `C` is shown in {numref}`vhdl_internal_signal`. This example also demonstrates the concept of concurrent signal assignment in VHDL.  Signal assignment in VHDL uses the operator "<=". In this example the inverted value of `A` will be assigned to C, while the result of the operation `B and C` will be assigned to `Y`. These two lines are concurrent statements which both will be translated to hardware operating in parallel. In this case, an inverter operating on the input `A` in addition to an AND-gate with inputs `B` and `C`. If you consider that all gates are associated with a gate delay, that is, a change on the input needs to propagate through the logic gate and is therefore not instantaneously reflected on the ouput, you can maybe appreciate the fact that signal assignments are associated with a delay. {numref}`vhdl_internal_signal` illustrates this case where a change on A is reflected on the output C after a time t1, and then the change on C is again reflected on the output Y after a time t2.
 
-```{figure} ../images/vhdl_internal_signal.jpeg
+```{figure} ../images/vhdl_internal_signal.jpg
 ---
 width: 90%
 align: center

@@ -6,51 +6,100 @@ root: index
 defaults:
   titlesonly: false
 
-
+# options:  # The options key will be applied to all chapters, but not sub-sections
+#  numbered: True
 
 parts:
-  # - caption: Introduction
-  #   numbered: false
-  #   chapters:
-  #   - file: index
-  - caption: General information
-    numbered: true 
-    chapters:
-    - file: part-introduction/introduction_description
-    - file: part-introduction/introduction_tools
-
-    #- url: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
-    #  title: FYS4220 official webpage
-  - caption: VHDL
+  - caption: Programmable logic
     numbered: true
     chapters:
-    - file: part-vhdl/vhdl_intro
+    - file: part-fpga/pld_introduction
+    - file: part-fpga/fpga_introduction
+
+  - caption: VHDL
+    numbered: true
+    maxdepth: 2 
+    chapters:
+  #  - file: part-vhdl/vhdl_intro
     - file: part-vhdl/vhdl_history
     - file: part-vhdl/vhdl_design_units
+    - file: part-vhdl/vhdl_design_flow
     - file: part-vhdl/vhdl_objects_data_types
     - file: part-vhdl/vhdl_operators
     - file: part-vhdl/vhdl_description_models
     - file: part-vhdl/vhdl_process
     - file: part-vhdl/vhdl_state_machines
     - file: part-vhdl/vhdl_packages_subprograms
+    - file: part-vhdl/vhdl_testbenches
     - file: part-vhdl/vhdl_generics
 
-
-
-  - caption: Soft core processor
+  - caption: Embedded
     numbered: true
     chapters:
     - file: part-softcore/softcore_intro
-  
+    - file: part-softcore/embedded_memory_mapped
+    - file: part-softcore/embedded_hal
+    - file: part-softcore/embedded_nios2_system
+    - file: part-softcore/embedded_memory_mapped_sw
+    - file: part-softcore/embedded_interrupt
+
   - caption: RTOS
     numbered: true
     chapters:
-    - file: part-rtos/rtos_intro
+    - file: part-rtos/rtos_intro.md 
+        
+#lparts:
+  # - caption: Introduction
+  #   numbered: false
+  #   chapters:
+  #   - file: index
+#  - caption: General information
+#    numbered: true 
+#    chapters:
+#    - file: part-introduction/introduction_description
+#    - file: part-introduction/introduction_tools
+#   - file: exercises
 
-  - caption: Project
-    numbered: true
-    chapters:
-    - file: part-project/project_intro
+    #- url: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
+    #  title: FYS4220 official webpage
+  
+  #- caption: Programmable logic technology
+  #  numbered: true
+  #  chapters:
+  #  - file: part-fpga/pld_introduction
+  #  - file: part-fpga/fpga_introduction
+#    - file: quiz_fpga
+
+#  - caption: VHDL
+#    numbered: true
+#    chapters:
+#    - file: part-vhdl/vhdl_intro
+#    - file: part-vhdl/vhdl_history
+#    - file: part-vhdl/vhdl_design_units
+#    - file: part-vhdl/vhdl_objects_data_types
+#    - file: part-vhdl/vhdl_operators
+#    - file: part-vhdl/vhdl_description_models
+#    - file: part-vhdl/vhdl_process
+#    - file: part-vhdl/vhdl_state_machines
+#    - file: part-vhdl/vhdl_packages_subprograms
+#    - file: part-vhdl/vhdl_generics
+
+
+
+# - caption: Soft core processor
+#   numbered: true
+#    chapters:
+#    - file: part-softcore/softcore_intro
+  
+#  - caption: RTOS
+#    numbered: true
+#    chapters:
+#    - file: part-rtos/rtos_intro
+
+#  - caption: Project
+#    numbered: true
+#    chapters:
+#    - file: part-project/project_intro
   
   - caption: References
     numbered: true

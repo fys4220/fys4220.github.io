@@ -35,6 +35,15 @@ Here we have two values *A* and *B*, and the result of the *OR* operation is ass
 
 %In this course we will use VHDL to describe the functionality of our designs, the tool Modelsim to simulate the behaviour of our design, and finally the Quartus Prime Lite development tool to synthesis the design and program the FPGA.
 
-
+<!-- https://www.youtube.com/watch?v=4ntXSyOhlBY-->
 
 [^vhdl]: VHDL: _VHISC_ Hardware Description Language, _VHISC_: Very High Speed Integrated Circuits
+
+## Supporting videos
+
+<div class="video-container">
+<iframe width="1058" height="595" src="https://www.youtube.com/embed/2xXKKpA9o4w" title="A brief historical view on VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Link to video: [https://www.youtube.com/watch?v=2xXKKpA9o4w](https://www.youtube.com/watch?v=2xXKKpA9o4w)
+

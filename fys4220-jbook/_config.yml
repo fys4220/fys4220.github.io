@@ -2,16 +2,19 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: Real-time and embedded data systems
-title: ""
+# title: ""
 author: Ketil Røed
 email: ketil.roed@fys.uio.no
 logo: images/fys4220_logo.png
+copyright: "2022"
 only_build_toc_files : true
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  execute_notebooks: force
+  execute_notebooks: cache
+
+
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -30,25 +33,35 @@ repository:
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
-html:
-  announcement: "⚠️Under development!⚠️"
-  home_page_in_navbar: false
-  baseurl: https://fys4220.github.io
-  use_issues_button: true
-  use_repository_button: true
-  navbar_number_sections: true
-  html_admonition: true
-  use_multitoc_numbering: true # False: Continous numbering across parts/chaters True:restart for each part
-  extra_footer: 
-    <p> ... Add license info heres ... </p>
 
 sphinx:
   config:
     html_show_copyright: true
     language: en
 #    render_using_wavedrompy: true 
-#    latex_logo: images/fys4220_logo.png
-
+    latex_logo: images/fys4220_logo.png
+#    latex_domain_indices: true
+    #latex_toplevel_sectioning: 'section'
+    html_theme_options:
+      show_navbar_depth: 0 
+      announcement: "⚠️Under development!⚠️"
+      extra_footer: 
+        <p> ... Add license info heres ... </p>
+#      extra_navbar: "" #Enable this to remove Powered by jupyter book
 #  extra_extensions:
 #    - sphinxcontrib.mermaid
 #    - sphinxcontrib.wavedrom
+
+#html:
+#  announcement: "⚠️Under development!⚠️"
+#  home_page_in_navbar: false
+#  home_page_in_toc: true
+#  show_navbar_depth: 0
+#  baseurl: https://fys4220.github.io
+#  use_issues_button: true
+#  use_repository_button: false
+#  navbar_number_sections: true
+#  html_admonition: true
+#  use_multitoc_numbering: true # False: Continous numbering across parts/chaters True:restart for each part
+#  extra_footer: 
+#    <p> ... Add license info heres ... </p>
