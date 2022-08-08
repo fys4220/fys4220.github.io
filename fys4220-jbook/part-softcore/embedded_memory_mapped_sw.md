@@ -1,7 +1,7 @@
 (embedded-memory-mapped-sw)=
 # Accessing Nios II memory mapped modules
 
-In this part we will look closer at we from software can access and control a memory mapped module in the Nios II system. For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in {numref}`fig:embedded-basic-nios2-system-with-pio`.
+In this part we will look closer at how we from software can access and control a memory mapped module in the Nios II system. For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in {numref}`fig:embedded-basic-nios2-system-with-pio`.
 
 ```{figure} ../images/embedded_basic_nios2_system_with_pio.png
 ---
@@ -13,10 +13,10 @@ Simplified overview of a basic Nios II system with PIO cores.
 ```
 
 The PIO module can also be used to assert an interrupt to the CPU based on input signals. This will be explored and demonstrated in {numref}`embedded-interrupt`.
-
 ```{admonition} Tip
-More information on available IP cores can be found in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) {cite}`intel-embbeded-ip-user-guide`. The PIO core is described in chapter 27 on page 307. 
+More information on available IP cores can be found in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) {cite}`intel-embedded-ip-user-guide`. The PIO core is described in chapter 27 on page 307. 
 ```
+
 
 ```{admonition} Example code on Github.uio.no
 The code for this example can be found here: https://github.uio.no/FYS4220/fys4220_nios2_example
@@ -163,7 +163,7 @@ extern "C"
 
 ````
 
-This file can be located in the *HAL/inc* folder of you BSP project and amongst others it provides the following macro functions. For more information about how to define macro objects and functions see section [7.3](https://publications.gbdirect.co.uk/c_book/chapter7/directives.html) in {cite}`cbook`. 
+This file can be located in the *HAL/inc* folder of your BSP project and amongst others it provides the following macro functions. For more information about how to define macro objects and functions see section [7.3](https://publications.gbdirect.co.uk/c_book/chapter7/directives.html) in {cite}`cbook`. 
 
 ```
 IORD(BASE, OFFSET)
@@ -530,9 +530,9 @@ width: 70%
 align: center
 name: fig:embedded-pio-register-map
 ---
- Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) {cite}`intel-embbeded-ip-user-guide`.
+ Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) . Test
 ```
-
+<!--{cite}`intel-embedded-ip-user-guide` -->
 By writing and reading to these registers it is possible to configure the PIO module dynamically when running the system. The data register can be used to access the PIO core's input and output ports. For a PIO module configured as a 10 bit wide output, which will be used to turn on and off LEDs, all LEDs can be turned on by using the following command:
 
 ```

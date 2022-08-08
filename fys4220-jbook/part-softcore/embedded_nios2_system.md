@@ -10,10 +10,19 @@ Developing a microcontroller system for an FPGA can usually be divided into to m
     - Generate a board support package (based on the hardware )
     - Write and compile software application
 
+For a general introduction and overview of the development flow watch the video below.
+
+<div class="video-container">
+<iframe width="806" height="605" src="https://www.youtube.com/embed/_z5mYM8FKTE" title="embedded nios sw development" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=_z5mYM8FKTE](https://www.youtube.com/watch?v=_z5mYM8FKTE)
+
+
 %Creating a System Design with Platform Designer: Getting Started
 %https://www.youtube.com/watch?v=d43Pqc_IZpg
 
-The following sections will demonstrate these steps for an Intel Nios II microcontroller system. While the tools are specific to the specific hardware and FPGA vendor, the overall concepts should be similar between hardware platforms. 
+In the following sections we will show a practial example of building a Intel Nios II microcontroller system. While the tools used are specific to the specific hardware and FPGA vendor, the overall concepts should be similar between hardware platforms. 
 
 We will start by building the system shown in {numref}`fig:embedded-basic-nios2-system`. The system consist of three main units:
 

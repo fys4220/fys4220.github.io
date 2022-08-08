@@ -3,6 +3,15 @@
 
 *Memory mapped I/O (MMIO)* is a method of performing input/output between the central processing unit (CPU) and peripheral devices in a computer. Memory mapped I/O uses the same regular address space to address both memory and I/O devices. The memory and registers of the I/O devices are mapped to (associated with) address values. This means that when an address is accessed by the CPU, it may refer to a portion of the physical RAM, or it may refer to a memory region connected to I/O devices. Thus, the CPU instructions used to access the memory can also be used to access peripheral devices, and areas of the CPU addressable space must be reserved for I/O rather than memory.
 
+## Supporting videos
+
+The following video gives a general introduction to memory mapped I/O.
+
+<div class="video-container">
+<iframe width="806" height="605" src="https://www.youtube.com/embed/qNs9rQnNODI" title="embedded memory mapped" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=qNs9rQnNODI](https://www.youtube.com/watch?v=qNs9rQnNODI)
 
 ## The Avalon interface
 In FYS4220 we will be using the [Nios II](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html) processor. The Nios II architecture supports separate instruction and data busses, classifying it as a [Harvard architecture](https://en.wikipedia.org/wiki/Harvard_architecture) cite. Both the instruction and data buses are implemented as Avalon memory mapped (Avalon-MM) master ports that adhere to the Avalon-MM  interface specification.
@@ -251,5 +260,4 @@ end architecture;
 %More information about the Avalon memory mapped interfaces can be found in chapter %3 of the Avalon Interface Specificiation document by Intel cite%{avalon_specification}.
 %
 %The CPU communicates with the respecitve memory mapped components on the Avalon bus %by reading from and writing to the component's register interface. This register %interface is mapped to the CPU's address space, and each register has its own %address value. A basic example of how such a register interface can be implemented %in VHDL is shown below:
-
 

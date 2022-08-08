@@ -529,7 +529,8 @@ The following video gives and introduction to synchronous processes in VHDL.
 <iframe width="1920" height="806" src="https://www.youtube.com/embed/xnml2JUfbWI" title="Synchronous process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Video link: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+Video tink: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+        
 
 
 

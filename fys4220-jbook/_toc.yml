@@ -41,12 +41,18 @@ parts:
     - file: part-softcore/embedded_hal
     - file: part-softcore/embedded_nios2_system
     - file: part-softcore/embedded_memory_mapped_sw
-    - file: part-softcore/embedded_interrupt
-
-  - caption: RTOS
-    numbered: true
-    chapters:
-    - file: part-rtos/rtos_intro.md 
+#    - file: part-softcore/embedded_interrupt
+#
+#  - caption: RTOS
+#    numbered: true
+#    chapters:
+#    - file: part-rtos/rtos_intro.md 
+#      title: Introduction to uC/OS-II
+#    - file: part-rtos/rtos_tasks    
+#    - file: part-rtos/rtos_latency_jitter
+#    - file: part-rtos/rtos_intertask_communication
+#    - file: part-rtos/rtos_basic_example
+#    - file: part-rtos/rtos_semaphores_example
         
 #lparts:
   # - caption: Introduction
