@@ -25,7 +25,7 @@ Before you start developing the application, you need to generate the required b
 
 ## Board support package
 
-In {numref}`embedded-software` the software application used a board support package that included the basic drivers needed to control and communicate with the hardware platform. In this part we will use board support package which is extended with the $\mu$C/OS-II real-time kernel {cite}`ucosii`. This BSP provides access to $\mu$C/OS-II services for time management and task management, and intertask communication. 
+In {numref}`embedded-software` the software application used a board support package that included the basic drivers needed to control and communicate with the hardware platform. In this part we will use board support package which is extended with the $\mu$C/OS-II real-time kernel {cite}`ucosii`. This BSP provides access to $\mu$C/OS-II services for time management and task management, and /ntertask communication. 
 
 The Nios-II software build tools already includes the $\mu$C/OS-II real-time kernel. This can be added to the BSP by replacing the second argument used for the *nios2-bsp* command in {numref}`embedded-bsp` with *ucosii* as shown below.
 
@@ -189,15 +189,15 @@ A task looks like any other c function containing a return type and argument. Ho
 
 A task can be thought of as function that beleives it has the CPU to itself. In a multi-tasking system it is therefore importent to provide a mechanism for switching between tasks. The is referred to as a context switch and is taken care of by the schedular in the system.
 
-The task is either in an active state where it is being executed by the CPU, or it can be in various inactive state where it is e.g., is waiting for an event or for the schedular to active the task. The various task states for $\mu$C/OS-II are described [here](https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163854/Kernel+Structure#KernelStructure-TaskStates) and shown in {numref}`fig:project-ucosii-task-states`. 
+The task is either in an active state where it is being executed by the CPU, or it can be in various inactive state where it is e.g., is waiting for an event or for the schedular to active the task. The various task states for $\mu$C/OS-II are described [here](https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163854/Kernel+Structure#KernelStructure-TaskStates) and shown in {numref}`fig:rtos-ucosii-task-states`. 
 
 ```{figure} ../images/rtos_ucosii_task_states.png
 ---
 width: 100%
 align: center
-name: fig:project-ucosii-task-states
+name: fig:rtos-ucosii-task-states
 ---
-The various task states a $\mu$C/-II task. Figure from {cite}`ucosii-manual`.
+The various task states a $\mu$C/-II task. Figure from the [$\mu$C/OS-II manual](https://micrium.atlassian.net/wiki/spaces/osiidoc/overview).
 ```
 
 For a task to give up its use of the CPU, it needs to include a call to a function that blocks the execution of the task for a short moment. The list of functions that can be used for this purpose is shown in the example above. These functions are use to either wait for a given event or to block the execution of the task for a specified time period. While the task is blocked, the schedular can evaluate whether another task has higher priority and needs to run. If the task is never block, it will run continuously and never allow any other task to run.

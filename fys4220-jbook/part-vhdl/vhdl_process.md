@@ -4,6 +4,7 @@
 In VHDL a process can be used to model both
 - combinational logic,
 - and synchronous logic.
+
 The process statement is particularly useful and needed when writing test benches. The process statement itself is a concurrent statement identified by its label, its sensitivity list, a declaration area and a begin-end area containing instructions executed sequentially. Within the proces each line of code is read sequentially and assignments are scheduled to be updated/effectuated next time the process is suspended. The general syntax for a process is shown below. Elements in square brackets are optional.
 
 ```vhdl

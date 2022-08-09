@@ -20,14 +20,19 @@ To gain wide spread use, the maintenance of VHDL was handed over to *Institute o
 
 When writing VHDL descriptions, the standard can and must be invoked by adding the following statements to your all of your VHDL files, typically at the top of your file.
 
-```vhdl
+```{code-block} vhdl
+---
+caption: Including the IEEE std_logic_1164 library
+linenos: True
+name: listing:vhdl_history_library 
+---
 library IEEE;
 IEEE.std_logic_1164.all;
 ```
 
 The IEEE library contains a number of packages and the *std_logic_1164* is the standard that describes the definitions of logic values and basic logic operations. It is needed in order to understand e.g. the basic syntax shown below that describes an *OR* operation.
 
-```vhdl
+```{code-block} vhdl
 Y <=  A OR B;
 ```
 

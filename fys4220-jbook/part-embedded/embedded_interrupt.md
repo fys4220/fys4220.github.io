@@ -87,7 +87,7 @@ width: 70%
 align: center
 name: fig:embedded-interrupt-pio-register-map
 ---
- Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) {cite}`intel-embbeded-ip-user-guide`.
+ Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf).
 ```
 
 %{numref}`fig:embedded-nios-pio-core` shows a block diagram of a system that uses mulitipe PIO cores where one PIO core is configured to use the edge caputure register, and provide an interrupt input to the system
@@ -98,7 +98,7 @@ name: fig:embedded-interrupt-pio-register-map
 %align: center
 %name: fig:embedded-nios-pio-core
 %---
-% Block diagram of the PIO core. Figure 79. on page 208 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) {cite}%`intel-embbeded-ip-user-guide`.
+% Block diagram of the PIO core. Figure 79. on page 208 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf).
 %```
 
 

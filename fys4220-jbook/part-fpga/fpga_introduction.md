@@ -1,9 +1,5 @@
 # Field Programmable Gate Arrays
-Before you dive into writing Hardware Description Language (HDL), you should understand the basics of programmable logic and FPGAs. 
 
-
-
-## Supporting video
 The following video gives a brief introduction to FPGAs.
 
 <div class="video-container">

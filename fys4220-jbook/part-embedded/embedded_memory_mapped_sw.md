@@ -530,8 +530,10 @@ width: 70%
 align: center
 name: fig:embedded-pio-register-map
 ---
- Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf) . Test
+Register map for the PIO module. Table 273 on page 311 in the Intel [Embedded Peripherals IP User Guide](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf).
 ```
+
+
 <!--{cite}`intel-embedded-ip-user-guide` -->
 By writing and reading to these registers it is possible to configure the PIO module dynamically when running the system. The data register can be used to access the PIO core's input and output ports. For a PIO module configured as a 10 bit wide output, which will be used to turn on and off LEDs, all LEDs can be turned on by using the following command:
 

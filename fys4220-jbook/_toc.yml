@@ -9,40 +9,98 @@ defaults:
 # options:  # The options key will be applied to all chapters, but not sub-sections
 #  numbered: True
 
-parts:
-  - caption: Programmable logic
-    numbered: true
+parts: 
+  - caption: Overview
     chapters:
-    - file: part-fpga/pld_introduction
-    - file: part-fpga/fpga_introduction
+    - file: part-information/information_content_overview
+    - file: part-information/information_other_resources
+    - file: references.md
 
-  - caption: VHDL
+  - caption: Main content
     numbered: true
-    maxdepth: 2 
     chapters:
-  #  - file: part-vhdl/vhdl_intro
-    - file: part-vhdl/vhdl_history
-    - file: part-vhdl/vhdl_design_units
-    - file: part-vhdl/vhdl_design_flow
-    - file: part-vhdl/vhdl_objects_data_types
-    - file: part-vhdl/vhdl_operators
-    - file: part-vhdl/vhdl_description_models
-    - file: part-vhdl/vhdl_process
-    - file: part-vhdl/vhdl_state_machines
-    - file: part-vhdl/vhdl_packages_subprograms
-    - file: part-vhdl/vhdl_testbenches
-    - file: part-vhdl/vhdl_generics
+    - file: part-fpga/fpga
+      sections:
+      - file: part-fpga/pld_introduction
+      - file: part-fpga/fpga_introduction
+    - file: part-vhdl/vhdl
+      sections:
+      - file: part-vhdl/vhdl_history
+      - file: part-vhdl/vhdl_design_units
+      - file: part-vhdl/vhdl_design_flow
+      - file: part-vhdl/vhdl_objects_data_types
+      - file: part-vhdl/vhdl_operators
+      - file: part-vhdl/vhdl_concurrent_statements
+      - file: part-vhdl/vhdl_description_models
+      - file: part-vhdl/vhdl_process
+      - file: part-vhdl/vhdl_state_machines
+      - file: part-vhdl/vhdl_packages_subprograms
+      - file: part-vhdl/vhdl_testbenches
+      - file: part-vhdl/vhdl_generics
+    - file: part-embedded/embedded
+      sections:
+      - file: part-embedded/embedded_intro
+      - file: part-embedded/embedded_memory_mapped
+      - file: part-embedded/embedded_hal
+      - file: part-embedded/embedded_nios2_system
+      - file: part-embedded/embedded_memory_mapped_sw
+      - file: part-embedded/embedded_interrupt
+    - file: part-rtos/rtos.md
+      sections:
+      - file: part-rtos/rtos_intro.md 
+        title: Introduction to RTOS & uC/OS-II
+      - file: part-rtos/rtos_tasks    
+      - file: part-rtos/rtos_latency_jitter
+      - file: part-rtos/rtos_intertask_communication
+      - file: part-rtos/rtos_basic_example
+      - file: part-rtos/rtos_semaphores_example
+  - caption: Project
+    numbered: true
+    chapters:
+    - file: part-project/project
+      sections:
+      - file: part-project/project_intro
 
-  - caption: Embedded
-    numbered: true
-    chapters:
-    - file: part-softcore/softcore_intro
-    - file: part-softcore/embedded_memory_mapped
-    - file: part-softcore/embedded_hal
-    - file: part-softcore/embedded_nios2_system
-    - file: part-softcore/embedded_memory_mapped_sw
-#    - file: part-softcore/embedded_interrupt
+#parts:
+#  - caption: Introduction
+#    chapters:
+#    - file: part-information/information_content_overview
+#    - file: part-information/information_other_resources
+#    - file: references.md
 #
+#  - caption: Programmable logic
+#    numbered: true
+#    chapters:
+#    - file: part-fpga/pld_introduction
+#    - file: part-fpga/fpga_introduction
+#
+#  - caption: VHDL
+#    numbered: true
+#    maxdepth: 2 
+#    chapters:
+#  #  - file: part-vhdl/vhdl_intro
+#    - file: part-vhdl/vhdl_history
+#    - file: part-vhdl/vhdl_design_units
+#    - file: part-vhdl/vhdl_design_flow
+#    - file: part-vhdl/vhdl_objects_data_types
+#    - file: part-vhdl/vhdl_operators
+#    - file: part-vhdl/vhdl_description_models
+#    - file: part-vhdl/vhdl_process
+#    - file: part-vhdl/vhdl_state_machines
+#    - file: part-vhdl/vhdl_packages_subprograms
+#    - file: part-vhdl/vhdl_testbenches
+#    - file: part-vhdl/vhdl_generics
+#
+#  - caption: Embedded
+#    numbered: true
+#    chapters:
+#    - file: part-embedded/softcore_intro
+#    - file: part-embedded/embedded_memory_mapped
+#    - file: part-embedded/embedded_hal
+#    - file: part-embedded/embedded_nios2_system
+#    - file: part-embedded/embedded_memory_mapped_sw
+#    - file: part-embedded/embedded_interrupt
+##
 #  - caption: RTOS
 #    numbered: true
 #    chapters:
@@ -95,7 +153,7 @@ parts:
 # - caption: Soft core processor
 #   numbered: true
 #    chapters:
-#    - file: part-softcore/softcore_intro
+#    - file: part-embedded/softcore_intro
   
 #  - caption: RTOS
 #    numbered: true
@@ -107,10 +165,10 @@ parts:
 #    chapters:
 #    - file: part-project/project_intro
   
-  - caption: References
-    numbered: true
-    chapters:
-    - file: references.md
+#  - caption: References
+#    numbered: true
+#    chapters:
+#    - file: references.md
 
 #chapters:
 #- file: markdown

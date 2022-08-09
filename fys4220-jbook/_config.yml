@@ -15,6 +15,10 @@ execute:
   execute_notebooks: cache
 
 
+# This as not yet been released to jb
+# https://github.com/executablebooks/jupyter-book/issues/1254
+# nb_number_source_lines: True
+
 
 # Define the name of the latex output file for PDF builds
 latex:
@@ -36,6 +40,7 @@ repository:
 
 sphinx:
   config:
+    html_theme: sphinx_book_theme
     html_show_copyright: true
     language: en
 #    render_using_wavedrompy: true 
@@ -43,12 +48,20 @@ sphinx:
 #    latex_domain_indices: true
     #latex_toplevel_sectioning: 'section'
     html_theme_options:
-      show_navbar_depth: 0 
+      show_navbar_depth: 1 
       announcement: "⚠️Under development!⚠️"
       extra_footer: 
         <p> ... Add license info heres ... </p>
+    latex_elements:
+      preamble: |
+        \usepackage[nottoc,numbib]{tocbibind} 
+        \addto\captionsenglish{\renewcommand\bibname{Custom Name}} 
+        \renewenvironment{sphinxthebibliography} 
+        {\begin{thebibliography}} 
+        {\end{thebibliography}} 
 #      extra_navbar: "" #Enable this to remove Powered by jupyter book
-#  extra_extensions:
+  extra_extensions: 
+    
 #    - sphinxcontrib.mermaid
 #    - sphinxcontrib.wavedrom
 
