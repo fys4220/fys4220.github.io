@@ -1,0 +1,10 @@
+{
+    signal: [
+
+        { name: 'TX bit position', wave: '1.32222222231', data: ['start', 'D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'stop'] },
+        { name: 'TX', wave: '1.0101..0101.' },
+    ],
+
+    config: { hscale: 1 }
+
+}

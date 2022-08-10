@@ -12,6 +12,22 @@ The material that will be covered is divided into four main parts:
 ```{figure} ../images/fys4220_overview.png
 ```        
 
+The course will:
+* Briefly recap the basic building blocks of digital logic relevant for FPGAs:
+  * logic gates, multiplexer, flip-flops.
+* Give an overview of programmable logic devices: 
+  * PROM, PLA, PAL, GAL, CPLD, FPGA.
+* Give an introduction to FPGA technology:
+  * logic blocks, look-up tables (LUT), configuration bits, softcore and hardcore CPU.
+* Give an introduction to the hardware description languague VHDL:
+  * design units, description models, VHDL objects and assignments, process statements, combination logic, synchronous logic, sequential logic, state machines, tools, design flow, simulation and test benches;
+* Cover basic concepts of embedded and real-time systems:
+  * constraints and characteristics, 
+  * hardware abstraction,
+  * task, scheduling, context switch, intertask communication (messages, queues, semaphores),
+  * softcore implementation on FPGA (NIOS II) and memory mapped I/O
+  * basic programming c.
+
 You will find the relevant material on this site in the format of recorded topical videos and reading material. Supplementary material may be provided as links to other relavant text books, videos, or articles. 
 
 **Learning by doing:**
@@ -30,19 +46,3 @@ After completing this course:
 Link to UiO course page for FYS4220: https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html
 
 
-<!--
-The course will:
-* give a brief introduction to the basic building blocks of digital logic relevant for FPGAs:
-  * Logic gates, multiplexer, flip-flops;
-  * including an overview of overview of programmable logic devices: PROM, PLA, PAL, GAL, CPLD, FPGA;
-* give an introduction to FPGA technology:
-  * Logic blocks, Look-up Tables, configuration bits, softcore and hardcore CPU;
-* give an introduction to the hardware description languague VHDL:
-  * Design units, description models, VHDL objects and assignments, process statements, combination logic, synchronous logic, sequential logic, state machines, tools, design flow, simulation and test benches;
-* cover basic concepts of embedded and real-time systems through an example project:
-  * constraints and characteristics, 
-  * hardware abstraction,
-  * task, scheduling, context switch, intertask communication (messages, queues, semaphores),
-  * softcore implementation on FPGA (NIOS II) and memory mapped I/O
-  * basic programming c.
--->

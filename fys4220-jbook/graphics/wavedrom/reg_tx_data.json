@@ -1,0 +1,10 @@
+{reg:
+[
+  {bits: 8,  name: 'TX DATA', attr: ['Bits 7:0']},
+ {bits: 24,  name: 'UNUSED', attr: ['Bits 31:8'], type: 1},
+ ], 
+  config:{bits: 32}
+
+
+}
+  

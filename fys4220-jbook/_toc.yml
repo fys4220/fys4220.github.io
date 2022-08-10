@@ -13,9 +13,8 @@ parts:
   - caption: Overview
     chapters:
     - file: part-information/information_content_overview
-    - file: part-information/information_other_resources
-    - file: references.md
-
+    - file: part-information/information_tools
+#    - file: part-information/information_other_resources
   - caption: Main content
     numbered: true
     chapters:
@@ -54,13 +53,25 @@ parts:
       - file: part-rtos/rtos_intertask_communication
       - file: part-rtos/rtos_basic_example
       - file: part-rtos/rtos_semaphores_example
+    - file: references.md
+  - caption: Assignments
+    numbered: true
+    chapters:
+    - file: part-assignments/assignments_intro
+    - file: part-assignments/assignments_preparing_git
+    - file: part-assignments/assignments_your_first_fpga_project
+    - file: part-assignments/assignments_seven_segment_display
+    - file: part-assignments/assignments_synchronization
+    - file: part-assignments/assignments_synchronous_logic
   - caption: Project
     numbered: true
     chapters:
-    - file: part-project/project
-      sections:
-      - file: part-project/project_intro
-
+#    - file: part-project/project
+#      sections:
+    - file: part-project/project_intro
+    - file: part-project/project_uart
+    - file: part-project/project_nios2
+    - file: part-project/data_rate
 #parts:
 #  - caption: Introduction
 #    chapters:
