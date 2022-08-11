@@ -1,37 +1,63 @@
-(assignments-preparing-git)=
-# Prepare your Github repository
+(information-preparing-git)=
+# Git  
 
-## Git
+This section will give you a brief introduction to Git and how we will use Github.uio.no in this course.
 
-This course will use https://github.uio.no for distribution, organization, and submission of the project assignments.
-
-```{admonition} Warning
+```{admonition} Note!
+:class:
 Notice that we are using a UiO managed version of Github – Github.uio.no – and **NOT** Github.com.
 ```
 
 There is no need to become and expert Git user.  The most common commands you will use are:
-* git clone
-* git add
-* git commit
-* git tag
-* git pull
-* git push
-* git status
+* *git clone* 
+* *git add* 
+* *git commit*
+* *git tag*
+* *git pull*
+* *git push*
+* *git status*
 
 A list of basic Git commands can be found here: Basic Git commands from https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
 
 
-Other sources of information on Git:
+There are many good resources on Git online and we encourage you to have a look at them. Some examples are:
 * Informasjon on Github at UiO (Norwegian only): http://www.uio.no/tjenester/it/maskin/filer/versjonskontroll/github.html 
 * Git tutorials from Atlassian: https://www.atlassian.com/git/tutorials/
 * Pro Git: https://git-scm.com/book/en/v2
 * Git Reference : http://git.github.io/git-reference/
-* Become a Git pro in just one blog. A thorough guide to Git architecture and command line interface: https://itnext.io/become-a-git-pro-in-just-one-blog-a-thorough-guide-to-git-architecture-and-command-line-interface-93fbe9bdb395 (Open page in yourn browser's private mode if you have exceeded the medium.com's free readings.)
+* Become a Git pro in just one blog. A thorough guide to Git architecture and command line interface: https://itnext.io/become-a-git-pro-in-just-one-blog-a-thorough-guide-to-git-architecture-and-command-line-interface-93fbe9bdb395 (Tip: open page in your browser's private mode if you have exceeded the medium.com's free readings.)
 
-A few videos on Git:
-* Introduction to Git by *Higher level programming*: https://www.youtube.com/watch?v=vWdmXunGQC8 (around 20 minutes)
-* A longer full lecture (about 1.5 hours) from the *Missing semester" class at MIT: https://missing.csail.mit.edu
 
+
+It can also be worth watching the introduction lecture (about 53 min)  on Git from one of the popular CS50 courses at Harvard:
+
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/NcoBAfJ6l2Q" title="CS50W - Lecture 1 - Git" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<!--
+*An introduction to Git by "Higher level programming" (around 20 minutes):*
+
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/vWdmXunGQC8" title="Introduction to Git" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+---
+-->
+
+
+
+
+
+<!--
+---
+
+*A lecture (about 1.5 hours) on Git from the "Missing semester" class at MIT: https://missing.csail.mit.edu*
+
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/2sjqTHE0zok" title="Lecture 6: Version Control (git) (2020)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+-->
 
 ## Git on windows
 On the windows computers in the FYS4220 lab. (V329) we have installed Git for Windows: https://git-for-windows.github.io. 

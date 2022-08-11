@@ -14,7 +14,14 @@ parts:
     chapters:
     - file: part-information/information_content_overview
     - file: part-information/information_tools
+    - file: part-information/information_agenda
 #    - file: part-information/information_other_resources
+    - file: part-information/information_getting_started
+      sections: 
+      - file: part-information/information_download_tools
+      - file: part-information/information_prepare_git
+
+
   - caption: Main content
     numbered: true
     chapters:
@@ -30,6 +37,7 @@ parts:
       - file: part-vhdl/vhdl_objects_data_types
       - file: part-vhdl/vhdl_operators
       - file: part-vhdl/vhdl_concurrent_statements
+      - file: part-vhdl/vhdl_ex_first_project
       - file: part-vhdl/vhdl_description_models
       - file: part-vhdl/vhdl_process
       - file: part-vhdl/vhdl_state_machines
@@ -58,11 +66,11 @@ parts:
     numbered: true
     chapters:
     - file: part-assignments/assignments_intro
-    - file: part-assignments/assignments_preparing_git
+#    - file: part-assignments/assignments_preparing_git
     - file: part-assignments/assignments_your_first_fpga_project
     - file: part-assignments/assignments_seven_segment_display
-    - file: part-assignments/assignments_synchronization
     - file: part-assignments/assignments_synchronous_logic
+    - file: part-assignments/assignments_synchronization
   - caption: Project
     numbered: true
     chapters:

@@ -17,4 +17,4 @@ The introductory assignment consist of four parts:
 - {ref}`assignments-synchronization`
     - Sampling asynchronous signals
 
-Before you start, you should {ref}`assignments-preparing-git`.
+Before you start, you should {ref}`information-preparing-git`.

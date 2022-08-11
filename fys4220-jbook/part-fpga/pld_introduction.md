@@ -1,3 +1,4 @@
+(fpga-pld)=
 # Programmable logic devices
 
 The following video gives a brief introduction to programmable logic devices.
