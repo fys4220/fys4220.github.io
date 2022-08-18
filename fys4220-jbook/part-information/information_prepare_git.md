@@ -2,31 +2,36 @@
 # Git  
 
 This section will give you a brief introduction to Git and how we will use Github.uio.no in this course.
+course. Github is a cloud-based hosting service that lets you manage Git repositories. 
 
 ```{admonition} Note!
 :class:
 Notice that we are using a UiO managed version of Github – Github.uio.no – and **NOT** Github.com.
 ```
 
-There is no need to become and expert Git user.  The most common commands you will use are:
-* *git clone* 
-* *git add* 
-* *git commit*
-* *git tag*
-* *git pull*
-* *git push*
-* *git status*
+Git is a version control system that lets you manage and keep track of you source code history. Git uses so called repositories to store a collection of files of various different versions (file history) of a project. There is no need to become and expert Git user.  The most common commands you will use are:
+* *git init*: initialize an existing directory as a Git repository
+* *git clone*: retrieve an entire repository from a hosted location via URL
+* *git add*: add a file as it looks now to your next commit (stage)
+* *git commit*: commit your staged content as a new commit snapshot
+* *git pull*: fetch and merge any commits from the tracking remote branch
+* *git push*: transmit local branch commits to the remote repository branch
+* *git status*: show modified files in working directory, staged for your next commit (use this abundantly)
+* *git log*: show all commits in the current branch's history
+<!--* [*git tag*]():--> 
 
+<!--
 A list of basic Git commands can be found here: Basic Git commands from https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
+-->
 
-
-There are many good resources on Git online and we encourage you to have a look at them. Some examples are:
+There are many good resources on Git online and we encourage you to have a look at them. Some examples are listed below:
 * Informasjon on Github at UiO (Norwegian only): http://www.uio.no/tjenester/it/maskin/filer/versjonskontroll/github.html 
+* Git Guide by Github: https://github.com/git-guides
+* Github cheat sheet: https://education.github.com/git-cheat-sheet-education.pdf
 * Git tutorials from Atlassian: https://www.atlassian.com/git/tutorials/
 * Pro Git: https://git-scm.com/book/en/v2
 * Git Reference : http://git.github.io/git-reference/
 * Become a Git pro in just one blog. A thorough guide to Git architecture and command line interface: https://itnext.io/become-a-git-pro-in-just-one-blog-a-thorough-guide-to-git-architecture-and-command-line-interface-93fbe9bdb395 (Tip: open page in your browser's private mode if you have exceeded the medium.com's free readings.)
-
 
 
 It can also be worth watching the introduction lecture (about 53 min)  on Git from one of the popular CS50 courses at Harvard:
@@ -58,9 +63,11 @@ It can also be worth watching the introduction lecture (about 53 min)  on Git fr
 <iframe width="912" height="513" src="https://www.youtube.com/embed/2sjqTHE0zok" title="Lecture 6: Version Control (git) (2020)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 -->
+## Install Git
 
-## Git on windows
-On the windows computers in the FYS4220 lab. (V329) we have installed Git for Windows: https://git-for-windows.github.io. 
+Git often comes installed by default on most Mac and Linux machines. 
+
+On windows you can use Git for Windows: https://git-for-windows.github.io. Git for Windows is installed on the Windows computers in the student lab. (V329) we have installed.
 
 Git for Windows provides a BASH emulation *Git BASH* used to run Git from the command line. 
 
@@ -68,10 +75,14 @@ It also provides a graphical user interface *Git GUI*. However, we recommend to 
 
 There should be a link to *Git BASH* on the desktop. Double click on *Git BASH*, navigate to an appropriate directory and clone your Github.uio.no repository. The default path when starting *Git BASH* is typically your UiO home directory.
 
-## Setup up a Github.uio.no repository
-Before you start to work on the assignments and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2021* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor.
+A guide on how to install Git is provided by Github here: https://github.com/git-guides/install-git
 
-The direct link to the organization is https://github.uio.no/FY4220-2021.
+
+
+## Setup up a Github.uio.no repository
+Before you start to work on the assignments and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor.
+
+The direct link to the organization is https://github.uio.no/FY4220-2022.
 
 
 * Login in to Github.uio.no and create a new repository in the *FYS4220-2021* organization. Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
@@ -81,8 +92,14 @@ width: 60%
 align: center
 name: assignments_gitrep_name
 ---
-Name your Git repository accordingly. The image is from 2020. The organization for 2021 is named FYS4220-2021.
+Name your Git repository accordingly. The example image is from 2020.
 ```
+
+```{Admonition} Note!
+:class: note
+Please stick to the naming convention for the repository name as specified above. This makes the instructur´s life easier! 
+```
+
 * Enable the *"Initialize this repository with a README"* and leave *.gitignore* initialization as *None* for the moment as shown in {numref}`assignments_gitrep_initialize`. Github does not provide a template *.gitignore*-file for VHDL. We will therefore add this file manually later.
 
 
@@ -173,13 +190,15 @@ If you would like check what a Git command is about to do, you can add the dry-r
 
 ```bash
 git <command> --dry-run
+
+The dry-run option will check what the git command is about to do, before actually doing so.
+
 ```
 
-The dry-run option will check what the git command is about to do, before actually doing so.```
 
 ```{admonition} Organisation and naming conventions
 :class:
-When working on the individual assignments and exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code isneeded to match your setup.
+When working on the individual assignments and exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code is needed to match your setup.
 ```
 
 You are now ready to start working on the first assignment. Remember to update the assignment progess status in the readme file as you move forward, and whenever you start or complete an assignment problem.

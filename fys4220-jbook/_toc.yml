@@ -10,7 +10,7 @@ defaults:
 #  numbered: True
 
 parts: 
-  - caption: Overview
+  - caption: Getting started
     chapters:
     - file: part-information/information_content_overview
     - file: part-information/information_tools
