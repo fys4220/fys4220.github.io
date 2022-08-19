@@ -16,10 +16,10 @@ parts:
     - file: part-information/information_tools
     - file: part-information/information_agenda
 #    - file: part-information/information_other_resources
-    - file: part-information/information_getting_started
-      sections: 
-      - file: part-information/information_download_tools
-      - file: part-information/information_prepare_git
+#    - file: part-information/information_getting_started
+#      sections: 
+    - file: part-information/information_download_tools
+    - file: part-information/information_prepare_git
 
 
   - caption: Main content

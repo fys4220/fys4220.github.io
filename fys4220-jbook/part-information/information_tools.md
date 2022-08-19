@@ -8,18 +8,18 @@ As you set upon the task of learning about FPGA and embedded system design, you 
 * A version control tool to keep track of your source.
 * And finally, the necessary hardware and laboratory equipment to test and verify you design when running on the FPGA. 
 
-In the following sections we will briefly outline the tools you will encounter in this course. While some of these tools are xpecific to the type of FPGA vendor we will use in this course, the skills you learn by using these tools are transferable to tools from other FPGA. Their user interfaces, integrated toolsets, and development flows may vary, but the general concepts still apply. 
+In the following sections we will briefly outline the tools you will encounter in this course. While some of these tools are specific to the type of FPGA vendor we will be use in this course, the skills you learn by using these tools are transferable to tools from other FPGA. Their user interfaces, integrated toolsets, and development flows may vary, but the general concepts still apply. 
  Working with the Quartus design tools from Intel (Intel aquired Altera in 2015) in this course will therefore lower your initial threshold for getting up to speed with e.g., the Vivado design tools from AMD Xilinx (ADM completed the acquisition of Xilinx in early 2022).
  
 
 ## Hardware 
 
-Lets start with the hardware. In this course you will use an FPGA development board from Intel as well as two cables, one cable to power and program the FPGA and one to communicate data between the FPGA and our PC. 
+Lets start with the hardware. In this course you will use an FPGA development board from Intel as well as two cables, one cable to power and program the FPGA and one to communicate data between the FPGA and your PC. 
 
 ### FPGA board
-You will be using the [DE10-Lite](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1021) development board from Terasic. This board is equipped with an [*MAX 10 FPGA*](https://www.intel.com/content/www/us/en/products/details/fpga/max/10.html) from Intel. The specific part number is: 10M50DAF484C7G.
+You will be using the [DE10-Lite](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=1021) development board from Terasic. This board is equipped with a [*MAX 10 FPGA*](https://www.intel.com/content/www/us/en/products/details/fpga/max/10.html) from Intel. The specific part number is: 10M50DAF484C7G.
 
-Depending on the number of students, you may be able to borrow a board from the course instructor. In this case, the board including all cables and the box will have to be returned at the end of the semester.
+Depending on the number of students, you may be able to borrow a board from the course instructor. In that case, the board including all cables and the box must be returned at the end of the semester.
 
 ```{figure} ../images/de10-lite_layout_top.jpg
 ---
@@ -29,19 +29,49 @@ name: fig:information_de10liteboard
 ---
 The DE10-Lite FPGA board
 ```
+It is recommended to study the [DE10-Lite user manual](https://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&No=1021&FID=a13a2782811152b477e60203d34b1baa) {cite}`de10-lite-user-manual` before starting to work on the exercises and project. 
+
 
 ### Cables
 
 The FPGA development board includes a USB cable that can be used to power the board and to both program and communicate with the FPGA through a JTAG-interface. JTAG is short for Joint Test Action Group. It is an industry standard for verifying designs and testing printed circuit boards after manufacture, and is widely used to provide access to processor debug functions and to program FPGAs. Learn more about JTAG [here](https://www.xjtag.com/about-jtag/what-is-jtag/).
 
+
+```{figure} ../images/information_jtag_cable.jpg
+---
+width: 60%
+align: center
+name: fig:information_jtag_cable
+---
+The USB-cable is included with the DE10-Lite development board. There is a dedicated chip on the FPGA board that is responsible for translating from USB to JTAG. 
+```
+
 In addition we will use a UART to USB converter cable {cite}`uart-usb-cable` from FTDI chip to communicate data between the PC and the design running on the FPGA. Depending on the number of students signing up for the course, this cable may also be borrowed from the course instructor.
 
 
+
+```{figure} ../images/information_ftdi_cable.jpg
+---
+width: 60%
+align: center
+name: fig:information_ftdi_cable
+---
+The UART to USB converte cable from FTDI chip.
+```
 ## FPGA design & simulation tools
 
 **Quartus Prime Lite:**
 As we are using an FPGA from Intel we will naturally also be using development tools provided by Intel – the Quartus Prime Lite Edition design software. This tool enables analysis and synthes of designs written in hardware description languages like e.g., VHDL or Verilog, as well as the ability to download these designs to an Intel FPGA. It also includes the Nios II embedded design suite which is used to develop and download software to a Nios II microcontroller system, if included in the FPGA design running on the FPGA. 
 
+
+```{figure} ../images/information_quartus.png
+---
+width: 95%
+align: center
+name: fig:information_quartus
+---
+The Intel Quartus Lite  design tool.
+```
 The Quartus Prime Lite version can be downloaded for free and no license file is required:
 * [Link to download page for Quartus Prime Lite](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html?edition=lite&platform=windows&s=Newest&f:guidetmD240C377263B4C70A4EA0E452D0182CA=%5BIntel®%20Quartus®%20Prime%20Design%20Software%3BIntel®%20Quartus®%20Prime%20Lite%20Edition%5D)
 
@@ -51,6 +81,15 @@ Installation of Quartus Prime Lite will require around 15 GB of free disk space 
 **ModelSim:**
 To simulate our FPGA design we will use a simulation tool called ModelSim/QuestaSim, which also can be downloaded from the link above. From version 21.1 of Quartus Prime Lite, QuestaSim is included, while for earlier versions ModelSim is included. ModelSim is a slightly "lighter" version, but for FYS4220 this makes no difference. However, QuestaSim requires you to register and download a free license file. If you do not want to register you should instead use ModelSim provided with the version 18.1 of Quartus Prime Lite. These tools can be used independently of each other, e.g., you can use version 18.1 of ModelSim and version 21.1 of Quartus Prime Lite. 
 
+
+```{figure} ../images/vhdl_var_find_modelsim1.png
+---
+width: 100%
+align: center
+name: fig:information_modelsim
+---
+The ModelSim simulation tool.
+```
 
 ```{Admonition} For Mac users!
 :class: note

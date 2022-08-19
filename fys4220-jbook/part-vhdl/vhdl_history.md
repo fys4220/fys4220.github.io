@@ -1,5 +1,5 @@
 (vhdl-history)=
-# The brief history
+# Introduction
 
 Before we explain the basic structure of a VHDL[^vhdl] file and introduce some of the basic elements of the VHDL language, it may be interesting to understand the birth of VHDL. Its development was motivated by a lack of adequate documentation for the behaviour and functionality of Application Specific Integrated Circuits (ASICs). In 1983 the US Department of Defence (DoD) initiated the process to develop a standardize documentation language for ASICs. Together with Intermetrics, IBM, and Texas Instrument, the first version of VHDL was finalized in 1985. VHDL was implemented in a format similar to a programming language and was in its first version a specification and modelling languague that could be seen as an alternative to complex manuals. As a natural development, this tool was soon extended to include simulation capabilities, and logic simulators where developed in the late 1980s. Finally, the logical next step was to implement the possibility to read VHDL and output a description of the physical implementation of the circuit. This process is referred to as logic synthesis.
 
@@ -8,6 +8,13 @@ VHDL is today a formal notation intended for use in all phases of the creation o
 * verification,
 * synthesis,
 * and testing of hardware designs.
+
+It supports different needs in the design process:
+- It can be used to describe the structure of a system, that is, how it is decomposed into subsystems and how those subsystems are interconnected. 
+- Further, it can be used to desribe the function of a system using familiar programming syntax. 
+- It can be used to simulate the system. This allows the designer to test the correctness of the system before it is implemented in hardware. 
+- It allows the detailed structure of a design to be synthesized from a more abstract specification, allowing designers to concentrate on more strategic design decisions and reducing the time to market. 
+This chapter will 
 
 ## IEEE standard 
 

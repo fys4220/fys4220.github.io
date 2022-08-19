@@ -5,7 +5,7 @@ To download and install Quartus and ModelSim follow the instructions below.
 ```{Admonition} Note!
 :class: note
 
-Starting from version 19.1 of Quartus Prime Lite, Cyqwin has been replaced by Ubuntu WSL as the back end for the Nios II command shell and Nios II system build tools for eclipse. This complicates the installation procedure (instructions can be found on the download page). We therefore recommend to use version 18.1. When downloading this version, all relevant tools are included and easily installed.
+Starting from version 19.1 of Quartus Prime Lite, [Cyqwin](https://www.cygwin.com) has been replaced by [Windows subsystem for Linux (WSL)](https://ubuntu.com/wsl) as the backend for the Nios II command shell and Nios II system build tools for eclipse. This complicates the installation procedure (instructions can be found on the download page). We therefore recommend to use version 18.1. When downloading this version, all relevant tools are included and easily installed.
  
 Version 18.1 is also the version which is installed on the computers in the student laboratory. Using version 18.1 instead of later versions makes no difference for the use in FYS4220.
 ```

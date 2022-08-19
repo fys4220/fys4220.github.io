@@ -73,6 +73,7 @@ Git for Windows provides a BASH emulation *Git BASH* used to run Git from the co
 
 It also provides a graphical user interface *Git GUI*. However, we recommend to use the command line interface to get familiar with the basic Git commands.
 
+
 There should be a link to *Git BASH* on the desktop. Double click on *Git BASH*, navigate to an appropriate directory and clone your Github.uio.no repository. The default path when starting *Git BASH* is typically your UiO home directory.
 
 A guide on how to install Git is provided by Github here: https://github.com/git-guides/install-git
@@ -80,12 +81,12 @@ A guide on how to install Git is provided by Github here: https://github.com/git
 
 
 ## Setup up a Github.uio.no repository
-Before you start to work on the assignments and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor.
+Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor.
 
-The direct link to the organization is https://github.uio.no/FY4220-2022.
+The direct link to the organization is https://github.uio.no/FYS4220-2022.
 
 
-* Login in to Github.uio.no and create a new repository in the *FYS4220-2021* organization. Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
+* Login in to Github.uio.no and create a new repository in the *FYS4220-2022* organization. Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
 ```{figure} ../images/assignments_create_gitrep_name.png
 ---
 width: 60%
@@ -97,10 +98,10 @@ Name your Git repository accordingly. The example image is from 2020.
 
 ```{Admonition} Note!
 :class: note
-Please stick to the naming convention for the repository name as specified above. This makes the instructur´s life easier! 
+Please stick to the naming convention for the repository name as specified above. This makes the instructor´s life easier! 
 ```
 
-* Enable the *"Initialize this repository with a README"* and leave *.gitignore* initialization as *None* for the moment as shown in {numref}`assignments_gitrep_initialize`. Github does not provide a template *.gitignore*-file for VHDL. We will therefore add this file manually later.
+* Enable the *"Initialize this repository with a README"* and leave *.gitignore* initialization as *None* as shown in {numref}`assignments_gitrep_initialize`. Github does not provide a template *.gitignore*-file for VHDL. We will therefore add this file manually later.
 
 
 
@@ -139,7 +140,7 @@ git clone https://github.uio.no/FYS4220-2020/fys4220-lastname-firstname.git
 FYS4220 Git repository for <firstname> <lastname>
 ```
 
-You are encouraged to use the readme file as a log for your work and to keep track of yor progress. The content of this file, as well as the code uploaded to your Git repository, will be the basis for the final evaluation and approval of the project.
+You are encouraged to use the readme file as a log for your work and to keep track of your progress. The content of this file, as well as the code uploaded to your Git repository, will be the basis for the final evaluation and approval of the project.
 
 
 A *.gitignore* file is used by Git to filter out files that are not subject to version control.
@@ -147,7 +148,7 @@ A *.gitignore* file is used by Git to filter out files that are not subject to v
 ```bash
 touch .gitignore
 ```
-A file with a leading punctuation mark is a hidden file and is normally not visible in a directory browser. In a terminal window you can write `ls -a` followed by enter to see the files in the directory. To view the file in the Windows File Explorer, enable *Show hidden files, folders and drivers* from the *View* tab of (File --> Change folder and search options).
+A file with a leading punctuation mark is a hidden file and is normally not visible in a directory browser. In a terminal window you can write `ls -a` followed by enter to see all files in the directory. To view the file in the Windows File Explorer, enable *Show hidden files, folders and drivers* from the *View* tab of (File --> Change folder and search options).
 * Open the *.gitignore* file and add the following lines and save the file.
 
 ```console
@@ -198,10 +199,10 @@ The dry-run option will check what the git command is about to do, before actual
 
 ```{admonition} Organisation and naming conventions
 :class:
-When working on the individual assignments and exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code is needed to match your setup.
+When working on the individual exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code is needed to match your setup.
 ```
 
-You are now ready to start working on the first assignment. Remember to update the assignment progess status in the readme file as you move forward, and whenever you start or complete an assignment problem.
+You are now ready to start working on the first exercise. Remember to update the assignment progress status in the readme file as you move forward, and whenever you start or complete an assignment problem.
 
 ## Using Git for FYS4220
 
