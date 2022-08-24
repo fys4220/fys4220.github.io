@@ -14,7 +14,8 @@ Before you start to write code it is always smart to first spend some time to th
 The first step is to make sure you know how to design an adder using logic gates. If you do not already know how to do this, use a relevant text book or online resources to refresh your knowledge.
 
 
-## 1-bit half adder
+knowledgeagend
+## Part1: 1-bit half adder
 
 Pre
 

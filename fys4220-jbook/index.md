@@ -2,7 +2,7 @@
 <!--Real-time and embedded data systems
 -->
 
-This content is made to support the course *FYS4220 Real-time and embedded data systems* at the University of Oslo.
+This content is made to support the course [*FYS4220 Real-time and embedded data systems*](https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html) at the University of Oslo.
 <!--
 ```{figure} ./images/fys4220_logo.png
 ```

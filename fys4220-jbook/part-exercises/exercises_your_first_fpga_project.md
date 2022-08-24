@@ -204,10 +204,10 @@ You have now created and programmed your first FPGA design.
 
 ## Supporting video
 
-The following video works through the same example as presented above. Note that the video is a few years old -- some details like file and folder names are therefore different. Follow the naming convention in the text above. 
+In the following video I work through the exercise above. Note that the video is a few years old -- some details like file and folder names will therefore be different. You should follow the naming convention as specified in the description above on this page. 
 
 
 <div class="video-container">
-<iframe width="1058" height="595" src="https://www.youtube.com/embed/2xXKKpA9o4w" title="A brief historical view on VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="912" height="568" src="https://www.youtube.com/embed/hQx_fcnzPks" title="EX1: First FPGA project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
