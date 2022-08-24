@@ -1,8 +1,13 @@
-(design-units)=
+(vhdl-design-units)=
 # Design units and structure
 
+<div class="video-container">
+<iframe width="1058" height="595" src="https://www.youtube.com/embed/-WT1XKdmkLQ" title="VHDL design units and structure" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
-Why should we use a Hardware Description Language (HDL)? Today the various development tools may provide a possibility to draw and connect the logic building blocks by using a schematic editor through a graphical user interface like shown in {numref}`quartus_schematic`.
+[[Slides]](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/vhdl_design_units_structure.pdf)
+
+Why should we use a Hardware Description Language (HDL)? Today the FPGA development tools may provide a possibility to draw and connect the logic building blocks by using a schematic editor through a graphical user interface like shown in {numref}`quartus_schematic`.
 
 
 ```{figure} ../images/quartus_schematic.png
@@ -15,7 +20,7 @@ Quartus Prime Lite schematic editor.
 ```
 
 
-While this may provide a pleasing visual overview of your design, it comes with some disadvantages like lack of portability across platforms, lack of maintainability, and potentially a very complex diagram for large designs. The better solution is therefore to describe the design using a Hardware Description Languages (HDLs) like e.g. VHDL or Verilog. Using VHDL, the design in {numref}`quartus_schematic` can be described as shown below.
+While this may seem intuative and provide a pleasing visual overview of your design, it comes with some disadvantages like lack of portability across platforms, lack of maintainability, and potentially a very complex diagram for large designs. The better solution is therefore to describe the design using a Hardware Description Languages (HDLs) like e.g. VHDL or Verilog. Using VHDL, the design in {numref}`quartus_schematic` can be described as shown below.
 
 ```vhdl
 library ieee;
@@ -43,11 +48,7 @@ Y <= (A and B) or (A and C) or (B and C);
 end architecture;
 ```
 
-The overhead in number of lines for this simple design may seem large.  However, the more complex the design, the smaller the relative overhead. The VHDL description above can be stored as a readable text format in a file with the extension *.vhd*. This comes with the added bonus that the file can be put under version control using e.g. Git. An essential and important practice when developing code based projects. In the following sections we will explain the structure of a VHDL file. 
-
-
-
-
+The overhead in number of lines for this simple design may seem large.  However, the more complex the design, the smaller the relative overhead. The VHDL description above can be stored as a readable text format in a file with the extension *.vhd*. This comes with the added bonus that the file can be put under version control using e.g. Git. An essential and important practice when developing code based projects. In the following sections we will explain the basic structure of a VHDL file. 
 
 ## VHDL as a model of digital system 
 
@@ -65,14 +66,14 @@ name: vhdl_system
 ```{admonition} Some important remarks
 :class: note
 VHDL is a HARDWARE DESCRIPTION LANGUAGE. 
-* A VHDL model is translated into _actual hardware_ and mapped onto an FPGA. This is in contrast to other high level languages where the code is executed on predefined hardware like a processor. While code running on a processor is executed sequentially, a VHDL description mapped onto an FPGA is a physical implementation in and of hardware resources – where multiple instances can be realized and operate concurrently. This opens for massive parallelization of functinality, one of the main advantages of FPGAs compared to standard CPUs.
+* A VHDL model is translated into _actual hardware_ and mapped onto an FPGA. This is in contrast to other high level languages where the code is executed on predefined hardware like a processor. While code running on a processor is executed sequentially, a VHDL description mapped onto an FPGA is a physical implementation in, and of hardware resources – where multiple instances can be realized and operate concurrently. This opens for massive parallelization of functinality, one of the main advantages of FPGAs compared to standard CPUs.
 
-* When refering to the execution of a VHDL code, this means that the VHDL model is being simulated (e.g. by software running on a computer)
+* When refering to the execution of a VHDL code, this means that the VHDL model is being simulated (e.g. by software running on a computer).
 ```
 
 At the top level, the structure of a VHDL design can be viewed as black-box approach, where the two main parts of any hierarchical design are the
 * black box,
-* and the "stuff" that goes into the black box (e.g. other black boxes)
+* and the "stuff" that goes into the black box (e.g., other black boxes)
 
 ```{figure} ../images/vhdl_stuff.png
 ---
@@ -84,19 +85,18 @@ Black box approach.
 ```
 
 ## Entity and architecture
-In VHDL the black box is referred to as *entity* and the "stuff" that goes inside the entity is referred to as the *architecture* body of that *entity*.  An image that might help to visualize this concept is to consider a chip or chip package like the one shown in {numref}`chip_entity`. From the outside the chip can be view as a black box as its internal functionality is not directly visible. The pins of the chip provide a port or interface to the inside architecture of the chip as illustrated in {numref}`chip_architecture`.
+In VHDL the black box is referred to as the *entity* and the "stuff" that goes inside the entity is referred to as the *architecture* body of that *entity*.  An image that might help to visualize this concept is to consider a chip or chip package like the one shown in {numref}`chip_entity`. From the outside the chip can be view as a black box as its internal functionality is not directly visible. 
 
-```{figure} ../images/chip_entity.png
+```{figure} ../images/vhdl_chip_entity.png
 ---
 width: 50%
 align: center
 name: chip_entity
 ---
-The entity describes the interface to the outside world (connection pins of package).
+The entity describes the interface to the outside world and. E.g., the pins of a chip that can be used to connect to its inside functinality.
+Image credit: Audrius Meskauskas, distributed under CC BY-SA 3.0, [wikipedia](https://en.wikipedia.org/wiki/7400-series_integrated_circuits#/media/File:TexasInstruments_7400_chip,_view_and_element_placement.jpg).   
 ```
-
-The entity and architecture approach enables the use of hierarchical structure (modularity) and the reuse of previously written code. A module is referred to by its inherently simple black box representation rather than by the details of its inside circuitry or functionality. The chip analogy works very well for a simple non-hierarchical design, where the entity describes the pins (their name and direction), and the architecture describes the functionality connected to these pins. However, for more complex designs, an hierarchical approach may be needed. An entity description is therefore not limited to describe the top level interface of a chip, but can also be used to describe the interface of internal modules of a chip or design, not connected directly to the pins of a chip.
-
+The pins of the chip provide a port or interface to the inside architecture of the chip as illustrated in {numref}`chip_architecture`. 
 
 ```{figure} ../images/chip_architecture.png
 ---
@@ -105,7 +105,13 @@ align: center
 name: chip_architecture
 ---
 The architecture describes the functionality of the circuit inside the entity (chip package).
+Image credit: Audrius Meskauskas, distributed under CC BY-SA 3.0, [wikipedia](https://en.wikipedia.org/wiki/7400-series_integrated_circuits#/media/File:TexasInstruments_7400_chip,_view_and_element_placement.jpg).   
 ```
+
+
+The entity and architecture approach enables the use of hierarchical structure (modularity) and the reuse of previously written code. A module is referred to by its inherently simple black box representation rather than by the details of its inside circuitry or functionality. The chip analogy works very well for a simple non-hierarchical design, where the entity describes the pins (their name and direction), and the architecture describes the functionality connected to these pins. However, for more complex designs, an hierarchical approach may be needed. An entity description is therefore not limited to describe the top level interface of a chip, but can also be used to describe the interface of internal modules of a chip or design, not connected directly to the pins of a chip.
+
+
 
 
 %#!bsummary  Relevant adn supplementary reading
@@ -114,7 +120,7 @@ The architecture describes the functionality of the circuit inside the entity (c
 %#!esummary
 
 
-## The basic structure of a VHDL file
+## The basic structure of a VHDL File
 The basic structure of a VHDL-file can be divided in three parts as shown in {numref}`vhdl_file_structure`:
 
 
@@ -136,10 +142,9 @@ library IEEE;
 IEEE.std_logic_1164.all;
 ```
 
-
 ### Entity
 
-An entity declaration should start with *entity* and end with *end* keywords. The identifier in an entity declaration names the module  so that it can be referred to later. A port clause lists and names each of the ports, which together form the interface of the entity.
+An entity declaration should start with the keyword *entity* and end with keyword *end*. The identifier in an entity declaration names the module  so that it can be referred to later. A port clause is then used to list and name each of the entity's ports, which together form the interface of the entity.
 Items enclosed by *< >* are mandatory items, while *[ ]* are optional.
 
 ```vhdl
@@ -155,8 +160,6 @@ end [entity] [identifier];
 
 
 Each port has a type which specifies the kind of information that is communicated, and a mode which specifies how information flows into or out from the entity. The valid modes for an entity are listed in the table below and illustrated in {numref}`vhdl_port_directions`.
-
-%# #include "vhdl_modes_table.do.txt"
 
 
 | Mode   | Description                               |
@@ -177,7 +180,7 @@ Entity port modes.
 ```
 
 ### Architecture
-While entity describes the interface or external representation of the circuit, the architecture describes what the circuit actually does, its internal operation. An architecture body generally applies some operations to values on input ports, generating values to be assigned to output ports. An architecture needs to be connected to an entity, this achieved with the `<entity_identifier>` in the first line of the architcture declaration. Items enclosed by *< >* are mandatory items, while *[ ]* are optional.
+While entity describes the interface or external representation of the circuit, the architecture describes what the circuit actually does – its internal functionality. An architecture body generally operates on values from the input ports, generating values to be assigned to output ports. An architecture needs to be connected to an entity, this achieved with the `<entity_identifier>` in the first line of the architcture declaration. Items enclosed by *< >* are mandatory items, while *[ ]* are optional.
 
 ```vhdl
 architecture <identifier> of <entity_identifier> is
@@ -213,7 +216,7 @@ end architecture rtl;
 
 ## Comments
 
-In VHDL, when a double dash (`--`) is used, any text to the right will be treated as a comment and will not be interpreted by the compiler. Unfortunately there are no block comments in VHDL.
+In VHDL, when a double dash (`--`) is used, any text to the right will be treated as a comment and will not be interpreted by the compiler. From VHDL-2008 it is also possible to comment out blocks using /\* and \*/.
 
 ```vhdl
 architecture rtl of superduper_module is
@@ -223,17 +226,22 @@ architecture rtl of superduper_module is
 begin
 
 -- This is another comment
--- Unfortunately there are no block comments in VHDL
--- Additional comment lines are therefore needed to make a block comment.
+
+/* This is a block comment 
+Block comments are supported from VHDL-2008
+But for the moment the syntax highlighting 
+used for these pages does not seem to support this.
+*/
 
 end struct;
 ```
 
+```{admonition} Supplementary suggested reading
+Chapter 5, section 5.4  in LaMeres {cite}`lameres`.
+* [Direct link html-version](https://link-springer-com.ezproxy.uio.no/chapter/10.1007/978-3-030-12489-2_5)
 
-## Supporting video
+{Download}`Chapter 3 in Mealy and Teppero, Free Range VHDL. <../docs/free_range_vhdl.pdf>` 
+```
 
-<div class="video-container">
-<iframe width="1058" height="595" src="https://www.youtube.com/embed/-WT1XKdmkLQ" title="VHDL design units and structure" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
 
-Link to video: [https://www.youtube.com/watch?v=-WT1XKdmkLQ](https://www.youtube.com/watch?v=-WT1XKdmkLQ)
+

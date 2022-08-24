@@ -10,26 +10,73 @@ In addition to practical problems, the exercises also contain questions which ar
 
 -->
 
-## Week 34 
+
+
+
+
+## Week 34: Getting started 
+
 * Material to study:
+  * {ref}`information-content`
+  * {ref}`information-tools`
   * {ref}`fpga-pld`
   * {ref}`fpga-introduction`
-  * {ref}`information-getting-started`
+* Exercises:
+  * {ref}`information-prepare-git`
+<!--
 * Exercises:
   * {ref}`fpga-exercise`
 
 * Project tasks:
   * None
-
-
-<!--
+-->
 
 ## Week 35
 * Material to study:
+  * {ref}`vhdl`
+  * {ref}`vhdl-history`
+  * {ref}`vhdl-design-units`
+  * {ref}`vhdl-objects-and-data-types`
+  * {ref}`vhdl-operators`
+  * {ref}`vhdl-concurrent-statements`
+  
 * Exercises:
+  * {ref}`information-download-quartus`
+  * {ref}`exercises-first-project`
+  * EX2 - Coming soon
+## Week 36
+
+## Week 37 
+
+## Week 38 
+
+## Week 39
+
+## Week 40 
+
+## Week 41
+
+## Week 42
+
+## Week 43
+
+## Week 44
+
+## Week 44
+<!--
+## Week 36
+* Details coming soon.
+## Week 36
+* Details coming soon.
+## Week 35
+* Material to study:
+* {ref}`information-download-quartus`
+* {ref}`information-prepare-git`
+* Exercises:
+
 * Project tasks:
-
-
+-->
+<!--
 * Start to think about the problem and draw a very basic top level block diagram of the
 
 

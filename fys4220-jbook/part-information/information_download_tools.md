@@ -1,3 +1,4 @@
+(information-download-quartus)=
 # Quartus and ModelSim
 
 To download and install Quartus and ModelSim follow the instructions below.

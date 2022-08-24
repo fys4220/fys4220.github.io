@@ -1,3 +1,4 @@
+(vhdl-objects-and-data-types)=
 # Objects and data types
 
 ## Objects
@@ -231,3 +232,11 @@ To resolve this, and to define an appropriate resolved value for all combination
              ('U', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X')   -- | - |
              );
 ```
+
+
+```{admonition} Supplementary suggested reading
+Read more about objects and types in chapter 11 in  {Download}` Mealy and Teppero, Free Range VHDL. <../docs/free_range_vhdl.pdf>` 
+
+```
+
+

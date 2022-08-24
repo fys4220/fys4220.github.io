@@ -1,3 +1,4 @@
+(information-tools)=
 # Tools
 
 As you set upon the task of learning about FPGA and embedded system design, you will quickly notice the plethora of tools required to get the job done. You will need:

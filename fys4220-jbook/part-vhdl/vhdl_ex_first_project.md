@@ -1,2 +1,2 @@
-(ex_first_project)=
+(ex-first-project)=
 # EX: Your first project

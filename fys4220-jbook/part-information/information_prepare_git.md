@@ -1,24 +1,28 @@
-(information-preparing-git)=
+(information-prepare-git)=
 # Git  
 
-This section will give you a brief introduction to Git and how we will use Github.uio.no in this course.
-course. Github is a cloud-based hosting service that lets you manage Git repositories. 
+This section will give you a brief introduction to Git and how we will use Github.uio.no in this course. 
+
+%Github is a cloud-based hosting service that lets you manage Git repositories. 
 
 ```{admonition} Note!
 :class:
 Notice that we are using a UiO managed version of Github – Github.uio.no – and **NOT** Github.com.
 ```
 
-Git is a version control system that lets you manage and keep track of you source code history. Git uses so called repositories to store a collection of files of various different versions (file history) of a project. There is no need to become and expert Git user.  The most common commands you will use are:
-* *git init*: initialize an existing directory as a Git repository
-* *git clone*: retrieve an entire repository from a hosted location via URL
-* *git add*: add a file as it looks now to your next commit (stage)
-* *git commit*: commit your staged content as a new commit snapshot
-* *git pull*: fetch and merge any commits from the tracking remote branch
-* *git push*: transmit local branch commits to the remote repository branch
-* *git status*: show modified files in working directory, staged for your next commit (use this abundantly)
-* *git log*: show all commits in the current branch's history
+Git is a version control system that lets you manage and keep track of you source code history. Git uses so called repositories to store a collection of files of a project, including previous versions of these files (file history). There is no need to become an expert at Git, however, that are a few commands that you will use frequently and that it is worth spending some time to familiarise yourself with: 
+* **git init**: initialize an existing directory as a Git repository
+* **git clone**: retrieve an entire repository from a hosted location via URL
+* **git add**: add a file as it looks now to your next commit (stage)
+* **git commit**: commit your staged content as a new commit snapshot
+* **git pull**: fetch and merge any commits from the tracking remote branch
+* **git push**: transmit local branch commits to the remote repository branch
+* **git status**: show modified files in working directory, staged for your next commit (use this abundantly)
+* **git log**: show all commits in the current branch's history
 <!--* [*git tag*]():--> 
+
+
+
 
 <!--
 A list of basic Git commands can be found here: Basic Git commands from https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
@@ -80,13 +84,12 @@ A guide on how to install Git is provided by Github here: https://github.com/git
 
 
 
-## Setup up a Github.uio.no repository
-Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor.
+## Setup of  Github repository 
+Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor. You can only be added to the organization after you have logged in for the first time and your user has been created. 
 
 The direct link to the organization is https://github.uio.no/FYS4220-2022.
 
-
-* Login in to Github.uio.no and create a new repository in the *FYS4220-2022* organization. Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
+* Login in to Github.uio.no and create a new repository in the *FYS4220-2022* organization (click the green button called *New*). Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
 ```{figure} ../images/assignments_create_gitrep_name.png
 ---
 width: 60%
@@ -100,6 +103,13 @@ Name your Git repository accordingly. The example image is from 2020.
 :class: note
 Please stick to the naming convention for the repository name as specified above. This makes the instructor´s life easier! 
 ```
+* Choose your preferred visibility [Public | Internal | Private]. If you choose *Public* or *Internal* your repository will be visible for everyone who is logged in to Github.uio.no. If you choose *Private* only you and the course instructor can see your repository. 
+
+```{admonition} A note on sharing and ollaboration
+:class: note
+In general we encourage collaboration and therefore suggest that you set the visibility to the default value, which is *Internal* (not sure if there is practical difference between *Public* and *Internal* for our usage). However, keep in mind that to learn any programming language there is no way around doing the hard work yourself (practice, practice, practice). If you try to take the "easy way" out by copying and pasting from your fellow students repository, you only fool yourself. Instead, if you get stuck, discuss the problem with your peers and use instead their repositories as inspiration rather than just a simple copy and paste. Also, for this purpose it is recommend that you do your best to document your code – write structured and easily readable code with relevant comments explaining the purpose of your code. 
+```
+
 
 * Enable the *"Initialize this repository with a README"* and leave *.gitignore* initialization as *None* as shown in {numref}`assignments_gitrep_initialize`. Github does not provide a template *.gitignore*-file for VHDL. We will therefore add this file manually later.
 
@@ -115,7 +125,9 @@ Initialize with readme and no *.gitignore*
 ```
 
 
-A Git repository has now been created and is ready to be cloned as shown in {numref}`assignments_github_first_repo`. You can choose to clone either using SSH og HTTPS. If you know how to setup SSH keys, cloning the repository using SSH is generally favorable as you do not have to write your username and password everytime you clone or push. However, if you do not know how to use SSH keys, it is recommended to clone using HTTPS, but you will need to write your username and password everytime you clone or push.
+A Git repository has now been created and is ready to be cloned as shown in {numref}`assignments_github_first_repo`. You can choose to clone either using SSH og HTTPS. If you know how to [setup SSH keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account), cloning the repository using SSH is generally favorable as you do not have to write your username and password everytime you clone or push. However, if you do not know how to use SSH keys, it is recommended to clone using HTTPS, but you will need to write your username and password everytime you clone or push.
+
+
 
 ```{figure} ../images/assignments_github_first_repo.png
 ---
@@ -140,7 +152,7 @@ git clone https://github.uio.no/FYS4220-2020/fys4220-lastname-firstname.git
 FYS4220 Git repository for <firstname> <lastname>
 ```
 
-You are encouraged to use the readme file as a log for your work and to keep track of your progress. The content of this file, as well as the code uploaded to your Git repository, will be the basis for the final evaluation and approval of the project.
+You are encouraged to use the readme file to document your work and to keep track of your progress. The content of this file, as well as the code uploaded to your Git repository, will be the basis for the final evaluation and approval of the project.
 
 
 A *.gitignore* file is used by Git to filter out files that are not subject to version control.
@@ -178,7 +190,7 @@ _*
 ```bash
 git add .gitignore
 git commit -am "Added .gitignore and updated readme.md"
-git push origin master
+git push origin main
 ```
 
 Verify that you repository has been updated online.
@@ -217,22 +229,58 @@ $ git config --global user.email sam@example
 Please use you UiO e-mail address.
 
 
-_A normal command line based working flow:_
-* Login to Github.uio.no
-* Clone your repository *fys4220-lastname-firstname*:
+A normal command line based working flow is shown in figure {numref}`fig:information_git_workflow`. 
+
+```{figure} ../graphics/mermaid_git_workflow.pdf
+---
+width: 100%
+name: fig:information_git_workflow
+---
+The most basic workflow when using Git.
+```
+
+Login to Github.uio.no and clone your repository *fys4220-lastname-firstname*:
 ```console
 git clone https://github.uio.no/fys4220-2021/fys4220-lastname-firstname.git
 ```
-* Edit and save a file (e.g., the readme file).
-* Commit the change with a relevant/informative message:
+
+This will create a local copy of your git repository. 
+
+Edit and save a file (e.g., the readme file). Then add the file to the staging area.
+```bash
+git add README.md
+```
+Commit the change with a relevant/informative message.
+```bash
+git commit -m "Made changes to file README.md"
+```
+
+Push these changes to the remote repository on Github.uio.no.
+```bash
+git push origin main
+```
+
+The local copy of the repository can now be deleted if wanted.
+
+It is possible to combine the `git add` and `git commit` command in one step by adding *-a* to `git commit`.
+
 ```bash
 git commit -am "Made changes to file README.md"
 ```
-* Push these changes to the remote repository on Github.uio.no:
-```bash
-git push origin master
+
+Type `git commit -h` and find out what the *-a* argument means.
+
+
+If there are changes on the remote repository which are not yet updated locally, you will fisrt have to download these changes using `git pull` before  you can upload your local changes. 
+
+```{admonition} Tip
+:class: tip
+
+To reduce the risk of merge conflicts, only make changes to your local repository on your PC. Do not edit the files directly in the browser. 
+See the CS50W lecture on Git above for an example of how to handle merge conflicts.
+
 ```
-* The local copy of the repository can now be deleted if wanted.
+
 
 %### Submitting the project assignments
 

@@ -1,5 +1,12 @@
 # Description styles
 
+
+<div class="video-container">
+<iframe width="1012" height="759" src="https://www.youtube.com/embed/ZFT7vDt6U-U" title="VHDL description models" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+[Slides](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/vhdl_description_models.pdf)
+
 The architecture body of a VHDL description can be divided in two sections:
 * the declaration section,
 * and the section between the keywords `begin`  and  `end architecture`.
@@ -417,12 +424,12 @@ RTL is the style of code that is required for a synthesis tool to translate the 
 %#| Assert statements                                   |
 %#|-----------------------|
 
-## Supporting video
+```{admonition} Supplementary suggested reading:
 
-<div class="video-container">
-<iframe width="1012" height="759" src="https://www.youtube.com/embed/ZFT7vDt6U-U" title="VHDL description models" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-Video link: [https://www.youtube.com/watch?v=ZFT7vDt6U-U](https://www.youtube.com/watch?v=ZFT7vDt6U-U)
-
+Chapter 5, section 5.1 and 5.2, and chapter 9 and 10 {Download}`in Mealy and Teppero, Free Range VHDL. <../docs/free_range_vhdl.pdf>`
+ 
+Chapter 5, section 5.6 *Structural design using components* in LaMeres {cite}`lameres`.
+* [Direct link html-version](https://link-springer-com.ezproxy.uio.no/chapter/10.1007/978-3-030-12489-2_5#Sec1)
+* [Direct link pdf-version](https://link.springer.com/content/pdf/10.1007%2F978-3-030-12489-2_5)
+```
  

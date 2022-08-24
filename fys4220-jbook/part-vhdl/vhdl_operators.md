@@ -1,3 +1,4 @@
+(vhdl-operators)=
 # Operators
 
 ## Arithmetic operators
@@ -115,3 +116,8 @@ List of operator priorities from high to low:
 ```
 
 Be careful when you are typing expressions; make sure to use enough parenthesis.
+
+
+```{admonition} Supplementary suggested reading
+{Download}`Chapter 11 in Mealy and Teppero, Free Range VHDL. <../docs/free_range_vhdl.pdf>` 
+```

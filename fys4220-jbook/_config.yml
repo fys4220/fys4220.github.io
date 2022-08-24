@@ -50,8 +50,8 @@ sphinx:
     html_theme_options:
       show_navbar_depth: 1 
       announcement: "⚠️Under development!⚠️"
-      extra_footer: 
-        <p> ... Add license info heres ... </p>
+#      extra_footer: 
+#        <p> ... Add license info heres ... </p>
     latex_elements:
       preamble: |
         \usepackage[nottoc,numbib]{tocbibind} 
