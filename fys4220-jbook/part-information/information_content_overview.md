@@ -106,4 +106,6 @@ The course will:
 You will find the relevant material on this site in the format of recorded topical videos and reading material. Supplementary material may be provided as links to other relavant text books, videos, or articles. 
 
 
+# Recommended previous knowledge
 
+Previous knowledge of FPGAs or embedded systems is not required. However, it is recommended that you have basic knowledge of electronics and in particular digital electronics/logic, and some knowledge of at least one high-level programming language. 

@@ -231,7 +231,7 @@ Please use you UiO e-mail address.
 
 A normal command line based working flow is shown in figure {numref}`fig:information_git_workflow`. 
 
-```{figure} ../graphics/mermaid_git_workflow.pdf
+```{figure} ../graphics/mermaid/mermaid_git_workflow.pdf
 ---
 width: 100%
 name: fig:information_git_workflow

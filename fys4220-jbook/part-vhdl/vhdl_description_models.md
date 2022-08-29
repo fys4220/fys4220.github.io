@@ -1,3 +1,4 @@
+(vhdl-description-styles)=
 # Description styles
 
 
@@ -262,20 +263,20 @@ port(
 Example 1: Data-flow description:
 
 ```vhdl
-architecture description_model of example is
+architecture description_model of mux is
 
 begin
 
   Y <= ((not sel) and A ) or (sel and B);
 
-end data_flow;
+end architecture;
 ```
 
 
 Example 2: A higher abstraction level description using the VHDL process statement:
 
 ```vhdl
-architecture description_model of example is
+architecture description_model of mux is
 
 begin
 
@@ -288,7 +289,7 @@ begin
   end if;
 end process;
 
-end behav;
+end architecture;
 ```
 
 ```{admonition} Question

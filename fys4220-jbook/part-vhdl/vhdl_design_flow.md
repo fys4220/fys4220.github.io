@@ -1,3 +1,4 @@
+(vhdl-design-flow)=
 # Design flow
 
 

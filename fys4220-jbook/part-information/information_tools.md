@@ -127,7 +127,7 @@ The room is reserved for FYS4220 on:
 * Mondays from 12:15 to 16:00 (14:00 to 18:00 in the period 19/9–3/10)
 * Wednesday from 10:15 to 14:00.
 
-
+Your are of course free to use this rooms outside these ours if the room is available and not booked by any other course. You can find the weekly schedule for the room [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2022).
 
 ```{figure} ../images/student_lab.jpg
 ---

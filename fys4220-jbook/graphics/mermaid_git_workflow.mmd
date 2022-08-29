@@ -1,9 +1,0 @@
-flowchart LR;
-    id1[working directory] -->|git add| id2[staging area] -->|git commit| id3[local .git] -->|push| id4[remote <br> github]
-    %%id4 -->|git fetch|id3
-    id4 -->|git pull|id1
-    id4 -->|git clone|id1
-    %%id3 -->|git checkout|id1
-    classDef default fill:#ffffff, stroke:#000000;
-    %%classDef main fill:#f2f2f2, stroke-width:2px;
-    id2:::main

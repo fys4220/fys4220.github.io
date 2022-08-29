@@ -42,9 +42,23 @@ In addition to practical problems, the exercises also contain questions which ar
   
 * Exercises:
   * {ref}`information-download-quartus`
+    * Only relevant if you want to install the tools on your own computer
   * {ref}`exercises-first-project`
-  * EX2 - Coming soon
-## Week 36
+  * {ref}`exercises-adder-a`
+
+## Week 36 
+* Material to study:
+  * {ref}`vhdl-design-flow`
+  * {ref}`vhdl-description-styles`
+  * {ref}`vhdl-testbenches`
+  * {ref}`vhdl-process`
+  * {ref}`vhdl-generics`
+
+* Exercises
+  * {ref}`exercises-adder-b`
+  * {ref}`exercises-adder-c`
+
+
 
 ## Week 37 
 

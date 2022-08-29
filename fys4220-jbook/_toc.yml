@@ -38,12 +38,12 @@ parts:
       - file: part-vhdl/vhdl_objects_data_types
       - file: part-vhdl/vhdl_operators
       - file: part-vhdl/vhdl_concurrent_statements
-#      - file: part-vhdl/vhdl_description_models
-#      - file: part-vhdl/vhdl_process
+      - file: part-vhdl/vhdl_description_models
+      - file: part-vhdl/vhdl_testbenches
+      - file: part-vhdl/vhdl_process
+      - file: part-vhdl/vhdl_generics
 #      - file: part-vhdl/vhdl_state_machines
 #      - file: part-vhdl/vhdl_packages_subprograms
-#      - file: part-vhdl/vhdl_testbenches
-#      - file: part-vhdl/vhdl_generics
     - file: part-embedded/embedded
 #      sections:
 #      - file: part-embedded/embedded_intro
@@ -67,6 +67,7 @@ parts:
     - file: part-exercises/exercises_intro
 #      sections:
     - file: part-exercises/exercises_your_first_fpga_project
+    - file: part-exercises/exercises_adder
 #    - file: part-exercises/exercises_seven_segment_display
 #      - file: part-exercises/exercises_synchronous_logic
 #      - file: part-exercises/exercises_synchronization

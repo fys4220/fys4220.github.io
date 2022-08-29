@@ -57,7 +57,8 @@ The book is currently available online at [O’Reilly for Higher Education](http
     :height: 150px
     ```
 ``````
-
+## General
+- Weekly schedule for the laboratory V329 can be found [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2022).
 
 <!--
 ## FPGAs
