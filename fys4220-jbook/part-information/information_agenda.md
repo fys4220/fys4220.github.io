@@ -46,7 +46,7 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-first-project`
   * {ref}`exercises-adder-a`
 
-## Week 36 
+## Week 36 (tentative)
 * Material to study:
   * {ref}`vhdl-design-flow`
   * {ref}`vhdl-description-styles`
@@ -57,26 +57,37 @@ In addition to practical problems, the exercises also contain questions which ar
 * Exercises
   * {ref}`exercises-adder-b`
   * {ref}`exercises-adder-c`
+  * {ref}`exercises-counter`
 
 
+## Week 37 (tentative)
+* Material to study:
+  * {ref}`vhdl-statemachines`
 
-## Week 37 
+* Exercises
+  * {ref}`exercises-counter` (if not already completed)
+  * State machine 
+% state machines, tx or rx to PC
+## Week 38 (tentative) 
+%project
+## Week 39 (tentative) 
 
-## Week 38 
+## Week 40  (tentative) 
 
-## Week 39
+## Week 41 (tentative) 
 
-## Week 40 
+## Week 42 (tentative) 
 
-## Week 41
+## Week 43 (tentative) 
 
-## Week 42
+## Week 44 (tentative) 
 
-## Week 43
+## Week 46 (tentative) 
 
-## Week 44
+## Week 47 (tentative) 
 
-## Week 44
+## Week 48 (tentative) 
+
 <!--
 ## Week 36
 * Details coming soon.

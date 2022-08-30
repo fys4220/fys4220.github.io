@@ -68,6 +68,7 @@ parts:
 #      sections:
     - file: part-exercises/exercises_your_first_fpga_project
     - file: part-exercises/exercises_adder
+#    - file: part-exercises/exercises_counter
 #    - file: part-exercises/exercises_seven_segment_display
 #      - file: part-exercises/exercises_synchronous_logic
 #      - file: part-exercises/exercises_synchronization

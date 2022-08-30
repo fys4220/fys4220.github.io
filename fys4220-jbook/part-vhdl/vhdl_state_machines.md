@@ -1,5 +1,5 @@
 % Source: https://vhdlwhiz.com/n-process-state-machine/
-
+(vhdl-statemachines)=
 # State machines
 
 Finite state machines (FSMs) are used to solved many problems in digital electronics. An FSM is used to model a behaviour composed of a finit number of states, input events, transitions between those states (rules and conditions), and actions. That is, a state machine will read a series of inputs and switch to different states depending on the value of the inputs. Each state specifies which state to switch to for a given input value. A state machine is an effective method for implementing control functionality.
@@ -490,6 +490,9 @@ The following video gives and introduction to state machines in VHDL.
 
 Video link: [https://www.youtube.com/watch?v=OZn_fk95vvE](https://www.youtube.com/watch?v=OZn_fk95vvE)
 
+There are different approaches to describing state machines in VHDL. The following videos demonstrates how to describe state machines using a 1-process, 2-process, or 3-process approach. The examples also demonstrates the use of configurations in VHDL.
+
+**1-process state machine**
 
 The following video demonstrates how to write a 1-process state machine in VHDL.
 <div class="video-container">
@@ -497,7 +500,6 @@ The following video demonstrates how to write a 1-process state machine in VHDL.
 </div>
 
 Video link: [https://www.youtube.com/watch?v=leF7IKnbN7s](https://www.youtube.com/watch?v=leF7IKnbN7s)
-
 
 The following video demonstrates the simulation of a 1-process state machine.
 <div class="video-container">
@@ -507,6 +509,8 @@ The following video demonstrates the simulation of a 1-process state machine.
 Video link: [https://www.youtube.com/watch?v=T81iE7mhdiA](https://www.youtube.com/watch?v=T81iE7mhdiA)
 
 
+
+**2-process state machine**
 
 The following video demonstrates how to write a 2-process state machine in VHDL.
 <div class="video-container">
@@ -525,6 +529,8 @@ Video link: [https://www.youtube.com/watch?v=IcDMVWBvxbA](https://www.youtube.co
 
 
 
+**3-process state machine**
+
 The following video demonstrates how to write and  simulation a 3-process state machine in VHDL.
 <div class="video-container">
 <iframe width="1920" height="806" src="https://www.youtube.com/embed/leF7IKnbN7s" title="vhdl 3process statemachine" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -532,7 +538,7 @@ The following video demonstrates how to write and  simulation a 3-process state 
 
 Video link: [https://www.youtube.com/watch?v=leF7IKnbN7s](https://www.youtube.com/watch?v=leF7IKnbN7s)
 
-
+You will find the code use in these examples under the organisation FYS4220 on Github: https://github.com/fys4220/fys4220-example-basic-statemachine
 
 
 %#A simple counter is an example of sequential logic. It can also be considered a state machine where the
