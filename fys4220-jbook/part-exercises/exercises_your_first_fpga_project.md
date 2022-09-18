@@ -154,7 +154,8 @@ These warnings can for the moment be ignored. If the compilation of the project 
 * Open the Quartus programmer (Tools -> Programmer).
 * If the field next to the button ”Hardware Setup” shows ”No Hardware”, make sure the USB cable is connect to both the PC and the DE10-Lite board, and that the power is turned on. Press the ”Hardware Setup and choose ”USB-Blaster [USB-0]” under the ”Currently selected hardware”. Press Close.
   * If you still do not see the USB-blaster you might need to install the drivers:http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions first.
-* Double click on the File field of the listed device and select the correct programming file. Tick the box for ”Programming/Configure”.
+* If you do not see an entry in the File filed, press auto detect to automatically detect the FPGA device. If you are asked to choose a specific device, choose the 10M50DA.
+* Double click on the File field of the listed device and select the correct programming file (.sof extension). Tick the box for ”Programming/Configure”.
 * To program the FPGA press Start.
 * Verify that your design works by changing the position of the toggle switches on the DE10-Lite board.
 * Remeber to update your assignment progress status in the *readme.md* file before updating the Git repository.

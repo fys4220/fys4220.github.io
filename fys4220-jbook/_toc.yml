@@ -41,11 +41,12 @@ parts:
       - file: part-vhdl/vhdl_description_models
       - file: part-vhdl/vhdl_testbenches
       - file: part-vhdl/vhdl_process
+      - file: part-vhdl/vhdl_metastability
       - file: part-vhdl/vhdl_generics
-#      - file: part-vhdl/vhdl_state_machines
-#      - file: part-vhdl/vhdl_packages_subprograms
+      - file: part-vhdl/vhdl_state_machines
+      - file: part-vhdl/vhdl_packages_subprograms
     - file: part-embedded/embedded
-#      sections:
+      #      sections:
 #      - file: part-embedded/embedded_intro
 #      - file: part-embedded/embedded_memory_mapped
 #      - file: part-embedded/embedded_hal
@@ -68,19 +69,19 @@ parts:
 #      sections:
     - file: part-exercises/exercises_your_first_fpga_project
     - file: part-exercises/exercises_adder
-#    - file: part-exercises/exercises_counter
+    - file: part-exercises/exercises_counter
+    - file: part-exercises/exercises_state_machine
 #    - file: part-exercises/exercises_seven_segment_display
 #      - file: part-exercises/exercises_synchronous_logic
 #      - file: part-exercises/exercises_synchronization
   - caption: Project
     numbered: false
     chapters:
-    - file: part-project/project
+    - file: part-project/project_intro
 #      sections:
-#    - file: part-project/project_intro
-#    - file: part-project/project_uart
-#    - file: part-project/project_nios2
-#    - file: part-project/data_rate
+    - file: part-project/project_uart
+      #    - file: part-project/project_nios2
+      #    - file: part-project/data_rate
 #parts:
 #  - caption: Introduction
 #    chapters:

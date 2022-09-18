@@ -284,7 +284,7 @@ name: fig:vhdl-process-multiplexer-default-value
 ---
 Only the last statement in the VHDL description will be implemented.
 ```
-
+(vhdl-synchronous-process)=
 ### Synchronous process
 
 In VHDL a storage element can be implemented by making a process synchronous to the a clock. This is nothing else than a edge sensitive storing device, or D flip-flop.
@@ -440,8 +440,6 @@ name: fig:vhdl-process-multiplexer-with-register
 Combinational and synchronous logic.
 ```
 
-
-(vhdl-process-finding-modelsim-variables)=
 ## Finding the process internal variabels in Modelsim
 
 The process below uses a variable internal to the process. If you would like to add this variable to the wave view in Modelsim, it is not located in the *Objects* window where you can find the signals but in a different window called *Locals*.

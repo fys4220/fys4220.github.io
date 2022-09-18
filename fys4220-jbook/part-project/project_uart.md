@@ -4,16 +4,16 @@ In this part of the project you will design the UART controller that will be use
 
 ```{Admonition} The learning outcome of this problem is to:
 :class:
-- aquire basic knowledge of the UART serial communication protocol.
-- gain experience in describing state machines in VHDL.
-- learn how to write a memory mapped CPU interface to connect a custom VHDL peripheral to the CPU bus.
-- gain additional experience in writing test benches, including using a dedicated verification framework/library.
+- Aquire basic knowledge of the UART serial communication protocol.
+- Gain experience in architecting a VHDL module.
+- Learn how to write a memory mapped CPU interface to connect a custom VHDL peripheral to the CPU bus.
+- Gain additional experience in writing test benches, including using a dedicated verification framework/library.
 ```
 
 A top level block diagram of a suggested design for the UART controller (`uart.vhd`) is shown in {numref}`fig:project-uart-top-level`. This solution consists of three submodules:
-- the TX module which is responsible for transmitting the 8-bit data serially on the UART TX line.
-- the RX module which is responsible for sampling the UART RX line and receiving the 8-bit data. 
-- the processor memory mapped interface.
+- The TX module which is responsible for transmitting the 8-bit data serially on the UART TX line.
+- The RX module which is responsible for sampling the UART RX line and receiving the 8-bit data. 
+- The processor memory mapped interface that will be used to control and communicate with the TX and RX modules from software running on the CPU.
 %- the Tx module for sending serial data to the PC (`uart_tx.vhd`)
 %- the Rx module for receiving serial data from the PC (`uart_rx.vhd`)
 
@@ -26,13 +26,11 @@ name: fig:project-uart-top-level
 Simplified top level block diagram of the UART controller. It consists of 3 submodules, the CPU interace, UART TX, UART RX.
 ```
 
-Your job is to write the VHDL description for the `uart.vhd`. You are free to design your own solution for the UART. However, the solution example that will be provided later, and the description below, will follow the design sketched in {numref}`fig:project-uart-top-level`. 
-
-The work will be divided in 3 parts:
+Your job is to write the VHDL description for the `uart.vhd`. This work will be divided in 3 parts:
 
 %- {numref}`project-uart-protocol` {ref}`project-uart-protocol` 
-- {ref}`project-uart-rx`
 - {ref}`project-uart-tx`
+- {ref}`project-uart-rx`
 - {ref}`project-uart-pif`
 
 %- {numref}`project-uart-rx` {ref}`project-uart-rx`
@@ -50,10 +48,11 @@ The work will be divided in 3 parts:
 %
 %There are numerous sources online where you can find relevant information. Remember to include a reference to the sources you use. The text %does not have to be very extensive  -- around 1 page -- but should include a simple diagram illustrating the UART packet. 
 %
+Before you start to design the respective modules, you should first make sure you understand the basics of the UART protocol. 
 
 (project-uart-intro)=
 ## UART data transmission
-UART is an abbreviation for Universal Asynchronous Receiver-Transceiver. It is used for one-to-one asynchronous bi-directional serial communication.  In its most basic form it uses to lines for communication, one for transmitting (TX) and one for receiving (RX). 
+UART is an abbreviation for Universal Asynchronous Receiver-Transceiver. It is used for one-to-one asynchronous bi-directional serial communication.  In its most basic form it uses two lines for communication, one for transmitting (TX) and one for receiving (RX). 
 
 ```{figure} ../images/project_uart_tx_rx.png
 ---
@@ -64,7 +63,7 @@ name: project-uart-tx-rx
 UART connection between two devices.
 ```
 
-Asynchronous means that the communication interface does not make use of a dedicated line for a clock signal. Both the receiver and transmitter therefore needs to be aware of the frequency used to transmit and receive data.
+Asynchronous means that the communication interface does not make use of a dedicated line for a clock signal. Both the receiver and transmitter therefore needs to be aware of the frequency used to transmit and receive data, referred to as the baud rate.
 
 %in order to correctly encode and decode the data. 
 
@@ -80,13 +79,13 @@ name: project-uart-packet
 The General UART packet.
 ```
 
-{numref}`project-uart-tx-graphics/wavedrom` show an example of a TX transmission with 1 start bit, 8 data bits, no parity bit, and 1 stop bit. The TX line is usually held high when no data is transmitted. Start of transmission is initiated by pulling the TX line low for the duration of a bit period. This corresponds to the start bit position. The data frame is transmitted with the least significant bit first. A transmission is completed by pulling the TX line high for the duration of one bit period -- the stop bit. 
+{numref}`fig:project-uart-tx-example` show an example of a TX transmission with 1 start bit, 8 data bits, no parity bit, and 1 stop bit. The TX line is usually held high when no data is transmitted. Start of transmission is initiated by pulling the TX line low for the duration of a bit period. This corresponds to the start bit position. The data frame is transmitted with the least significant bit first. A transmission is completed by pulling the TX line high for the duration of one bit period -- the stop bit. 
 
-```{figure} ../graphics/wavedrom/uart_tx_example.png
+```{figure} ../graphics/wave_project_uart_tx_example.png
 ---
 width: 100%
 align: center
-name: project-uart-tx-graphics/wavedrom
+name: fig:project-uart-tx-example
 ---
 Example of an 8 bit data frame transmitted on the TX line with 1 stop bit, no parity bit, and 1 stop bit.
 ```
@@ -94,7 +93,11 @@ Example of an 8 bit data frame transmitted on the TX line with 1 stop bit, no pa
 ```{admonition} What is value of the 8 bit data frame transmitted in the figure above?
 :class: tip, dropdown
 
-From LSB to MSB the data bits are : 1 0 1 1 1 0 1 0
+From LSB to MSB the data bits are : 1 0 1 1  1 0 1 0
+
+Since we are more used to read the value with the MSB to the left the reversed order is shown below.
+
+From MSB to LSB the data bits are : 0 1 0 1  1 1 0 1
 
 This corresponds to the the byte "5D" in hexadecimal format.
 ```
@@ -109,7 +112,7 @@ AnalogDialogue gives a nice overview of the UART communication protocol:
 ### Baud rate
 In communication system, the baud rate is the rate at which symbols or information is transferred. The unit is symbols per second. The baud rate is related to raw bit rate which can be expressed in bits per seconds. For a digital system with only two possible states (0 and 1) the baud rate is equivalent to the bit rate. 
 
-A commonly used baud rate for a UART transmission is 115200 bits/s. This means that a bit is transferred every 8.68 $\mu$s. The transfer of a full UART data frame with 1 start bit, 8 data bits, and 1 stop bist is therefore 10*8 $\mu$s = 86.8 $\mu$s.
+A commonly used baud rate for a UART transmission is 115200 bits/s. This means that a bit is transferred every 8.68 $\mu$s. The transfer of a full UART data frame with 1 start bit, 8 data bits, and 1 stop bit is therefore 10\*8 $\mu$s = 86.8 $\mu$s.
 
 
 
@@ -128,20 +131,54 @@ The UART packet used for this project has 1 start bit, 8 data bits, and 1 stop b
 ```
 
 
-The main task of the TX module will is serialize an 8-bit data word on to the TX line at the specified baud rate of 115200 bits/s. The module will run on the 50 MHz system clock and have an asynchronous active low reset. A suggested list of top level ports for the RX module's entity description is shown in the table below.
+The main task of the TX module is to serialize an 8-bit data word on to the TX line at the specified baud rate of 115200 bits/s. The module will run on the 50 MHz system clock and have an asynchronous active low reset. 
+```{admonition} A few words about design practice!
+It is often tempting to start to code immediately without thinking much about how to structure the module. This may work well for very simple modules but will very quickly lead to difficulties for more complex design. It is therefore recommended that you first spend some time to design the architecture of your module. This includes how to split the required functionality into smaller sub-modules, and how these sub-modules are interconnected. This will lead to a modular and hirarchical design that is easier to verify and understand. 
+
+In general it is also a good practice to strive to follow the **KISS** principle -- **keep it simple stupid**. This principle states that *most systems work best if they are kept simple rather then complicated; therefore, simplicity should be a key goal in design, and unnecessary complexity should be avoided.*
+
+Identifying the various sub-functions of your system and splitting your design into respecitve modules can therefore help to reduced the complexity of each module, and thus reduced the probability of errors. 
+
+```
+
+Both the TX and RX modules have a few common or similar sub-functions:
+- **State machine**: A finite state machine to control to start and stop transmission. See {ref}`exercises-state-machine` for the case of the TX module. A slightly modified version must be designed for the RX module. 
+- **Bit counter**: A module that keeps track of the number of bits that have been transferred or received. 
+- **Shift register**: A module that loads an 8-bit data word into a 10-bit internal data buffer (including also the start and stop bit) before shifting these 10 bits serially on to the TX line (TX module); or that serially shifts in 10-bits (start bit, 8-bit data, stop bit) from the RX line and stores these bits in an internal 10-bit data buffer (RX module). 
+- **Baud rate generator**: A module that generates an internal signal with a period corresponding to the required baud rate. This signal will drive the transmit/receive data shift register and bit counter.
+
+The bit counter and baud rate generator can be reused for both the TX and RX module as their functionality is the same for both cases. On the other hand, the controlling state machine and shift register must be adapted to each case, although with only marginal difference.  
+
+Considering the four sub-modules introduced above, a suggested architecture of the TX module is shown in {numref}`fig:project-tx-uart-architecture`.
+
+```{figure} ../graphics/project_tx_uart_architecture.png
+---
+width: 100%
+align: center
+name: fig:project-tx-uart-architecture
+---
+Internal architecture of the TX module. The diagram is created using the Draw.io Integration in VS Code, and the source file can be downloaded from {download}`here <../graphics/project_tx_uart_architecture.drawio>`. You can edit the file in VS Code or online at www.draw.io. A desktop version of Draw.io is also available on [Github](https://github.com/jgraph/drawio-desktop/releases/tag/v20.3.0).
+```
+The corresponding ports of the top level entity is listed in the table below. 
 
 | Port name     | Direction | Type             | Width | Comment                                         |
 | ------------- | --------- | ---------------- | ----- | ----------------------------------------------- |
 | clk           | in        | std_logic        | 1     | 50 MHz system clock                             |
-| arst_n        | in        | std_logic        | 1     | Asynchronous active low reset                   |
+| areset_n        | in        | std_logic        | 1     | Asynchronous active low reset                   |
 | tx_data       | in        | std_logic_vector | 8     | Input data to be transmitted on the RX line     |
 | tx_data_valid | in        | std_logic        | 1     | Valid data on tx_data. Start transmission.      |
 | tx_busy       | out       | std_logic        | 1     | Module busy, transmission ongoing (active high) |
 | tx            | out       | std_logic        | 1     | UART TX output                                  |
 
 
-To start the tranmission of data the `tx_data_valid` input is pulled to a high level for one system clock cycle when the data is made available on the input `tx_data`.
+To start the tranmission of data the `tx_data_valid` input is pulled to a high level for one system clock cycle when the data is made available on the input `tx_data`. This condition loads `tx_data` into the internal data buffer of the TX shift register, and triggers the state machine to move from its idle state to its transmit state. 
 
+Write the VHDL descriptions for each of the sub-modules and included them in the TX module *tx_uart.vhd*. You should already have written the VHDL description for the TX FSM in {ref}`exercises-state-machine`. Ideally, each of the sub-modules should be verified with individual test benches. However, since we only have a limited amount of time available, an acceptable shortcut is to write a test bench for the TX module and run incremental simulations as you write and include the individual sub-modules. Start by including the TX FSM module and run a simulation with only this module included. Add the baud rate generator and rerun the simulation to check that you have a running baud rate signal. Then add the bit counter module. After each baud rate period, this module should increment a counter. When the counter has reach the required number of bits (10), puts a pulse of one system clock cycle on the *tx_complete* port. Rerun the simulation to verify this behaviour. Finally, add the TX shift regiser. After each baud rate period, the internal TX data buffer is shifted one position. The data is shifted out with the least significant bit first. 
+
+
+Write a stimuli process in the test bench that sets a data value on the `tx_data` input and then toggles the `tx_data_valid` port for one system clock cycle. For the TX module the main verification method is to study the wave diagram.
+
+<!--
 ```{figure} ../graphics/wavedrom/uart_tx_start_example.png
 ---
 width: 80%
@@ -150,8 +187,9 @@ name: project-uart-tx-start-example.
 ---
 This wave diagram shows the start condition for transmitting data. Data is made available on `tx_data` and the `tx_data_valid` is toggled. The TX module then reads the data on the `tx_data` input and starts the transmission. The signals `tx_data`, `tx_data_valid`, and the system clock is in this part controlled from the testbench.
 ```
-
- Since the TX signal runs at much lower frequency than the system clock, it is necessary to implement a mechanism that can be used to generate the correct length of the bit period. 
+-->
+<!--
+Since the TX signal runs at much lower frequency than the system clock, it is necessary to implement a mechanism that can be used to generate the correct length of the bit period. 
 
 ```{admonition} Can you think of a way to do this?
 :class: tip, dropdown
@@ -165,39 +203,47 @@ $$
 The counter should start to increment at the start of a transmission when the TX line is pulled to a low value for the start bit. 
 
 ```
+-->
 
-You will also need a separate counter to keep track of the number of bits that has been transmitted.
 
-The VHDL description of the TX module can be written in different ways. One suggestion is to use a state machine to keep track of when the module is in and idle state -- waiting for a transmission to start -- and when it is transmitting data. 
-
-Write a testbench to simulate your TX module. At this point it is sufficient to verify its behaviour in the Modelsim wave view. 
 
 
 (project-uart-rx)=
 ## RX module 
-Having written the VHDL description for the TX module, writing the RX module should be very similar. The main difference of course being that the RX module now must convert the incoming serial data on the RX line to an 8-bit parallel data vector. The format of the UART packet and the  baud rate will be the same as for the TX module.
+After writing the VHDL description for the TX module, writing the RX module should be very similar. The main difference of course being that the RX module now must convert the incoming serial data on the RX line to an 8-bit parallel data vector. The format of the UART packet and the  baud rate will be the same as for the TX module.
 
-The main task of the RX module will be:
-- to detect the start of transmission (RX lines goes from high to low)
-- to sample the RX line and resolve the data bits
-- to flag if an incorrect start or stop bit has been detected
+Start by designing a top level architecture for the RX module inspired by the architecture for the TX module. Create a similar digram to the one in {numref}`fig:project-tx-uart-architecture`. 
 
-A suggested list of top level ports for the RX modules's entity description is shown in the table below.
+```{admonition} Review of design architecture required before writing the code!
+:class: warning
+The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors (Ketil Røed and Martin Järve). Provide a link to your diagram.
+```
+
+
+As already mentioned, the bit counter and baud rate generator modules can be reused without modifications. The few noticable difference are listed below:
+
+- Transmission is now started on a high to low transition on the RX line. The RX FSM should therefore also read the RX input and move to the receive state when the RX line goes to '0'.
+- The shift register should now shift in 10 bits, including start bit, 8 data bits, and a stop bit. 
+- The data on the RX line should be sampled in the center of a baud period when the data is expected to be stable. 
+
+The suggested list of top level ports for the RX module's entity description is shown in the table below.
 
 | Port name | Direction | Type             | Width | Comment                                                                |
 | ----------- | --------- | ---------------- | ----- | ---------------------------------------------------------------------- |
 | clk         | in        | std_logic        | 1     | 50 MHz system clock                                                    |
-| arst_n      | in        | std_logic        | 1     | Asynchronous active low reset                                          |
+| areset_n      | in        | std_logic        | 1     | Asynchronous active low reset                                          |
 | rx_data     | out       | std_logic_vector | 8     | Received data                                                          |
-| rx_err      | out       | std_logic        | 1     | Flag incorrect stop or start bit (active high). Reset on new reception |
+| rx_err      | out       | std_logic        | 1     | Flag incorrect stop or start bit (active high).                        |
 | rx_busy     | out       | std_logic        | 1     | Module busy, reception ongoing (active high)                           |
 | rx          | in        | std_logic        | 1     | UART RX input                                                          |
 
 
-As for the TX module, it is necessary to keep track of the bit period. The one difference now being that the value of the RX line should be read during the stable period of the transmission. This is normally done at the center point of a bit period. Make use of the counter to now alos find the center of the bit period.
 
-The counter must start to increment at the start of a transmission (when `RX = '0'`), and should be reset to 0 at the end of each bit period. The mid point of a bit period shall be used to register the data on the RX line.
 
+%As for the TX module, it is necessary to keep track of the bit period. The one difference now being that the value of the RX line should be read during the stable period of the transmission. This is normally done at the center point of a bit period. Make use of the counter to now alos find the center of the bit period.
+
+%The counter must start to increment at the start of a transmission (when `RX = '0'`), and should be reset to 0 at the end of each bit period. The mid point of a bit period shall be used to register the data on the RX line.
+<!--
 ```{figure} ../graphics/wavedrom/uart_rx.png
 ---
 width: 100%
@@ -206,15 +252,19 @@ name: project-uart-rx-graphics/wavedrom
 ---
 UART receive protocol
 ```
+-->
+%Again, you will also need a separate counter to keep track of the number of bits received. 
 
-Again, you will also need a separate counter to keep track of the number of bits received. 
+%At the end of a transmission, the received 8-bit data shall be made available at the output `rx_data`.
 
-At the end of a transmission, the received 8-bit data shall be made available at the output `rx_data`.
-
-The RX module must be simulated with a test bench.
+%The RX module must be simulated with a test bench.
 
 (project-uart-pif)=
 ## Processor interface
+
+Coming soon!
+
+<!--
 ```{admonition} Reading tip!
 :class: tip
 Make sure to read {numref}`embedded-memory-mapped` {ref}`embedded-memory-mapped` before you continue.
@@ -1142,5 +1192,6 @@ begin
 %do ../UVVM_Light/script/compile.do ../UVVM_Light .
 %```
 
+-->
 
 

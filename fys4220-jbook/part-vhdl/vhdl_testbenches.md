@@ -103,7 +103,7 @@ use ieee.std_logic_1164.all;
 entity half_adder_tb is
 end entity;
 
-architecture tb of mux_tb is
+architecture tb of half_adder_tb is
 
   -- Signals to be connected to the 
   -- design under test.
@@ -114,8 +114,12 @@ architecture tb of mux_tb is
 
 begin
 
-  -- Direct instantiation of 
-  -- the design under test
+  -- Direct instantiation of the design under test.
+  -- The statement below means: use the entity half_adder
+  -- which is compiled into the work library, and use the
+  -- architecture named rtl which is found in that entity. 
+  -- Then connect the ports of that entity to the corresponding
+  -- signals declared in the testbench. 
   dut: entity work.half_adder(rtl) 
     port map(
       A => A,
@@ -159,8 +163,12 @@ architecture tb of half_adder_tb is
 
 begin
 
-  -- Direct instantiation of 
-  -- the design under test
+  -- Direct instantiation of the design under test.
+  -- The statement below means: use the entity half_adder
+  -- which is compiled into the work library, and use the
+  -- architecture named rtl which is found in that entity. 
+  -- Then connect the ports of that entity to the corresponding
+  -- signals declared in the testbench. 
   dut: entity work.half_adder(rtl) 
     port map(
       A => A,
@@ -441,7 +449,68 @@ Modifying the half adder design to include and intentional error, e.g., changing
 # ** Note: Simulation complete
 #    Time: 250 ns  Iteration: 0  Instance: /half_adder_tb
 ```
-In this case it catches an reports the design error. 
+In this case it catches and reports the design error. 
+
+
+## Defining a clock source
+For synchronous designs you need to define a clock source for your testbench. A clock is a signal that changes between '0' and '1' at a fixed interval. This can be described using a simple process as shown below.
+
+```{code-block} vhdl
+
+process
+begin
+  clk <= '0';
+  wait for 10 ns;
+  clk <= '1';
+  wait for 10 ns;
+end process
+
+```
+
+If the signal is declared with an initial value it can also be described as shown below.
+
+
+```{code-block} vhdl
+
+architecture tb of test is
+  signal clk: std_logic := 0;
+begin
+
+  clk <= not clk after 10 ns;
+
+end architecture;
+```
+
+However, for both of these descriptions the clock will start to run immediately and will never end. A recommended solution is therefore to use and *enable* signal to turn on and of the clock. 
+
+
+```{code-block} vhdl
+
+architecture tb of test is
+  signal clk : std_logic;
+  signal clk_enable : boolean := false;
+  signal clk_period : time := 20 ns;
+
+begin
+
+  clk <= not clk after clk_period/2 when clk_ena else '0';
+ 
+  p_stimuli: process
+  begin
+    -- set default values
+
+    -- enable clock
+    clk_ena <= true;
+    -- set sequence of stimuli signals
+
+    -- disable clock
+    clk_ena <= false;
+    -- stop the process
+    wait;
+  end process;
+
+end architecture;
+```
 
 
 ## Supporting videos

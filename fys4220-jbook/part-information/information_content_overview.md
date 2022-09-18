@@ -42,7 +42,7 @@ This is a practical course where you will work with the material through a set o
 The embedded systems project will be based around a soft core CPU with the added peripherals required to communicate with the digital sensor and PC over standard serial interaces like UART[^footnote-uart], I2C[^footnote-i2c], and SPI[^footnote-spi]. A simplified overview of the system you will build is shown in figure {numref}`fig:information-embedded-system`. 
 %The CPU will be the [Nios II](https://www.intel.com/content/www/us/en/products/details/fpga/nios-processor/ii.html) soft core processor from Intel.   
 
-```{figure} ../images/project_embedded_system.png
+```{figure} ../graphics/project_embedded_system.png
 ---
 width: 100%
 align: center

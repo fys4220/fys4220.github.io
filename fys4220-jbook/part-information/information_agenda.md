@@ -46,7 +46,7 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-first-project`
   * {ref}`exercises-adder-a`
 
-## Week 36 (tentative)
+## Week 36
 * Material to study:
   * {ref}`vhdl-design-flow`
   * {ref}`vhdl-description-styles`
@@ -60,33 +60,117 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-counter`
 
 
-## Week 37 (tentative)
+## Week 37 
 * Material to study:
+  * {ref}`vhdl-metastability`
   * {ref}`vhdl-statemachines`
 
 * Exercises
   * {ref}`exercises-counter` (if not already completed)
-  * State machine 
+  * {ref}`exercises-state-machine`
+
 % state machines, tx or rx to PC
 ## Week 38 (tentative) 
-%project
+
+* Material to study:
+  * {ref}`vhdl-packages`
+
+
+* Project
+  * {ref}`project-intro`
+  * {ref}`project-uart-controller` -- 1. part: TX module
+
+
 ## Week 39 (tentative) 
+
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * {ref}`project-uart-controller` -- 2. part: RX module
 
 ## Week 40  (tentative) 
 
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * {ref}`project-uart-controller` -- 3. part: Processor interface
 ## Week 41 (tentative) 
+
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * Microcontroller system
 
 ## Week 42 (tentative) 
 
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * Microcontroller system
+
 ## Week 43 (tentative) 
+
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * Microcontroller system
 
 ## Week 44 (tentative) 
 
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * RTOS
+## Week 45 (tentative) 
+
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * RTOS 
+
 ## Week 46 (tentative) 
 
+* Material to study:
+  * TBA
+
+* Exercises
+  * TBA
+
+* Project
+  * RTOS 
 ## Week 47 (tentative) 
 
-## Week 48 (tentative) 
+
+
+
 
 <!--
 ## Week 36
