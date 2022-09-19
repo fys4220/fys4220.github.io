@@ -70,10 +70,11 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-state-machine`
 
 % state machines, tx or rx to PC
-## Week 38 (tentative) 
+## Week 38 
 
 * Material to study:
   * {ref}`vhdl-packages`
+  * {ref}`vhdl-testbenches` (Review the last part of the video covering the more advance aspects of test benches.)
 
 
 * Project
@@ -84,53 +85,43 @@ In addition to practical problems, the exercises also contain questions which ar
 ## Week 39 (tentative) 
 
 * Material to study:
-  * TBA
-
-* Exercises
-  * TBA
-
+  * {ref}`embedded-intro`
+  * {ref}`embedded-nios2`
+  * {ref}`embedded-softcore`
+  * {ref}`embedded-hal`
+* Exercises:
+  * {ref}`exercises-nios2-example`
 * Project
   * {ref}`project-uart-controller` -- 2. part: RX module
 
 ## Week 40  (tentative) 
 
 * Material to study:
-  * TBA
+  * {ref}`embedded-memory-mapped`
 
 * Exercises
-  * TBA
+  * {ref}`exercises-memory-mapped-sw`
 
 * Project
   * {ref}`project-uart-controller` -- 3. part: Processor interface
-## Week 41 (tentative) 
+## Week 41-42 (tentative) 
 
 * Material to study:
-  * TBA
+  * {ref}`embedded-interrupt`
 
 * Exercises
-  * TBA
+  * {ref}`exercises-nios2-interrupt`
 
 * Project
   * Microcontroller system
 
-## Week 42 (tentative) 
-
-* Material to study:
-  * TBA
-
-* Exercises
-  * TBA
-
-* Project
-  * Microcontroller system
 
 ## Week 43 (tentative) 
 
 * Material to study:
-  * TBA
+  * {ref}`rtos-intro`
 
 * Exercises
-  * TBA
 
 * Project
   * Microcontroller system
@@ -138,20 +129,23 @@ In addition to practical problems, the exercises also contain questions which ar
 ## Week 44 (tentative) 
 
 * Material to study:
-  * TBA
+  * {ref}`rtos-tasks`
+  * {ref}`rtos-latency-jitter`
 
 * Exercises
-  * TBA
+  * {ref}`exercises-rtos-basic-example`
 
 * Project
   * RTOS
 ## Week 45 (tentative) 
 
 * Material to study:
-  * TBA
+  * {ref}`rtos-intertask`
+  * {ref}`rtos-semaphores`
+  * {ref}`rtos-messages`
 
 * Exercises
-  * TBA
+  * {ref}`exercises-rtos-semaphores-example`
 
 * Project
   * RTOS 

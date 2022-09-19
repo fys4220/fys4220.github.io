@@ -1,5 +1,6 @@
 (project-uart-controller)=
 # UART controller
+
 In this part of the project you will design the UART controller that will be used to communicate data between the microcontroller system in the FPGA and the PC. 
 
 ```{Admonition} The learning outcome of this problem is to:
@@ -164,7 +165,7 @@ The corresponding ports of the top level entity is listed in the table below.
 | Port name     | Direction | Type             | Width | Comment                                         |
 | ------------- | --------- | ---------------- | ----- | ----------------------------------------------- |
 | clk           | in        | std_logic        | 1     | 50 MHz system clock                             |
-| areset_n        | in        | std_logic        | 1     | Asynchronous active low reset                   |
+| areset_n      | in        | std_logic        | 1     | Asynchronous active low reset                   |
 | tx_data       | in        | std_logic_vector | 8     | Input data to be transmitted on the RX line     |
 | tx_data_valid | in        | std_logic        | 1     | Valid data on tx_data. Start transmission.      |
 | tx_busy       | out       | std_logic        | 1     | Module busy, transmission ongoing (active high) |
@@ -216,7 +217,9 @@ Start by designing a top level architecture for the RX module inspired by the ar
 
 ```{admonition} Review of design architecture required before writing the code!
 :class: warning
-The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors (Ketil Røed and Martin Järve). Provide a link to your diagram.
+The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors (Ketil Røed and Martin Järve). Provide a link to your diagram. 
+
+I encourage you to discuss and prepare the diagram together with one of the other students in the course. You can then submit one diagram together, naming the responsible persons in the issue description.
 ```
 
 
@@ -258,13 +261,11 @@ UART receive protocol
 %At the end of a transmission, the received 8-bit data shall be made available at the output `rx_data`.
 
 %The RX module must be simulated with a test bench.
-
 (project-uart-pif)=
 ## Processor interface
-
-Coming soon!
-
+Comming soon!
 <!--
+
 ```{admonition} Reading tip!
 :class: tip
 Make sure to read {numref}`embedded-memory-mapped` {ref}`embedded-memory-mapped` before you continue.
@@ -1193,5 +1194,4 @@ begin
 %```
 
 -->
-
 

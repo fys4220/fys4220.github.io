@@ -45,32 +45,45 @@ parts:
       - file: part-vhdl/vhdl_generics
       - file: part-vhdl/vhdl_state_machines
       - file: part-vhdl/vhdl_packages_subprograms
-    - file: part-embedded/embedded
-      #      sections:
-#      - file: part-embedded/embedded_intro
-#      - file: part-embedded/embedded_memory_mapped
-#      - file: part-embedded/embedded_hal
-#      - file: part-embedded/embedded_nios2_system
-#      - file: part-embedded/embedded_memory_mapped_sw
-#      - file: part-embedded/embedded_interrupt
-    - file: part-rtos/rtos.md
-#      sections:
-#      - file: part-rtos/rtos_intro.md 
-#        title: Introduction to RTOS & uC/OS-II
-#      - file: part-rtos/rtos_tasks    
-#      - file: part-rtos/rtos_latency_jitter
-#      - file: part-rtos/rtos_intertask_communication
-#      - file: part-rtos/rtos_basic_example
-#      - file: part-rtos/rtos_semaphores_example
+    - file: part-embedded/embedded_intro
+      sections:
+      - file: part-embedded/embedded_nios2
+      - file: part-embedded/embedded_softcore
+      - file: part-embedded/embedded_memory_mapped
+      - file: part-embedded/embedded_hal
+      - file: part-embedded/embedded_nios2_system_development
+      - file: part-embedded/embedded_interrupt
+    - file: part-rtos/rtos_intro.md
+      sections:
+      - file: part-rtos/rtos_ucosii.md 
+        title: uC/OS-II
+      - file: part-rtos/rtos_tasks    
+      - file: part-rtos/rtos_latency_jitter
+      - file: part-rtos/rtos_intertask_communication
+        sections:    
+        - file: part-rtos/rtos_semaphores
+        - file: part-rtos/rtos_priority_inversion
+        - file: part-rtos/rtos_messages
   - caption: Exercises
     numbered: false
     chapters:
     - file: part-exercises/exercises_intro
 #      sections:
-    - file: part-exercises/exercises_your_first_fpga_project
-    - file: part-exercises/exercises_adder
-    - file: part-exercises/exercises_counter
-    - file: part-exercises/exercises_state_machine
+    - file: part-exercises/exercises_vhdl.md
+      sections:
+      - file: part-exercises/exercises_your_first_fpga_project
+      - file: part-exercises/exercises_adder
+      - file: part-exercises/exercises_counter
+      - file: part-exercises/exercises_state_machine
+    - file: part-exercises/exercises_embedded
+      sections:
+      - file: part-exercises/exercises_nios2_example
+      - file: part-exercises/exercises_memory_mapped_sw
+      - file: part-exercises/exercises_nios2_interrupt
+    - file: part-exercises/exercises_rtos
+      sections:
+      - file: part-exercises/exercises_rtos_basic_example
+      - file: part-exercises/exercises_rtos_semaphores_example
 #    - file: part-exercises/exercises_seven_segment_display
 #      - file: part-exercises/exercises_synchronous_logic
 #      - file: part-exercises/exercises_synchronization

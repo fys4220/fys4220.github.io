@@ -1,5 +1,5 @@
-(embedded-memory-mapped-sw)=
-# Accessing Nios II memory mapped modules
+(exercises-memory-mapped-sw)=
+# EX6: Accessing Nios II memory mapped modules
 
 In this part we will look closer at how we from software can access and control a memory mapped module in the Nios II system. For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in {numref}`fig:embedded-basic-nios2-system-with-pio`.
 
@@ -18,12 +18,12 @@ More information on available IP cores can be found in the Intel [Embedded Perip
 ```
 
 
-```{admonition} Example code on Github.uio.no
-The code for this example can be found here: https://github.uio.no/FYS4220/fys4220_nios2_example
+```{admonition} Example code on Github
+The code for this example can be found here: https://github.com/fys4220/fys4220_nios2_example 
 ```
 
 ## Adding the PIO cores
-Open the *nios2_system.qsys* from {numref}`embedded-nios2-example` in Platform Designer. From the IP catalog, add a PIO core.   
+Open the *nios2_system.qsys* from {ref}`exercises-nios2-example` in Platform Designer. From the IP catalog, add a PIO core.   
 
 Each PIO core can provide upt to 32 I/O ports which can be configured either as intput or output or both. In this example we will use two PIO cores, one with 10 inputs connected to the slide switches, and one with 10 ouputs connected to the LEDs. Name the two PIOs *pio_sw* and *pio_led*. Configure the widht of the two PIOs to be 10 bits, and set the direction according to each PIO core's operation. See example in {numref}`fig:embedded-pio-input`.
 
@@ -61,7 +61,7 @@ Remember to also add the relevant pin assignments for the LEDs and slide switche
 Recompile the Quartus project to generate a new programming file with the updated system.
 
 ## Updating the BSP
-Whenever the hardware description of the microcontroller system is modified, the corresponding board support package must also be updated to reflect these change. This can be done by regenerating the BSP project using the command demonstrated in {numref}`embedded-bsp`. Navigate to the *software* folder and type:
+Whenever the hardware description of the microcontroller system is modified, the corresponding board support package must also be updated to reflect these change. This can be done by regenerating the BSP project using the command demonstrated in {ref}`embedded-bsp`. Navigate to the *software* folder and type:
 
 ```
 $ nios2-bsp hal app_bsp ../quartus/nios2_system.sopcinfo
@@ -557,7 +557,7 @@ IOWR(LED_PIO_BASE,0,sw_data);
 
 ## Update software
 
-We will now update the software application from {numref}`embedded-nios2-example` to allow the slide switches to turn of and on the LEDs.
+We will now update the software application from {ref}`exercises-nios2-example` to allow the slide switches to turn of and on the LEDs.
 
 Modify the *app.c* as shown below.
 

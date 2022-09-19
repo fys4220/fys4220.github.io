@@ -3,18 +3,30 @@
 
 *Memory mapped I/O (MMIO)* is a method of performing input/output between the central processing unit (CPU) and peripheral devices in a computer. Memory mapped I/O uses the same regular address space to address both memory and I/O devices. The memory and registers of the I/O devices are mapped to (associated with) address values. This means that when an address is accessed by the CPU, it may refer to a portion of the physical RAM, or it may refer to a memory region connected to I/O devices. Thus, the CPU instructions used to access the memory can also be used to access peripheral devices, and areas of the CPU addressable space must be reserved for I/O rather than memory.
 
-## Supporting videos
 
-The following video gives a general introduction to memory mapped I/O.
 
 <div class="video-container">
 <iframe width="806" height="605" src="https://www.youtube.com/embed/qNs9rQnNODI" title="embedded memory mapped" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Video link: [https://www.youtube.com/watch?v=qNs9rQnNODI](https://www.youtube.com/watch?v=qNs9rQnNODI)
+[[Slides]](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/embedded_memory_mapped.pdf)
 
 ## The Avalon interface
-In FYS4220 we will be using the [Nios II](https://www.intel.com/content/www/us/en/products/programmable/processor/nios-ii.html) processor. The Nios II architecture supports separate instruction and data busses, classifying it as a [Harvard architecture](https://en.wikipedia.org/wiki/Harvard_architecture) cite. Both the instruction and data buses are implemented as Avalon memory mapped (Avalon-MM) master ports that adhere to the Avalon-MM  interface specification.
+
+The Nios II architecture supports separate instruction and data busses, classifying it as a [Harvard architecture](https://en.wikipedia.org/wiki/Harvard_architecture) cite. Both the instruction and data buses are implemented as Avalon memory mapped (Avalon-MM) master ports that adhere to the Avalon-MM  interface specification.
+
+<div class="video-container">
+<iframe width="946" height="710" src="https://www.youtube.com/embed/jiTtDPerlyk" title="embedded avalon interface" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+[[Slides]](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h21/lecture-slides/embedded_niosii_avalon_bus.pdf)
+
+```{admonition} Comment to video
+From 8:22 this video covers the implementation of an I2C-master, which was used previously in this course. Although we are using a UART controller for the embedded systems project in 2021, the explanations and general concepts are still highly relevant. 
+```
+
+
+
 
 The Nios-II CPU uses the [Avalon-MM interface](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/manual/mnl_avalon_spec.pdf) to provide memory mapped read and write access to peripheral devices. The following Avalon interfaces are available:
 

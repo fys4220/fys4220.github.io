@@ -1,9 +1,9 @@
-(rtos-semaphores-example)=
-# Semaphore examples
+(exercises-rtos-semaphores-example)=
+# EX9: Semaphore example
 
 ## Protecting shared resources
 
-As mentioned in {numref}`rtos-basic-example` the *OSTimeDlyHMSM* function is used to block the tasks for 3 seconds. Both tasks are using the same resource for writing to the standard output and thus there is a risk that both tasks will use this resources at the same time, resulting in a corrupted output. However, the execution time of the *printf* command in this example is in the order of a few hundered microseconds. The chance that the higher priority task may interrupt the lower priority task in the middle of a *printf* execution is therefore very low.
+As mentioned in {ref}`exercises-rtos-basic-example` the *OSTimeDlyHMSM* function is used to block the tasks for 3 seconds. Both tasks are using the same resource for writing to the standard output and thus there is a risk that both tasks will use this resources at the same time, resulting in a corrupted output. However, the execution time of the *printf* command in this example is in the order of a few hundered microseconds. The chance that the higher priority task may interrupt the lower priority task in the middle of a *printf* execution is therefore very low.
 
 To better demonstrate this scenario we will have to increase the time it takes to write to the JTAG UART. In addition we can also increase the repetition rate of each task, that is, how often they run. This can be achieved by looping through each character of the text string and using the command *putchar* to write a single character at the time, and reducing the task's time delay. Modify both tasks according to the suggested code below. The use of the *strlen* function requires the *string.h* header file to be included (`#include <string.h>`).
 

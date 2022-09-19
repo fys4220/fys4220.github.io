@@ -26,6 +26,5 @@ The following video gives an introduction to the hardware abstraction layer.
 <iframe width="806" height="605" src="https://www.youtube.com/embed/6gqU9S0u3dk" title="embedded hal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-Video link: [https://www.youtube.com/watch?v=6gqU9S0u3dk](https://www.youtube.com/watch?v=6gqU9S0u3dk)
-
+[[Slides]](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/embedded_hal.pdf)
 
