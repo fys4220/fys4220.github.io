@@ -104,7 +104,7 @@ In addition to practical problems, the exercises also contain questions which ar
 
 * Project
   * {ref}`project-uart-controller` -- 3. part: Processor interface
-## Week 41-42 (tentative) 
+## Week 41 (tentative) 
 
 * Material to study:
   * {ref}`embedded-interrupt`
@@ -113,8 +113,16 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-nios2-interrupt`
 
 * Project
-  * Microcontroller system
+  * {ref}`project-nios2` 
 
+
+## Week 42 (tentative) 
+
+* Material to study:
+  * Review previous material
+
+* Project
+  * {ref}`project-nios2` 
 
 ## Week 43 (tentative) 
 
@@ -124,7 +132,7 @@ In addition to practical problems, the exercises also contain questions which ar
 * Exercises
 
 * Project
-  * Microcontroller system
+  * {ref}`project-nios2` 
 
 ## Week 44 (tentative) 
 
@@ -136,7 +144,8 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-rtos-basic-example`
 
 * Project
-  * RTOS
+  * {ref}`project-rtos`
+
 ## Week 45 (tentative) 
 
 * Material to study:
@@ -148,21 +157,18 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`exercises-rtos-semaphores-example`
 
 * Project
-  * RTOS 
+  * {ref}`project-rtos`
 
 ## Week 46 (tentative) 
 
 * Material to study:
-  * TBA
-
-* Exercises
-  * TBA
+  * Review previous material
 
 * Project
-  * RTOS 
+  * {ref}`project-rtos`
 ## Week 47 (tentative) 
 
-
+* Review all course material
 
 
 

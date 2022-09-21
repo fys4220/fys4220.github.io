@@ -1,5 +1,5 @@
 (project-uart-controller)=
-# UART controller
+# P1: UART controller
 
 In this part of the project you will design the UART controller that will be used to communicate data between the microcontroller system in the FPGA and the PC. 
 
@@ -241,7 +241,42 @@ The suggested list of top level ports for the RX module's entity description is 
 | rx          | in        | std_logic        | 1     | UART RX input                                                          |
 
 
+Write the VHDL description for the RX module and a test bench to verify expected behaviour. When testing the TX module, it was reasonable easy write a test bench that assigned data to the *tx_data* port and then toggled the *tx_data_valid* port for one clock cycle. However, for the RX module you know need to provide a stream of data on the RX input port corresponding to a 10 bit serial transmission at the expected baud rate. This can of course be done setting the respective values and waiting for a baud period like shown below.
 
+```{code-block} vhdl
+
+
+p_stimuli: process
+begin
+  -- rx high when no activity.
+  rx <= '1';
+  wait for 100 ns;
+  -- Start transactions
+  -- start bit
+  rx <= '0';
+  wait for C_BIT_PERIOD;
+  -- data bit 0
+   rx <= '1';
+  wait for C_BIT_PERIOD;
+  -- data bit 1
+  rx <= '0';
+  wait for C_BIT_PERIOD;
+  .
+  .
+  .
+  -- data bit 7
+  rx <= '0';
+  wait for C_BIT_PERIOD;
+  -- stop bit
+  rx <= '1';
+  wait for C_BIT_PERIOD;
+
+end process
+
+```
+However, this is not so flexible if you want to test multiple transactions. Then you would have to repeat all these lines for each transaction. This is a perfect case for writing a procedure that can be reused easily. To see how this can be done, study the example in {numref}`vhdl-package-example-procedure`.
+
+The choice of method is up to you. Either the more simple approach shown above, or the procedure example. 
 
 %As for the TX module, it is necessary to keep track of the bit period. The one difference now being that the value of the RX line should be read during the stable period of the transmission. This is normally done at the center point of a bit period. Make use of the counter to now alos find the center of the bit period.
 
@@ -263,12 +298,10 @@ UART receive protocol
 %The RX module must be simulated with a test bench.
 (project-uart-pif)=
 ## Processor interface
-Comming soon!
-<!--
-
+In this section you will write the memory mapped register interface that will allow the software running on the microcontroller system to access and controll your UART module. 
 ```{admonition} Reading tip!
 :class: tip
-Make sure to read {numref}`embedded-memory-mapped` {ref}`embedded-memory-mapped` before you continue.
+Make sure you study {numref}`embedded-memory-mapped` {ref}`embedded-memory-mapped` before you continue.
 ```
 To connect the TX and RX modules to a microcontroller system we need define a set of registers that can be accessed by the the CPU. These registers should contain information about the data to be transmitted and received, and the status of the modules. A suggested set of registers can be:
 
@@ -287,9 +320,25 @@ Bit 3: tx_err
 Bit 4: tx_irq  
 Bit 5: rx_irq  
 
-The *tx_data_valid* is the bit used to start a transaction for the UART TX module. This bit can be set when the CPU writes to the *tx_data register*, and reset when the UART TX module has started a transmission, i.e., when *tx_busy* goes high. 
+The *tx_data_valid* is the bit used to start a transaction for the UART TX module. This bit can be set when the CPU writes to the *tx_data register*. It should remain high until the TX module has started a transmission, and then be automatically reset to '0' from the internal logic of this processor interface. How can you detect when a transmission has started?
 
-The *tx_irq* and *rx_irq* bits are used to indicate when a transmission has been completed and when the UART RX has received data. Can you think of a solution that would set these bits accordingly.
+````{admonition} Solution
+:class: tip, dropdown
+
+By monitoring the *tx_busy* signal. We know from the TX state machine that the *tx_busy* signal is initially low when there is no activity, and that it goes high after the state machine has detected a high value on *tx_data_valid*. Therefore, the *tx_data_valid* bit position can be reset when a rising edge is detected on the TX busy signal.
+
+```{code-block} vhdl
+-- Reset tx_data_valid when tx busy goes high
+if tx_busy = '1' and mm_tx_busy = '0' then
+  tx_data_valid <= '0'; --reset tx data valid
+end if;
+```
+
+Where *mm_tx_busy* is the registered version of the TX busy signal in the processor interface.
+
+````
+
+To control the flow of data you will use two interrupt signals, *tx_irq* and *rx_irq*. These interrupts are used to indicate when a transmission has been completed on the UART TX and when the UART RX has received data.  Can you think of a solution that would set these bits accordingly?
 
 ````{admonition} Solution
 :class: tip, dropdown
@@ -331,7 +380,7 @@ if we = '1' then
 .
 .
 ```
-
+You will see how this can be utilized in software when we come to the RTOS part of the project.
 ````
 
 `````
@@ -369,15 +418,15 @@ elsif rising_edge(clk) then
 ```
 
 You task is to write the register interface and connect the TX and RX module. Create a file called `uart.vhd` and include both the TX and RX modules as well as the register interface. 
-Connect the relevant ports from the TX and RX modules to the respective register locations. You also have to considere how to implement an appropriate functionality for starting a TX transaction, e.g., controlling the `tx_valid_data` port.
+Connect the relevant ports from the TX and RX modules to the respective register locations. 
+%You also have to considere how to implement an appropriate functionality for starting a TX transaction, e.g., controlling the `tx_valid_data` port.
 
 
 ```{admonition} Warning
 :class: warning
 
-The test bench example that is provided in the next section requires: 
-- the status bit positions for the UART status register to be as shown above, and 
-- the names of the top level entity to be exactly as shown below.
+If you want to make use of the test bench example provided in the next section it is important that you adhere to the ordering of the bits in the status regiser 
+as described above and the naming of the ports in the top level entity shown below.
 
 If you use different names or locations, you will need to modify the test bench accordingly.
 
@@ -412,7 +461,10 @@ end uart;
 
 
 ### Verifying the UART
-To verify the behaviour of the UART we need to test both the processor interface and the TX and RX lines. This would require you to write support procedures to control and monitor each port according to the Avalon bus specification and the UART packet structure and timing. A very basic example of a procedure that can be used to generate stimuli on the RX port is shown below. 
+To verify the behaviour of the UART we need to test both the processor interface and the TX and RX lines. This would require you to write support procedures to control and monitor each port according to the Avalon bus specification and the UART packet structure and timing. An example procedure for stimulating the RX port was already shown in {numref}`vhdl-package-example-procedure`.
+
+<!--
+A very basic example of a procedure that can be used to generate stimuli on the RX port is shown below. 
 
 ```{admonition} Notice
 The procodure below is only provided as an example to demonstrate the concept.  We will not use this procedure. Instead we will be using procedures from an already existing Verification library as described from {numref}`project-uart-uvvm`.
@@ -451,9 +503,10 @@ begin
   serial_data <= '1'; 
 end procedure;
 ```
+-->
 
-Similar procedures would also be needed to test the TX interface and the Avalon Memory Mapped register interface. The procedures can then be used in the test bench if they are placed either in the declaration area of the test bench's architecture, or in a separate VHDL package. 
-
+Similar procedures would also be needed to test the TX interface and the Avalon Memory Mapped register interface. The procedures can then be used in the test bench if they are placed either in the declaration area of the test bench's architecture, or in a separate VHDL package.
+<!--
 ```vhdl
 -- write x55 to the rx input
 uart_write_data(x"55", rx);
@@ -465,8 +518,8 @@ uart_write_data( x"22", rx, inject_error_stop_bit => true);
 ```{admonition} Reading tip!
 See the section on {ref}`vhdl-packages` for more information on how to write a VHDL package.
 ```
-
-Writing dedicate test procedures like the one above can be very instructive, but it can also be time consuming. It is therefore recommended to make use of already available verifcation librarys if possible. One such library is the open source Universal VHDL Verification Methodology (UVVM) library available from www.github.com/uvvm and www.uvvm.org. 
+-->
+Writing dedicate test procedures can be very valuable for the learning process, but it can also be time consuming. When you have written a few your self, and have nailed the concept, it is instead recommended to make use similar procedures written and avaible by others. Since a lot of interface are standard, there is no point "reinventing the wheel", since someone has already written these procedures and made them available in open source verification libraries like e.g., Universal VHDL Verification Methodology (UVVM) library available from www.github.com/uvvm and www.uvvm.org, or Open source VHDL verification methodology (OSVVM) available from www.osvvm.rog. In this course we will demonstrate the use of UVVM. 
 
 ```{Admonition} Reading tip!
 If you would like to read more about UVVM here are a few relevant links:
@@ -476,9 +529,16 @@ If you would like to read more about UVVM here are a few relevant links:
 - [Einar Karlsen, *ESA satser på norsk verifikasjonssystem*, Elektronikknett 7. september 2017 (Norwegian only).](https://elektronikknett.no/Artikkelarkiv/2017/September/ESA-satser-paa-norsk-verifikasjonssystem)
 ```
 
-It is an extensive library and we will limit our use to the reduced version called UVVM Light (https://github.com/UVVM/UVVM_Light), and its respective [Bus Functional Models (BFM)](https://en.wikipedia.org/wiki/Bus_functional_model) for the UART and Avalon interfaces:
+In the video below, Espen Tallaksen from EmLogic gives an introductory talk about UVVM.  UVVM is an extensive library and we will limit our use to the reduced version called UVVM Light (https://github.com/UVVM/UVVM_Light), and its respective [Bus Functional Models (BFM)](https://en.wikipedia.org/wiki/Bus_functional_model) for the UART and Avalon interfaces. The most relevant part of the video are the first 15 minutes. After this, more advanced concepts which are less relevant for this course are covered. Of course, you are welcome to watch the full presenation if you like.
 
-The relevant procedures to use are:
+<div class="video-container">
+<iframe width="806" height="453" src="https://www.youtube.com/embed/6720XWkkANk" title="UVVM: UVM for VHDL designers – An introduction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
+These first 15 minutes cover the basics of UVVM, and shows an example for the testing of a UART. The test procedures that you will use in the project are different from the ones use in the example, but the concepts are the same. The example uses so called bus functional models to interface and test the UART. A BFM is a VHDL description that models the signaling protocal of the various interface. Similar to the procedure used to stimulate the RX port in the previous section. In the example in processor interface to the UART is a simple bus interface (SBI). The simple bus interface is an alternative to the Avalon interface, which you instead will use to test the UART in this project. 
+
+The relevant procedures for this project are are:
 
 - avalon_mm_write()
 - avalon_mm_read()
@@ -923,7 +983,7 @@ begin
 end architecture;
 ```
 
-
+<!--
 ```{admonition} Notice
 Since the description has been updated to include the IRQ signals, the previous version of the test bench is provided below. This version does not check for the IRQ bits in the status register, and is no longer relevent after these IRQ bits have been added to your UART module's status register. 
 ```
@@ -1192,6 +1252,4 @@ begin
 %```tcl
 %do ../UVVM_Light/script/compile.do ../UVVM_Light .
 %```
-
 -->
-

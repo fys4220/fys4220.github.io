@@ -1,7 +1,16 @@
 (exercises-memory-mapped-sw)=
 # EX6: Accessing Nios II memory mapped modules
 
-In this part we will look closer at how we from software can access and control a memory mapped module in the Nios II system. For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in {numref}`fig:embedded-basic-nios2-system-with-pio`.
+In this part we will look closer at how we from software can access and control a memory mapped module in the Nios II system. 
+
+
+```{admonition} The learning outcome of this problem is to:
+* Be able to write and read data from memory mapped peripherals.
+* Be able to use the PIO module to access external resources such as LEDs and switches.
+```
+
+
+For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in {numref}`fig:embedded-basic-nios2-system-with-pio`.
 
 ```{figure} ../images/embedded_basic_nios2_system_with_pio.png
 ---

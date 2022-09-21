@@ -1,6 +1,12 @@
 (exercises-rtos-semaphores-example)=
 # EX9: Semaphore example
+This exercise will demonstrate the use of semaphores.
 
+```{admonition} The learning outcome of this problem is to:
+* Be able to use a semaphore to:
+  * protect a shared resource, and
+  * synchronize to tasks.
+```
 ## Protecting shared resources
 
 As mentioned in {ref}`exercises-rtos-basic-example` the *OSTimeDlyHMSM* function is used to block the tasks for 3 seconds. Both tasks are using the same resource for writing to the standard output and thus there is a risk that both tasks will use this resources at the same time, resulting in a corrupted output. However, the execution time of the *printf* command in this example is in the order of a few hundered microseconds. The chance that the higher priority task may interrupt the lower priority task in the middle of a *printf* execution is therefore very low.
@@ -90,11 +96,7 @@ More information about the function calls can be found in the $\mu$c/OS-II API r
 
 Modify the code to use a semaphore called *shared_jtag_sem* to control the access to the JTAG UART. Compile and download the software to observe the difference with respect to not protecting the shared variable with a semaphore.
 
-See also the recoded video lectures on semaphores:
-
-- [Semaphores (8:58)](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h21/forelesningsvideoer/rtos_semaphores.mp4) [(slides)](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h21/lecture-slides/rtos_semaphores.pdf)
-- [Example - semaphore (10:59)](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h21/forelesningsvideoer/rtos_semaphore_example.mp4) [(slides)](https://www.uio.no/studier/emner/matnat/fys/FYS4220/h21/lecture-slides/rtos_semaphores_example.pdf)
-
+See also the recoded video lectures on {ref}`rtos-semaphores`.
 
 ````{admonition} Complete code example
 :class: dropdown

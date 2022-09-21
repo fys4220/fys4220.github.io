@@ -44,7 +44,7 @@ The suggested top level entity connections are listed in {numref}`tab:tx_fsm_ent
   - in
   - std_logic
 * - tx_complete
-  - out 
+  - in 
   - std_logic
 * - tx_enable
   - out

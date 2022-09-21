@@ -130,7 +130,7 @@ begin
 end architecture;
 ```
 
-
+(vhdl-package-example-procedure)=
 ### Procedure
 The example below shows how a procedure can be declared in a package and used to automate the test stimuli on the input of a RX UART module.
 ```{code-block} vhdl

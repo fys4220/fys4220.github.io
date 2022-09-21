@@ -5,12 +5,10 @@ digraph fsm_tx_uart_sd {
 	sIDLE [label="sIDLE
 
  tx_busy <= '0'
- tx_complete <= '0'
  tx_enable <= '0'"]
 	sTRANSMIT [label="sTRANSMIT
 
  tx_busy <= '1'
- tx_complete <= '1'
  tx_enable <= '1'"]
 	a:e -> sIDLE:w [label="areset_n = '0'"]
 	sIDLE:n -> sTRANSMIT:n [label="tx_data_valid = '1'"]

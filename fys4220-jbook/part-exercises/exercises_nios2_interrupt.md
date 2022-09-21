@@ -1,6 +1,11 @@
 (exercises-nios2-interrupt)=
 # EX7: Nios II interrupt handling
+In this exercise you will add interrupt handling to the microcontroller system.
 
+```{admonition} The learning outcome of this problem is to:
+* Be able to configure the PIO modules as an interrupt source.
+* Be able to write software routines to handle the interrupt.
+```
 
 To demonstrate interrupt handing in the Nios II system we will use one of the two push buttons on the DE10-Lite board as the interrupt source. KEY0 is already in use for the asynchronous active low reset. For this example we will therfore use KEY1, which is connected to PIN_A7 of the MAX10 FPGA. To implement the interrupt functionality we need to add new hardware and software. The required software API was already introduced above, while the hardware can be implemented with the appropriate configuration of a PIO core. 
 

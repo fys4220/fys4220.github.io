@@ -1,7 +1,12 @@
 (exercises-rtos-basic-example)=
 # EX8: A basic RTOS application
 
-In this part you will create a software application that will run two simple tasks. The job of the two tasks is to write "Hello from task1" and "Hello from task2" to the standard output.  The example will further demonstrate how semaphores can be used to protect shared resources.
+In this part you will create a RTOS software application that will run two simple tasks. The job of the two tasks is to write "Hello from task1" and "Hello from task2" to the standard output.  
+
+```{admonition} The learning outcome of this problem is to:
+* Be able to setup an run a basic $\mu$C/OS-II RTOS system.
+* Be able to write RTOS task functions.
+```
 
 %This part consists of three sections:
 %- A basic  $\mu$C/OS-II application to get started.

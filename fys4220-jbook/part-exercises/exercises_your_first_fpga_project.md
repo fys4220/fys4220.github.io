@@ -108,7 +108,7 @@ set_location_assignment PIN_A8 -to led[0]
 # YOUR TASK: Enter the pin assignments for the remaining LED pins
 
 #To avoid that the FPGA is driving an unintended value on pins that are not in use:
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
 ```
 
 * Add the new Tcl-file to the project (Project -> Add/Remove Files in Project). The Tcl-file may not be visible by default. Change file file filter to _All Files (\*.\*)_.

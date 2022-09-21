@@ -1,20 +1,22 @@
 (project-nios2)=
-# Microcontroller system
+# P2: Microcontroller system
 In this part of the project you will build and implement the soft core processor that will be used to read out data from the digital accelerometer sensor.
 
 ```{admonition} Preparation
-Before continuing you should work through the example described in {numref}`embedded-nios2-example`, {numref}`embedded-memory-mapped-sw` and {numref}`embedded-interrupt`.
+Before continuing you should work through the example described in {ref}`exercises-nios2-example`, {ref}`exercises-memory-mapped-sw` and {ref}`exercises-nios2-interrupt`.
 
 The system described and developed in these examples will be used in this part to build the final system. 
 ```
 
 The microcontroller system will now be expended with the remaining components needed for the final system. These are:
 
-- The UART module from {numref}`project-uart-controller` to communicate between the microcontroller system and the host PC.
-- An SPI module to communicate with the accelerometer.
-- An Interval Timer module to provide a periodic tick every 1 ms -- to be used when adding the real-time kernel in {numref}`project-rtos`.
 
-In addition the ADXL345 accelerometer {cite}`adxl345` has two interrupt lines that will be connected to the system. A PIO module was already used in {numref}`embedded-interrupt` to handle an interrupt from an external push button. The two interrupt lines can easily be added to this module by increasing the number of inputs from 1 to 3. 
+
+- The UART module from {ref}`project-uart-controller` to communicate between the microcontroller system and the host PC.
+- An SPI module to communicate with the accelerometer.
+- An Interval Timer module to provide a periodic tick every 1 ms -- to be used when adding the real-time kernel in {ref}`project-rtos`.
+
+In addition the ADXL345 accelerometer {cite}`adxl345` has two interrupt lines that will be connected to the system. A PIO module was already used in {ref}`exercises-nios2-interrupt` to handle an interrupt from an external push button. The two interrupt lines can easily be added to this module by increasing the number of inputs from 1 to 3. 
 
 
 An overview of the full system is shown in {numref}`fig:project-final-system`. 
@@ -40,11 +42,11 @@ Overview of full Nios II system for the FYS4220 project.
 %```
 
 The two main tasks in this part of the project is to: 
-- Update the hardware of the microcontroller system in {numref}`project-nios2-hardware`
-- Test the  UART and SPI interface in {numref}`project-nios2-software`
+- Update the hardware of the microcontroller system in {ref}`project-nios2-hardware`
+- Test the  UART and SPI interface in {ref}`project-nios2-software`
 
 
-You will start by integrating the UART module developed in {numref}`project-uart-controller`.
+You will start by integrating the UART module developed in {ref}`project-uart-controller`.
 
 ```{admonition} Useful check list
 
@@ -70,7 +72,7 @@ With today's large FPGA designs it can be difficult to design all the needed fun
 
 #### Creating the UART IP
 In order to describe and package IP components for use in the Nios II system, you must create a Hardware Definition File (_hw.tcl) which will describe your component, its interfaces, and associated HDL files. This file will be used by the Platform Designer to identify and include the module in the IP catalog. The Platform designer tool provides a Component Editor GUI to help create a simple _hw.tcl file.
-A component can have any number of interfaces in any combination. Each interface represents a set of signals that you can connect within the Platform designer, or export outside of the system (e.g., our RX and TX ports). For this project and for uart.vhd component designed in {numref}`project-uart-controller`, the following interfaces will be used:
+A component can have any number of interfaces in any combination. Each interface represents a set of signals that you can connect within the Platform designer, or export outside of the system (e.g., our RX and TX ports). For this project and for uart.vhd component designed in {ref}`project-uart-controller`, the following interfaces will be used:
 
 - a memory mapped interface to provide the Nios II CPU access to the components register space 
     - Signals: *we*, *re*, *wdata*, *rdata*, *addr*
@@ -83,7 +85,7 @@ A component can have any number of interfaces in any combination. Each interface
 - an interrupt interface 
     - Signals: *irq*
 
-If you continue to work with the example from sections {numref}`embedded-nios2-example`, {numref}`embedded-memory-mapped-sw` and {numref}`embedded-interrupt`, you should now copy your UART source files into the *hdl* directory.
+If you continue to work with the example from sections {ref}`exercises-nios2-example`, {ref}`exercises-memory-mapped-sw` and {ref}`exercises-nios2-interrupt`, you should now copy your UART source files into the *hdl* directory.
 
 In Platform designer start the Component editor: File->New Component. Give the new component a name and provide other relevant information similar to what is shown in {numref}`fig:project-component-info`. 
 
@@ -478,18 +480,18 @@ To test the UART interface, you will expand the software application to:
 To test the SPI interface, you will use the provided SPI drivers to read back the identification number of the ADXL345 accelerometer.
 
 ### Update the board support package
-Whenever the hardware of the microcontroller system has been changes, it is required to regenerate the board support package. See section {numref}`embedded-bsp` for how to do this.
+Whenever the hardware of the microcontroller system has been changes, it is required to regenerate the board support package. See section {ref}`embedded-bsp` for how to do this.
 
 
 ### UART loopback test
 
 The UART loopback test will be performed by sending and receving characters from the host PC over the USB to UART cable. You will implement the required software application to receive and send back these characters. 
 
-From the development of the UART controller in {numref}`project-uart-controller` we know that an interrupt will be signaled when data has been received by the UART RX module. You therefore need to add the required interrupt handling to the software application. An example of interrupt handling has already been demonstrated in {numref}`embedded-interrupt`. Use this as a starting point for adding interrupt handling for the UART. Try first to write the required code before looking at the tip provided below.
+From the development of the UART controller in {ref}`project-uart-controller` we know that an interrupt will be signaled when data has been received by the UART RX module. You therefore need to add the required interrupt handling to the software application. An example of interrupt handling has already been demonstrated in {ref}`exercises-nios2-interrupt`. Use this as a starting point for adding interrupt handling for the UART. Try first to write the required code before looking at the tip provided below.
 
 ````{admonition} Tip
 :class: tip, dropdown
-The interrupts from the UART are enabled by default. That is, they are automatically set when there is a falling edge on either the *tx_busy* or *rx_busy* signal. Thus, there is no need to manually enable interrupts as was done for the example shown in {numref}`embedded-interrupt`. You therefore only need to register the interrupt with the Nios II system using the *alt_ic_isr_register* function. 
+The interrupts from the UART are enabled by default. That is, they are automatically set when there is a falling edge on either the *tx_busy* or *rx_busy* signal. Thus, there is no need to manually enable interrupts as was done for the example shown in {ref}`exercises-nios2-interrupt`. You therefore only need to register the interrupt with the Nios II system using the *alt_ic_isr_register* function. 
 
 ```c
 alt_ic_isr_register(UART_BASIC_IRQ_INTERRUPT_CONTROLLER_ID,
@@ -499,7 +501,7 @@ alt_ic_isr_register(UART_BASIC_IRQ_INTERRUPT_CONTROLLER_ID,
 The names of the arguments provided here may be different for your design depending on how you named the respective components when designing the system in Platform Designer. These names can be found in the *system.h* file of the board support package. 
 
 To service the interrupt you will need to write a dedicated interrupt handling routine (suggested name *handle_interrupt_uart*). When called, this routine will:
-- Read the UART module's status register and store the value in the *volatile int* variable *uart_status*. This is a similar operation as was done for the *edge_capture* variable from the example in {numref}`project-uart-controller`.
+- Read the UART module's status register and store the value in the *volatile int* variable *uart_status*. This is a similar operation as was done for the *edge_capture* variable from the example in {ref}`project-uart-controller`.
 - Reset the interrupt bits in the UART module's status register. This is done by performing a write operation to the UART's status register. 
 - In the main function, check whether the *tx_irq* og *rx_irq* bit has been set. 
 - If the *rx_irq* bit has been set, read the *rx_data* register and send back the receive data by writing to the *tx_data* register. 
@@ -579,7 +581,7 @@ In Python the cable can be accessed using the [PySerial module](https://pyserial
 
 
 ### SPI test
-To test the SPI interface you will read back the device identification number from the ADXL345 accelerometer using the SPI IP module added to the microntroller system in {numref}`project-spi-module`. 
+To test the SPI interface you will read back the device identification number from the ADXL345 accelerometer using the SPI IP module added to the microntroller system in {ref}`project-spi-module`. 
 
 #### SPI driver
 The SPI module comes with a driver that can be used to easily communicate with any attached SPI device. By including the driver's header file *altera_avalon_spi.h*, this gives access to function *alt_avalon_spi_command* shown below.
@@ -629,7 +631,7 @@ Defining a variable as int also corresponds to signed 32-bit.
 
 #### ADXL345 SPI transaction
 
-{numref}`project-spi-module` shows how the SPI read transaction wave diagram for the ADXL345. The most significant bit is use to set a write (low) or read condition (high). To read or write multiple bytes in one transaction the MB bit must be set to 1. 
+{ref}`project-spi-module` shows how the SPI read transaction wave diagram for the ADXL345. The most significant bit is use to set a write (low) or read condition (high). To read or write multiple bytes in one transaction the MB bit must be set to 1. 
 %For this example you will only read 1 byte (MB = 0). Bits 5--0 defines the address of the register you want to read from. 
 
 ```{figure} ../images/project_adxl345_read_wave.png

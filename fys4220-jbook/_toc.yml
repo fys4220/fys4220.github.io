@@ -23,6 +23,8 @@ parts:
     - file: references.md
     - url: https://github.uio.no/FYS4220-2022 
       title: Github organization page
+    - url: https://github.uio.no/orgs/FYS4220-2022/discussions
+      title: Discussion forum
   - caption: Main content
     numbered: true
     chapters:
@@ -93,8 +95,8 @@ parts:
     - file: part-project/project_intro
 #      sections:
     - file: part-project/project_uart
-      #    - file: part-project/project_nios2
-      #    - file: part-project/data_rate
+    - file: part-project/project_nios2
+    - file: part-project/data_rate
 #parts:
 #  - caption: Introduction
 #    chapters:

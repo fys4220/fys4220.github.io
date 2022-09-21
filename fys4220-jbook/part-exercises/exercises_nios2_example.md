@@ -7,6 +7,13 @@
 
 In the following sections we will show a practial example of building a Intel Nios II microcontroller system. While the tools used are specific to the specific hardware and FPGA vendor, the overall concepts should be similar between hardware platforms. 
 
+```{admonition} The learning outcome of this problem is to:
+* Get familiar with the software build tools for Quartus.
+* Be able to build and generate a basic microcontroller system based on the Nios II soft core processor.
+* Include this microcontroller design in a top level VHDL description and synthesise the system.
+* Be able to write, compile, and test a basic "Hello world" program to run on the microcontroller system.
+```
+
 We will start by building the system shown in {numref}`fig:embedded-basic-nios2-system`. The system consist of three main units:
 
 - Nios II/e CPU
@@ -261,7 +268,7 @@ set_location_assignment PIN_P11 -to clk
 set_location_assignment PIN_B8 -to arst_n
 
 #To avoid that the FPGA is driving an unintended value on pins that are not in use:
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
 ```
 
 Place the *system_top.sdc* and *de10-lite_pinning.tcl* file in the *quartus* folder. 
