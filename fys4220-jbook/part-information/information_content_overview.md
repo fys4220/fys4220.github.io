@@ -50,8 +50,10 @@ name: fig:information-embedded-system
 ---
 Simplified overview of the embedded microcontroller system. The UART interface will be described in VHDL while the rest of the system will be generated using the Quartus Platform designer tool. All parts which are inside the larger box name *Microcontroller system* will be implemented on the FPGA while the digital sensor is separate chip on the FPGA development board, and PC is connected to the FPGA through a JTAG cable.  
 ```
-
-The system also needs a JTAG[^footnote-jtag] interface to download the compiled program to the microcontroller system, and a memory to store these program instructions and data that is generated while the program is running. The JTAG interface will be used to both download your synthesized FPGA design to the configuration memory of the FPGA, and to download your compiled program to the internal memory of the microcontroller system.
+<!--
+The FPGA also has a JTAG[^footnote-jtag] interface to download the compiled program to the microcontroller system, and a memory to store these program instructions and data that is generated while the program is running. 
+-->
+The FPGA also has a JTAG[^footnote-jtag] interface that will be used to both download your synthesized FPGA design to the configuration memory of the FPGA, and to download your compiled program to the internal memory of the microcontroller system.
 A separate chip on the FPGA board is responsible for translating from USB to JTAG. 
 
 [^footnote-uart]: Universal Asyncronous Receiver-Transmitter

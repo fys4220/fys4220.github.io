@@ -54,10 +54,29 @@ The suggested top level entity connections are listed in {numref}`tab:tx_fsm_ent
   - std_logic
 ```
 
+When setting up the test conditions in the test bench, the inputs *tx_data_valid* and *tx_complete* signals shall be assumed to be synchronous to the clock and have a duration of one single clock cycle. Creating a single clock cycle pulse which is synchronous to the clock can be achieved with the following statements .
+
+```{code-block} vhdl
+wait until rising_edge(clk);
+tx_data_valid <= '1';
+wait until rising_edge(clk);
+tx_data_valid <= '0';
+```
+
+{numref}`fig:fsm_tx_uart_test_condition` shows an example behaviour of the input test signals.
+
+```{figure} ../graphics/wave_fsm_tx_uart_test_condition.png
+---
+width: 100%
+align: center
+name: fig:fsm_tx_uart_test_condition
+---
+Test signals for the state machine.
+```
 
 ## Script based simulation
 
-So far you have run your simulations from Modelsim in a manual fashion, using the mouse to perform relevant actions such as compile the code, start the simulation, add signals to the wave diagram. This works fine, but in the long run and for more complex designs, it is highly recommended to use a command and script based approach. The relevant commands be typed and run directly in Modelsim's Transcript window, or collected and grouped in a script file. The simulation can then be automated by simply calling the script file from the Transcript window. 
+Until now you have run your simulations from Modelsim in a manual fashion, using mouse to perform relevant actions such as compile the code, start the simulation, add signals to the wave diagram. This works fine, but in the long run and for more complex designs, it is highly recommended to use a command and script based approach where the relevant commands can be typed and run directly in Modelsim's Transcript window, or collected and grouped in one or several script files. The simulation can then be automated by simply calling the script file from the Transcript window. 
 
 
 The most relevant commands to learn are listed and explained below:
@@ -105,12 +124,16 @@ delete wave *
 ```
 
 ```{code-block} tcl
-# add waves and dividers
-
+# add waves and dividers. The label argument 
+# is optional. If not applied, the full path of the 
+# signal will be use. 
 add wave -divider TX_FSM_TB
 add wave -label clk /tx_fsm_tb/clk
 add wave -label areset_n /tx_fsm_tb/areset_n
 
+# To access signals in submodules, use the 
+# label name given when instantiating the modules,
+# e.g., dut.
 add wave -divider TX_FSM
 add wave -label tx_data_valid /tx_fsm_tb/dut/tx_data_valid
 add wave -label tx_complete /tx_fsm_tb/dut/tx_complete

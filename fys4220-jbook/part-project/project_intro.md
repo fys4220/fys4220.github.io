@@ -21,10 +21,10 @@ Simplified overview of the embedded microcontroller system. The UART interface w
 %The main objective of the project assignment is to gain knowledge and experience in building a small embedded microcontroller system on an FPGA. The application of the system is to readout data from a digital sensor (accelerometer), and to present this data on a PC. 
 
 The microcontroller system will run on the MAX10 FPGA on the DE10-Lite board. It will be based around a soft core CPU with the added peripherals required to communicate with the digital sensor and PC over standard serial interaces like UART[^footnote-uart], I2C[^footnote-i2c], and SPI[^footnote-spi]. The digital accelerometer is available as a separate device on the DE10-lite board, that is, external to the FPGA. 
-
+<!--
 The system also needs a JTAG[^footnote-jtag] interface to download the compiled program to the microcontroller system, and a memory to store these program instructions and data that is generated while the program is running. The JTAG interface will be used to both download your synthesized FPGA design to the configuration memory of the FPGA, and to download your compiled program to the internal memory of the microcontroller system.
-
-A real-time operating system (RTOS) will then be used to manage the main tasks running on the CPU, namely reading data from the digital sensor and sending this data over the UART to the PC. 
+-->
+A real-time operating system (RTOS) will finally be used to manage the main tasks running on the CPU, namely reading data from the digital sensor and sending this data over the UART to the PC. 
 
 <!--
 ```{admonition} JTAG

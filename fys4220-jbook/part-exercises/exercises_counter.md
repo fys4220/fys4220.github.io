@@ -50,7 +50,7 @@ A basic block diagram of a 4-bit up-counter with an enable signal.
 
 The main functional requirements of the counter are:
 - The counter shall increment its output by 1 when one of the FPGA board's push buttons (KEY1) is pressed. That is, the button will act as a count enable.
-- The count enable signal shall be active low. 
+- The count enable signal shall be active high. 
 - The counter design shall run on a clock frequency of 50 MHz (frequency provided by the external clocking circuit on the DE10-Lite board).
 - The counter shall count from 0 to 15. When the counter reaches 15, the counter shall roll over and the next output value shall be 0. 
 - The counter shall be reset (output shall be 0) when one of the FPGA board´s buttons (KEY0) is pressed. The reset shall be synchronous to the clock signal.
