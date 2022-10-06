@@ -1,3 +1,4 @@
+(agenda)=
 # Weekly agenda
 
 This agenda is meant to help you organize your weekly progress in this course. Each week lists the recommended material to study and any relevant exercises or tasks related to the embedded systems project. It is strongly recommended to follow this agenda already from the start. Otherwise, you risk falling behind and expose your self to a unreasonably high workload towards the end of the semester. 
@@ -82,7 +83,7 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`project-uart-controller` -- 1. part: TX module
 
 
-## Week 39 (tentative) 
+## Week 39 
 
 * Material to study:
   * {ref}`embedded-intro`

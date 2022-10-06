@@ -220,22 +220,22 @@ do compile.do ; restart -f ; run -all
 ```
  
 
-I would also recommend to keep the files in a folder separate from the folder where you run the simulation e.g., in a folder called scripts.
-
+I would also recommend to organize the various files in different folders according to their function as shown in {numref}`fig:exercises-tree-folder`. E.g., simulation script files in the *sim* folder, HDL design files in *src* and HDL test bench files in *tb*. 
 
 ```{figure} ../images/exercises_tree_folder.png
 ---
 width: 50%
 align: center
-name: fig:exercise-tree-folder
+name: fig:exercises-tree-folder
 ---
 A suggested folder structure.
 ```
-
+<!--
 Navigating to the simulation folder in Modelsim and running the simulation from there you will have to provide the relative path the script file.
 
 ```{code-block} tcl
 do ../scripts/compile_and_run.do
 ```
 
+-->
 

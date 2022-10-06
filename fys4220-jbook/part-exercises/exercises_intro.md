@@ -4,6 +4,8 @@ Before you embark on the main project it is highly recommended to work through a
 
 To help you get started, the description is rather detailed for the first exercise. As you get familiar with the tools and writing VHDL, you are expected work on and complete the exercises -- and later the project -- more independently.
 
+You can find suggestied solution examples to the exercises on Github: https://github.com/fys4220/fys4220-exercises
+
 
 <!--
 The introductory assignment consist of four parts:

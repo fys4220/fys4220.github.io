@@ -215,12 +215,41 @@ After writing the VHDL description for the TX module, writing the RX module shou
 
 Start by designing a top level architecture for the RX module inspired by the architecture for the TX module. Create a similar digram to the one in {numref}`fig:project-tx-uart-architecture`. 
 
-```{admonition} Review of design architecture required before writing the code!
+`````{admonition} Review of design architecture required before writing the code!
 :class: warning
 The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors (Ketil Røed and Martin Järve). Provide a link to your diagram. 
 
 I encourage you to discuss and prepare the diagram together with one of the other students in the course. You can then submit one diagram together, naming the responsible persons in the issue description.
+
+
+To help you identify some of the differences, a propose microarchitecture of the *rx_shift_reg.vhd* module is shown in {numref}`fig:project-rx-shiftreg-architecture`. Different from the TX UART, the RX uart must sample the input RX in the middle of a bit period. This can be done by detecting the rising edge of the signal *baud_rate_clk* and use this event as an enable for the shift register. When all bits have been received, the *rx_complete* signal can be used to register the *tx_data* to the output, and to signal an error if either the start or stop bit have values other than expected. 
+
+```{figure} ../graphics/project_rx_shiftreg_architecture.png
+---
+width: 100%
+align: center
+name: fig:project-rx-shiftreg-architecture
+---
+The diagram shows the microarchitecture for the RX shift register.
 ```
+
+An example of how to describe the serial shifting of bits is shown in the code block below.
+
+```{code-block} vhdl
+-- rx_buffer is declared as a 10-bit std_logic_vector
+p_serial_shift: process(clk)
+  begin
+    if rising_edge(clk) then
+      if enable = '1' then
+        rx_buffer <= rx & rx_buffer(9 downto 1);
+      end if;
+    end if;
+end process;
+```
+
+
+
+`````
 
 
 As already mentioned, the bit counter and baud rate generator modules can be reused without modifications. The few noticable difference are listed below:
@@ -316,7 +345,7 @@ The status register should consist of the following information:
 Bit 0: tx_data_valid   
 Bit 1: tx_busy  
 Bit 2: rx_busy  
-Bit 3: tx_err  
+Bit 3: rx_err  
 Bit 4: tx_irq  
 Bit 5: rx_irq  
 

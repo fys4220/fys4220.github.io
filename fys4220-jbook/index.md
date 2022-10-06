@@ -3,6 +3,9 @@
 -->
 
 This content is made to support the course [*FYS4220 Real-time and embedded data systems*](https://www.uio.no/studier/emner/matnat/fys/FYS4220/index-eng.html) at the University of Oslo.
+
+A {ref}`agenda` has been setup to guide you through the course.
+
 <!--
 ```{figure} ./images/fys4220_logo.png
 ```
