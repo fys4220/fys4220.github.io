@@ -334,20 +334,21 @@ Make sure you study {numref}`embedded-memory-mapped` {ref}`embedded-memory-mappe
 ```
 To connect the TX and RX modules to a microcontroller system we need define a set of registers that can be accessed by the the CPU. These registers should contain information about the data to be transmitted and received, and the status of the modules. A suggested set of registers can be:
 
-- A data transmit register 
-- A data receive register.
-- A status register 
+- An 8-bit data transmit register (*mm_tx_data*) 
+- A 8-bit data receive register (*mm_rx_data*)
+- A 8-bit status register (*mm_tx_status*)
 
 `````{admonition} Status register
 
-The status register should consist of the following information:
+The status registeri should consist of the following information:
 
-Bit 0: tx_data_valid   
+Bit 0: tx_data_valid  
 Bit 1: tx_busy  
 Bit 2: rx_busy  
 Bit 3: rx_err  
 Bit 4: tx_irq  
 Bit 5: rx_irq  
+Bit 6–7: Not in use
 
 The *tx_data_valid* is the bit used to start a transaction for the UART TX module. This bit can be set when the CPU writes to the *tx_data register*. It should remain high until the TX module has started a transmission, and then be automatically reset to '0' from the internal logic of this processor interface. How can you detect when a transmission has started?
 
@@ -363,7 +364,11 @@ if tx_busy = '1' and mm_tx_busy = '0' then
 end if;
 ```
 
-Where *mm_tx_busy* is the registered version of the TX busy signal in the processor interface.
+Where *mm_tx_busy* is the registered version of the TX busy signal in the processor interface. And *mm_tx_busy* is defined as an alias:
+
+```vhdl
+alias mm_tx_busy : std_logic is mm_tx_status(1);
+```
 
 ````
 

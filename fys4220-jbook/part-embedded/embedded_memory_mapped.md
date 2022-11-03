@@ -353,7 +353,7 @@ begin
         if reset_timer = '1' then
           data_reg_timer <= (others => '0');
         elsif run = '1' then
-          data_reg_timer <= data_reg2_timer + 1;
+          data_reg_timer <= data_reg_timer + 1;
         end if;
   end process;
 
