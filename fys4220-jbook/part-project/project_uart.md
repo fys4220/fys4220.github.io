@@ -970,7 +970,10 @@ begin
     -- USE UART BFM to send data to RX line
     uart_bfm_send_data := x"55";
     uart_transmit(uart_bfm_send_data, "UART TX", rx, C_UART_BFM_CONFIG_DEFAULT, C_SCOPE, shared_msg_id_panel);
-    wait for 5*C_CLK_PERIOD;
+    
+    -- wait for irq signal to be activated indicating receive completed    
+    await_value(irq, '1', 0 ns, C_BIT_PERIOD, error, "Interrupt expected", C_SCOPE);
+    
     -- Read rx register of UART moduel to check if data has been received.
     mm_reg_addr        := "01";
     avalon_mm_check(mm_reg_addr, x"00000055", "MM IF transaction to verify correct value in RX data register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
@@ -988,9 +991,10 @@ begin
     uart_bfm_send_data := x"55";
     uart_transmit(uart_bfm_send_data, "UART TX", rx, C_UART_BFM_CONFIG_STOP_ERROR, C_SCOPE, shared_msg_id_panel);
     ----------------------
+    
+    -- wait for irq signal to be activated indicating receive completed    
+    await_value(irq, '1', 0 ns, C_BIT_PERIOD, error, "Interrupt expected", C_SCOPE);
 
-    -- with error injection for stop bit.
-    wait for 5*C_CLK_PERIOD;
     -- First read rx register of UART moduel to check if data has been received.
     mm_reg_addr := "01";
     avalon_mm_check(mm_reg_addr, x"00000055", "MM IF transaction to verify correct value in RX data register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
@@ -999,8 +1003,6 @@ begin
     avalon_mm_check(mm_reg_addr, x"00000028", "MM IF transaction to verify correct value in status register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
     -- Reset tx irq
     avalon_mm_write(mm_reg_addr, x"00000000", "MM IF Write transaction to reset irq in status register", clk, avalon_mm_if, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
-
-
 
 
     wait for 5*C_CLK_PERIOD;
