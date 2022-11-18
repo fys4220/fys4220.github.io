@@ -98,8 +98,8 @@ name: fig:project-component-info
 Component editor. Specify component information.
 ```
 
-Change to the *Files* tab and and click the *Add File...* button under the first section *Synthesis Files*. Navigate to the *hdl* directory and add your UART source files as shown in 
-{numref}`fig:project-component-files`.
+Change to the *Files* tab and and click the *Add File...* button under the first section *Synthesis Files*. Navigate to the *hdl* directory and add your all your UART source files as shown in 
+{numref}`fig:project-component-files`. 
 
 ```{figure} ../images/project_component_files.png
 ---
@@ -107,8 +107,25 @@ width: 70%
 align: center
 name: fig:project-component-files
 ---
-Add the UART source files.
+Add the UART source files. 
 ```
+
+```{admonition} Note
+:class: warning
+Note that you may have different files and filenames than shown in the figure. Make sure to add all of YOUR UART design files.
+```
+
+Make sure to set the correct top level file. For the example here this is *uart.vhd* as shown in {numref}`fig:project-component-files-top-level`.
+
+```{figure} ../images/project_component_files_top_level.png
+---
+width: 70%
+align: center
+name: fig:project-component-files-top-level
+---
+Click on the no Attributes column for the *uart.vhd* file and choose *Top-Level File*.
+```
+
 
 Then click the *Analyse Synthesis files* button to analyse the source files as shown in {numref}`fig:project-component-files-analyze`. This process will identify the top-level file as well as making an attempt to identify and assign the appropriate interfaces.
 
@@ -619,10 +636,10 @@ typedef unsigned long long alt_u64;
 To declare a 8-bit unsigned variable you can therefore also use:
 
 ```c
-alt_u32 data;
+alt_u8 data;
 ```
 
-Defining a variable as int also corresponds to signed 32-bit.
+Defining a variable as int, corresponds to signed 32-bit.
 
 ````
 
@@ -658,17 +675,19 @@ alt_u8 spi_tx_data[6];
 int no_bytes;
 
 // ADXL345 command byte configuration
-// bit 7: RnW
-// bit 6: For multi byte read or write
+// bit 7: RnW (0: Write, 1: Read)
+// bit 6: For multi byte read or write from the accelerometer
 // bit 5-0: register address
 
 // Configure SPI bit in DATA_FORMAT register
+// bit 7: 0 (Write) 
+// bit 6: Single 
 spi_tx[0] = 0x00 | 0x31; // Single byte write (cmd byte + 1 data byte) + register address
 spi_tx[1] = 0x0; // register data to write
 no_bytes = alt_avalon_spi_command(SPI_BASE,0,2,spi_tx,0,spi_rx,0);
 
 // To read device ID register send 0x80
-spi_tx_data[0] = 0x8 | 0x0; //Single byte read + address
+spi_tx_data[0] = 0x80 | 0x0; //Single byte read + address
 no_bytes = alt_avalon_spi_command(SPI_BASE, 0, 1, spi_tx_data, 1, spi_rx_data, 0);
 ```
 
