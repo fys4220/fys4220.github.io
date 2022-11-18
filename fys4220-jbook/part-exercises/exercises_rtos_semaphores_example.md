@@ -120,7 +120,7 @@ void task1(void* pdata)
 {
   char text[] = "Hello from Task1\n";
   int i;
-  alt_u8 error_code = OS_NO_ERR;
+  alt_u8 error_code = OS_ERR_NONE;
   while (1)
   {
     // Collect semaphore before writing to JTAG UART
@@ -140,7 +140,7 @@ void task2(void* pdata)
 {
   char text[] = "Hello from Task2\n";
   int i;
-  alt_u8 error_code = OS_NO_ERR;
+  alt_u8 error_code = OS_ERR_NONE;
   while (1)
   {
     // Collect semaphore before writing to JTAG UART
@@ -275,7 +275,7 @@ void task1(void* pdata)
 {
   char text[] = "Hello from Task1 on interrupt!\n";
   int i;
-  alt_u8 error_code = OS_NO_ERR;
+  alt_u8 error_code = OS_ERR_NONE;
   while (1)
   {
     // Wait for the sempahore from interrupt handling routine before executing the task
@@ -302,7 +302,7 @@ void task2(void* pdata)
 {
   char text[] = "Hello from Task2\n";
   int i;
-  alt_u8 error_code = OS_NO_ERR;
+  alt_u8 error_code = OS_ERR_NONE;
   while (1)
   {
     // Collect semaphore before writing to JTAG UART
