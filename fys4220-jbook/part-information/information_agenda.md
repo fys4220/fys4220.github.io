@@ -95,7 +95,7 @@ In addition to practical problems, the exercises also contain questions which ar
 * Project
   * {ref}`project-uart-controller` -- 2. part: RX module
 
-## Week 40  (tentative) 
+## Week 40 
 
 * Material to study:
   * {ref}`embedded-memory-mapped`
@@ -105,7 +105,7 @@ In addition to practical problems, the exercises also contain questions which ar
 
 * Project
   * {ref}`project-uart-controller` -- 3. part: Processor interface
-## Week 41 (tentative) 
+## Week 41
 
 * Material to study:
   * {ref}`embedded-interrupt`
@@ -117,7 +117,7 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`project-nios2` 
 
 
-## Week 42 (tentative) 
+## Week 42 
 
 * Material to study:
   * Review previous material
@@ -135,7 +135,7 @@ In addition to practical problems, the exercises also contain questions which ar
 * Project
   * {ref}`project-nios2` 
 
-## Week 44 (tentative) 
+## Week 44
 
 * Material to study:
   * {ref}`rtos-tasks`
@@ -147,7 +147,7 @@ In addition to practical problems, the exercises also contain questions which ar
 * Project
   * {ref}`project-rtos`
 
-## Week 45 (tentative) 
+## Week 45
 
 * Material to study:
   * {ref}`rtos-intertask`
@@ -160,14 +160,14 @@ In addition to practical problems, the exercises also contain questions which ar
 * Project
   * {ref}`project-rtos`
 
-## Week 46 (tentative) 
+## Week 46
 
 * Material to study:
   * Review previous material
 
 * Project
   * {ref}`project-rtos`
-## Week 47 (tentative) 
+## Week 47
 
 * Review all course material
 
