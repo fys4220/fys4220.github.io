@@ -4,7 +4,7 @@
 In this part of the project you will design the UART controller that will be used to communicate data between the microcontroller system in the FPGA and the PC. 
 
 ```{Admonition} The learning outcome of this problem is to:
-:class:
+:class: note
 - Aquire basic knowledge of the UART serial communication protocol.
 - Gain experience in architecting a VHDL module.
 - Learn how to write a memory mapped CPU interface to connect a custom VHDL peripheral to the CPU bus.
@@ -494,7 +494,7 @@ end uart;
 
 
 
-### Verifying the UART
+## Verifying the UART
 To verify the behaviour of the UART we need to test both the processor interface and the TX and RX lines. This would require you to write support procedures to control and monitor each port according to the Avalon bus specification and the UART packet structure and timing. An example procedure for stimulating the RX port was already shown in {numref}`vhdl-package-example-procedure`.
 
 <!--
@@ -553,7 +553,7 @@ uart_write_data( x"22", rx, inject_error_stop_bit => true);
 See the section on {ref}`vhdl-packages` for more information on how to write a VHDL package.
 ```
 -->
-Writing dedicate test procedures can be very valuable for the learning process, but it can also be time consuming. When you have written a few your self, and have nailed the concept, it is instead recommended to make use similar procedures written and avaible by others. Since a lot of interface are standard, there is no point "reinventing the wheel", since someone has already written these procedures and made them available in open source verification libraries like e.g., Universal VHDL Verification Methodology (UVVM) library available from www.github.com/uvvm and www.uvvm.org, or Open source VHDL verification methodology (OSVVM) available from www.osvvm.rog. In this course we will demonstrate the use of UVVM. 
+Writing dedicate test procedures can be very valuable for the process of learning, but it can also be time-consuming. When you have first nailed the concept of writing such test procedurece, it is generally more efficient to make use of already existing libraries. There is no point "reinventing the wheel" when someone else has already written these procedures and made them available in open source verification libraries like e.g., Universal VHDL Verification Methodology (UVVM) library available from www.github.com/uvvm and www.uvvm.org, or Open source VHDL verification methodology (OSVVM) available from www.osvvm.rog. In this course we will demonstrate the use of UVVM. 
 
 ```{Admonition} Reading tip!
 If you would like to read more about UVVM here are a few relevant links:
@@ -563,16 +563,16 @@ If you would like to read more about UVVM here are a few relevant links:
 - [Einar Karlsen, *ESA satser på norsk verifikasjonssystem*, Elektronikknett 7. september 2017 (Norwegian only).](https://elektronikknett.no/Artikkelarkiv/2017/September/ESA-satser-paa-norsk-verifikasjonssystem)
 ```
 
-In the video below, Espen Tallaksen from EmLogic gives an introductory talk about UVVM.  UVVM is an extensive library and we will limit our use to the reduced version called UVVM Light (https://github.com/UVVM/UVVM_Light), and its respective [Bus Functional Models (BFM)](https://en.wikipedia.org/wiki/Bus_functional_model) for the UART and Avalon interfaces. The most relevant part of the video are the first 15 minutes. After this, more advanced concepts which are less relevant for this course are covered. Of course, you are welcome to watch the full presenation if you like.
+In the video below, Espen Tallaksen from EmLogic gives an introductory talk on UVVM.  UVVM is an extensive library and we will limit our use to the reduced version called UVVM Light (https://github.com/UVVM/UVVM_Light), and its respective [Bus Functional Models (BFM)](https://en.wikipedia.org/wiki/Bus_functional_model) for the UART and Avalon interfaces. The most relevant part of the video are the first 15 minutes. After this, more advanced concepts which are less relevant for this course are covered. Of course, you are welcome to watch the full presenation if you like.
 
 <div class="video-container">
 <iframe width="806" height="453" src="https://www.youtube.com/embed/6720XWkkANk" title="UVVM: UVM for VHDL designers – An introduction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 
-These first 15 minutes cover the basics of UVVM, and shows an example for the testing of a UART. The test procedures that you will use in the project are different from the ones use in the example, but the concepts are the same. The example uses so called bus functional models to interface and test the UART. A BFM is a VHDL description that models the signaling protocal of the various interface. Similar to the procedure used to stimulate the RX port in the previous section. In the example in processor interface to the UART is a simple bus interface (SBI). The simple bus interface is an alternative to the Avalon interface, which you instead will use to test the UART in this project. 
+These first 15 minutes cover the basics of UVVM exemplified by testing a UART. The test procedures that you will use in your project are different from the ones use in the example, but the concepts are the same. The example uses so called bus functional models to interface and test the UART. A BFM is a VHDL description that models the signaling protocal of the various interface. Similar to the procedure used to stimulate the RX port in the previous section. In the example the processor to UART interface  a simple bus interface (SBI). You will instead use an Avalon interface in your project, which is a bus interface specific for the Nios-II processor. 
 
-The relevant procedures for this project are are:
+The relevant procedures that will be used from the UVVM library for this project are:
 
 - avalon_mm_write()
 - avalon_mm_read()
@@ -598,7 +598,7 @@ All documents can be found in the  [*UVVM_Light/doc*](https://github.com/UVVM/UV
 ```
 
 (project-uart-uvvm)=
-#### Setting up the simulation
+### Setting up the simulation
 
 The description below assume that you will have the following directory structure. If you have different directory structure you must adopot the commands and decsription below accordingly. 
 

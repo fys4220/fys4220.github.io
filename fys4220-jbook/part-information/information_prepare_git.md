@@ -6,7 +6,7 @@ This section will give you a brief introduction to Git and how we will use Githu
 %Github is a cloud-based hosting service that lets you manage Git repositories. 
 
 ```{admonition} Note!
-:class:
+:class: note
 Notice that we are using a UiO managed version of Github – Github.uio.no – and **NOT** Github.com.
 ```
 
@@ -197,7 +197,7 @@ Verify that you repository has been updated online.
 
 
 ```{admonition} Tip
-:class:
+:class: tip
 
 If you would like check what a Git command is about to do, you can add the dry-run option:
 
@@ -210,7 +210,7 @@ The dry-run option will check what the git command is about to do, before actual
 
 
 ```{admonition} Organisation and naming conventions
-:class:
+:class: warning
 When working on the individual exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code is needed to match your setup.
 ```
 

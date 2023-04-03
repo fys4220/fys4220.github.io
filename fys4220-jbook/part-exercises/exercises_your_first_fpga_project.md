@@ -9,6 +9,7 @@ The most simple FPGA design that can be made is to make a connection between two
 - Verify that the design works by changing the position of the slide switches and observing the LEDs.
 
 ```{admonition} The learning outcome of this exercise is to:
+:class: note
 * Get familiar with the Quartus Prime design tool and the DE10-Lite board.
 * Be able to write and synthesize your first basic VHDL design.
 * And program the FPGA.
@@ -125,7 +126,7 @@ The Quartus assignment editor lists all connections between entity port names an
 ```
 
 ```{admonition} Tip
-:class:
+:class: tip
 When the Tcl file is added to the project, you can also (re)run the script from the Tcl Console Window using the command *source DE10-lite-pinning.tcl*. The Tcl Console Window can be opened from  (View --> Utility Windows) or through the short-cut *Alt+2*. Make sure you are in the same directory as the source file. You can check the current director using the command `pwd`. Change directory using the command *cd ..* to go up one level, or *cd <dir-name>* to enter a directory.
 ```
 
