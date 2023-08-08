@@ -10,7 +10,7 @@ As you set upon the task of learning about FPGA and embedded system design, you 
 * And finally, the necessary hardware and laboratory equipment to test and verify you design when running on the FPGA. 
 
 In the following sections we will briefly outline the tools you will encounter in this course. While some of these tools are specific to the type of FPGA vendor we will be use in this course, the skills you learn by using these tools are transferable to tools from other FPGA. Their user interfaces, integrated toolsets, and development flows may vary, but the general concepts still apply. 
- Working with the Quartus design tools from Intel (Intel aquired Altera in 2015) in this course will therefore lower your initial threshold for getting up to speed with e.g., the Vivado design tools from AMD Xilinx (ADM completed the acquisition of Xilinx in early 2022).
+ Working with the Quartus design tools from Intel (Intel acquired Altera in 2015) in this course will therefore lower your initial threshold for getting up to speed with e.g., the Vivado design tools from AMD Xilinx (ADM completed the acquisition of Xilinx in early 2022).
  
 
 ## Hardware 
@@ -73,8 +73,14 @@ name: fig:information_quartus
 ---
 The Intel Quartus Lite  design tool.
 ```
-The Quartus Prime Lite version can be downloaded for free and no license file is required:
-* [Link to download page for Quartus Prime Lite](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html?edition=lite&platform=windows&s=Newest&f:guidetmD240C377263B4C70A4EA0E452D0182CA=%5BIntel®%20Quartus®%20Prime%20Design%20Software%3BIntel®%20Quartus®%20Prime%20Lite%20Edition%5D)
+The Quartus Prime Lite version can be downloaded for free and no license file is required.
+<!-- * [Link to download page for Quartus Prime Lite](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html?edition=lite&platform=windows&s=Newest&f:guidetmD240C377263B4C70A4EA0E452D0182CA=%5BIntel®%20Quartus®%20Prime%20Design%20Software%3BIntel®%20Quartus®%20Prime%20Lite%20Edition%5D)
+-->
+
+```{admonition} Tip!
+:class: tip
+Instructions on how to download and install the tools can be found here: {ref}`information-download-quartus`.
+```
 
 Installation of Quartus Prime Lite will require around 15 GB of free disk space on you computer.
 
@@ -110,7 +116,7 @@ If you prefer to use both GHDL and GTKWave in FYS4220 that is OK. However, most 
 
 
 ## Git and Github
-You will be using [Git](https://git-scm.com) and Github.uio.no to manage your code. Git is a version control system that lets you manage and keep track of you source code history. Git uses so called repositories to store a collection of files of various different versions (file history) of a project. Github is a cloud-based hosting service that lets you manage Git repositories. UiO runs an enterprise version of the Github service hosted on UiO controlled servers.
+You will be using [Git](https://git-scm.com) and Github.uio.no to manage your code. Git is a version control system that lets you manage and keep track of you source code history. Git uses so-called repositories to store a collection of files of various different versions (file history) of a project. Github is a cloud-based hosting service that lets you manage Git repositories. UiO runs an enterprise version of the Github service hosted on UiO controlled servers.
 
 A Github organisation will be created for FYS4220 and each of you will create your own personal Git repository within this organisation. A Github organization is simply an area where multiple repositories are collected and more easily managed. To activate your user, you will first need to log in to Github.uio.no using your UiO credentials. Only then it will be possible to add you to the FYS4220 organisation.
 
@@ -122,12 +128,12 @@ For some people, text editors are religion, e.g., [the Emacs vs vi war](https://
 
 The student laboratory is in room 329 on the 3. floor, west wing, of the Physics building. There are 16 working stations equipped with a Windows PC and an oscilloscope. Version 18.1 of the Quartus Prime Lite and Modelsim Altera starter edition are installed on the PCs. 
 
-The room is reserved for FYS4220 on:
+We have reserved the room for FYS4220 on:
 
-* Mondays from 12:15 to 16:00 (14:00 to 18:00 in the period 19/9–3/10)
-* Wednesday from 10:15 to 14:00.
+* Mondays from 12:15 to 16:00 
+* Wednesday from 08:15 to 12:00.
 
-Your are of course free to use this rooms outside these ours if the room is available and not booked by any other course. You can find the weekly schedule for the room [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2022).
+You are of course free to use this rooms outside these hours if the room is available and not booked by any other course. You can find the weekly schedule for the room [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2023).
 
 ```{figure} ../images/student_lab.jpg
 ---

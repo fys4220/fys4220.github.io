@@ -12,8 +12,8 @@ Version 18.1 is also the version which is installed on the computers in the stud
 ```
 * Open a browser and navigate to the Quartus Prime Lite [download page](https://www.intel.com/content/www/us/en/collections/products/fpga/software/downloads.html?edition=lite&platform=windows&s=Newest&f:guidetmD240C377263B4C70A4EA0E452D0182CA=%5BIntel®%20Quartus®%20Prime%20Design%20Software%3BIntel®%20Quartus®%20Prime%20Lite%20Edition%5D)
 * Select the either the Windows or Linux version depending on your operating system:
-  * [Intel® Quartus® Prime Lite Edition Design Software Version 21.1.1 for Windows](https://www.intel.com/content/www/us/en/software-kit/736572/intel-quartus-prime-lite-edition-design-software-version-21-1-1-for-windows.html)
-  * [Intel® Quartus® Prime Lite Edition Design Software Version 21.1.1 for Linux](https://www.intel.com/content/www/us/en/software-kit/736571/intel-quartus-prime-lite-edition-design-software-version-21-1-1-for-linux.html) 
+  * [Intel® Quartus® Prime Lite Edition Design Software Version 18.1 for Windows](https://www.intel.com/content/www/us/en/software-kit/665990/intel-quartus-prime-lite-edition-design-software-version-18-1-for-windows.html?)
+  * [Intel® Quartus® Prime Lite Edition Design Software Version 18.1 for Linux](https://www.intel.com/content/www/us/en/software-kit/665988/intel-quartus-prime-lite-edition-design-software-version-18-1-for-linux.html?) 
 * Select version: 18.1 as shown in {numref}`fig:information_choose_quartus_version`
 
 ```{figure} ../images/information_choose_quartus_version.png

@@ -1,8 +1,12 @@
 (agenda)=
 # Weekly agenda
 
-This agenda is meant to help you organize your weekly progress in this course. Each week lists the recommended material to study and any relevant exercises or tasks related to the embedded systems project. It is strongly recommended to follow this agenda already from the start. Otherwise, you risk falling behind and expose your self to a unreasonably high workload towards the end of the semester. 
+We have prepared this agenda to help you organize your weekly progress in this course. Each week lists the recommended material to study and any relevant exercises or tasks related to the embedded systems project. 
 
+```{admonition} Warning!
+:class: warning
+It is strongly recommended to follow this agenda already from the start. Otherwise, you risk falling behind and expose yourself to a unreasonably high workload towards the end of the semester. 
+```
 
 <!--
 It is expected that you have worked through the recommended study material as a preparation to the Thursday lecture slot. The lecture slot will then be used to discuss the most important parts of this material or any relevant problems that have been identified during the lab hours.  
@@ -24,6 +28,9 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`fpga-introduction`
 * Exercises:
   * {ref}`information-prepare-git`
+  * {ref}`information-download-quartus`
+    * Only relevant if you want to install the tools on your own computer
+
 <!--
 * Exercises:
   * {ref}`fpga-exercise`
@@ -42,8 +49,6 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`vhdl-concurrent-statements`
   
 * Exercises:
-  * {ref}`information-download-quartus`
-    * Only relevant if you want to install the tools on your own computer
   * {ref}`exercises-first-project`
   * {ref}`exercises-adder-a`
 
@@ -125,7 +130,7 @@ In addition to practical problems, the exercises also contain questions which ar
 * Project
   * {ref}`project-nios2` 
 
-## Week 43 (tentative) 
+## Week 43  
 
 * Material to study:
   * {ref}`rtos-intro`

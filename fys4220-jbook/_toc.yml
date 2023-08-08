@@ -12,9 +12,9 @@ defaults:
 parts: 
   - caption: Getting started
     chapters:
+    - file: part-information/information_agenda
     - file: part-information/information_content_overview
     - file: part-information/information_tools
-    - file: part-information/information_agenda
 #    - file: part-information/information_other_resources
 #    - file: part-information/information_getting_started
 #      sections: 
