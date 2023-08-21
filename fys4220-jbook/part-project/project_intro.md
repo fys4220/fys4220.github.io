@@ -52,9 +52,9 @@ The project will be divided into 3 main parts to guide you through the design of
 
 A suggested timeline for the progress of the project:
 
-- Part 1:  19. Sept. -- 7. Oct. 
-- Part 2:  10. Oct. -- 28. Oct.
-- Part 3: 31. Oct. -- 18. Nov.
+- Part 1:  18. Sept. -- 6. Oct. 
+- Part 2:  9. Oct. -- 27. Oct.
+- Part 3: 30. Oct. -- 17. Nov.
 
 
 ```{admonition} Collaboration

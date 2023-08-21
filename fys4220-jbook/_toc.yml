@@ -21,9 +21,9 @@ parts:
     - file: part-information/information_download_tools
     - file: part-information/information_prepare_git
     - file: references.md
-    - url: https://github.uio.no/FYS4220-2022 
+    - url: https://github.uio.no/FYS4220-2023 
       title: Github organization page
-    - url: https://github.uio.no/orgs/FYS4220-2022/discussions
+    - url: https://github.uio.no/orgs/FYS4220-2023/discussions
       title: Discussion forum
   - caption: Main content
     numbered: true

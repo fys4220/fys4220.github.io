@@ -1,7 +1,7 @@
 (agenda)=
 # Weekly agenda
 
-We have prepared this agenda to help you organize your weekly progress in this course. Each week lists the recommended material to study and any relevant exercises or tasks related to the embedded systems project. 
+We have prepared this agenda to help you organize your weekly progress in this course. Each week lists the recommended material to study and the relevant exercises or tasks related to the embedded systems project. 
 
 ```{admonition} Warning!
 :class: warning
@@ -28,8 +28,8 @@ In addition to practical problems, the exercises also contain questions which ar
   * {ref}`fpga-introduction`
 * Exercises:
   * {ref}`information-prepare-git`
-  * {ref}`information-download-quartus`
-    * Only relevant if you want to install the tools on your own computer
+  * {ref}`information-download-quartus` (Only relevant if you want to install the tools on your own computer)
+  * {ref}`exercises-first-project`
 
 <!--
 * Exercises:

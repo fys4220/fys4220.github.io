@@ -19,9 +19,15 @@ Git is a version control system that lets you manage and keep track of you sourc
 * **git push**: transmit local branch commits to the remote repository branch
 * **git status**: show modified files in working directory, staged for your next commit (use this abundantly)
 * **git log**: show all commits in the current branch's history
+
+When working with branches, these commands are 
+* **git branch**: list branches
+* **git branch [branch-name]**: create a new branch at the current commit
+* **git checkout [existing-branch-name]**: switch to another branch and check it out into your working directory
+* **git merge [branch]**: merge the specified branch's history into the current one 
 <!--* [*git tag*]():--> 
 
-
+Checkout the Github cheat sheet for more commands: https://education.github.com/git-cheat-sheet-education.pdf
 
 
 <!--
@@ -31,7 +37,6 @@ A list of basic Git commands can be found here: Basic Git commands from https://
 There are many good resources on Git online and we encourage you to have a look at them. Some examples are listed below:
 * Informasjon on Github at UiO (Norwegian only): http://www.uio.no/tjenester/it/maskin/filer/versjonskontroll/github.html 
 * Git Guide by Github: https://github.com/git-guides
-* Github cheat sheet: https://education.github.com/git-cheat-sheet-education.pdf
 * Git tutorials from Atlassian: https://www.atlassian.com/git/tutorials/
 * Pro Git: https://git-scm.com/book/en/v2
 * Git Reference : http://git.github.io/git-reference/
@@ -71,25 +76,25 @@ It can also be worth watching the introduction lecture (about 53 min)  on Git fr
 
 Git often comes installed by default on most Mac and Linux machines. 
 
-On windows you can use Git for Windows: https://git-for-windows.github.io. Git for Windows is installed on the Windows computers in the student lab. (V329) we have installed.
+On Windows you can use Git for Windows: https://git-for-windows.github.io. We have installed Git for Windows on the Windows computers in the student lab (V329).
 
 Git for Windows provides a BASH emulation *Git BASH* used to run Git from the command line. 
 
-It also provides a graphical user interface *Git GUI*. However, we recommend to use the command line interface to get familiar with the basic Git commands.
+It also provides a graphical user interface *Git GUI*. However, we recommend using the command line interface to get familiar with the basic Git commands.
 
 
-There should be a link to *Git BASH* on the desktop. Double click on *Git BASH*, navigate to an appropriate directory and clone your Github.uio.no repository. The default path when starting *Git BASH* is typically your UiO home directory.
+There should be a link to *Git BASH* on the desktop. Double-click on *Git BASH*, navigate to an appropriate directory and clone your Github.uio.no repository. The default path when starting *Git BASH* is typically your UiO home directory.
 
 A guide on how to install Git is provided by Github here: https://github.com/git-guides/install-git
 
 
 
 ## Setup of  Github repository 
-Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2022* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor. You can only be added to the organization after you have logged in for the first time and your user has been created. 
+Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2023* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor. You can only be added to the organization after you have logged in for the first time and your user has been created. 
 
-The direct link to the organization is https://github.uio.no/FYS4220-2022.
+The direct link to the organization is https://github.uio.no/FYS4220-2023.
 
-* Login in to Github.uio.no and create a new repository in the *FYS4220-2022* organization (click the green button called *New*). Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
+* Login in to Github.uio.no and create a new repository in the *FYS4220-2023* organization (click the green button called *New*). Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
 ```{figure} ../images/assignments_create_gitrep_name.png
 ---
 width: 60%
@@ -101,13 +106,13 @@ Name your Git repository accordingly. The example image is from 2020.
 
 ```{Admonition} Note!
 :class: note
-Please stick to the naming convention for the repository name as specified above. This makes the instructor´s life easier! 
+Please stick to the naming convention for the repository name as specified above. This makes the instructors' life easier! 
 ```
 * Choose your preferred visibility [Public | Internal | Private]. If you choose *Public* or *Internal* your repository will be visible for everyone who is logged in to Github.uio.no. If you choose *Private* only you and the course instructor can see your repository. 
 
-```{admonition} A note on sharing and ollaboration
+```{admonition} A note on sharing and collaboration
 :class: note
-In general we encourage collaboration and therefore suggest that you set the visibility to the default value, which is *Internal* (not sure if there is practical difference between *Public* and *Internal* for our usage). However, keep in mind that to learn any programming language there is no way around doing the hard work yourself (practice, practice, practice). If you try to take the "easy way" out by copying and pasting from your fellow students repository, you only fool yourself. Instead, if you get stuck, discuss the problem with your peers and use instead their repositories as inspiration rather than just a simple copy and paste. Also, for this purpose it is recommend that you do your best to document your code – write structured and easily readable code with relevant comments explaining the purpose of your code. 
+In general we encourage collaboration and therefore suggest that you set the visibility to the default value, which is *Internal* (not sure if there is practical difference between *Public* and *Internal* for our usage). However, keep in mind that to learn any programming language there is no way around doing the hard work yourself (practice, practice, practice). If you try to take the "easy way" out by copying and pasting from your fellow students repository, you only fool yourself. Instead, if you get stuck, discuss the problem with other students and use instead their repositories as inspiration rather than just a simple copy and paste. Also, for this purpose it is recommend that you do your best to document your code – write structured and easily readable code with relevant comments explaining the purpose of your code. 
 ```
 
 
@@ -156,7 +161,7 @@ You are encouraged to use the readme file to document your work and to keep trac
 
 
 A *.gitignore* file is used by Git to filter out files that are not subject to version control.
-* To add this file write the following command inside the Git repository directory. Do not forget the leading punctuation mark.
+* To add this file write the following command inside the directory of the Git repository. Do not forget the leading punctuation mark.
 ```bash
 touch .gitignore
 ```
@@ -246,7 +251,20 @@ git clone https://github.uio.no/fys4220-2021/fys4220-lastname-firstname.git
 
 This will create a local copy of your git repository. 
 
-Edit and save a file (e.g., the readme file). Then add the file to the staging area.
+
+It is generally good practice to not work directly on the main branch. The main branch should always contain a working version of your code. When you are developing a new feature, e.g., starting a new exercise, always create a new branch for this work. When you have completed the feature, it can be merged into the main branch. In this course we will use a feature called pull request to review and merge the changes. We will demonstrate this feature by make a change to the README file.
+
+Create and checkout a new branch called *development*.
+
+```bash
+git branch development
+git checkout development
+# Check that you are on the correct branch
+git branch
+```
+
+
+Edit the README file add some text. Then add the file to the staging area.
 ```bash
 git add README.md
 ```
@@ -255,12 +273,13 @@ Commit the change with a relevant/informative message.
 git commit -m "Made changes to file README.md"
 ```
 
-Push these changes to the remote repository on Github.uio.no.
+Push these changes to the development branch on the remote repository on Github.uio.no.
 ```bash
-git push origin main
+git push origin development
 ```
 
-The local copy of the repository can now be deleted if wanted.
+
+<!-- The local copy of the repository can now be deleted if wanted. -->
 
 It is possible to combine the `git add` and `git commit` command in one step by adding *-a* to `git commit`.
 
@@ -271,7 +290,7 @@ git commit -am "Made changes to file README.md"
 Type `git commit -h` and find out what the *-a* argument means.
 
 
-If there are changes on the remote repository which are not yet updated locally, you will fisrt have to download these changes using `git pull` before  you can upload your local changes. 
+If there are changes on the remote repository which are not yet updated locally, you will first have to download these changes using `git pull` before  you can upload your local changes. 
 
 ```{admonition} Tip
 :class: tip
@@ -280,6 +299,43 @@ To reduce the risk of merge conflicts, only make changes to your local repositor
 See the CS50W lecture on Git above for an example of how to handle merge conflicts.
 
 ```
+
+After the local changes have been pushed to the development branch on Github.uio.no, you can create a pull request 
+
+```{figure} ../images/assignments_pullrequest.png
+---
+width: 80%
+align: center
+name: assignments_pullrequest
+---
+Press the *Compare & pull request* to create the pull request.
+```
+
+This will open a new page where you should write a message to explain the changes you would like to have reviewed and merged to the main branch. Press the *Create pull request* button. 
+
+
+```{figure} ../images/assignments_pullrequest2.png
+---
+width: 80%
+align: center
+name: assignments_pullrequest2
+---
+Write a message to explain the changes that should be reviewed for a merge to the main branch.
+```
+
+If your repository have been configured with the correct branch protection rule (this will be taken care of by the instructor), you should now see a page similar to the one shown below, indicating that a review is required to complete the pull request. You now have to add a reviewer and assignee to complete the review and merged. Choose the course instructor *ketilroe*. 
+
+```{figure} ../images/assignments_pullrequest3.png
+---
+width: 80%
+align: center
+name: assignments_pullrequest3
+---
+The pull request have been created and the merge to the main branch is blocked and awaiting a review.
+```
+
+We will use the same procedure when you are working on the exercises and project. 
+
 
 
 %### Submitting the project assignments
