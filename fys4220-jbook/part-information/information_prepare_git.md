@@ -90,7 +90,7 @@ A guide on how to install Git is provided by Github here: https://github.com/git
 
 
 ## Setup of  Github repository 
-Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2023* has already been created for FYS4220. If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor. You can only be added to the organization after you have logged in for the first time and your user has been created. 
+Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2023* has already been created for FYS4220. _If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor._ You can only be added to the organization after you have logged in for the first time and your user has been created. 
 
 The direct link to the organization is https://github.uio.no/FYS4220-2023.
 
@@ -101,7 +101,7 @@ width: 60%
 align: center
 name: assignments_gitrep_name
 ---
-Name your Git repository accordingly. The example image is from 2020.
+Name your Git repository accordingly. The example image is from 2020. An organization with the current year has been create. Please use this.
 ```
 
 ```{Admonition} Note!
@@ -147,10 +147,10 @@ First view of newly create Git repository.
 * Copy the path to the repository and use the *git clone* command to download the repository's content.
 
 ```bash
-git clone https://github.uio.no/FYS4220-2020/fys4220-lastname-firstname.git
+git clone https://github.uio.no/FYS4220-2023/fys4220-lastname-firstname.git
 ```
 
-* Navigate into the directory that was just created and open the readme file with your favorite text editor.
+* Navigate into the directory that was just created and open the readme file with your favourite text editor.
 * Write the following headline:
 
 ```console
@@ -304,7 +304,7 @@ After the local changes have been pushed to the development branch on Github.uio
 
 ```{figure} ../images/assignments_pullrequest.png
 ---
-width: 80%
+width: 95%
 align: center
 name: assignments_pullrequest
 ---
@@ -316,7 +316,7 @@ This will open a new page where you should write a message to explain the change
 
 ```{figure} ../images/assignments_pullrequest2.png
 ---
-width: 80%
+width: 95%
 align: center
 name: assignments_pullrequest2
 ---
@@ -327,7 +327,7 @@ If your repository have been configured with the correct branch protection rule 
 
 ```{figure} ../images/assignments_pullrequest3.png
 ---
-width: 80%
+width: 95%
 align: center
 name: assignments_pullrequest3
 ---

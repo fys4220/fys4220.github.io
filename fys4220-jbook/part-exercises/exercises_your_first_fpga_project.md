@@ -1,7 +1,7 @@
 (exercises-first-project)=
 # EX1: Your first FPGA project
 
-The most simple FPGA design that can be made is to make a connection between two pins of the FPGA. Where one pin is configured as an input and the other as an output. The goal of this exercise is to use the 10 slide switches on the DE10-Lite board to turn on and off the red Light Emitting Diodes (LED). The slide switches and LEDs can be seen in {numref}`fig:assignment-de10-lite`. Both the LEDs and the slide switches are physically connected to pins on the FPGA. Your task will be to create a VHDL design that connects these ports together. This will include:
+The most simple FPGA design that can be made is to make a connection between two pins of the FPGA, where we configure one pin an input and the other pin as an output. In this exercise you will use the 10 slide switches on the DE10-Lite board to control (turn on and off) the red Light Emitting Diodes (LED). The slide switches and LEDs can be seen in {numref}`fig:assignment-de10-lite`. Both the LEDs and the slide switches are physically connected to pins on the FPGA. Your task will be to create a VHDL design that connects these ports together. This will include:
 - Writing the VHDL statement that describes this connection.
 - Create a project in the Quartus design tools.
 - Setup the correct pinning assignments.
@@ -26,12 +26,41 @@ name: fig:assignment-de10-lite
 DE10-Lite board.
 ```
 
+## Prepare a new Git branch for the development of exercise 1.
+
+
+
+Clone your git repository to the local disk and create a new branch called *ex1*.
+
+```bash
+git clone https://github.uio.no/FYS4220-2023/<name of your git repository>
+git branch ex1
+```
+
+Check that you have created the new branch by running the command `git branch`:
+
+```bash
+$ git branch
+  ex1
+* main
+```
+
+This command lists the available branches. The branch marked with a star is the active branch. The new branch can be activated by running the command `git checkout` command.
+
+```bash
+$ git checkout ex1
+$ git branch
+* ex1
+  main
+```
+
+The branch _ex1_ is now marked with a star, which indicates that this branch is the active branch. 
+
+
 ## Create the Quartus Prime Project 
-To start we first need to create a project in the Quartus Prime development tool. Creating a project in Quartus will generate a number of related project files. It is therefore recommended to organise your files in a dedicated directory for each exercise. 
+To start you first need to create a project in the Quartus Prime development tool. Creating a project in Quartus will generate a number of related project files. I therefore recommended that you organize your files in a dedicated directory for each exercise. 
 
 %We will use the same directory for all the individual problems in the introductory assignment. The suggeted name for the directory is _lab1_. However, you are free to name it as you prefer.
-
-
 
 * Create a new directory called e.g., *ex1* in your local Git repository directory
 * Start the Quartus Prime program.
@@ -48,14 +77,12 @@ To start we first need to create a project in the Quartus Prime development tool
 For more information on the meaning of the device name see page 5 in *Intel MAX10 FPGA device overview*: https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/max-10/m10_overview.pdf
 
 
-
 ## Write your first VHDL design 
 The overall structure of the most typical VHDL-file can be divided in three parts as introduced in the section {ref}`vhdl-design-units`.
-You will create a VHDL file and write the respective description for these three parts.
-
+You will now create a VHDL file and write the respective description for these three parts.
 
 * Create a new directory called _src_ inside your _ex1_ directory
-* Open your favourite text editor (e.g. Notepad++) and create a file called *ex1.vhd* in the *src* directory. Remember to save the file in order to activate syntax highlighting.
+* Open your favourite text editor (e.g. Notepad++ or VS Code) and create a file called *ex1.vhd* in the *src* directory. Remember to save the file in order to activate syntax highlighting.
 * Add the new VHDL file to the project. (Project -> Add/Remove Files in Project). Locate the file, press *Add* and then press *OK*.
 * Add the following template VHDL desciption to *ex1.vhd*.
 
@@ -76,13 +103,36 @@ architecture top_level of ex1 is
 begin
 
   -- YOUR TASK:
-  -- Insert the required statement(s) that will connect
+  -- Insert the required statement(s) to connect
   -- the slide switches (inputs) to the LEDs (outputs).
 
 end architecture top_level;
 ```
 
-Your task is to add the needed ports to the *entity* description and the appropriate signal assignment(s) to connect the input ports to the output ports in the *architecture* description. This will physically connect the slide switches to the LEDs through the FPGA.
+Your task is now to add the needed ports to the *entity* description and the appropriate signal assignment(s) to connect the input ports to the output ports in the *architecture* description. This will physically connect the slide switches to the LEDs through the FPGA.
+
+
+### Commit and push the new file
+It is generally recommended to regularly commit your work to keep track of your development. This allows you to easily roll back to previous working version of your code. To exercise this, you will now add the new file under version control and push it online to your Github repository.
+
+```bash
+git add ex1.vhd
+git commit -m "created the new file ex1.vhd"
+git push origin ex1
+```
+Go online and verify that the new file is visible under the _ex1_ branch of your repository. You can change which branch is visible by using the dropdown button to the top left above your listed files as shown in the figure below.
+
+```{figure} ../images/assignments_ex1_branch.png
+---
+width: 95%
+align: center
+name: fig:assignment-ex1-branch
+---
+The dropdown menu shows the to available branches.
+```
+
+
+
 
 ```{admonition} Tips
 :class: tip, dropdown
@@ -92,7 +142,7 @@ Your task is to add the needed ports to the *entity* description and the appropr
 
 
 ## Pinning assignment
-The slides switches and the LEDs are hardwired to specific FPGA pins. It is therefore necessary to inform Quartus about which pins to use, that is, the "address" of the relevant pins.
+The slides switches and the LEDs are hardwired to specific FPGA pins. It is therefore necessary to inform Quartus about which pins to use, that is, the “address” of the relevant pins.
 
 The correct pin assignments can be found in the DE10-Lite User Manual which can be download from [Terasic](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=218&No=1021&PartNo=4). For example, the manual specifies that *sw(0)* is connected to the FPGA *PIN C10* and *led(0)* is connected to *PIN A8*. Each pin can be assigned manually through the Quartus Prime pin assignment manager, however, a more elegant and time saving approach is to make the pin assignment using a [Tcl](https://en.wikipedia.org/wiki/Tcl) scripting file.
 
@@ -159,7 +209,7 @@ These warnings can for the moment be ignored. If the compilation of the project 
 * Double click on the File field of the listed device and select the correct programming file (.sof extension). Tick the box for ”Programming/Configure”.
 * To program the FPGA press Start.
 * Verify that your design works by changing the position of the toggle switches on the DE10-Lite board.
-* Remeber to update your assignment progress status in the *readme.md* file before updating the Git repository.
+* Remember to update your assignment progress status in the *readme.md* file before updating the Git repository.
 
 ```{admonition} Question to consider!
 :class: note
@@ -175,15 +225,12 @@ With value we here mean whether you have to set it to a high voltage or low volt
 
 ## Update the git repository:
 
-When you have completed this exercise make sure to save your changes and push them to your git repository:
-
+When you have completed this exercise make sure to save your changes and push them to the git repository:
 
 ```bash
 git add -A
 git commit -am "First FPGA project completed"
-git push origin main
-git tag -a first-fpga-project -m "First FPGA project completed"
-git push origin first-fpga-project
+git push origin ex1
 ```
 
 To check which files have been added to the git repository write the command
@@ -202,7 +249,14 @@ ex1/ex1.qpf
 ex1/ex1.qsf
 ```
 
-You have now created and programmed your first FPGA design.
+
+<!-- git tag -a first-fpga-project -m "First FPGA project completed" -->
+<!-- git push origin first-fpga-project -->
+
+
+## Create a pull request to complete the exercise
+
+You have now created and programmed your first FPGA design and are ready to merge your solution into the main branch using a pull request. Press the _Compare & pull request_ button, write a descriptive text briefly explaining what you have done, add the user _ketilroe_ as reviewer and assignee, and finally press the _Create pull request_ button.
 
 ## Supporting video
 
