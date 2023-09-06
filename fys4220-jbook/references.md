@@ -66,6 +66,45 @@ The book is currently available online at [O’Reilly for Higher Education](http
 -->
 
 
+<!-- ## List of recorded videos
+
+**Programmable logic and FPGA technology**
+
+- [Introduction to programmable logic devices (24:16)](https://youtu.be/78u_ZiDrP8g)  
+- [Introduction to FPGAs (18:45)](https://www.youtube.com/watch?v=-bpNFbVPOdE)
+
+**VHDL**
+
+Background and introduction
+
+- [A brief historical view (7:03)](https://www.youtube.com/watch?v=2xXKKpA9o4w)
+- [Design units and structure (7:44) ](https://www.youtube.com/watch?v=-WT1XKdmkLQ)
+- [Description models (19:34)](https://www.youtube.com/watch?v=ZFT7vDt6U-U) 
+- [The design flow (06:07)](https://www.youtube.com/watch?v=s4XWx6PetrE) 
+
+Process
+
+- [Combinational process (8:15) ](https://www.youtube.com/watch?v=TvnNbY7dLQA)
+- [Combinational Process with simulation and common pitfalls (33:19)](https://youtu.be/kEU-dkICHxg)
+- [Synchronous process with asynchronous or synchronous reset (28:50)](https://www.youtube.com/watch?v=xnml2JUfbWI) 
+
+
+Test benches
+
+Introduction to packages and subprograms (10:20) 
+Introduction to test benches (27:51) 
+ 
+
+State machines
+
+Introduction to Finite State Machines (12:18)
+Example implementation of a 1-process state machine (11:14) 
+Simulation of the 1-process state machine (17:42) 
+Example implementation of a 2-process state machine (9:23) 
+Simulation of the 2-process state machine (3:16) 
+Example implementation of a 3-process state machine incl. simulation (13:02) 
+ -->
+
 ## References
 ```{bibliography}
 :style: alpha

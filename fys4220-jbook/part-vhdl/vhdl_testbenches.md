@@ -14,7 +14,7 @@ A top-level view on testbenches.
 
 Testbenches can be written in VHDL. A VHDL testbench is not meant to run on hardware and can therefore take advantage of the full extent of the VHDL language. In contrast, the design under test, which will run on the FPGA, is restricted to VHDL written at the RTL-level level (see section {ref}`vhdl-rtl`).  
 
-For a VHDL testbench it is e.g., possible to write a statment like shown below.
+For a VHDL testbench it is e.g., possible to write a statement like shown below.
 
 ```{code-block} vhdl
 A <= '0';
@@ -66,7 +66,7 @@ end architecture;
 ```
 
 
-To build a testbench to verify this design you will make use to the structural description style introduced in section {ref}`vhdl-structural`. Since the half adder is already described as a complete component with an entity and related architecture, we can simply reuse this design in a new VHDL file. The first step is to prepare the testbench VHDL-file. To distinguish the two files and entities, it is common to add *tb* as a prefix or postfix to the name of the design under test, and use this as the name of the testbench file. In this example add *tb* as a postfix. 
+To build a testbench to verify this design you will make use to the structural description style introduced in section {ref}`vhdl-structural`. Since we already have described the half adder as a complete component with an entity and related architecture, we can simply reuse this design in a new VHDL file. The first step is to prepare the testbench VHDL-file. To distinguish the two files and entities, it is common to add *tb* as a prefix or postfix to the name of the design under test, and use this as the name of the testbench file. In this example add *tb* as a postfix. 
 
 ```{code-block} vhdl
 -- Filename: halv_adder_tb.vhd
@@ -230,7 +230,7 @@ Chapter 8, section 8.4 in LaMeres {cite}`lameres`.
 
 ## Simulate in Modelsim
 
-The testbench is now ready to be simulated using e.g., Modelsim. A simulation tool like Modelsim can be used to run the test bench and visualize its behaviour in a wave diagram format. Modelsim is a commercial tool, but a free version called *Modelsim-Intel FPGA Starter Edition* is included when downloading and installing the Quartus Prime Lite Edition. The starter edition is limited to 10000 lines of code. Adding more lines will reduce the performance of the simulator is significantly. An open-source alternative for the VHDL language is [GHDL](http://ghdl.free.fr) or [GHDL on Github](https://github.com/ghdl/ghdl). The output of GHDL can be read and viewed by [GTKWave](http://gtkwave.sourceforge.net). Since Modelsim is already included in Quartus Prime Lite, and since it is one of the most used tool in industry, we will continue to use Modelsim in this course.
+The testbench is now ready to be simulated using Modelsim. A simulation tool like Modelsim can be used to run the test bench and visualize its behaviour in a wave diagram format. Modelsim is a commercial tool, but a free version called *Modelsim-Intel FPGA Starter Edition* is included when downloading and installing the Quartus Prime Lite Edition. The starter edition is limited to 10000 lines of code. Adding more lines will reduce the performance of the simulator is significantly. An open-source alternative for the VHDL language is [GHDL](http://ghdl.free.fr) or [GHDL on Github](https://github.com/ghdl/ghdl). The output of GHDL can be read and viewed by [GTKWave](http://gtkwave.sourceforge.net). Since Modelsim is already included in Quartus Prime Lite, and since it is one of the most used tool in industry, we will continue to use Modelsim in this course.
 
 In the following description the files are organized as shown below. Design files and testbench files are often separated into different folders. It is also good practice to create a separate folder where the simulations are run. 
 
@@ -304,23 +304,98 @@ To verify the correct behaviour of the half adder, we need to manually inspect t
 % then add procedures
 
 ## Self-testing testbenches
-A manual verification of a wave diagram as discussed above will very quickly become impractical and time consuming as your design's complexity increases. It is therefore recommended to automate the simulation and verification as much as possible. Ideally, a testbench should run and complete reporting simply if the simulation passed the verification criteria or no. This means that you have to add checking into your testbench. One method is to make use of the assertion and report statements in VHDL.
+A manual verification of a wave diagram as discussed above will very quickly become impractical and time-consuming as your design's complexity increases. It is therefore recommended to automate the simulation and verification as much as possible. Ideally, a testbench should run and complete reporting simply if the simulation passed the verification criteria or no. This means that you have to add checking into your testbench. One method is to make use of the assertion and report statements in VHDL.
 
 ### Assert and report
 
-Assertion and report statements can be used to check that expected conditions are met in your design. The full syntax is shown below.
-```
-[label]: assert condition
-         [ report expression ] 
-         [ severity expression ];
-```
 
-In its simplest form it just includes the keyword *assert* followed by a condition that we expect to be true when the assertion statement is executed. E.g., for the half adder design above, when the inputs *A* and *B* are both '0', we expect the output signal *SUM* to also be ´0´. 
+**Report**
+
+The basic syntax of the report statement is:
 
 ```{code-block} vhdl
-A <= '1';
-B <= '1';
+report <message_string> [severity <severity_level>]
+```
+
+There are four severity levels that can be used (error, warning, note, and failure). Using severity level *failure* will stop the simulation, while the three others will allow the simulation to continue.
+
+```{code-block} vhdl
+-- defined in the standard package with is included by default. 
+type severity_level is (note, warning, error, failure); 
+```
+
+If the severity level is omitted, the report statement is implicitly assumed to be a *note*. 
+
+Given the following lines:
+
+```{code-block} vhdl
+report "This is a note";
+report "This is also a note" severity note;
+report "This is a warning" severity warning;
+report "This is an error" severity error;
+report "This is a failure" severity failure;
+```
+
+a simulation in Modelsim will return:
+
+```
+# ** Note: This is a note
+#    Time: 0 ns  Iteration: 0  Instance: /assert_tb
+# ** Note: This is also a note
+#    Time: 0 ns  Iteration: 0  Instance: /assert_tb
+# ** Warning: This is a warning
+#    Time: 0 ns  Iteration: 0  Instance: /assert_tb
+# ** Error: This is an error
+#    Time: 0 ns  Iteration: 0  Instance: /assert_tb
+# ** Failure: This is a failure
+#    Time: 0 ns  Iteration: 0  Process: /assert_tb/line__17 File: assert_tb.vhd
+# Break in Process line__17 at assert_tb.vhd line 27
+# Stopped at assert_tb.vhd line 27
+```
+
+Report statements are sequential statements, which means that they can only be used inside a {ref}`vhdl-process` or {ref} `vhdl-packages-procedure` statement.
+
+
+**Assert** 
+
+The most basic syntax of the assert statement is:
+
+```
+assert condition;
+```
+
+This statement can be used to check if a condition is true or false. If the condition is true, the simulation will continue without prompting a message. If the condition is false, the simulation will prompt a message. 
+
+```{code-block} vhdl
+-- Here the condition is true and the simulation will continue without a prompt
+assert true;
+-- Here the condition is false and the simulation will break
+assert false;
+```
+
+Assertion and report statements can be combined to check if an expected condition is met, or provide feedback in case it is not met. 
+
+The combined syntax is shown below followed by a basic example:
+```
+[label]: assert condition
+         [ report <message_string> [severity <severity_level>]];
+```
+
+```{code-block} vhdl
+ assert false report "This assert condition is false" severity warning;
+ ```
+
+When used in the half-adder test bench, the assert statement can be used to verify correct behaviour of the half-adder.
+
+E.g., when the inputs *A* and *B* are both '0', we expect the output signal *SUM* to also be ´0´. 
+
+```{code-block} vhdl
+-- Set the input signals to '0'
+A <= '0';
+B <= '0';
+-- progress simulation to make sure the signal values are updated.
 wait for 1 ns;
+-- check if the output signal SUM is '0' as expected.
 assert SUM = '0';
 ```
 
@@ -331,23 +406,43 @@ Adding the assertion statement checking for the condition *SUM = '0'* will repor
 #    Time: 200 ns  Iteration: 0  Instance: /half_adder_tb
 ```
 
-To increase the verbosity level you can add a report statement and also the appropriate severity level. To test this you can change the statement `SUM <= A xor B;` to `SUM <= A or B` and demonstrate the assertion statement as shown below.
+To increase the verbosity level you can add a report statement and also the appropriate severity level. To test this you can change the statement `SUM <= A xor B;` to `SUM <= A or B` in your half-adder design and demonstrate the assertion statement as shown below.
 ```{code-block} vhdl
-A <= '1';
-B <= '1';
+-- Set the input signals to '0'
+A <= '0';
+B <= '0';
+-- progress simulation to make sure the signal values are updated.
 wait for 1 ns;
-assert SUM = '0';
+-- check if the output signal SUM is '0' as expected and prompt a message if not.
+assert SUM = '0'
   report "Incorrect value for signal SUM. Was " & to_string(SUM) & ", expected 0"
   severity warning;
 ```
-Modelsim will then report the following message.
+
+Modelsim will then report the following message:
 
 ```
 # ** Warning: Incorrect value for signal SUM. Was to 1, expected 0
 #    Time: 200 ns  Iteration: 0  Instance: /half_adder_tb
 ```
 
-There are four severity levels that can be used (error, warning, note, and failure). Using severity level *failure* will stop the simulation, while the three others will allow the simulation to continue.
+Assert statements can be used both in the concurrent part of the architecture and inside a process.
+
+
+```{code-block} vhdl
+architecture tb of test_tb is
+begin
+
+assert false report "This is a warning" severity warning;
+
+process
+begin
+  assert false report "This is warning from inside a process" severity warning;
+end process;
+
+end architecture;
+```
+
 
 
 ```{admonition} A note on simulation time and updating of signals
@@ -356,20 +451,27 @@ You might have noticed that a "*wait for 1 ns*" statement has been use in the ex
 
 ```{admonition} VHDL 2008 and type convertion
 VHDL is a strongly type language. For the report statement this means that the value of SUM which is of the type std_logic needs to be convert to a string. If the testbench is compiled with VHDL 2008, it is possible to use the *to_string* function. For previous versions, the convertion had to be done using the more cryptic statement `std_logic'image(SUM)`. Also, this statement did not support convertion from *std_logic_vector*. For ease of use, it is therefore recommended to use the *to_string* function supported in VHDL. This also supports *std_logic_vector*. 
+
+In Modelsim you can set the appropriate VHDL version in two ways:
+- Right click on the file to be compiled (Properties --> VHDL), or 
+- through compile options in the menu bar for project wide setting (Compile --> Compile options)
+
 ```
 
 The assertion statement also supports composite conditions. 
 
 ```{code-block} vhdl
-assert (COUT & SUM) = "10"
+
+assert (COUT = '1' and SUM = '0')
   report "Incorrect value for signal SUM and COUT," & to_string(COUT & SUM)    
   severity warning;
 
 -- or
 
-assert (COUT = 1 and SUM = 0)
+assert (COUT & SUM) = "10"
   report "Incorrect value for signal SUM and COUT," & to_string(COUT & SUM)    
   severity warning;
+
 
 ```
 A complete stimuli process including assertion statements for the half adder example is shown below.
@@ -389,7 +491,7 @@ A complete stimuli process including assertion statements for the half adder exa
     B <= '0';
     -- Progress simulation time and check values
     wait for 50 ns;
-    assert (COUT & SUM) = "00"
+    assert (COUT = '0' and SUM = '0');
       report "(COUT & SUM) was " & to_string(COUT & SUM) & ", expected 00"
       severity warning;
 
@@ -399,7 +501,7 @@ A complete stimuli process including assertion statements for the half adder exa
     wait for 50 ns;
     -- Progress simulation time and check values
     wait for 50 ns;
-    assert (COUT & SUM) = "01"
+    assert (COUT = '0' and SUM = '1');
       report "(COUT & SUM) was " & to_string(COUT & SUM) & ", expected 00"
       severity warning;
 
@@ -408,7 +510,7 @@ A complete stimuli process including assertion statements for the half adder exa
     B <= '1';
     -- Progress simulation time and check values
     wait for 50 ns;
-    assert (COUT & SUM) = "01"
+    assert (COUT = '0' and SUM = '1');
       report "(COUT & SUM) was " & to_string(COUT & SUM) & ", expected 00"
       severity warning;
 
@@ -417,7 +519,7 @@ A complete stimuli process including assertion statements for the half adder exa
     B <= '1';
     -- Progress simulation time and check values
     wait for 50 ns;
-    assert (COUT & SUM) = "10"
+    assert (COUT = '1' and SUM = '0');
       report "(COUT & SUM) was " & to_string(COUT & SUM) & ", expected 00"
       severity warning;
 

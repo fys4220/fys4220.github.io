@@ -37,7 +37,7 @@ To gain wide spread use, the maintenance of VHDL was handed over to *Institute o
 
 VHDL is in active development and the latest revision is currently:  [1076-2019](https://doi.org/10.1109/IEEESTD.2019.8938196). However, the 2019 version has just been released and there is always a lag before the various development and simulation tools supports an updated standard. E.g., the VHDL standard 1076-1993 is still the default setting in Quartus Prime Lite, while for Modelsim it is 1076-2002. On both tools this can be changed, but for the moment only to 1076-2008:
 * Quartus: (Assignments --> Settings --> Compiler Settings --> VHDL input).
-* Modelsim: Right click on the file to be compiled (Properties --> VHDL).
+* Modelsim: Right click on the file to be compiled (Properties --> VHDL), or through compile options in the menu bar for project wide setting (Compile --> Compile options)
 
 The VHDL version are typically referred to as *VHDL-year*, e.g., VHDL-87, VHDL-93, VHDL-2008. 
 

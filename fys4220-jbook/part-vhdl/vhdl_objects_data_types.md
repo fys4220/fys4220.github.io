@@ -92,7 +92,9 @@ constant <identifier> : <type> [:= initial_value]
 %# #- [https://en.wikipedia.org/wiki/VHDL](https://en.wikipedia.org/wiki/VHDL)
 %# #- [1076-2008 - IEEE Standard VHDL Language Reference Manual, DOI: 10.1109/IEEESTD.2009.4772740](https://doi.org/# 10.1109/IEEESTD.2009.%4772740)
 
+(vhdl-data-types)=
 ## Data types
+
 The concept of type is very important in VHDL. The type of an object defines the set of values that the object can assume, as well as the set of operations that can be performed on those values {cite}`ashenden`. VHDL is said to be a strongly typed languages, meaning that an object can only be assigned values of the same type that was used to declare the object. The advantage of a strongly typed language is that errors will be detected at an early phase of the design process.
 
 ### Commonly used types
@@ -102,7 +104,7 @@ The two most commonly used types in VHDL are probably:
 - *std_logic*
 - *std_logic_vector*
 
-The *std_logic* type was introduced in the IEEE *std_logic_1164* standard to represent all logic values that cab be modelled and synthesised in a modern programmable logic device. It can be thought of as representing a single wire or bit. A *std_logic_vector* is an efficient way of grouping together a set of signals with the same name, e.g. an 8-bit data bus.
+The *std_logic* type was introduced in the IEEE *std_logic_1164* standard to represent all logic values that can be modelled and synthesised in a modern programmable logic device. It can be thought of as representing a single wire or bit. A *std_logic_vector* is an efficient way of grouping together a set of signals with the same name, e.g. an 8-bit data bus.
 
 In an electronic circuit logic values of 0 (low) and 1 (high) are represented by using voltages. E.g. 0 V for a logic low value and 1.2 V, 3.3 V or 5 V for a logic high value depending on the technology used. In VHDL these values can be represented by a *std_logic* value of '0' or '1'.
 

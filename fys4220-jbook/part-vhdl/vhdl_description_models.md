@@ -130,10 +130,10 @@ begin
   A3 : AND_GATE port map(A => A_IN, B => C_IN, Y => int3);
   O1 : OR_GATE port map(A  => int1, B => int2, C => int3, Y => Y_OUT);
 
-end architcture structural;
+end architecture structural;
 ```
 
-This structural description makes use of two different components, a 2-input and-gate and a 3-input or-gate. The components and signals used to interconnect the components are declared in the declaration section of the architcture while the implementation of the interconnections are described as concurrent statements between the *begin* and `end architcture` keywords. The `port map` statement is used to connect the ports of the component to the internal signals of the top level architecture. The and-gate and or-gate are described in a separate VHDL file. The advantage of an hierarchical approach is that components can easily be reused. E.g., the implementation above makes use of three and-gates and one or-gate to achieve the design shown in figure {numref}`fig:vhdl-description-models-schematic-tmr`. However, the VHDL description above does not reveal anything about the functionality or behaviour of the design, only how the components are interconnected.
+This structural description makes use of two different components, a 2-input and-gate and a 3-input or-gate. The components and signals used to interconnect the components are declared in the declaration section of the architecture while the implementation of the interconnections are described as concurrent statements between the *begin* and `end architecture` keywords. The `port map` statement is used to connect the ports of the component to the internal signals of the top level architecture. The and-gate and or-gate are described in a separate VHDL file. The advantage of an hierarchical approach is that components can easily be reused. E.g., the implementation above makes use of three and-gates and one or-gate to achieve the design shown in figure {numref}`fig:vhdl-description-models-schematic-tmr`. However, the VHDL description above does not reveal anything about the functionality or behaviour of the design, only how the components are interconnected.
 
 
 ```{figure} ../images/vhdl_tmr_structural.png

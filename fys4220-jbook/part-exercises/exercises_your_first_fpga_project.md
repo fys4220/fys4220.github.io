@@ -15,6 +15,8 @@ The most simple FPGA design that can be made is to make a connection between two
 * And program the FPGA.
 ```
 
+
+
 %More information about the DE10-Lite board can be found on the "DE10-Lite":"http://de10-lite.terasic.com/" webpage and in the "DE10-Lite User Manual":"https://tinyurl.com/y2y5fky4". For more information about Intel FPGAs and the Quartus Prime design software visit the "Intel documentation page":"https://www.intel.com/content/www/us/en/programmable/documentation/lit-index.html" and "Quartus Prime user guide":"https://www.intel.com/content/www/us/en/programmable/documentation/yoq1529444104707.html".
 
 ```{figure} ../images/de10-lite_layout_top.jpg 
@@ -57,6 +59,14 @@ $ git branch
 The branch _ex1_ is now marked with a star, which indicates that this branch is the active branch. 
 
 
+## Supporting video
+In the following video I work through the exercise below. Note that the video is a few years old -- some details like file and folder names will therefore be different. You should follow the naming convention as specified in the description on this page. 
+
+<div class="video-container">
+<iframe width="912" height="568" src="https://www.youtube.com/embed/hQx_fcnzPks" title="EX1: First FPGA project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
 ## Create the Quartus Prime Project 
 To start you first need to create a project in the Quartus Prime development tool. Creating a project in Quartus will generate a number of related project files. I therefore recommended that you organize your files in a dedicated directory for each exercise. 
 
@@ -77,6 +87,9 @@ To start you first need to create a project in the Quartus Prime development too
 For more information on the meaning of the device name see page 5 in *Intel MAX10 FPGA device overview*: https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/max-10/m10_overview.pdf
 
 
+
+
+
 ## Write your first VHDL design 
 The overall structure of the most typical VHDL-file can be divided in three parts as introduced in the section {ref}`vhdl-design-units`.
 You will now create a VHDL file and write the respective description for these three parts.
@@ -90,6 +103,47 @@ You will now create a VHDL file and write the respective description for these t
 library IEEE;
 use IEEE.std_logic_1164.all;
 
+-- The entity describes the interface
+-- between the outside and the internal
+-- functionality.
+entity ex1 is
+  port (
+      -- sw is a 10-bit wide input port
+      sw: in std_logic_vector(9 downto 0);
+      -- led is a 10-bit wide output port
+      led: out std_logic_vector(9 downto 0)
+      );
+    end entity ex1;
+
+-- The architecture describes the internal functionality
+architecture rtl of ex1 is
+
+begin
+
+  -- The following statement will connect the input signal vector _sw_ to 
+  -- the output signal vector _led_ 
+  led <= sw;
+  
+end architecture rtl;
+```
+
+```{admonition} Tip
+:class: tip
+When you have multiple signals or ports of the same name these can be bundled together using the *std_logic_vector* type. The *std_logic* is the most commonly used type in VHDL, and the *std_logic_vector* is the array version of it.
+
+You can read more about *std_logic* and *std_logic_vector* in the section {ref}`vhdl-data-types`.
+
+```
+
+
+
+<!-- For more information about how to write basic VHDL description using entity and architecture.  -->
+
+
+<!-- ```vhdl
+library IEEE;
+use IEEE.std_logic_1164.all;
+
 entity ex1 is
   port (
       -- YOUR TASK:
@@ -98,7 +152,7 @@ entity ex1 is
       );
     end entity ex1;
 
-architecture top_level of ex1 is
+architecture rtl of ex1 is
 
 begin
 
@@ -106,10 +160,12 @@ begin
   -- Insert the required statement(s) to connect
   -- the slide switches (inputs) to the LEDs (outputs).
 
-end architecture top_level;
-```
+end architecture rtl;
+``` -->
 
-Your task is now to add the needed ports to the *entity* description and the appropriate signal assignment(s) to connect the input ports to the output ports in the *architecture* description. This will physically connect the slide switches to the LEDs through the FPGA.
+
+
+<!-- Your task is now to add the needed ports to the *entity* description and the appropriate signal assignment(s) to connect the input ports to the output ports in the *architecture* description. This will physically connect the slide switches to the LEDs through the FPGA. -->
 
 
 ### Commit and push the new file
@@ -134,29 +190,43 @@ The dropdown menu shows the to available branches.
 
 
 
-```{admonition} Tips
-:class: tip, dropdown
-* When you have multiple signals or ports of the same name these can be bundled together using the *std_logic_vector* type. The *std_logic* is the most commonly used type in VHDL, and the *std_logic_vector* is the array version of it.
-* To comply with the remaining part of this problem, it is suggested to use **sw** and **led** when naming the ports.
-```
+
 
 
 ## Pinning assignment
 The slides switches and the LEDs are hardwired to specific FPGA pins. It is therefore necessary to inform Quartus about which pins to use, that is, the “address” of the relevant pins.
 
-The correct pin assignments can be found in the DE10-Lite User Manual which can be download from [Terasic](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=218&No=1021&PartNo=4). For example, the manual specifies that *sw(0)* is connected to the FPGA *PIN C10* and *led(0)* is connected to *PIN A8*. Each pin can be assigned manually through the Quartus Prime pin assignment manager, however, a more elegant and time saving approach is to make the pin assignment using a [Tcl](https://en.wikipedia.org/wiki/Tcl) scripting file.
+The correct pin assignments can be found in the DE10-Lite User Manual which can be download from [Terasic](https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&CategoryNo=218&No=1021&PartNo=4). For example, the manual specifies that *sw[0]* is connected to the FPGA *PIN C10* and *led[0]* is connected to *PIN A8*. Each pin can be assigned manually through the Quartus Prime pin assignment manager, however, a more elegant and time saving approach is to make the pin assignment using a [Tcl](https://en.wikipedia.org/wiki/Tcl) scripting file.
 
 * Create a new file called *de10-lite-pinning.tcl* in your *ex1* directory.
-* Open the new Tcl-file in your favourite text editor  and enter the required pinning constraints. Examples for the first LED and SW pin assignment is shown below.
+* Open the new Tcl-file in your favourite text editor and enter the required pinning constraints as show below. 
+
+<!-- Examples for the first LED and SW pin assignment is shown below. -->
 
 ```tcl
 #Toggle switches
 set_location_assignment PIN_C10 -to sw[0]
-# YOUR TASK: Enter the pin assignments for the remaining SW pins
+set_location_assignment PIN_C11 -to sw[1]
+set_location_assignment PIN_D12 -to sw[2]
+set_location_assignment PIN_C12 -to sw[3]
+set_location_assignment PIN_A12 -to sw[4]
+set_location_assignment PIN_B12 -to sw[5]
+set_location_assignment PIN_A13 -to sw[6]
+set_location_assignment PIN_A14 -to sw[7]
+set_location_assignment PIN_B14 -to sw[8]
+set_location_assignment PIN_F15 -to sw[9]
 
 #LED outputs
 set_location_assignment PIN_A8 -to led[0]
-# YOUR TASK: Enter the pin assignments for the remaining LED pins
+set_location_assignment PIN_A9 -to  led[1]
+set_location_assignment PIN_A10 -to led[2]
+set_location_assignment PIN_B10 -to led[3]
+set_location_assignment PIN_D13 -to led[4]
+set_location_assignment PIN_C13 -to led[5]
+set_location_assignment PIN_E14 -to led[6]
+set_location_assignment PIN_D14 -to led[7]
+set_location_assignment PIN_A11 -to led[8]
+set_location_assignment PIN_B11 -to led[9]
 
 #To avoid that the FPGA is driving an unintended value on pins that are not in use:
 set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED"
@@ -204,7 +274,20 @@ These warnings can for the moment be ignored. If the compilation of the project 
 * Make sure to connect the USB cable to the USB connector on the DE10-Lite.
 * Open the Quartus programmer (Tools -> Programmer).
 * If the field next to the button ”Hardware Setup” shows ”No Hardware”, make sure the USB cable is connect to both the PC and the DE10-Lite board, and that the power is turned on. Press the ”Hardware Setup and choose ”USB-Blaster [USB-0]” under the ”Currently selected hardware”. Press Close.
-  * If you still do not see the USB-blaster you might need to install the drivers:http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions first.
+
+
+```{admonition} Note!
+:class: note
+
+USB-Blaster driver installation on Windows:
+
+* If you have connected DE10-Lite board to you computer, and the USB-blaster does not show up in the Quartus programmer tool, you might need to [install the driver](http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions).
+
+```
+
+  <!-- * If you still do not see the USB-blaster you might need to install the drivers:http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions first. -->
+
+
 * If you do not see an entry in the File filed, press auto detect to automatically detect the FPGA device. If you are asked to choose a specific device, choose the 10M50DA.
 * Double click on the File field of the listed device and select the correct programming file (.sof extension). Tick the box for ”Programming/Configure”.
 * To program the FPGA press Start.
@@ -258,12 +341,4 @@ ex1/ex1.qsf
 
 You have now created and programmed your first FPGA design and are ready to merge your solution into the main branch using a pull request. Press the _Compare & pull request_ button, write a descriptive text briefly explaining what you have done, add the user _ketilroe_ as reviewer and assignee, and finally press the _Create pull request_ button.
 
-## Supporting video
-
-In the following video I work through the exercise above. Note that the video is a few years old -- some details like file and folder names will therefore be different. You should follow the naming convention as specified in the description above on this page. 
-
-
-<div class="video-container">
-<iframe width="912" height="568" src="https://www.youtube.com/embed/hQx_fcnzPks" title="EX1: First FPGA project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
 
