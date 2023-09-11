@@ -252,7 +252,17 @@ git clone https://github.uio.no/fys4220-2021/fys4220-lastname-firstname.git
 This will create a local copy of your git repository. 
 
 
-It is generally good practice to not work directly on the main branch. The main branch should always contain a working version of your code. When you are developing a new feature, e.g., starting a new exercise, always create a new branch for this work. When you have completed the feature, it can be merged into the main branch. In this course we will use a feature called pull request to review and merge the changes. We will demonstrate this feature by make a change to the README file.
+https://docs.github.com/en/get-started/quickstart/github-flow
+
+```{admonition} Recommended workflow
+:class: note
+
+It is generally good practice to not work directly on the main branch. In this course we will follow the Github flow approach where the main branch always will contain a reviewed and working version of your code, and where dedicated branches are created when developing new features. A new branch is a safe place to make changes. During the development you commit and push changes to the new branch. When you have completed the feature or modification to your code, it can be merged into the main branch. In this course we will use a feature called pull request to review and merge the changes. We will demonstrate this feature below where you will make a change to the README file.
+
+You can read more about the Github flow [here](https://docs.github.com/en/get-started/quickstart/github-flow).
+
+```
+
 
 Create and checkout a new branch called *development*.
 
