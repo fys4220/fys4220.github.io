@@ -595,6 +595,11 @@ architecture tb of test is
 
 begin
 
+  -- invert the value of the signal clk after a certain time (half clock period) when 
+  -- the enable signal is true, otherwise the clk signal shall remain 0.
+  -- This creates a signal that changes its value every half clock cycle when the clk_ena
+  -- signal is true, and remains at 0 when the clk_ena signal is false, that is, a clock
+  -- with the frequency equal to 1/clk_period
   clk <= not clk after clk_period/2 when clk_ena else '0';
  
   p_stimuli: process
