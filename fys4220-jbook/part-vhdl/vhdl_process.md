@@ -18,6 +18,32 @@ end [process] [process-label];
 The *process-label* is an optional identifer of the process, e.g. a name given to the process, which can be used e.g. to easily find/identify the process when performing simulations in Modelsim.
 
 
+## Supporting videos
+
+The 3 following videos gives an introduction to process in VHDL. The first video discusses how the process statement works and how it can be used to write combinational logic. The second video then follows up with a testbench to simulate the combinational process from video 1. These two videos also demonstrates how a process can be used differently when writing code for synthesis and for a testbench purpose. Finally, the third video covers the synchronous process, and shows an example of how to write a process that describes and simulates a 1-bit memory element (D flip-flop). It also covers how to implement both synchronous and asynchronous resets, and a short discussion on the actual hardware that is utilized in the FPGA for synchronous logic.
+
+Video 1: Combinational process
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/TvnNbY7dLQA" title="Combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=TvnNbY7dLQA](https://www.youtube.com/watch?v=TvnNbY7dLQA)
+
+Video 2: Testbench example to simulate the combinational process from video 1.
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/kEU-dkICHxg" title="Example of combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video link: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+
+
+Video 3: Synchronous process in VHDL
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/xnml2JUfbWI" title="Synchronous process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+Video tink: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
+
 ## Process execution
 
 When a process is activated, the statements within the process are read sequentially from `begin` to `end`. The process will then return to the `begin` keyword and read all statements again. The process can therefore be viewed as a loop that repeats all its statements. 
@@ -416,7 +442,7 @@ Inferred register with enable
 
 ## Combining synchronous and combinational logic
 
-A general rule of thumb is that all signal assigments within a synchronous proces will lead to the generation of a register (D flip-flop). If we take the example of the multiplexer and enclose it within a synchronous process making it dependent on the clock, a register will be added to the ouput.
+A general rule of thumb is that all signal assignments within a synchronous process will lead to the generation of a register (D flip-flop). If we take the example of the multiplexer and enclose it within a synchronous process making it dependent on the clock, a register will be added to the output.
 
 ```vhdl
 process(clk) is
@@ -439,6 +465,8 @@ name: fig:vhdl-process-multiplexer-with-register
 ---
 Combinational and synchronous logic.
 ```
+
+
 
 ## Finding the process internal variabels in Modelsim
 
@@ -505,30 +533,6 @@ name: fig:vhdl-process-var-find-modelsim1
 ```
 
 
-## Supporting videos
-
-
-The following video gives an introduction to combinational processes in VHDL.
-<div class="video-container">
-<iframe width="1219" height="759" src="https://www.youtube.com/embed/TvnNbY7dLQA" title="Combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-Video link: [https://www.youtube.com/watch?v=TvnNbY7dLQA](https://www.youtube.com/watch?v=TvnNbY7dLQA)
-
-The following video shows an example of how a combinational process in VHDL can be simulated.
-<div class="video-container">
-<iframe width="1219" height="759" src="https://www.youtube.com/embed/kEU-dkICHxg" title="Example of combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-Video link: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
-
-
-The following video gives and introduction to synchronous processes in VHDL.
-<div class="video-container">
-<iframe width="1920" height="806" src="https://www.youtube.com/embed/xnml2JUfbWI" title="Synchronous process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-Video tink: [https://www.youtube.com/watch?v=kEU-dkICHxg](https://www.youtube.com/watch?v=kEU-dkICHxg)
         
 
 

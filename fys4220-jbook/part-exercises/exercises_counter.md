@@ -126,9 +126,16 @@ a unique condition on the external enable. The external enable signal has to uni
 %Test your code in hardware. Connect the output of the counter to 4 of the LEDs. Remember to update your pinning file, adding the appropriate pins for all the input and output ports of your design. 
 
 
-### 
 
 
+## Design considerations
+
+The multiplexer shown above is a very simple design and can easily be written using a single process. However, as you design becomes more complex, it is recommended to think about how you can partition you design into multiple processes and even entities/modules.  If you include too much logic or functionality within a single process, it may become difficult to read as well as more prone to errors. 
+
+Assume that the multiplexer example is to be implemented in hardware, and that the select signal is controlled from an external switch or button. 
+
+
+You will get more experience with this when you start working on the project where you will 
 
 ## EX3.B: High level implementation
 
