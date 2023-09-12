@@ -5,7 +5,7 @@ In VHDL a process can be used to model both
 - combinational logic,
 - and synchronous logic.
 
-The process statement is particularly useful and needed when writing test benches. The process statement itself is a concurrent statement identified by its label, its sensitivity list, a declaration area and a begin-end area containing instructions executed sequentially. Within the proces each line of code is read sequentially and assignments are scheduled to be updated/effectuated next time the process is suspended. The general syntax for a process is shown below. Elements in square brackets are optional.
+The process statement is particularly useful and needed when writing test benches. The process statement itself is a concurrent statement identified by its label, its sensitivity list, a declaration area and a begin-end area containing instructions executed sequentially. Within the process each line of code is read sequentially and assignments are scheduled to be updated/effectuated next time the process is suspended. The general syntax for a process is shown below. Elements in square brackets are optional.
 
 ```vhdl
 [process-label] : process[( sensitivity list )] [is]
@@ -466,9 +466,82 @@ name: fig:vhdl-process-multiplexer-with-register
 Combinational and synchronous logic.
 ```
 
+## Design with multiple processes
+As mentioned earlier, the process statement is itself a concurrent statement; and multiple process statements can be written in the same architecture. 
+
+```vhdl
+
+architecture rtl of more_complex_design is
+
+begin
+
+proc1: process(clk)
+begin
+  if rising_edge(clk) then
+  -- put your synchronous logic here
+  end if;
+end process;
+
+-- A second synchronous process
+proc2: process(clk)
+begin
+  if rising_edge(clk)
+  -- put your other synchronous logic here
+  end if;
+end process;
+
+-- A combinational process
+proc3: process(signal1, signal2)
+begin
+-- put your combinational logic here
+end process;
+
+-- You can also add separate dataflow statements in the same architecture.
+Y <= A and B;
 
 
-## Finding the process internal variabels in Modelsim
+end architecture;
+
+```
+
+For example, you could consider splitting the combinational and synchronous part of the design in {numref}`fig:vhdl-process-multiplexer-with-register` into two processes. The result will be exactly the same. 
+
+```vhdl
+architecture rtl of multiple_process_example is
+
+  signal Y_i : std_logic;
+
+begin
+
+-- Combinational process that will output
+-- either A or B depending on the value of the select signal SEL
+p_comb_mult: process(A,B,SEL) is
+begin
+  if SEL = '1' then
+      Y_i <= A;
+    else
+      Y_i <= B;
+    end if;
+end;
+
+-- Add a register on the output of the multiplexer to keep the value
+-- stable for a clock cycle.
+p_synch_reg: process(clk) is
+begin
+  if rising_edge(clk) then
+    Y <= Y_i;
+  end if;
+end process
+
+```
+
+This is of course a very simple example. However, as your design becomes more complex, it is recommended to think about how you can partition your design into multiple processes or even entities/modules, according to their different functionalities and purposes. This will reduce the complexity of each process or module, which in turn will make it easier to write the VHDL description for the smaller unit of functionality, and improve readability.
+You will gain some experience with how to partition a design when you will write a basic UART controller in the first part of the project in this course: {ref}`project-uart-controller`.
+
+
+
+## Finding the process internal variables in Modelsim
+
 
 The process below uses a variable internal to the process. If you would like to add this variable to the wave view in Modelsim, it is not located in the *Objects* window where you can find the signals but in a different window called *Locals*.
 
@@ -509,7 +582,7 @@ name: fig:vhdl-process-var-find-modelsim2
 
 ```
 
-To view the internal variables of a process, mark the relevant process and you should see the variable listed as shonw below.
+To view the internal variables of a process, mark the relevant process and you should see the variable listed as shown below.
 
 
 
@@ -521,7 +594,7 @@ name: fig:vhdl-process-var-find-modelsim3
 ---
 
 ```
-Here you can also see the process label which help you to identify the process you are looking for. The figure below shows how the process would be labeled if you do not give it a specific name. The process now has the unrecognizable label `line__17`.
+Here you can also see the process label which help you to identify the process you are looking for. The figure below shows how the process would be labelled if you do not give it a specific name. The process now has the unrecognizable label `line__17`.
 
 ```{figure} ../images/vhdl_var_find_modelsim1.png
 ---

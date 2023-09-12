@@ -221,25 +221,33 @@ The VHDL implementation of the diagram above is shown below:
 library ieee;
 use ieee.std_logic_1164.all;
 
-
+-- This module detects the falling edge of the asynchronous
+-- active low incoming enable_n signal and generates a single
+-- active high output pulse with a duration equal to the length of
+-- one clock cycle of the incoming clock clk.
 entity edge_detection is
 port (
-  clk : in std_logic;
-  enable_n : in std_logic;
-  pulse : out std_logic
+  clk : in std_logic; 
+  enable_n : in std_logic; 
+  pulse : out std_logic 
 );
 end edge_detection;
 
 
 architecture rtl of edge_detection is
 
-  -- Signal for the twoo synchronization registers
+  -- Signal for the two synchronization registers
   signal enable_r1_n : std_logic;
   signal enable_r2_n : std_logic;
   -- Signal for the edge detection register
   signal enable_i_n : std_logic;
 begin
   
+  -- This process the 3 registeres through
+  -- which the input enable signal is clocked to
+  -- to first synchronize the signal and then to add
+  -- a register used for the combinational edge detection logic
+  -- described in the separate statement below. 
   p_synchronization: process(clk)
     begin
       if rising_edge(clk) then
