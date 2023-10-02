@@ -9,7 +9,7 @@ In this exercise you will design state machine that will be use to control the t
 ```
 
 
-The state machine it self is rather simple with only two states as shown in the state diagram in {numref}`fig:exercise-fsm-tx-uart-sd`. The state machine is activate on a high level of the signal `tx_data_valid` and changes to the *sTRANSMIST* sate. In this state the state machine signals that the system is busy and waits for a high level on the signal `tx_complete`, which indicates that the transmission has completed, and that the state machine can return to the *sIDLE* state. The two control signals `tx_data_valid` and `tx_complete` are controlled by other modules that will be introduced later. 
+The state machine itself is rather simple with only two states as shown in the state diagram in {numref}`fig:exercise-fsm-tx-uart-sd`. The state machine is activated on a high level of the signal `tx_data_valid` and changes to the *sTRANSMIST* state. In this state the state machine signals that the system is busy and waits for a high level on the signal `tx_complete`, which indicates that the transmission has completed, and that the state machine can return to the *sIDLE* state. The two control signals `tx_data_valid` and `tx_complete` are controlled by other modules that will be introduced later. Reset is asynchronous and active low; *a* and *_n* in *areset_n*.
 
 
 ```{figure} ../graphics/fsm_tx_uart_sd.gv.png
@@ -33,7 +33,6 @@ The suggested top level entity connections are listed in {numref}`tab:tx_fsm_ent
 * - Name
   - Direction
   - Type
-
 * - clk
   - in
   - std_logic
@@ -49,6 +48,7 @@ The suggested top level entity connections are listed in {numref}`tab:tx_fsm_ent
 * - tx_enable
   - out
   - std_logic
+
 * - tx_busy
   - out 
   - std_logic
