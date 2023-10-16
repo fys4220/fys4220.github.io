@@ -75,7 +75,7 @@ end package;
 
 package body user_pkg is
   -- implementation details of BCD to 7-segment decoder
-  function bcd2seg7(signal bcd : in std_logic_vector(3 downto 0)) return std_logic_vector(7 downto 0) is
+  function bcd2seg7(signal bcd : in std_logic_vector(3 downto 0)) return std_logic_vector is
   begin
     case bcd is
       when "0000" => return "01000000";
@@ -261,7 +261,7 @@ begin
       report "rx_busy goes low - new data has been received";
     end if;
 
-    -- check if correct value has been received by the rx module
+    -- check if correct value has been received by the rx moduel
     assert rx_data = x"55" -- report if not equal to expected byte.
     report "Incorrect byte received!"
       severity warning;
