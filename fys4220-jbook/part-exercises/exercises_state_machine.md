@@ -1,6 +1,6 @@
 (exercises-state-machine)=
 # EX4: State machine
-In this exercise you will design state machine that will be use to control the transmission of data for the UART transciever that you need for the embedded system project in this course.  
+In this exercise you will design state machine to control the transmission of data for the UART transceiver that you need for the embedded system project in this course.  
 
 
 ```{admonition} The learning outcome of this problem is to:
@@ -54,7 +54,7 @@ The suggested top level entity connections are listed in {numref}`tab:tx_fsm_ent
   - std_logic
 ```
 
-When setting up the test conditions in the test bench, the inputs *tx_data_valid* and *tx_complete* signals shall be assumed to be synchronous to the clock and have a duration of one single clock cycle. Creating a single clock cycle pulse which is synchronous to the clock can be achieved with the following statements .
+When setting up the test conditions in the test bench, the inputs *tx_data_valid* and *tx_complete* signals shall be assumed to be synchronous to the clock and have a duration of one single clock cycle. Creating a single clock cycle pulse which is synchronous to the clock can be achieved with the following statements.
 
 ```{code-block} vhdl
 wait until rising_edge(clk);
@@ -76,7 +76,7 @@ Test signals for the state machine.
 
 ## Script based simulation
 
-Until now you have run your simulations from Modelsim in a manual fashion, using mouse to perform relevant actions such as compile the code, start the simulation, add signals to the wave diagram. This works fine, but in the long run and for more complex designs, it is highly recommended to use a command and script based approach where the relevant commands can be typed and run directly in Modelsim's Transcript window, or collected and grouped in one or several script files. The simulation can then be automated by simply calling the script file from the Transcript window. 
+Until now, you have run your simulations from Modelsim in a manual fashion, using mouse to perform relevant actions such as compile the code, start the simulation, add signals to the wave diagram. This works fine, but in the long run and for more complex designs, it is highly recommended to use a command and script based approach where the relevant commands can be typed and run directly in Modelsim's Transcript window, or collected and grouped in one or several script files. The simulation can then be automated by simply calling the script file from the Transcript window. 
 
 
 The most relevant commands to learn are listed and explained below:
@@ -155,7 +155,7 @@ restart
 restart -f
 ```
  
-I recommend to split the commands into separate files depending on their function. This allows you to easily rerun only the relevent part during development and debugging. E.g., to avoid quitting and restarting the simulation when you change your design, your only rerun the commmands that will recompile your code. A suggested setup is shown below:
+I recommend to split the commands into separate files depending on their function. This allows you to easily rerun only the relevant part during development and debugging. E.g., to avoid quitting and restarting the simulation when you change your design, your only rerun the commands that will recompile your code. A suggested setup is shown below:
 
 Add commands related to compilation in a file called *compile.do*.
 ```{code-block} tcl
@@ -198,8 +198,8 @@ do wave.do
 run -all
 ```
 
-You can now run the individual files depending on the need. A typical scenario would be that you have made a small change to your code and want to recompile and rerun the simulation. You would then like to avoid calling the *vsim* command which makes a full reinitalization and restart of your simulation – with all the mad blinking of Modelsim windows!
-Instead call the *compile.do* script and restart the simulation with the `restart -f` command. 
+You can now run the individual files depending on the need. A typical scenario would be that you have made a small change to your code and want to recompile and rerun the simulation. You would then like to avoid calling the *vsim* command which makes a full reinitialization and restart of your simulation – with all the mad blinking of Modelsim windows!
+Instead, call the *compile.do* script and restart the simulation with the `restart -f` command. 
 
 ```{code-block} tcl
 do compile.do

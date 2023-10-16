@@ -32,7 +32,7 @@ When writing complex VHDL descriptions it can be useful to divide or structure t
 (vhdl-packages-procedure)=
 ### Procedure
 A procedure can be used to define an algorithm and is widely use to ease the writing and structuring of test benches.
-The procedure accepts constants, variables and signals as object classes in its parameter list. Objects in the parameter list is separated with `;`. If the object class is not specified, a variable or constant is assumed depending on the mode (if `in` it is a constant, if `out`/`inout` it is a variable). Objects in the parameter list can have modes `in`, `out`, or `inout`. If the mode is not specified the default is `in`. A procedure does not return a value, but may change the values of the paramteres passed to them. Procedures are synthesizable, provided that they do not detect clock edges or contain wait statements, i.e. they must not infer registers, but describe cominational logic. However, procedures are mostly used for test benches. 
+The procedure accepts constants, variables, and signals as object classes in its parameter list. Objects in the parameter list is separated with `;`. If the object class is not specified, a variable or constant is assumed depending on the mode (if `in` it is a constant, if `out`/`inout` it is a variable). Objects in the parameter list can have modes `in`, `out`, or `inout`. If the mode is not specified the default is `in`. A procedure does not return a value, but may change the values of the parameters passed to them. Procedures are synthesizable, provided that they do not detect clock edges or contain wait statements, i.e., they must not infer registers, but describe combinational logic. However, procedures are mostly used for test benches. 
 ```vhdl
 procedure <identifier> [ ( formal_parameter_list ) ] is
 -- subprogram declaration part
@@ -45,7 +45,7 @@ end [procedure] [identifier]
 
 
 ### Function
-A function is an expression that defines a sequntial algorithm that computates of a value to be returned. It can produce only one return value and must contain a return statement. A function can only use parameters of type constant or signal with mode *in*, and cannot change the values of the parameters passed in the parameter list. Objects in the parameter list is separated with `;`. If the object class is not specified it is assumed to be of type constant and mode *in*. When a function is called the parameters are given the values of the actual parameters. Wait statements cannot be used in functions (functions execute in zero simulation time). Functions are most commonly used for describing combinational logic, type conversions, or defining the meaning of an operator for a new type.
+A function is an expression that defines a sequential algorithm that computes of a value to be returned. It can produce only one return value and must contain a return statement. A function can only use parameters of type constant or signal with mode *in*, and cannot change the values of the parameters passed in the parameter list. Objects in the parameter list is separated with `;`. If the object class is not specified it is assumed to be of type constant and mode *in*. When a function is called, the parameters are given the values of the actual parameters. Wait statements cannot be used in functions (functions execute in zero simulation time). Functions are most commonly used for describing combinational logic, type conversions, or defining the meaning of an operator for a new type.
 
 ```vhdl
 function <identifier> [ ( formal_parameter_list ) ]  return <type> is
@@ -60,7 +60,7 @@ end [function] [identifier]
 
 
 ### Function
-The example below shows how function can be used to described the binary coded decimal to 7-segment decoder. This is typical example of a logic function that e.g. can be declared in a package for easy reuse.
+The example below shows how function can be used to describe the binary coded decimal to 7-segment decoder. This is typical example of a logic function that e.g., can be declared in a package for easy reuse.
 
 ```vhdl
 -- Library and package part
@@ -198,7 +198,7 @@ package body tb_support_pkg is
 end;
 
 ```
-The procudure *uart_write_data* can then be easily used in the stimuli process of the main test bench. 
+The procedure *uart_write_data* can then be easily used in the stimuli process of the main test bench. 
 
 ```{code-block} vhdl
 library ieee;
