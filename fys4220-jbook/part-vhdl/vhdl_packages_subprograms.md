@@ -75,7 +75,6 @@ end package;
 
 package body user_pkg is
   -- implementation details of BCD to 7-segment decoder
-  function bcd2seg7(signal bcd : in std_logic_vector(3 downto 0)) return std_logic_vector is
   begin
     case bcd is
       when "0000" => return "01000000";
