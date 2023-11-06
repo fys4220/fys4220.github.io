@@ -3,6 +3,7 @@
 
 In this part you will create a RTOS software application that will run two simple tasks. The job of the two tasks is to write "Hello from task1" and "Hello from task2" to the standard output.  
 
+
 ```{admonition} The learning outcome of this problem is to:
 * Be able to setup an run a basic $\mu$C/OS-II RTOS system.
 * Be able to write RTOS task functions.
@@ -42,6 +43,9 @@ Create the board support package using the following command:
 nios2-bsp ucosii app_rtos_bsp ../quartus/nios2_system.sopcinfo
 ```
 
+```{admonition} Note
+Your microcontroller system needs a timer module for the RTOS to work. This has already been included in the Microcontroller system built for the second part of the Project. It is therefore recommended to use this hardware for this exercise. 
+```
 
 ## Makefile
 
