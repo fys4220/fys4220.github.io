@@ -25,7 +25,7 @@ Another popular open-source real-time operating system for microcontrollers is [
 
 The $\mu$C/OS-II documentation is available as both HTML and PDF here: https://micrium.atlassian.net/wiki/spaces/osiidoc/overview. 
 
-It is recommended to read the chapter on [real-time system concepts](https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163855/Real-Time+Systems+Concepts), as well as watching the RTOS related videos available on the FYS4220 Canvas page. 
+It is recommended to read the chapter on [real-time system concepts](https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163855/Real-Time+Systems+Concepts), as well as watching the RTOS related videos available on the FYS4220 webpage page: {ref}`rtos-intro`. 
 
 Before you start developing the application, you need to generate the required board support package and Makefile.
 

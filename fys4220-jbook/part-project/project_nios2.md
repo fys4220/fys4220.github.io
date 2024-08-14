@@ -682,9 +682,9 @@ int no_bytes;
 // Configure SPI bit in DATA_FORMAT register
 // bit 7: 0 (Write) 
 // bit 6: Single 
-spi_tx[0] = 0x00 | 0x31; // Single byte write (cmd byte + 1 data byte) + register address
-spi_tx[1] = 0x0; // register data to write
-no_bytes = alt_avalon_spi_command(SPI_BASE,0,2,spi_tx,0,spi_rx,0);
+spi_tx_data[0] = 0x00 | 0x31; // Single byte write (cmd byte + 1 data byte) + register address
+spi_tx_data[1] = 0x0; // register data to write
+no_bytes = alt_avalon_spi_command(SPI_BASE,0,2,spi_tx_data,0,spi_rx_data,0);
 
 // To read device ID register send 0x80
 spi_tx_data[0] = 0x80 | 0x0; //Single byte read + address
