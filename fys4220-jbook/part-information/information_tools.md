@@ -130,8 +130,8 @@ The student laboratory is in room 329 on the 3. floor, west wing, of the Physics
 
 We have reserved the room for FYS4220 on:
 
-* Mondays from 12:15 to 16:00 
-* Wednesday from 08:15 to 12:00.
+* Mondays from 10:15 to 14:00 
+* Tuesdays from 12:15 to 16:00.
 
 You are of course free to use this rooms outside these hours if the room is available and not booked by any other course. You can find the weekly schedule for the room [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2023).
 

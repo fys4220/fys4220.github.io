@@ -2,7 +2,7 @@
 
 
 ## Recommended reading
-There are no single text book that fully covers the complete curriculum. The curriculum is therefore based on topics covered in the recorded lectures and the content and material presented on these pages, including the practical exercises and embedded systems project assignment.
+There are no single text book that fully covers the complete curriculum. We therefore base the curriculum on topics covered in the recorded lectures and the content and material presented on these pages, including the practical exercises and embedded systems project assignment.
 
 There are nevertheless numerous text books and online resources available that can be used for further reading and depth. A few examples a listed below. These will be referred to on this page when relevant.
 
@@ -15,7 +15,7 @@ There are nevertheless numerous text books and online resources available that c
 :widths: 80 20
 
 * - **Mealy and Teppero, “Free range VHDL”**<br><br>
-For a basic introduction to VHDL the "Free range VHDL"  by Mealy and Teppero can be a good starting point. The book has until recently been available to download for free under "Creative Commons Attribution-ShareAlike Unported License" from http://freerangefactory.org. This link seems no longer to be active. The Latex source can however be found on Github: https://github.com/fabriziotappero/Free-Range-VHDL-book, from where it can be downloaded and compiled to a pdf. A compiled version is avaiable {download}`here <./docs/free_range_vhdl.pdf>`.
+For a basic introduction to VHDL the "Free range VHDL"  by Mealy and Teppero can be a good starting point. The book has until recently been available to download for free under "Creative Commons Attribution-ShareAlike Unported License" from a page called freerangefactory. This page seems no longer to be active. The Latex source can however be found on Github: https://github.com/fabriziotappero/Free-Range-VHDL-book, from where it can be downloaded and compiled to a pdf. A compiled version is avaiable {download}`here <./docs/free_range_vhdl.pdf>`.
   - ```{figure} ./images/book_freerange.png
     ---
     scale: 70%
