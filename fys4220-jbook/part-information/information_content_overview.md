@@ -37,7 +37,9 @@ Link to UiO course page for FYS4220: https://www.uio.no/studier/emner/matnat/fys
 
 ## Learning by doing:
 
-This is a practical course where you will work with the material through a set of exercises and an embedded systems project. The exercises will cover some of the relevant concepts presented in FYS4220 and lay the foundation for solving the measurement problem presented in the case presented above. 
+Reading theory is useful, but without actual practice, the value may be very limited. In this course you will therefore work with the material through a set of exercises and an embedded systems project.
+%This is a practical course where you will work with the material through a set of exercises and an embedded systems project. 
+The exercises will cover basic concepts relevant for FYS4220 and lay the foundation for solving the measurement problem presented in the case presented above. 
 
 The embedded systems project will be based around a soft core CPU with the added peripherals required to communicate with the digital sensor and PC over standard serial interaces like UART[^footnote-uart], I2C[^footnote-i2c], and SPI[^footnote-spi]. A simplified overview of the system you will build is shown in figure {numref}`fig:information-embedded-system`. 
 %The CPU will be the [Nios II](https://www.intel.com/content/www/us/en/products/details/fpga/nios-processor/ii.html) soft core processor from Intel.   

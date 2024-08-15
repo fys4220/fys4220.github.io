@@ -48,7 +48,7 @@ sphinx:
 #    latex_domain_indices: true
     #latex_toplevel_sectioning: 'section'
     html_theme_options:
-      show_navbar_depth: 1 
+      show_navbar_depth: 2 
       #announcement: "⚠️Under development!⚠️"
 #      extra_footer: 
 #        <p> ... Add license info heres ... </p>

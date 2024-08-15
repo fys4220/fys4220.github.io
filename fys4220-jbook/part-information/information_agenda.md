@@ -5,7 +5,7 @@ We have prepared this agenda to help you organize your weekly progress in this c
 
 ```{admonition} Warning!
 :class: warning
-It is strongly recommended to follow this agenda already from the start. Otherwise, you risk falling behind and expose yourself to a unreasonably high workload towards the end of the semester. 
+It is strongly recommended to follow this agenda already from the start. Otherwise, you risk falling behind and expose yourself to an unreasonably high workload towards the end of the semester. 
 ```
 
 <!--

@@ -90,11 +90,11 @@ A guide on how to install Git is provided by Github here: https://github.com/git
 
 
 ## Setup of  Github repository 
-Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2023* has already been created for FYS4220. _If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor._ You can only be added to the organization after you have logged in for the first time and your user has been created. 
+Before you start to work on the exercises and project, you will have to create a git repository on Github.uio.no. A Github *Organization* site called *FYS4220-2024* has already been created for FYS4220. _If this organization is not visible after you have logged in to Github.uio.no, contact the course instructor._ You can only be added to the organization after you have logged in for the first time and your user has been created. 
 
-The direct link to the organization is https://github.uio.no/FYS4220-2023.
+The direct link to the organization is https://github.uio.no/FYS4220-2024.
 
-* Login in to Github.uio.no and create a new repository in the *FYS4220-2023* organization (click the green button called *New*). Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
+* Login in to Github.uio.no and create a new repository in the *FYS4220-2024* organization (click the green button called *New*). Name the repository as shown in {numref}`assignments_gitrep_name` replacing *lastname* and *firstname* with your respective lastname and firstname.
 ```{figure} ../images/assignments_create_gitrep_name.png
 ---
 width: 60%
@@ -147,7 +147,7 @@ First view of newly create Git repository.
 * Copy the path to the repository and use the *git clone* command to download the repository's content.
 
 ```bash
-git clone https://github.uio.no/FYS4220-2023/fys4220-lastname-firstname.git
+git clone https://github.uio.no/FYS4220-2024/fys4220-lastname-firstname.git
 ```
 
 * Navigate into the directory that was just created and open the readme file with your favourite text editor.
