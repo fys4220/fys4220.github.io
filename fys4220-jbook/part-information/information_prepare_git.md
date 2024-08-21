@@ -324,7 +324,7 @@ Press the *Compare & pull request* to create the pull request.
 This will open a new page where you should write a message to explain the changes you would like to have reviewed and merged to the main branch. Press the *Create pull request* button. 
 
 
-```{figure} ../images/assignments_pullrequest2.png
+```{figure} ../images/assignments_pullrequest2_noprotection.png
 ---
 width: 95%
 align: center
@@ -333,15 +333,17 @@ name: assignments_pullrequest2
 Write a message to explain the changes that should be reviewed for a merge to the main branch.
 ```
 
-If your repository have been configured with the correct branch protection rule (this will be taken care of by the instructor), you should now see a page similar to the one shown below, indicating that a review is required to complete the pull request. You now have to add a reviewer and assignee to complete the review and merged. Choose the course instructor *ketilroe*. 
+<!-- If your repository has been configured with a branch protection rule (this will be taken care of by the instructor), you should now see a page similar to the one shown below, indicating that a review is required to complete the pull request. You now have to add a reviewer and assignee to complete the review and merged. Choose the course instructor *ketilroe*.  -->
 
-```{figure} ../images/assignments_pullrequest3.png
+If you are happy with your code and don't want anyone else to review it go ahead and merge the pull request your self. However, if you would like the code to be reviewed by the course instructor or anyone else, add their respective usernames under *Reviewers* and *Assignees*. The username of the course instructore is _ketilroe_.
+
+```{figure} ../images/assignments_pullrequest3_noprotection.png
 ---
 width: 95%
 align: center
 name: assignments_pullrequest3
 ---
-The pull request have been created and the merge to the main branch is blocked and awaiting a review.
+The pull request have been created and the merge to the main branch is awaiting a review.
 ```
 
 We will use the same procedure when you are working on the exercises and project. 

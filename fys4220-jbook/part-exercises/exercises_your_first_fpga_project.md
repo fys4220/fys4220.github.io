@@ -339,6 +339,6 @@ ex1/ex1.qsf
 
 ## Create a pull request to complete the exercise
 
-You have now created and programmed your first FPGA design and are ready to merge your solution into the main branch using a pull request. Press the _Compare & pull request_ button, write a descriptive text briefly explaining what you have done, add the user _ketilroe_ as reviewer and assignee, and finally press the _Create pull request_ button.
+You have now created and programmed your first FPGA design and are ready to merge your solution into the main branch using a pull request. Press the _Compare & pull request_ button, write a descriptive text briefly explaining what you have done. If you want your solution reviewed by the course instructor, add the user _ketilroe_ as both reviewer and assignee, then finally press the _Create pull request_ button. If you are content with your solution and don't need it reviewed, create the pull request and complete by merging the pull request yourself. 
 
 

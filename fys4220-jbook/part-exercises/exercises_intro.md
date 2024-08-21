@@ -4,8 +4,14 @@ Before you embark on the main project, it is highly recommended to work through 
 
 I have made the description of the first exercise relatively detailed to help you get started. As you get familiar with the tools and writing VHDL, you are expected work on and complete the exercises -- and later the project -- more independently.
 
-To help yourself keep better track of your work, you should make a folder for each exercise (ex1, ex2, ex3, ex4) in your Github-repository. Likewise, create a branch for each exercise to which you can commit and push your code during the development. If you want the code to be reviewed, you should create a pull request when it is completed. Remember to add the course instructor as a reviewer and assignee to the pull request. If you want help and feedback during the work with an exercise, please make use of the dedicated lab hours when the lab instructor is present. 
+To help yourself keep better track of your work, you should make a folder for each exercise (ex1, ex2, ex3, ex4) in your Github-repository. Likewise, create a branch for each exercise to which you can commit and push your code during the development. If you want your code to be reviewed by the course instructor, you should: 
 
+1. create a pull request when you have completed the exercise, 
+2. add the course instructor as both a reviewer and assignee to the pull request. 
+
+We also encourage you to team up with a fellow student in the course to review each other's work.
+
+If you want help and feedback during the work with an exercise or later the project, please make use of the dedicated lab hours when the course or lab instructor is present. 
 
 You can find suggested solution examples to the exercises on Github: https://github.com/fys4220/fys4220-exercises
 

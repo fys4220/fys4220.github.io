@@ -56,4 +56,4 @@ For the 4-bit adder above, you have to reuse the 1-bit adder 4 times. This is re
 
 ## Create a pull request to complete the exercise.
 
-Create a pull request and remember to add the course instructor as assignee and reviewer. 
+Create a pull request and remember to add the course instructor as assignee and reviewer if you want the code reviewed.

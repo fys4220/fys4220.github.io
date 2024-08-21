@@ -21,7 +21,7 @@ Simplified overview of the system that you will build during this course.
 ```
 
 ```{admonition} Weekly agenda!
-A {ref}`agenda` has been setup to guide you through the course.
+A {ref}`agenda` has been set up to guide you through the course.
 ```
 
 ```{admonition} Tip!
@@ -29,5 +29,5 @@ A {ref}`agenda` has been setup to guide you through the course.
 You can navigate between pages on this site by using the arrow keys on your keyboard.
 ```
 
-<font color='red'>These pages are under active development and will be updated as the course progresses.</font>
+<font color='red'>These pages are under active development and may be updated as the course progresses.</font>
    
