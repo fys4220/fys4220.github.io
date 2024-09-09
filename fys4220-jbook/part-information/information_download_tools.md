@@ -50,6 +50,9 @@ USB-Blaster driver installation on Windows:
 
 * If you have connected DE10-Lite board to you computer, and the USB-blaster does not show up in the Quartus programmer tool, you might need to [install the driver](http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions).
 
+* On Windows 11 it is not possible to install/activate the driver from Quartus 18.1 unless you disable *Memory Integrity* under *Core isolation* in the Windows security settings. (Minneintegritet og kjerneisolation if you have a Norwegian version). If you don't want to do this, the alternative solution is to
+download the Quartus Prime Programming Tools for the latest version of Quartus. You can find this under the *Additional Software* tab on the download page. You can then install the drivers found in the drivers folder in the installation director of this tool.
+ 
 ```
 
 

@@ -24,7 +24,7 @@ wait for 20 ns;
 ```
 This will force a value to the signal A which first is '0' for 20 ns and then '1' for 20 ns as shown in figure {numref}`fig:vhdl_testbench_wavedrom_basic`.
 
-```{figure} ../images/vhdl_testbench_wavedrom_basic.png
+```{figure} ../graphics/vhdl_testbench_wavedrom_basic.png
 ---
 width: 70%
 align: center

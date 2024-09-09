@@ -6,7 +6,7 @@ title: Real-time and embedded data systems
 author: Ketil Røed
 email: ketil.roed@fys.uio.no
 logo: images/fys4220_logo.png
-copyright: "2023"
+copyright: "2024"
 only_build_toc_files : true
 
 # Force re-execution of notebooks on each build.
@@ -48,7 +48,8 @@ sphinx:
 #    latex_domain_indices: true
     #latex_toplevel_sectioning: 'section'
     html_theme_options:
-      show_navbar_depth: 2 
+      show_navbar_depth: 1
+      home_page_in_toc: true
       #announcement: "⚠️Under development!⚠️"
 #      extra_footer: 
 #        <p> ... Add license info heres ... </p>
@@ -61,6 +62,7 @@ sphinx:
         {\end{thebibliography}} 
 #      extra_navbar: "" #Enable this to remove Powered by jupyter book
   extra_extensions: 
+  
     
 #    - sphinxcontrib.mermaid
 #    - sphinxcontrib.wavedrom

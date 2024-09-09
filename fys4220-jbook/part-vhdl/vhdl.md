@@ -24,7 +24,7 @@ OpenCores.org is a website where you can find a lot of open source hardware IPs.
 However, since high quality IP cores are often commercial and available only at a cost. It is therefore vaulable to know how to write your own VHDL module, which then can be packaged as an IP and easily reused in a microcontroller system. 
 
 Through the the embedded systems project seen in figure {numref}`fig:vhdl-embedded-system` you will learn how to include and use an already available IP core, and how to write your own:
-* For the sensor to FPGA interface you will use an I2C or SPI IP core available from the IP core library in Quartus.
+* For the sensor to FPGA interface you will use an SPI IP core available from the IP core library in Quartus.
 %In this part we will concentrate on VHDL. 
 * While the UART to PC interface will be used as an opportunity to learn VHDL. 
 
@@ -38,7 +38,8 @@ name: fig:vhdl-embedded-system
 You will write the VHDL description for the UART module in the microcontroller system.
 ```
 
-However, first you need to learn the basics of writing VHDL, as well as how to simulate your design to verify its correct behaviour.  This chapter will guide you through this process, and will be completed by writing the VHDL description for the UART module.
+However, you first need to learn the basics of writing VHDL, as well as how to simulate your design to verify its correct behaviour.  This chapter will guide you through this process. 
+<!-- and will be completed by writing the VHDL description for the UART module. -->
 
 
 

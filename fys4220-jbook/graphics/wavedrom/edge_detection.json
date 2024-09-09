@@ -1,0 +1,9 @@
+{ signal: [
+  { name: "clk",  wave: "P.........." },
+  { name: "enable_n",  wave: "1.0....1..."  },
+  { name: "enable_r", wave: "1..0....1.." },
+  { name: "pulse", wave: "0.10......." },
+  
+],
+    config: { hscale: 2 }
+  }

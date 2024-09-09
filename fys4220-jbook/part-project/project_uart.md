@@ -217,12 +217,12 @@ Start by designing a top level architecture for the RX module inspired by the ar
 
 `````{admonition} Review of design architecture required before writing the code!
 :class: warning
-The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors (Ketil Røed and Martin Järve). Provide a link to your diagram. 
+The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format *png* and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors. Provide a link to your diagram. 
 
 I encourage you to discuss and prepare the diagram together with one of the other students in the course. You can then submit one diagram together, naming the responsible persons in the issue description.
 
 
-To help you identify some of the differences, a propose microarchitecture of the *rx_shift_reg.vhd* module is shown in {numref}`fig:project-rx-shiftreg-architecture`. Different from the TX UART, the RX uart must sample the input RX in the middle of a bit period. This can be done by detecting the rising edge of the signal *baud_rate_clk* and use this event as an enable for the shift register. When all bits have been received, the *rx_complete* signal can be used to register the *tx_data* to the output, and to signal an error if either the start or stop bit have values other than expected. 
+To help you identify some of the differences, a proposed microarchitecture of the *rx_shift_reg.vhd* module is shown in {numref}`fig:project-rx-shiftreg-architecture`. Different from the TX UART, the RX uart must sample the input RX in the center of the bit period. This can be done by detecting the rising edge of the signal *baud_rate* and use this event as an enable for the shift register. When all bits have been received, the *rx_complete* signal can be used to register the *tx_data* to the output, and to signal an error if either the start or stop bit have values other than expected. 
 
 ```{figure} ../graphics/project_rx_shiftreg_architecture.png
 ---

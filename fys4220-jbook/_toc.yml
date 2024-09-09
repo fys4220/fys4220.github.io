@@ -6,8 +6,11 @@ root: index
 defaults:
   titlesonly: false
 
-# options:  # The options key will be applied to all chapters, but not sub-sections
-#  numbered: True
+options:  # The options key will be applied to all chapters, but not sub-sections
+  numbered: True
+
+
+
 
 parts: 
   - caption: Getting started
@@ -97,6 +100,10 @@ parts:
     - file: part-project/project_uart
     - file: part-project/project_nios2
     - file: part-project/data_rate
+
+
+
+
 #parts:
 #  - caption: Introduction
 #    chapters:

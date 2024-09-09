@@ -185,7 +185,9 @@ begin
 end concurrent;
 ```
 
-This can be resolved using e.g. a conditional statement like shown below.
+For simulation purposes this will be resolved by the resolution table of the *std_logic* type. However, this will not work when synthesized to hardware.
+
+You then have to make sure that it is either one or the other that is assigned at any given time. E.g., using a conditional statement like shown below.
 
 ```vhdl
 architecture concurrent of multiple is

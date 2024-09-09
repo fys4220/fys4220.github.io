@@ -56,9 +56,22 @@ The book is currently available online at [O’Reilly for Higher Education](http
   - ```{figure} ./images/book_ucosii_user_manual.png
     :height: 150px
     ```
+
 ``````
-## General
-- Weekly schedule for the laboratory V329 can be found [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2023).
+
+<!-- ## General
+- Weekly schedule for the laboratory V329 can be found [here](https://tp.educloud.no/uio/timeplan/?type=room&area%5B%5D=BL&building%5B%5D=BL24&id%5B%5D=BL24V329&week=34&weekTo=49&ar=2023). -->
+
+
+
+
+ ## References
+
+```{bibliography}
+:style: alpha
+```
+
+
 
 <!--
 ## FPGAs
@@ -105,7 +118,3 @@ Simulation of the 2-process state machine (3:16)
 Example implementation of a 3-process state machine incl. simulation (13:02) 
  -->
 
-## References
-```{bibliography}
-:style: alpha
-```

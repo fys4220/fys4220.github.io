@@ -189,7 +189,7 @@ type std_ulogic is ( U', -- uninitialised,
 );
 ```
 
-This means that an object of type *std_logic* also can assume the values listed above.
+This means that an object of type *std_logic* also can assume the values listed above. The value 'U' is the first of the listed values. That is reason for why a signal of the type *std_logic* or *std_ulogic* will get the value 'U' if you do not specify an initial value for the signal. 
 
 The list of enumerated values are due to the desire to model the more complex values that a digital signal can assume, e.g. tristate drivers, pull-up and pull-down outputs, high impedance state.
 

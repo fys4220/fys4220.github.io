@@ -1,0 +1,14 @@
+{signal: [
+  {name: 'A', wave: '0.1.' },
+  {node: 'A.B.C'},
+],
+  config: {
+  hscale: 1
+  },
+  edge: [
+  '',
+  'A 0 ns',
+  'B 20 ns',
+  'C 40 ns'
+]
+}

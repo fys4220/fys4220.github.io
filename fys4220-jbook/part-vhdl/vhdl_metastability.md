@@ -254,16 +254,16 @@ begin
         -- First bring the input signal through the 
         -- two synchronization registers
         enable_r1_n <= enable_n;
-        enable_r2_n <= enable_synch_r1_n;
+        enable_r2_n <= enable_r1_n;
         -- Additional register for edge detection functionality
-        enable_i_n <= enable_synch_r2_n;
+        enable_i_n <= enable_r2_n;
       end if;
   end process;
 
   -- Create the falling edge detection and thus
   -- a pulse with a duration of one single clock
-  -- cycle_
-  pulse <= not enable_synch_r2_n and enable_i_n;
+  -- cycle
+  pulse <= not enable_r2_n and enable_i_n;
 
 end architecture;
 
@@ -271,7 +271,53 @@ end architecture;
 
 
 
+The figure below shows the corresponding wave diagram. The signal *enable_n* is shown as an asynchronous signal, changing indpendently of the clock. 
 
+
+```{figure} ../graphics/wave_pulse_generator_with_synchronization.png
+---
+width: 100%
+align: center
+name: fig:vhdl-wave-pulse-generator_with_synchronization
+---
+Wave diagram for the single shot pulse generator. 
+```
+
+
+`````{admonition} What would happen if you wrote the statement for generating the pulse signal inside the process?
+:class: dropdown
+
+Adding the statement to the synchronous process will result in an additional register at the end of the signal path.  This will delay the pulse signal by one clock cycle. This may or may not be important, depending on the application. In our case this is not needed. The corresponding code and schematic is shown below.
+
+
+```vhdl
+p_synchronization: process(clk)
+    begin
+      if rising_edge(clk) then
+
+        enable_r1_n <= enable_n;
+        enable_r2_n <= enable_r1_n;
+        enable_i_n <= enable_r2_n;
+
+        -- Each statement within a synchronous process will create a register
+        pulse <= not enable_r2_n and enable_i_n;
+
+      end if;
+  end process;
+
+```
+
+
+
+```{figure} ../images/vhdl_synchronization_registers_v3.png
+---
+width: 100%
+align: center
+name: fig:vhdl-synchronization-registers_v3
+---
+Four registers will be created by the code above, one for each statement. 
+```
+`````
 
 
 ```{admonition} Supplementary suggested reading:
