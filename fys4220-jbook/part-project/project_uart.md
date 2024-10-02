@@ -222,7 +222,7 @@ The diagram of your design architecture must be reviewed by the course instructo
 I encourage you to discuss and prepare the diagram together with one of the other students in the course. You can then submit one diagram together, naming the responsible persons in the issue description.
 
 
-To help you identify some of the differences, a proposed microarchitecture of the *rx_shift_reg.vhd* module is shown in {numref}`fig:project-rx-shiftreg-architecture`. Different from the TX UART, the RX uart must sample the input RX in the center of the bit period. This can be done by detecting the rising edge of the signal *baud_rate* and use this event as an enable for the shift register. When all bits have been received, the *rx_complete* signal can be used to register the *tx_data* to the output, and to signal an error if either the start or stop bit have values other than expected. 
+To help you identify some of the differences, a proposed microarchitecture of the *rx_shift_reg.vhd* module is shown in {numref}`fig:project-rx-shiftreg-architecture`. Different from the TX UART, the RX uart must sample the input RX in the center of the bit period. This can be done by detecting the rising edge of the signal *baud_rate* and use this event as an enable for the shift register. When all bits have been received, the *rx_complete* signal can be used to register the *rx_data* to the output, and to signal an error if either the start or stop bit have values other than expected. 
 
 ```{figure} ../graphics/project_rx_shiftreg_architecture.png
 ---
@@ -336,7 +336,7 @@ To connect the TX and RX modules to a microcontroller system we need define a se
 
 - An 8-bit data transmit register (*mm_tx_data*) 
 - A 8-bit data receive register (*mm_rx_data*)
-- A 8-bit status register (*mm_tx_status*)
+- A 8-bit status register (*mm_status*)
 
 `````{admonition} Status register
 
@@ -382,13 +382,13 @@ that the busy signals are registered in the status register (called mm_status he
 
 ```vhdl
 if rising_edge(clk) then
-  mm_status(4) <= tx_busy;
-  mm_status(5) <= rx_busy;
+  mm_tx_busy <= tx_busy;
+  mm_rx_busy <= rx_busy;
 
-  if mm_status(4) = '1' and tx_busy = '0' then
+  if mm_tx_busy = '1' and tx_busy = '0' then
     tx_irq <= '1';
   end if;  
-  if mm_status(5) = '1' and rx_busy = '0' then
+  if mm_rx_busy = '1' and rx_busy = '0' then
     rx_irq <= '1';
   end if;  
 .

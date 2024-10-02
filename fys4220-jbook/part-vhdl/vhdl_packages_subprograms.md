@@ -252,7 +252,7 @@ begin
     -- Write the data 0x55 to the RX input
     uart_write_data(x"55", rx);
     -- make sure the data has been received and busy is set
-    wait for clk_periods*2; 
+    wait for clk_period*2; 
     -- make sure transaction has been completed
     -- and busy is low before checking received byte
     if rx_busy = '1' then
