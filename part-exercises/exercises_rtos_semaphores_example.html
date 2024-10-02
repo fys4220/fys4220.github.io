@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX9: Semaphore example &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_rtos_semaphores_example';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Project overview" href="../part-project/project_intro.html" />
+    <link rel="prev" title="EX8: A basic RTOS application" href="exercises_rtos_basic_example.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_rtos_semaphores_example.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX9: Semaphore example</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protecting-shared-resources">Protecting shared resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronization-of-tasks">Synchronization of tasks</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex9-semaphore-example">
+<span id="exercises-rtos-semaphores-example"></span><h1>EX9: Semaphore example<a class="headerlink" href="#ex9-semaphore-example" title="Permalink to this heading">#</a></h1>
+<p>This exercise will demonstrate the use of semaphores.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Be able to use a semaphore to:</p>
+<ul>
+<li><p>protect a shared resource, and</p></li>
+<li><p>synchronize to tasks.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="protecting-shared-resources">
+<h2>Protecting shared resources<a class="headerlink" href="#protecting-shared-resources" title="Permalink to this heading">#</a></h2>
+<p>As mentioned in <a class="reference internal" href="exercises_rtos_basic_example.html#exercises-rtos-basic-example"><span class="std std-ref">EX8: A basic RTOS application</span></a> the <em>OSTimeDlyHMSM</em> function is used to block the tasks for 3 seconds. Both tasks are using the same resource for writing to the standard output and thus there is a risk that both tasks will use this resources at the same time, resulting in a corrupted output. However, the execution time of the <em>printf</em> command in this example is in the order of a few hundered microseconds. The chance that the higher priority task may interrupt the lower priority task in the middle of a <em>printf</em> execution is therefore very low.</p>
+<p>To better demonstrate this scenario we will have to increase the time it takes to write to the JTAG UART. In addition we can also increase the repetition rate of each task, that is, how often they run. This can be achieved by looping through each character of the text string and using the command <em>putchar</em> to write a single character at the time, and reducing the task’s time delay. Modify both tasks according to the suggested code below. The use of the <em>strlen</em> function requires the <em>string.h</em> header file to be included (<code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;string.h&gt;</span></code>).</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define TASK1_PRIORITY      4</span>
+<span class="cp">#define TASK2_PRIORITY      5</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from task1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+<span class="w">    </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task2</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from task2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+<span class="w">    </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Compile the modified code and observe the result in the Nios-II terminal application.</p>
+<p>When running the code the output will sometimes be corrupted, e.g., like the output example shown below. That is, the higher priority task will interrupt the lower priority task before it has completed writing the full text string to the standard output.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task1</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">HelloHello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task1</span>
+<span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task1</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+<span class="n">Hello</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Task2</span>
+</pre></div>
+</div>
+<p>Since both tasks are using the same resource we need to implement a mechanism that controls the access to this resource. In <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II this can be acheived by using a semaphore, where the semaphore needs to be aquired by each task before using the shared resource. When the task no longer needs the resources, the task needs to release the semaphore.</p>
+<p>The relevant uC/OS-II functions to be used to declare, create, and use semaphores are shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">//Declare a pointer of type OS_EVENT.</span>
+<span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">shared_jtag_sem</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">//create semaphores in the main() function before starting the multitasking system, and initialize to 1. That is, the semaphore is available from start. If initialize to 0, the semaphore is not available from start.</span>
+<span class="n">shared_jtag_sem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OSSemCreate</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">//Prototype functions for OSSemPend and OSSemPost</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">OSSemPend</span><span class="w"> </span><span class="p">(</span><span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">pevent</span><span class="p">,</span>
+<span class="w">                </span><span class="n">INT16U</span><span class="w">    </span><span class="n">timeout</span><span class="p">,</span>
+<span class="w">                </span><span class="n">INT8U</span><span class="w">    </span><span class="o">*</span><span class="n">err</span><span class="p">);</span>
+
+<span class="n">INT8U</span><span class="w"> </span><span class="nf">OSSemPost</span><span class="p">(</span><span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">pevent</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>More information about the function calls can be found in the <span class="math notranslate nohighlight">\(\mu\)</span>c/OS-II API reference section of the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II user manual <span id="id1">[<a class="reference internal" href="../references.html#id16" title="Micrium. µC/OS-II Documentation. URL: https://micrium.atlassian.net/wiki/spaces/osiidoc/overview.">Mic</a>]</span> <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163887/C+OS-II+API+Reference">Direct Link</a></p>
+<p>Modify the code to use a semaphore called <em>shared_jtag_sem</em> to control the access to the JTAG UART. Compile and download the software to observe the difference with respect to not protecting the shared variable with a semaphore.</p>
+<p>See also the recoded video lectures on <a class="reference internal" href="../part-rtos/rtos_semaphores.html#rtos-semaphores"><span class="std std-ref">Semaphores</span></a>.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Complete code example</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;includes.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+
+<span class="cp">#define TASK_STACKSIZE 1024  </span><span class="c1">// Number of 32 bit words (e.g. 8192 bytes)</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+
+<span class="cp">#define TASK1_PRIORITY      4</span>
+<span class="cp">#define TASK2_PRIORITY      5</span>
+
+<span class="c1">//Semaphore to protect the shared JTAG resource</span>
+<span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">shared_jtag_sem</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from Task1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alt_u8</span><span class="w"> </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OS_ERR_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Collect semaphore before writing to JTAG UART</span>
+<span class="w">    </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">     </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// Release semaphore</span>
+<span class="w">    </span><span class="n">OSSemPost</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+<span class="w">    </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task2</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from Task2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alt_u8</span><span class="w"> </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OS_ERR_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Collect semaphore before writing to JTAG UART</span>
+<span class="w">    </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// Release semaphore</span>
+<span class="w">    </span><span class="n">OSSemPost</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+<span class="w">    </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* The main function creates two task and starts multi-tasking */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+<span class="c1">//create JTAG semaphore and initialize to 1</span>
+<span class="n">shared_jtag_sem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OSSemCreate</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task1</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">                    </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">task1_stk</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task2</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">                    </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">task2_stk</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">OSStart</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+</div>
+</section>
+<section id="synchronization-of-tasks">
+<h2>Synchronization of tasks<a class="headerlink" href="#synchronization-of-tasks" title="Permalink to this heading">#</a></h2>
+<p>In the example above the semaphore was used to protect the access to a shared resource. In addition a semaphore can also be used to synchronize the execution of a task with another task or event. In <a class="reference internal" href="../part-embedded/embedded_interrupt.html#embedded-interrupt"><span class="std std-numref">Section 3.6</span></a> we implemented interrupt handling for an external push button. In this case we can make use of a semaphore to execture a task every time the push button generates is pressed.</p>
+<p>When used for synchronization a semaphore must be initialize to 0, and then made available (posted) from the interrupt handling routine on an active interrupt. The task being synchronized to the interrupt must wait for the semaphore (pend).</p>
+<p>Your task will now be to synchronize <em>task1</em> from the example above with the interrupt generated by the push button. Try to solve the problem by yourself before you look at the solution example below.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Complete code example</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;includes.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;altera_avalon_pio_regs.h&quot;</span><span class="c1"> //access to PIO macros</span>
+
+<span class="cp">#define TASK_STACKSIZE 1024  </span><span class="c1">// Number of 32 bit words (e.g. 8192 bytes)</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+
+<span class="cp">#define TASK1_PRIORITY      4</span>
+<span class="cp">#define TASK2_PRIORITY      5</span>
+
+<span class="c1">//Semaphore to protect the shared JTAG resource</span>
+<span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">shared_jtag_sem</span><span class="p">;</span>
+
+<span class="c1">//Synchronization semaphore</span>
+<span class="n">OS_EVENT</span><span class="w"> </span><span class="o">*</span><span class="n">shared_key1_sem</span><span class="p">;</span>
+
+<span class="c1">//Gobal variable to hold the value of the edge capture register.</span>
+<span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">edge_capture</span><span class="p">;</span>
+
+<span class="c1">//The interrupt service routine </span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handle_interrupts</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="p">{</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">//Cast context to edge_capture&#39;s type</span>
+<span class="w">	</span><span class="c1">//Volatile to avoid compiler optimization</span>
+<span class="w">    </span><span class="c1">//this will point to the edge_capture variable.</span>
+<span class="w">	</span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+
+<span class="w">	</span><span class="c1">//Read the edge capture register on the PIO and store the value</span>
+<span class="w">    </span><span class="c1">//The value will be stored in the edge_capture variable and accessible</span>
+<span class="w">    </span><span class="c1">//from other parts of the code.</span>
+<span class="w">	</span><span class="o">*</span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IORD_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">);</span>
+
+<span class="w">	</span><span class="c1">//Write to edge capture register to reset it</span>
+<span class="w">	</span><span class="n">IOWR_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Post the semaphore to synchronize with task1</span>
+<span class="w">  </span><span class="n">OSSemPost</span><span class="p">(</span><span class="n">shared_key1_sem</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="c1">// Register the interrupt with the CPU</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">init_interrupts</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">	</span><span class="c1">//Recast the edge_capture point to match the</span>
+<span class="w">	</span><span class="c1">//alt_irq_register() function prototypo</span>
+<span class="w">	</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">edge_capture</span><span class="p">;</span>
+
+<span class="w">	</span><span class="c1">//In this case we enable only the interrupt connected to the push button</span>
+<span class="w">	</span><span class="n">IOWR_ALTERA_AVALON_PIO_IRQ_MASK</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mh">0x1</span><span class="p">);</span>
+
+<span class="w">	</span><span class="c1">//Reset the edge capture register</span>
+<span class="w">	</span><span class="n">IOWR_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">	</span><span class="c1">//Register the interrupt handler in the system</span>
+<span class="w">    </span><span class="c1">//The ID and PIO_IRQ number is available from the system.h file.</span>
+<span class="w">	</span><span class="n">alt_ic_isr_register</span><span class="p">(</span><span class="n">PIO_IRQ_IRQ_INTERRUPT_CONTROLLER_ID</span><span class="p">,</span>
+<span class="w">			</span><span class="n">PIO_IRQ_IRQ</span><span class="p">,</span><span class="w"> </span><span class="n">handle_interrupts</span><span class="p">,</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0</span><span class="p">);</span>
+
+
+<span class="p">}</span>
+
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from Task1 on interrupt!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alt_u8</span><span class="w"> </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OS_ERR_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Wait for the sempahore from interrupt handling routine before executing the task</span>
+<span class="w">    </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">shared_key1_sem</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Collect semaphore before writing to JTAG UART</span>
+<span class="w">    </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">     </span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// Release semaphore</span>
+<span class="w">    </span><span class="n">OSSemPost</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+
+<span class="w">    </span><span class="c1">// The task will only be exectuted when the semaphore is available.</span>
+<span class="w">    </span><span class="c1">// The PEND function will make sure that the task is blocked </span>
+<span class="w">    </span><span class="c1">// and the OSTimeDlyHMSM is no longer needed.</span>
+<span class="w">    </span><span class="c1">//OSTimeDlyHMSM(0, 0, 0, 20);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task2</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">text</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello from Task2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">  </span><span class="n">alt_u8</span><span class="w"> </span><span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OS_ERR_NONE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Collect semaphore before writing to JTAG UART</span>
+<span class="w">    </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">text</span><span class="p">);</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">putchar</span><span class="p">(</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// Release semaphore</span>
+<span class="w">    </span><span class="n">OSSemPost</span><span class="p">(</span><span class="n">shared_jtag_sem</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//printf(&quot;Hello from task2\n&quot;);</span>
+
+<span class="w">    </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* The main function creates two task and starts multi-tasking */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+
+
+<span class="c1">//create JTAG semaphore and initialize to 1</span>
+<span class="n">shared_jtag_sem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OSSemCreate</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">//create synchronization semaphore and initialize to 0</span>
+<span class="n">shared_key1_sem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OSSemCreate</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">//Initialize interrupt</span>
+<span class="n">init_interrupts</span><span class="p">();</span>
+
+
+<span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task1</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">                    </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">task1_stk</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task2</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span>
+<span class="w">                    </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">task2_stk</span><span class="p">,</span>
+<span class="w">                    </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span>
+<span class="w">                    </span><span class="nb">NULL</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="n">OSStart</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_rtos_basic_example.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EX8: A basic RTOS application</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../part-project/project_intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Project overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protecting-shared-resources">Protecting shared resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronization-of-tasks">Synchronization of tasks</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

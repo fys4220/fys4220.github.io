@@ -1,0 +1,42 @@
+div.mermaid {
+  text-align: center;
+}
+
+
+/* Make the logo taller */
+/*div.navbar-brand-box a.navbar-brand img {
+    max-height: 10vh !important;
+} 
+*/
+
+body {
+	background-color: #fff;
+    	color: #333
+}
+/*
+p {
+    text-align: justify;
+}
+*/
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.27198%;
+  }
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  }
+
+
+/* The side nav should be collapsed except the part you're in */
+/*
+ul.bd_sidenav:not(.current) {
+	display: none;
+}
+.tocsection.onthispage {}
+*/

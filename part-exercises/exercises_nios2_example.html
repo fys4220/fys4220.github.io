@@ -1,0 +1,960 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX5: A basic Nios II system &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_nios2_example';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EX6: Accessing Nios II memory mapped modules" href="exercises_memory_mapped_sw.html" />
+    <link rel="prev" title="Embedded systems" href="exercises_embedded.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_nios2_example.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX5: A basic Nios II system</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-hardware">Building the Hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microcontroller-system">Microcontroller system</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#on-chip-memory">On-chip memory</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nios-ii-processor-core">Nios II Processor core</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-components">Connecting the components</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cpu-reset-and-exception-vectors">CPU reset and exception vectors</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jtag-uart">JTAG UART</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-the-system">Saving the system</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-hdl">Generate the HDL</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-hdl">Top-level HDL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-remaining-necessary-files">Adding remaining necessary files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-software">Building the Software</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#board-support-package">Board Support Package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-application">Software application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming-the-fpga">Programming the FPGA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware">Hardware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-application-software">Download application software</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-application-sofware">Test application sofware</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex5-a-basic-nios-ii-system">
+<span id="exercises-nios2-example"></span><h1>EX5: A basic Nios II system<a class="headerlink" href="#ex5-a-basic-nios-ii-system" title="Permalink to this heading">#</a></h1>
+<p>In the following sections we will show a practial example of building a Intel Nios II microcontroller system. While the tools used are specific to the specific hardware and FPGA vendor, the overall concepts should be similar between hardware platforms.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Get familiar with the software build tools for Quartus.</p></li>
+<li><p>Be able to build and generate a basic microcontroller system based on the Nios II soft core processor.</p></li>
+<li><p>Include this microcontroller design in a top level VHDL description and synthesise the system.</p></li>
+<li><p>Be able to write, compile, and test a basic “Hello world” program to run on the microcontroller system.</p></li>
+</ul>
+</div>
+<p>We will start by building the system shown in <a class="reference internal" href="#fig-embedded-basic-nios2-system"><span class="std std-numref">Fig. 30</span></a>. The system consist of three main units:</p>
+<ul class="simple">
+<li><p>Nios II/e CPU</p></li>
+<li><p>On-chip memory / RAM</p></li>
+<li><p>JTAG UART</p></li>
+</ul>
+<p>The CPU and on-chip memory are the two most important components needed to build and run a system, where the on-chip memory is needed to store instructions and data used by the CPU. The JTAG UART is a IP core that provides an easy way to communicate serial character streams between the host PC and the microcontroller system.  On the PC host, sending and receiving characters can be done by using the <em>Nios II terminal</em> software (<em>nios2-terminal.exe</em>).</p>
+<figure class="align-center" id="fig-embedded-basic-nios2-system">
+<a class="reference internal image-reference" href="../_images/embedded_basic_nios2_system.png"><img alt="../_images/embedded_basic_nios2_system.png" src="../_images/embedded_basic_nios2_system.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Simplified overview of a basic Nios II system.</span><a class="headerlink" href="#fig-embedded-basic-nios2-system" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="warning admonition">
+<p class="admonition-title">Warning</p>
+<p>The description and scripts provided in this example assumes that you will use the following directory structure:</p>
+<ul class="simple">
+<li><p>nios2_example</p>
+<ul>
+<li><p>quartus</p></li>
+<li><p>hdl</p></li>
+<li><p>software</p></li>
+</ul>
+</li>
+</ul>
+<p>The Quartus folder recursively contains all the relevant Quartus project and Platform Designer files. The top-level VHDL file for the project (<em>system_top.vhd</em>) is stored in the <em>hdl</em> folder. Software and board support package files are stored in the <em>software</em> folder.</p>
+</div>
+<div class="admonition-example-code-on-github admonition">
+<p class="admonition-title">Example code on Github</p>
+<p>The code for this example can be found here: <a class="github reference external" href="https://github.com/fys4220/fys4220_nios2_example">fys4220/fys4220_nios2_example</a></p>
+</div>
+<section id="building-the-hardware">
+<span id="embedded-hardware"></span><h2>Building the Hardware<a class="headerlink" href="#building-the-hardware" title="Permalink to this heading">#</a></h2>
+<p>Start by creating a new Quartus project, give it the name <em>system_top</em>, and choose the correct FPGA device and part number: <em>MAX10 10M50DAF484C7G</em>.</p>
+<p>To build the microcontroller system we will use the Platform designer tool from Intel.</p>
+<ul class="simple">
+<li><p>In Quartus, go to the menu line and choose <em>Tools –&gt; Platform designer</em>.</p></li>
+</ul>
+<section id="microcontroller-system">
+<h3>Microcontroller system<a class="headerlink" href="#microcontroller-system" title="Permalink to this heading">#</a></h3>
+<p>When you first open the Platform designer the system will only consist of the Clock source component as show in <a class="reference internal" href="#fig-embedded-platform-designer"><span class="std std-numref">Fig. 31</span></a>. This component is responsible for receiving the main clock and reset for the system, and to distribute these to other components in the system.</p>
+<p>Double click on this component and make sure that the system clock frequency is set correctly to 50 MHz. By default the Clock source component assumes that reset provided to the system is asynchronous. The type of reset can be set by choosing the appropriate value for <em>Reset synchronous edges</em>. Since we will be using a push button as a reset, leave the choose at <em>None</em>. I.e., an asynchronous reset.</p>
+<p>Rename the component to <em>sys_clk</em>. Components can be renamed by right-clicking on the component and choosing rename, or by using the short-cut CTRL-R.</p>
+<figure class="align-center" id="fig-embedded-platform-designer">
+<a class="reference internal image-reference" href="../_images/embedded_platform_designer.png"><img alt="../_images/embedded_platform_designer.png" src="../_images/embedded_platform_designer.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Platform designer when starting a new build from scratch.</span><a class="headerlink" href="#fig-embedded-platform-designer" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Additional components can be found and added from the IP Catalog.  If you do not see the IP Catalog tab, this can be opened from (View –&gt; IP Catalog). You can either navigate the component tree under Library, or use the search field to find the required component.</p>
+<section id="on-chip-memory">
+<h4>On-chip memory<a class="headerlink" href="#on-chip-memory" title="Permalink to this heading">#</a></h4>
+<p>A microcontroller system will need a memory to store its instructions and data. In the IP catalog, locate the component called <em>On-Chip Memory (RAM or ROM) Intel FPGA IP</em>. Double click the component and it will be added to the system. In its configuration window, set the total memory size to 153600 bytes and uncheck the initialize memory content box. Leave all other settings with their default values. Press Finish and rename the component to <em>onchip_mem</em>.</p>
+<div class="admonition-important admonition">
+<p class="admonition-title">Important!</p>
+<p>It is possible to configure the memory with a pre-built software. This will allow the system to boot and immediatley run without the need to download the software. The corresponding mem.hex file then first needs to be generated by the Nios-II software build tools and referenced here. However, for this problem we will develop the software later and download it separately. We therefore need to uncheck the initialize memory content box.</p>
+</div>
+</section>
+<section id="nios-ii-processor-core">
+<h4>Nios II Processor core<a class="headerlink" href="#nios-ii-processor-core" title="Permalink to this heading">#</a></h4>
+<p>Next you will add the Nios-II CPU. When searcing for Nios in the IP Catalog you will see two entries under the Embedded processor branch. Choose the Nios II Processor. The classic is an older legacy version. Double click the component to open the configuration settings and choose the <strong>NiosII/e</strong> radio button. This is the economy version of the processor for which no license is required. The difference between the two processors are listed in the table below the radio buttons of the configuration tab. Press Finish and rename the component to <em>cpu</em>.</p>
+</section>
+<section id="connecting-the-components">
+<h4>Connecting the components<a class="headerlink" href="#connecting-the-components" title="Permalink to this heading">#</a></h4>
+<p>After adding the onchip memory and CPU a number of error messages will appear. These can removed by correctly connecting and configuring the newly added components.</p>
+<p>The clock source is used to distribute the system clock to the various system components. A connection from the clock source to the on-chip memory and CPU is therefore needed. This is done by connecting the clk output of the clock source component to the clk1 and clk inputs of the on-chip memory and CPU respectively as shown in <a class="reference internal" href="#fig-embedded-connecting-components"><span class="std std-numref">Fig. 32</span></a>.</p>
+<figure class="align-center" id="fig-embedded-connecting-components">
+<a class="reference internal image-reference" href="../_images/embedded_connecting_components.png"><img alt="../_images/embedded_connecting_components.png" src="../_images/embedded_connecting_components.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Connections between components are made by clicking on the open circles in the connections column. Closed or solid circles indicates that a connection has been made.</span><a class="headerlink" href="#fig-embedded-connecting-components" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The Nios-II CPU uses a Harvard type architecture where the data and instructions are kept in separate memory partitions and can be accessed simultaneously. The CPU therefore has a separate data master and instruction master connections. Since the on-chip memory will store both data and instructions, both have to be connected to the Avalond Memory Mapped Slave input of the on-chip memory component as shown in <a class="reference internal" href="#fig-embedded-memory-connection"><span class="std std-numref">Fig. 33</span></a>. Within the on-chip memory the data and instructions are separated and stored at different address partitions.</p>
+<figure class="align-center" id="fig-embedded-memory-connection">
+<a class="reference internal image-reference" href="../_images/embedded_memory_connection.png"><img alt="../_images/embedded_memory_connection.png" src="../_images/embedded_memory_connection.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Connection the data and instruction master connections to the on-chip memory.</span><a class="headerlink" href="#fig-embedded-memory-connection" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="cpu-reset-and-exception-vectors">
+<h4>CPU reset and exception vectors<a class="headerlink" href="#cpu-reset-and-exception-vectors" title="Permalink to this heading">#</a></h4>
+<p>After the on-chip memory has been connected to the CPU, the reset and exception vector locations have to be correctly configured for the CPU. Double click on the CPU component and navigate to the Vectors tab. Select <em>onchip_mem.s1</em> for both the reset and exception vector memory. Within the onchip memory the program that you download will by default be located at address position 0x0. This is also the position at which the instruction pointer of the CPU should point to in case of a reset. The corresponding location offset for the excpetion vector is 0x20.</p>
+<p>In addition to distributing the clock, the clock source component is also responsible for distributing the reset signals to the system’s other componets. Connect the clk_reset output of the clock source to the reset1 and reset inputs of the onchip memory and cpu respectively.</p>
+<p>The remaining error messages refers to that there is an overlap between the location of the data and instruction interfaces. This is a common error that you will see when ever you add a new component to the system that is connected to memory mapped master of the CPU. This can be corrected by either manually changing the base and end address locations of each component or by letting the Platfrom designer automatically assign available address locations to each component (System –&gt; Assign Base address). The latter option is strongly recommend as you do not have to think about which address location to use. At this stage you should have a system with out error messages, and you are ready to add the other needed components.</p>
+</section>
+<section id="jtag-uart">
+<h4>JTAG UART<a class="headerlink" href="#jtag-uart" title="Permalink to this heading">#</a></h4>
+<p>The JTAG UART is a IP core that provides an easy way to communicate serial character streams between the host PC and the microcontroller system. It can also be sused to debug the Nios-II system. It controls the connection between the system and the JTAG-to-USB connection on the board. Use the default settings for this component. Connect the clk, reset as for the other compents. Since the CPU will not fetch instructions from the JTAG UART, only the data master interface of the CPU shall be connected to the memory mappped slave interface of the JTAG UART.</p>
+<p>The JTAG UART also has an interrupt interface that shall be connected to the interrupt interface (irq) of the CPU. The IRQ column can be used to set the interrupt priority of the JTAG UART. The lower the number the higher the priority. Since the JTAG UART is related to serial communication and debugging of the system, it will usually not have a high priority during normal operation. Click the corresponding box in the IRQ window and type the value 16.</p>
+<p>The Platform designer does provide an Assign Interrupt Numbers command which connects IRQ signals to produce valid hardware results. However, assigning IRQs effectively requires an understanding of how software responds to them. Because the Platform designer does not know the software behavior, the Platform designer cannot make educated guesses about the best IRQ assignment. It is thefore required to set the interrupt prioity levels manually.</p>
+</section>
+<section id="saving-the-system">
+<h4>Saving the system<a class="headerlink" href="#saving-the-system" title="Permalink to this heading">#</a></h4>
+<p>Make sure that all warning and error messages has removed and save the system. Select (File –&gt; Save as) and save as <em>nios2_system.qsys</em> to a relevant directory. E.g., the diretory where you will store your quartus project.</p>
+<p>The system should no look similar to <a class="reference internal" href="#fig-embedded-jtag-connection"><span class="std std-numref">Fig. 34</span></a>.</p>
+<figure class="align-center" id="fig-embedded-jtag-connection">
+<a class="reference internal image-reference" href="../_images/embedded_jtag_connection.png"><img alt="../_images/embedded_jtag_connection.png" src="../_images/embedded_jtag_connection.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Connecting the JTAG UART to the system and setting the required prority.</span><a class="headerlink" href="#fig-embedded-jtag-connection" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="generate-the-hdl">
+<h4>Generate the HDL<a class="headerlink" href="#generate-the-hdl" title="Permalink to this heading">#</a></h4>
+<p>When all the necessary components are included and connected, it is time to generate the HDL description that will be used by Quartus to synthesize the system.</p>
+<p>To generate the HDL description of the system:</p>
+<ul class="simple">
+<li><p>Press the <em>Generate HDL</em> button or choose <em>Generate–&gt;Generate HDL</em> from the menu line.</p></li>
+<li><p>Choose VHDL under “Create HDL design files for synthesis”.</p></li>
+<li><p>Disable “Create block symbol file (.bsf)”.</p></li>
+<li><p>Leave “Create simulation model” as <em>None</em>.</p></li>
+<li><p>Press Generate.</p></li>
+</ul>
+<p>A directory with the same name as the system (in our case <em>nios2_system</em>) will now contain an HDL description of the system.</p>
+<p>The Platform Designer creates four files of particular interest and importance:</p>
+<ul class="simple">
+<li><p><em>nios2_system.qsys</em></p>
+<ul>
+<li><p>The Platform Designer file. <strong>This file must be kept under version control.</strong></p></li>
+</ul>
+</li>
+<li><p><em>nios2_system/nios2_system_inst.vhd</em></p>
+<ul>
+<li><p>An instantiation template generated when the system is saved</p></li>
+</ul>
+</li>
+<li><p><em>nios2_system/synthesis/nios2_system.qip</em></p>
+<ul>
+<li><p>This file includes all the information needed to synthesize the the system in your Quartus project. <strong>This file must be included in the Quartus project.</strong></p></li>
+</ul>
+</li>
+<li><p><em>nios2_system.sopc</em></p>
+<ul>
+<li><p>This file includes all the information needed for the Nios II software build tools to generate the required Board Support Package (BSP).</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition-tip admonition">
+<p class="admonition-title">Tip</p>
+<p>If you make changes the system in the Platform Designer, you must remember to regenerate the system (e.g., HDL, qip and SOPC files).</p>
+<p>Since the system can be fully generated from the <em>.qys</em> files, this is the only file that needs to be kept under version control.</p>
+</div>
+</section>
+</section>
+<section id="top-level-hdl">
+<h3>Top-level HDL<a class="headerlink" href="#top-level-hdl" title="Permalink to this heading">#</a></h3>
+<p>After the microcontroller system has been generated it is time to include it in your top-level VHDL description.</p>
+<p>The <em>nios2_system_inst.vhd</em> contains a template for the system instantiation as shown below:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- clk</span>
+<span class="w">        </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="w">  </span><span class="c1">-- reset_n</span>
+<span class="w">    </span>
+<span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="p">;</span>
+
+<span class="w"> </span><span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">clk_clk</span><span class="w">       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">CONNECTED_TO_clk_clk</span><span class="p">,</span><span class="w">       </span><span class="c1">--   clk.clk</span>
+<span class="w">        </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">CONNECTED_TO_reset_reset_n</span><span class="w">  </span><span class="c1">-- reset.reset_n</span>
+<span class="w">    </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same information can also be shown if choosing (Generate –&gt; Show Instantiation Template), and can be used to instantiate the microcontroller system in your top-level HDL as show below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">system_top</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">arst_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">system_top</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">clk_clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- clk</span>
+<span class="w">      </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="w"> </span><span class="c1">-- reset_n</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">clk_clk</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="c1">--   clk.clk</span>
+<span class="w">      </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">arst_n</span><span class="w"> </span><span class="c1">-- reset.reset_n</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Copy and past the top-level description of <em>system_top</em> into a file called <em>system_top.vhd</em>. Store the file in the <em>hdl</em> folde and add it to your project. (Project–&gt;Add/Remove Files in Project).</p>
+</section>
+<section id="adding-remaining-necessary-files">
+<h3>Adding remaining necessary files<a class="headerlink" href="#adding-remaining-necessary-files" title="Permalink to this heading">#</a></h3>
+<p>The Platform Designer creates a file called <em>nios2_system.qip</em> when it generates the HDL description for the system. This file includes all the information needed to synthesize the the system in your Quartus project. It therefore needs to be added to your Quartus project. In Quartus choose (Project–&gt;Add/Remove Files in Project), navigate to the folder containing the .qip file and add it.</p>
+<p>The last step needed is to add the relevant pinning and timing constraints:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># system_top.sdc</span>
+
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">20.000</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="nv">clk</span><span class="k">}]</span>
+<span class="nv">derive_clock_uncertainty</span>
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># de10-lite_pinning.tcl</span>
+
+<span class="c"># Dedicated FPGA clock pin for 50 MHz clock</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_P11<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>clk
+
+<span class="c"># key0 - used as reset</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_B8<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>arst_n
+
+<span class="c">#To avoid that the FPGA is driving an unintended value on pins that are not in use:</span>
+<span class="nv">set_global_assignment</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP<span class="w"> </span><span class="s2">&quot;AS INPUT TRI-STATED&quot;</span>
+</pre></div>
+</div>
+<p>Place the <em>system_top.sdc</em> and <em>de10-lite_pinning.tcl</em> file in the <em>quartus</em> folder.</p>
+<p>Add both files to your Quartus project and run the pinning Tcl-script (Tools–&gt;Tcl Scripts). Verify that the correct pinning assignments have been made in the Assignments Editor (Assignments–&gt;Assignments Editor).</p>
+<p>Save and compile the Quartus project.</p>
+</section>
+</section>
+<section id="building-the-software">
+<span id="embedded-software"></span><h2>Building the Software<a class="headerlink" href="#building-the-software" title="Permalink to this heading">#</a></h2>
+<p>In this part you will write a basic “Hello, World!” application. A microcontroller system’s software applications usually consists of an application project and a <a class="reference external" href="https://en.wikipedia.org/wiki/Board_support_package">Board Support Package (BSP)</a> project. The BSP is a layer of software containing hardware-specific drivers and routines that that can be used by the main software application to acccess the specific hardware resources of the system. This usually comprises a set of C or C++ source and header files.</p>
+<p>In this example it provides easy access to the JTAG UART for writing characters between the system and host PC,  simply by using a <em>printf</em> statement.</p>
+<p>The software application you will implement is shown below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">File</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">c</span>
+
+<span class="c1">#include &lt;stdio.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;Hello, World!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Intel provides a graphical user interface for developing a Nios II software application – Nios II Sofware Build Tools for Eclipse. This can be started from Quartus (Tool–&gt;Nios II Sofware Build Tools for Eclipse). However, this Eclipse-based GUI is very slow and sometimes buggy, which makes it a cumbersome experience to work with. A much better approach is to use the available command line tools:</p>
+<ul class="simple">
+<li><p>nios2-bsp (generates BSP)</p></li>
+<li><p>nios2-app-generate-makefile (generates software application makefile)</p></li>
+</ul>
+<section id="board-support-package">
+<span id="embedded-bsp"></span><h3>Board Support Package<a class="headerlink" href="#board-support-package" title="Permalink to this heading">#</a></h3>
+<p>Open the Nios II command shell from the main Windows menu (In Linux it can be started by writing <em>nios2_command_shell.sh</em> in a terminal window).</p>
+<p>Navigate to the <em>software</em>-folder of your project and create the folder <em>app_bsp</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">software</span>
+<span class="n">mkdir</span> <span class="n">app_bsp</span>
+</pre></div>
+</div>
+<p>Create the board support package using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">bsp</span> <span class="n">hal</span> <span class="n">app_bsp</span> <span class="o">../</span><span class="n">quartus</span><span class="o">/</span><span class="n">nios2_system</span><span class="o">.</span><span class="n">sopcinfo</span>
+</pre></div>
+</div>
+<p>For more information on how to use the <em>nios2-bsp</em> command type <code class="docutils literal notranslate"><span class="pre">nios2-bsp</span> <span class="pre">--help</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-bsp --help
+
+Usage: nios2-bsp &lt;bsp-type&gt; &lt;bsp-dir&gt; [&lt;sopc&gt;] [--&lt;option&gt;]*
+</pre></div>
+</div>
+<p>To create a BSP you will need to specify the type of Hardware Abstraction Layer (see <a class="reference internal" href="../part-embedded/embedded_hal.html#embedded-hal"><span class="std std-numref">Section 3.4</span></a>) to use, the path to were the BSP will be stored, and the path to the SOPC information file generated by the Platform Designer. The SOPC information file will be used to generate the relevant hardware-specific drivers for the system we generated in <a class="reference internal" href="#embedded-hardware"><span class="std std-ref">Building the Hardware</span></a>.</p>
+<p>Available BSP-types are <em>hal</em> and <em>ucosii</em>. <em>hal</em> is the basic abstraction layer when running a bare metal Nios II application. That is, an application without an operating system. The <em>ucosii</em> BSP-type supports a software application that is running on the real-time kernel $\mu&amp;C/OS-II.</p>
+<p>To compile the BSP, navigate to the <em>app_bsp</em> folder and type <em>make</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make
+</pre></div>
+</div>
+</section>
+<section id="software-application">
+<span id="embbeded-makefile"></span><h3>Software application<a class="headerlink" href="#software-application" title="Permalink to this heading">#</a></h3>
+<p>Create the folder <em>software/app</em> and add the file <em>app.c</em> with the c-code already provide above in <a class="reference internal" href="#embedded-software"><span class="std std-ref">Building the Software</span></a>.</p>
+<p>From the <em>software</em> folder create the software application makefile by typing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">generate</span><span class="o">-</span><span class="n">makefile</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">bsp</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app_bsp</span> <span class="o">--</span><span class="n">src</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app</span> <span class="o">--</span><span class="n">app</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app</span>
+</pre></div>
+</div>
+<p>Again, to learn more about how to use the <em>nios2-app-generate-makefile.exe</em>, type <code class="docutils literal notranslate"><span class="pre">nios2-app-generate-makefile.exe</span> <span class="pre">--help</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-app-generate-makefile.exe --help
+Command: nios2-app-generate-makefile
+
+Usage: nios2-app-generate-makefile --bsp-dir &lt;directory&gt; [&lt;options&gt;]
+</pre></div>
+</div>
+<p>Compile the software application by navigating to the <em>app</em> folder and type <code class="docutils literal notranslate"><span class="pre">make</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make
+Info: Building ../app_bsp
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../app_bsp
+[BSP build complete]
+Info: Compiling app.c to obj/default/./app.o
+nios2-elf-gcc -xc -MP -MMD -c -I../app_bsp/HAL/inc -I../app_bsp -I../app_bsp/drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/./app.o app.c
+Info: Linking app.elf
+nios2-elf-g++  -T&#39;../app_bsp/linker.x&#39; -msys-crt0=&#39;../app_bsp/obj/HAL/src/crt0.o&#39; -msys-lib=hal_bsp -L../app_bsp   -Wl,-Map=app.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o app.elf obj/default/./app.o -lm -msys-lib=m
+nios2-elf-insert app.elf --thread_model hal --cpu_name cpu --qsys true --simulation_enabled false --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2_system --sopcinfo c:/Users/ketilroe/workspace/nios2-example/software/app_bsp/../../quartus/nios2_system.sopcinfo
+Info: (app.elf) 28 KBytes program size (code + initialized data).
+Info:           114 KBytes free for stack + heap.
+Info: Creating app.objdump
+nios2-elf-objdump --disassemble --syms --all-header app.elf &gt;app.objdump
+[app build complete]
+</pre></div>
+</div>
+<p>This will create the executable file <em>app.elf</em> <a class="footnote-reference brackets" href="#footnote-elf" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>, which will be downloaded to run on the microcontroller system.</p>
+</section>
+</section>
+<section id="programming-the-fpga">
+<h2>Programming the FPGA<a class="headerlink" href="#programming-the-fpga" title="Permalink to this heading">#</a></h2>
+<section id="hardware">
+<h3>Hardware<a class="headerlink" href="#hardware" title="Permalink to this heading">#</a></h3>
+<p>To download and test the sofware application you first need to configure the FPGA with the hardware system from <a class="reference internal" href="#embedded-hardware"><span class="std std-ref">Building the Hardware</span></a>. This can be done either through the Programmer application in Quartus (Tools–&gt;Programmer), or from the Nios II command shell.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">configure</span><span class="o">-</span><span class="n">sof</span> <span class="o">&lt;</span><span class="n">relative_path_to</span><span class="o">/</span><span class="n">configuration_file</span><span class="o">.</span><span class="n">sof</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Example</p>
+<p>E.g., if in <em>software/app</em> folder and .sof file is <em>quartus/output_files</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-configure-sof ../../quartus/output_files/system_top.sof
+Info:   *******************************************************************
+Info: Running Quartus Prime Programmer
+Info: Command: quartus_pgm --no_banner --mode=jtag -o p;C:/Users/   ketilroe/workspace/nios2-example/quartus/output_files/system_top.sof
+Info (213045): Using programming cable &quot;USB-Blaster [USB-0]&quot;
+Info (213011): Using programming file C:/Users/ketilroe/workspace/  nios2-example/quartus/output_files/system_top.sof with checksum   0x00401269 for device 10M50DAF484@1
+Info (209060): Started Programmer operation at Sun Oct 10 17:18:34 2021
+Info (209016): Configuring device index 1
+Info (209017): Device 1 contains JTAG ID code 0x031050DD
+Info (209007): Configuration succeeded -- 1 device(s) configured
+Info (209011): Successfully performed operation(s)
+Info (209061): Ended Programmer operation at Sun Oct 10 17:18:36 2021
+Info: Quartus Prime Programmer was successful. 0 errors, 0 warnings
+Info: Peak virtual memory: 4425 megabytes
+Info: Processing ended: Sun Oct 10 17:18:36 2021
+Info: Elapsed time: 00:00:03
+Info: Total CPU time (on all processors): 00:00:0
+</pre></div>
+</div>
+</div>
+</section>
+<section id="download-application-software">
+<h3>Download application software<a class="headerlink" href="#download-application-software" title="Permalink to this heading">#</a></h3>
+<p>When the FPGA has been configured, you can download the software using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">download</span> <span class="o">-</span><span class="n">g</span> <span class="o">&lt;</span><span class="n">relative_path_to</span><span class="o">/</span><span class="n">application</span><span class="o">.</span><span class="n">elf</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Example</p>
+<p>E.g., if in <em>sofware</em> folder</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-download -g app/app.elf
+Using cable &quot;USB-Blaster [USB-0]&quot;, device 1, instance 0x00
+Pausing target processor: OK
+Initializing CPU cache (if present)
+OK
+Downloaded 29KB in 0.3s (96.6KB/s)
+Verified OK
+Starting processor at address 0x00040230
+</pre></div>
+</div>
+</div>
+</section>
+<section id="test-application-sofware">
+<h3>Test application sofware<a class="headerlink" href="#test-application-sofware" title="Permalink to this heading">#</a></h3>
+<p>The main task of the software application is to write “Hello, World!” to the standard output. In the board support package, the standard output is configured to be the JTAG UART. To access the JTAG UART on the host PC we use the <em>nios2-terminal</em> command line application:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-terminal.exe
+nios2-terminal: connected to hardware target using JTAG UART on cable
+nios2-terminal: &quot;USB-Blaster [USB-0]&quot;, device 1, instance 0
+nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
+
+Hello, World!
+</pre></div>
+</div>
+<hr class="footnotes docutils" />
+<aside class="footnote brackets" id="footnote-elf" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">ELF: Executable and Linkable Format</a></p>
+</aside>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_embedded.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Embedded systems</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_memory_mapped_sw.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EX6: Accessing Nios II memory mapped modules</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-hardware">Building the Hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#microcontroller-system">Microcontroller system</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#on-chip-memory">On-chip memory</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#nios-ii-processor-core">Nios II Processor core</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-components">Connecting the components</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cpu-reset-and-exception-vectors">CPU reset and exception vectors</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#jtag-uart">JTAG UART</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#saving-the-system">Saving the system</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-the-hdl">Generate the HDL</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-hdl">Top-level HDL</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-remaining-necessary-files">Adding remaining necessary files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-software">Building the Software</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#board-support-package">Board Support Package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-application">Software application</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#programming-the-fpga">Programming the FPGA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware">Hardware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-application-software">Download application software</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-application-sofware">Test application sofware</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,847 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>P3: RTOS &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-project/data_rate';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="P2: Microcontroller system" href="project_nios2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-project/data_rate.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>P3: RTOS</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-rates">Data rates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interrupts-and-data-flow">Interrupts and data flow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerometer-read-task">Accelerometer read task</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intertask-message">Intertask message</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-send-task">UART send task</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adxl345-configuration">ADXL345 configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-pc-software">Host PC software</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="p3-rtos">
+<span id="project-rtos"></span><h1>P3: RTOS<a class="headerlink" href="#p3-rtos" title="Permalink to this heading">#</a></h1>
+<p>In this part of the embedded system project you will build the final software application to read out accelerometer sensor data and present this data on the host PC. The software application running on the microcontroller system will use a real-time operating system kernel to split the required functionality into smaller units (tasks), and intertask communication services to communicate data between tasks.</p>
+<div class="admonition-preparation admonition">
+<p class="admonition-title">Preparation</p>
+<p>Before you start, work through the example described in <a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html#exercises-rtos-basic-example"><span class="std std-ref">EX8: A basic RTOS application</span></a> and <a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html#exercises-rtos-semaphores-example"><span class="std std-ref">EX9: Semaphore example</span></a>.</p>
+<p>These examples will provide you with the basics of how to write a uC/OS-II software application.</p>
+<p>You should also study the datasheet of the ADXL345 <span id="id1">[<a class="reference internal" href="../references.html#id13" title="Analog Devices. ADXL345 Digital Accelerometer datasheet. URL: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf.">Devb</a>]</span>, and in particular the sections:</p>
+<ul class="simple">
+<li><p>Theory of operation (p. 13–14)</p></li>
+<li><p>Serial communication (p. 15–22)</p></li>
+<li><p>Register map (p. 23–27)</p></li>
+</ul>
+</div>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Permalink to this heading">#</a></h2>
+<p>The main tasks of the software application is to:</p>
+<ul class="simple">
+<li><p>Correctly configure the ADXL345 accelerometer.</p></li>
+<li><p>Read out the X-, Y-, Z-data regsiters of the ADXL345.</p></li>
+<li><p>Send the accelerometer data over the UART to the host PC.</p></li>
+</ul>
+<p>The configuration will only be performed once at the start of the program, while the readout of data will be performed continuously. Reading data from the accelerometer and writing data to the UART are two operations that naturally can be split into two different tasks. These two tasks will be linked by a message sent from the accelerometer read tasks to the uart send task that contains a new packet of accelerometer data, see <a class="reference internal" href="#fig-project-rtos-two-tasks"><span class="std std-numref">Fig. 85</span></a>.</p>
+<figure class="align-center" id="fig-project-rtos-two-tasks">
+<a class="reference internal image-reference" href="../_images/project_rtos_two_tasks.png"><img alt="../_images/project_rtos_two_tasks.png" src="../_images/project_rtos_two_tasks.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 85 </span><span class="caption-text">One tasks reads data from the accelerometer and sends the data to another tasks that which again sends the data over the UART to the host PC.</span><a class="headerlink" href="#fig-project-rtos-two-tasks" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="data-rates">
+<h2>Data rates<a class="headerlink" href="#data-rates" title="Permalink to this heading">#</a></h2>
+<p>A packet of accelerometer data consist of X-, Y-, and Z-values, each two bytes in size.</p>
+<p>For continuous operation the data rate is limited by the baudrate of the UART interface and the time it takes to execute the UART send command in the software.
+The time it takes to send it a data packet over the UART interface is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># #bit = 8 data bits + 1 start bit + 1 stop bit</span>
+<span class="n">no_bytes</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">no_bits_per_byte</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">8</span>
+<span class="n">baudrate</span> <span class="o">=</span> <span class="mi">115200</span>
+<span class="n">time_byte</span> <span class="o">=</span> <span class="p">(</span><span class="n">no_bits_per_byte</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">baudrate</span> 
+<span class="n">time_packet</span> <span class="o">=</span> <span class="n">time_byte</span> <span class="o">*</span> <span class="n">no_bytes</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time to send 1 byte UART: </span><span class="si">{:.1f}</span><span class="s2"> us&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_byte</span><span class="o">*</span><span class="mf">1e6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time to send a data packet over the UART: </span><span class="si">{:.1f}</span><span class="s2"> us or </span><span class="si">{:.1}</span><span class="s2"> ms&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_packet</span><span class="o">*</span><span class="mf">1e6</span><span class="p">,</span><span class="n">time_packet</span><span class="o">*</span><span class="mf">1e3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time to send 1 byte UART: 86.8 us
+Time to send a data packet over the UART: 520.8 us or 0.5 ms
+</pre></div>
+</div>
+</div>
+</div>
+<p>This does not take into account the overhead of receiving the message from the accelerometer read task and executing the IOWR function to write to the TX data register of the UART. However, it sets an upper limit for the data rate.</p>
+<p>The maxium SPI clock frequency for the ADXL345 is 5 MHz according to Table 10. on page 17 in the ADXL345 datasheet. However, the SPI IP core was configured to run at 1 MHz when included in the microcontroller system in <a class="reference internal" href="project_nios2.html#project-spi-module"><span class="std std-ref">Add an SPI module</span></a>. When using the multi-byte mode of the SPI interface, one byte is first sent to the ADXL345 module before it returns the number of specified bytes. The time it takes to read out 6 data registers is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spi_freq</span> <span class="o">=</span> <span class="mf">1e6</span> <span class="c1"># Hz</span>
+<span class="n">no_bytes</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">6</span>
+<span class="n">no_bits_per_byte</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">time_packet</span> <span class="o">=</span> <span class="p">(</span><span class="n">no_bits_per_byte</span> <span class="o">*</span> <span class="n">no_bytes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">spi_freq</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time to read a data packet form ADXL345: </span><span class="si">{:.1f}</span><span class="s2"> us&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_packet</span><span class="o">*</span><span class="mf">1e6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time to read a data packet form ADXL345: 56.0 us
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is clearly faster than it takes to send the same data packet over the UART to the host PC. However, the output data rate of the ADXL345 is limited by the data rate of the interal ADC. According to Table 7. on page 14 in the ADXL345 datasheet<span id="id2">[<a class="reference internal" href="../references.html#id13" title="Analog Devices. ADXL345 Digital Accelerometer datasheet. URL: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf.">Devb</a>]</span>, the maximum output data rate is 3200 Hz. This means that the data registers of the ADXL345 are updated every 0.3 millisecond. This is still faster than UART interface.</p>
+<p>On page 15 of the datasheet, it is also stated that the use of the 3200 Hz and 1600 Hz output data rates is only recommended with SPI communication rates greater than or equal to 2 MHz. The 800 Hz output data rate is recommended only for communication speeds greater than or equal to 400 kHz, and the remaining data rates scale proportionally. With the current configuration of the SPI IP core, 800 Hz is therefore the maximum possible output data rate. This means that the data is updated every 1.25 milliseconds, which is 0.75 milliseconds slower than the UART interface. This may be OK, but to set a safety margin during the development, it is recommended to start at a lower output data rate, e.g., 100 Hz. The data will then be updated every 10 milliseconds. According to the overview of the register map in Table 19. this is also the default rate.</p>
+</section>
+<section id="interrupts-and-data-flow">
+<h2>Interrupts and data flow<a class="headerlink" href="#interrupts-and-data-flow" title="Permalink to this heading">#</a></h2>
+<p>The flow of data will be controlled using interrupts. An overview of the final solution is shown in <a class="reference internal" href="#fig-project-rtos-intertask-communication"><span class="std std-numref">Fig. 86</span></a>. Since both the SPI and UART interfaces are accessed by one single task respectively, there is no need to use a protection semaphore for these resources.</p>
+<figure class="align-center" id="fig-project-rtos-intertask-communication">
+<a class="reference internal image-reference" href="../_images/project_rtos_intertask_communication.png"><img alt="../_images/project_rtos_intertask_communication.png" src="../_images/project_rtos_intertask_communication.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 86 </span><span class="caption-text">An overview of how the tasks and interrupt service routines (ISR) communicate with synchronization semaphores and messages.</span><a class="headerlink" href="#fig-project-rtos-intertask-communication" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="accelerometer-read-task">
+<h3>Accelerometer read task<a class="headerlink" href="#accelerometer-read-task" title="Permalink to this heading">#</a></h3>
+<p>The ADXL345 can be configured to provide an interrupt when new data is available in its data registers. The interrupt functionality is configured through the following registers:</p>
+<ul class="simple">
+<li><p>INT_MAP:  decides which interrupts goes to which interrupt pin</p></li>
+<li><p>INT_ENABLE: enables the various interrupts</p></li>
+<li><p>DATA_FORMAT: The INT_INVERT bit sets the polarity of the interrupt</p></li>
+</ul>
+<p>The ADXL345 default interrupt polarity is active high. Since PIO module of the microcontroller system is configured to signal an interrupt on the falling edge of the input, the interrupt polarity of the ADXL345 must be set active low.</p>
+<p>Configure the ADXL345 to signal a data ready interrupt on the INT2 pin.</p>
+<p>A separate interrupt handling routine for the PIO interrupts must be written to detect the interrupt from the ADXL345. When the interrupt is detected, a semaphore must be used to signal that new data is available. The accelerometer read task waits (Pends) for this semaphore and performs a multi-byte (6 bytes) SPI read command to read the 6 data registers.</p>
+<div class="admonition-important admonition">
+<p class="admonition-title">Important</p>
+<p>The ADXL345 will generate an <em>DATA_READY</em> interrupt when new data has been made available in the respective data registers. However, the interrupt condition will only be cleared by reading the data registers. It is therefore recommended to clear any initial possible interrupt conditions that may be present before entering into the while loop of the accelerometer read task.</p>
+<figure class="align-center" id="fig-project-rtos-clear-interrupt">
+<a class="reference internal image-reference" href="../_images/project_rtos_clear_interrupt.png"><img alt="../_images/project_rtos_clear_interrupt.png" src="../_images/project_rtos_clear_interrupt.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 87 </span><span class="caption-text">The INT_SOURCE register where the <em>DATA_READY</em> bit will be set when new data is available in the data registers. This bit is reset when reading the data registers.</span><a class="headerlink" href="#fig-project-rtos-clear-interrupt" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="intertask-message">
+<h3>Intertask message<a class="headerlink" href="#intertask-message" title="Permalink to this heading">#</a></h3>
+<p>When new data has been read by the accelerometer read task, a <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II message mailbox will be used to send (Post) the new data to the UART send task. The message that will be sent is a pointer to a 6 byte array.</p>
+<div class="admonition-tip admonition">
+<p class="admonition-title">Tip</p>
+<p>It is recommended that a multiple-byte read of all data registers is performed to prevent a change in data between reads of sequential registers. If the multiple-byte bit (MB) is hight, after the register addressing (command byte) and the first byte of data, each subsequent set of clock pulses (eight clock pulses) causes the ADXL345 to point ot the next register for a read or write. This shifting continues until the clock pulses cease and chips select is deasserted. To perform reads or writes on different, nonsequential registers, chip select must be deasserted between transmissions and the new register must be addressed separately.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">spi_tx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xc0</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mh">0x32</span><span class="p">;</span><span class="w"> </span><span class="c1">//multiple-byte read + address of first data register.</span>
+<span class="n">return_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alt_avalon_spi_command</span><span class="p">(</span><span class="n">SPI_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">spi_tx</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">spi_rx</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The values from the 6 data register will now be available in the <em>spi_rx</em> array. The address of the first position of the array can now be posted to the mailbox.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Post pointer to msgbox_buffer</span>
+<span class="n">error_code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OSMboxPost</span><span class="p">(</span><span class="n">data_packet_msgbox</span><span class="p">,(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">spi_rx</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="uart-send-task">
+<h3>UART send task<a class="headerlink" href="#uart-send-task" title="Permalink to this heading">#</a></h3>
+<p>When sending data over the UART, the UART module will be busy for 86 microseconds and will not accept more than one new data byte during this period.
+From <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a>, we know that the UART module will provide an interrupt when a transaction on either the TX or RX line is complete. You can use this interrupt to control flow of data to the UART module.</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Tip</p>
+<p>When a new data packet of 6 bytes has been received by the UART send task, each byte has to be written separately to the TX data register of the UART module. For each write transactions, the UART send task must wait (Pend) for a semaphore set by an interrupt handling routine. When a TX transaction is complete, the UART module will signal an interrupt to the CPU. The interrupt handling routine must then read the status register – if the TX IRQ bit is set, the semaphore is posted.</p>
+<p>The data will be received through a message mailbox as a pointer to a 6 byte array. You must therefore loop through the array.</p>
+<p>When receiving the data on the host PC it may be difficult to distinguish the the data packets from each other unless a packet header is added to the data. A simple solution can be to add a fixed byte in the first position of the array that can easily be recognized by the receiving software on the host PC.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">alt_u8</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0xe2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>It may also be desirable to add a packet counter as the next byte. This can e.g., be used to verify that all bytes have been received.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//Get pointer to data from ADXL345</span>
+<span class="w">    </span><span class="n">data_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">alt_u8</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">OSMboxPend</span><span class="p">(</span><span class="n">data_packet_msgbox</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// Increase sample counter and add to second byte of array.</span>
+<span class="w">    </span><span class="n">sample_counter</span><span class="o">++</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sample_counter</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">// Looping through the 6 bytes and sending over the UART</span>
+<span class="w">    </span><span class="c1">// will take some time. Copy data to local array to avoid overwriting from the accelerometer task.</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">      </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">data_ptr</span><span class="p">;</span>
+<span class="w">      </span><span class="n">data_ptr</span><span class="o">++</span><span class="p">;</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// Send bytes over UART and wait for TX complete semaphore for each byte transaction.</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">8</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">       </span><span class="n">IOWR</span><span class="p">(</span><span class="n">UART_BASIC_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">       </span><span class="n">OSSemPend</span><span class="p">(</span><span class="n">tx_complete_sem</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">error_code</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="adxl345-configuration">
+<h2>ADXL345 configuration<a class="headerlink" href="#adxl345-configuration" title="Permalink to this heading">#</a></h2>
+<p>In addition to configuring the ADXL345 interrupt behaviour, the required output data rate, resolution and range must also be considered. These settings are controlled by writing to the following registers:</p>
+<ul class="simple">
+<li><p>BW_RATE</p></li>
+<li><p>DATA_FORMAT</p></li>
+</ul>
+<p>Since the default output rate of the ADXL345 is 100 Hz, there is no need to write configure the BW_RATE register unless you would like to try and run at a higher data rate.</p>
+<p>To set the desired resolution and accelerometer range, you will have to set the corresponding bits of the DATA_FORMAT register. Notice that the INT_INVERT bit is also part of the DATA_FORMAT register.</p>
+<p>Finally the POWER_CTL register must be considered to but the ADXL345 into a measure mode. To activate the ADXL345 the measure bit must be set to 1.</p>
+<p>The configuration of the ADXL345 must be performed on startup before entering into the while loop of the accelerometer read task.</p>
+</section>
+<section id="host-pc-software">
+<h2>Host PC software<a class="headerlink" href="#host-pc-software" title="Permalink to this heading">#</a></h2>
+<p>The Python script below can be used to read the data from sent to the serial port on the host PC. It assumes that the data is right justified (justify-bit in DATA_FORMAT set to 0), and you will have to modify the RESOLUTION and RANGE parameters according to how you have configured the DATA_FORMAT register. It also assumes that the data packet sent from the microcontroller system consists of 8 bytes: one ID byte (0xe2), one packet counter byte, 6 data bytes.</p>
+<p>The script requires the packages <a class="reference external" href="https://pypi.org/project/pyserial/">Pyserial</a> and and <a class="reference external" href="https://pypi.org/project/numpy/">numpy</a> to be installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyserial</span> <span class="n">numpy</span>
+</pre></div>
+</div>
+<p>Python script for reading the serial port and printing accelerometer data to the terminal:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">serial</span> <span class="c1">#pyserial: https://pyserial.readthedocs.io/en/latest/</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Modify RESOLUTION, RANGE and COM port according to your setting.</span>
+<span class="n">RESOLUTION</span> <span class="o">=</span> <span class="s2">&quot;FULL&quot;</span> <span class="c1"># 10BIT</span>
+<span class="n">RANGE</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># 4/8/16</span>
+<span class="n">COM_PORT</span> <span class="o">=</span> <span class="s2">&quot;COM4&quot;</span> <span class="c1"># Change according to the port which is used in your case</span>
+
+
+<span class="n">HEADER_ID</span> <span class="o">=</span> <span class="mh">0xe2</span>
+<span class="n">RESOLUTION_TABLE</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;FULL&quot;</span><span class="p">:{</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">:</span><span class="mi">8</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span><span class="mi">16</span><span class="p">:</span><span class="mi">16</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">},</span>
+              <span class="s2">&quot;10BIT&quot;</span><span class="p">:{</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">:</span><span class="mi">8</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span><span class="mi">16</span><span class="p">:</span><span class="mi">16</span><span class="o">/</span><span class="mi">2</span><span class="o">**</span><span class="mi">9</span><span class="p">}}</span>
+
+<span class="c1"># Create a command queue for key</span>
+<span class="n">cmd_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Keyboard thread to detect input commands and put them in the command queue</span>
+<span class="k">def</span> <span class="nf">keyboard</span><span class="p">(</span><span class="n">run_app</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">run_app</span><span class="p">():</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&gt; &quot;</span><span class="p">)</span>
+        <span class="n">cmd_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+
+<span class="c1"># Keep program running as long as True. Terminate by writing &quot;quit&quot; in terminal window</span>
+<span class="n">run_app</span> <span class="o">=</span> <span class="kc">True</span> 
+
+<span class="c1"># Thread for reading serial data</span>
+<span class="k">def</span> <span class="nf">serial_data</span><span class="p">(</span><span class="n">run_app</span><span class="p">):</span>
+    <span class="c1"># Open serial port</span>
+    <span class="n">ser</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">COM_PORT</span><span class="p">,</span> <span class="mi">115200</span><span class="p">,</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Initialize a data packet array with zero data bytes    </span>
+    <span class="n">data_packet</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># Initalize a data packet window array to shift through the data bytes.</span>
+    <span class="c1"># This window will be used to find the start of the data packet, and when </span>
+    <span class="c1"># a full packet has been received, copy the data packet to the data_packet array.</span>
+    <span class="n">packet_window</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">new_packet</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">packet_cnt</span> <span class="o">=</span> <span class="mi">0</span> 
+
+    <span class="k">while</span> <span class="n">run_app</span><span class="p">():</span>
+
+        <span class="n">no_bytes</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">no_bytes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">ser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">no_bytes</span><span class="p">)</span>
+
+            <span class="c1"># Loop through received bytes        </span>
+            <span class="k">for</span> <span class="n">byte_value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>    
+                <span class="c1"># Add received byte to the packet window</span>
+                <span class="n">packet_window</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte_value</span><span class="p">)</span>
+                <span class="c1"># Find index of header id</span>
+                <span class="n">start_idx</span> <span class="o">=</span> <span class="n">packet_window</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">HEADER_ID</span><span class="p">)</span>
+                <span class="c1"># If correct header ID is found in first position and a total of 9 bytes have been received</span>
+                <span class="c1"># the packet window may no contain a full valid data packet.            </span>
+                <span class="k">if</span> <span class="n">start_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">packet_window</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="c1"># check if last byte is start of next packet. If true, a full correct data packet has been received.</span>
+                    <span class="k">if</span> <span class="n">packet_window</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="n">HEADER_ID</span><span class="p">:</span>
+                        <span class="n">data_packet</span> <span class="o">=</span> <span class="n">packet_window</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Extract the 6 data bytes</span>
+                        <span class="n">packet_no</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">packet_window</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Extract the packet counter</span>
+                        <span class="n">new_packet</span> <span class="o">=</span> <span class="kc">True</span> 
+                        <span class="n">packet_cnt</span> <span class="o">=</span> <span class="n">packet_cnt</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">new_packet</span><span class="p">:</span> <span class="c1"># New data packet is available, organize data bytes</span>
+                    <span class="n">new_packet</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="c1"># The data is received in the following order</span>
+                    <span class="c1"># x0, x1, y0, y1, z1, z2. This means that the least significatn byte is at the lowest position in the byte array</span>
+                    <span class="c1"># corresponding to little endian. The data for each axis is 2 bytes or 16 bits which corresponds to a short. </span>
+                    <span class="c1"># It is also formated in two-complement format, which means that it is a signed short.</span>
+                    
+                    <span class="c1"># Arrange bytes</span>
+                    <span class="n">x_value_raw</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_packet</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span>  <span class="n">data_packet</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">y_value_raw</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_packet</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span>  <span class="n">data_packet</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="n">z_value_raw</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_packet</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="o">+</span>  <span class="n">data_packet</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+                    
+                    <span class="c1"># Convert to signed 16 bit</span>
+                    <span class="n">x_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">x_value_raw</span><span class="p">)</span>
+                    <span class="n">y_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">y_value_raw</span><span class="p">)</span>
+                    <span class="n">z_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="n">z_value_raw</span><span class="p">)</span>
+                    
+                    <span class="c1"># Convert to g</span>
+                    <span class="n">x_value</span> <span class="o">=</span> <span class="n">x_value</span> <span class="o">*</span> <span class="n">RESOLUTION_TABLE</span><span class="p">[</span><span class="n">RESOLUTION</span><span class="p">][</span><span class="n">RANGE</span><span class="p">]</span>
+                    <span class="n">y_value</span> <span class="o">=</span> <span class="n">y_value</span> <span class="o">*</span> <span class="n">RESOLUTION_TABLE</span><span class="p">[</span><span class="n">RESOLUTION</span><span class="p">][</span><span class="n">RANGE</span><span class="p">]</span>
+                    <span class="n">z_value</span> <span class="o">=</span> <span class="n">z_value</span> <span class="o">*</span> <span class="n">RESOLUTION_TABLE</span><span class="p">[</span><span class="n">RESOLUTION</span><span class="p">][</span><span class="n">RANGE</span><span class="p">]</span>    
+                    
+                    <span class="c1"># Print value in g</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Packet no: </span><span class="si">{:3d}</span><span class="s2">, (x: </span><span class="si">{:+1.3f}</span><span class="s2">), (y: </span><span class="si">{:+1.3f}</span><span class="s2">), (z: </span><span class="si">{:+1.3f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">packet_no</span><span class="p">,</span> <span class="n">x_value</span><span class="p">,</span> <span class="n">y_value</span><span class="p">,</span> <span class="n">z_value</span><span class="p">))</span>
+                    <span class="c1"># print raw value</span>
+                    <span class="c1"># print(&quot;Packet no: {:3d}, (x:{:4x}), (y:{:4x}), (z:{:4x})&quot;.format(packet_no, x_value_raw, y_value_raw, z_value_raw))</span>
+
+                    
+
+                <span class="c1">## remove oldest received byte </span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">packet_window</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+                    <span class="n">packet_window</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span> 
+
+    <span class="n">ser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="c1"># Create threads</span>
+    <span class="n">keyboard_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">keyboard</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run_app</span><span class="p">,))</span>
+    <span class="n">serial_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">serial_data</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">run_app</span><span class="p">,))</span>
+
+    <span class="c1"># Set threads as deamon -- threads are automatically killed if program is killed</span>
+    <span class="c1"># if you are using Python 3.10 the following two lines seems to give an error messages.</span>
+    <span class="c1"># For now, just comment them out.</span>
+    <span class="c1"># keyboard_thread.setDaemon(True)</span>
+    <span class="c1"># serial_thread.setDaemon(True)</span>
+
+    <span class="c1"># Start threads</span>
+    <span class="n">keyboard_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">serial_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="n">run_app</span><span class="p">:</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">cmd_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s2">&quot;quit&quot;</span> <span class="o">==</span> <span class="n">cmd</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">run_app</span> <span class="o">=</span> <span class="kc">False</span>       
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-project"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="project_nios2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">P2: Microcontroller system</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasks">Tasks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-rates">Data rates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interrupts-and-data-flow">Interrupts and data flow</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accelerometer-read-task">Accelerometer read task</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intertask-message">Intertask message</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-send-task">UART send task</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adxl345-configuration">ADXL345 configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#host-pc-software">Host PC software</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

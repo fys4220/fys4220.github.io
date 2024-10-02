@@ -1,0 +1,1775 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>P1: UART controller &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-project/project_uart';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="P2: Microcontroller system" href="project_nios2.html" />
+    <link rel="prev" title="Project overview" href="project_intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="project_intro.html">Project overview</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-project/project_uart.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>P1: UART controller</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-data-transmission">UART data transmission</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baud-rate">Baud rate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tx-module">TX module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rx-module">RX module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processor-interface">Processor interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-the-uart">Verifying the UART</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-simulation">Setting up the simulation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="p1-uart-controller">
+<span id="project-uart-controller"></span><h1>P1: UART controller<a class="headerlink" href="#p1-uart-controller" title="Permalink to this heading">#</a></h1>
+<p>In this part of the project you will design the UART controller that will be used to communicate data between the microcontroller system in the FPGA and the PC.</p>
+<div class="note admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Aquire basic knowledge of the UART serial communication protocol.</p></li>
+<li><p>Gain experience in architecting a VHDL module.</p></li>
+<li><p>Learn how to write a memory mapped CPU interface to connect a custom VHDL peripheral to the CPU bus.</p></li>
+<li><p>Gain additional experience in writing test benches, including using a dedicated verification framework/library.</p></li>
+</ul>
+</div>
+<p>A top level block diagram of a suggested design for the UART controller (<code class="docutils literal notranslate"><span class="pre">uart.vhd</span></code>) is shown in <a class="reference internal" href="#fig-project-uart-top-level"><span class="std std-numref">Fig. 46</span></a>. This solution consists of three submodules:</p>
+<ul class="simple">
+<li><p>The TX module which is responsible for transmitting the 8-bit data serially on the UART TX line.</p></li>
+<li><p>The RX module which is responsible for sampling the UART RX line and receiving the 8-bit data.</p></li>
+<li><p>The processor memory mapped interface that will be used to control and communicate with the TX and RX modules from software running on the CPU.</p></li>
+</ul>
+<figure class="align-center" id="fig-project-uart-top-level">
+<a class="reference internal image-reference" href="../_images/project_uart_top_level.png"><img alt="../_images/project_uart_top_level.png" src="../_images/project_uart_top_level.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Simplified top level block diagram of the UART controller. It consists of 3 submodules, the CPU interace, UART TX, UART RX.</span><a class="headerlink" href="#fig-project-uart-top-level" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Your job is to write the VHDL description for the <code class="docutils literal notranslate"><span class="pre">uart.vhd</span></code>. This work will be divided in 3 parts:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#project-uart-tx"><span class="std std-ref">TX module</span></a></p></li>
+<li><p><a class="reference internal" href="#project-uart-rx"><span class="std std-ref">RX module</span></a></p></li>
+<li><p><a class="reference internal" href="#project-uart-pif"><span class="std std-ref">Processor interface</span></a></p></li>
+</ul>
+<p>Before you start to design the respective modules, you should first make sure you understand the basics of the UART protocol.</p>
+<section id="uart-data-transmission">
+<span id="project-uart-intro"></span><h2>UART data transmission<a class="headerlink" href="#uart-data-transmission" title="Permalink to this heading">#</a></h2>
+<p>UART is an abbreviation for Universal Asynchronous Receiver-Transceiver. It is used for one-to-one asynchronous bi-directional serial communication.  In its most basic form it uses two lines for communication, one for transmitting (TX) and one for receiving (RX).</p>
+<figure class="align-center" id="project-uart-tx-rx">
+<a class="reference internal image-reference" href="../_images/project_uart_tx_rx.png"><img alt="../_images/project_uart_tx_rx.png" src="../_images/project_uart_tx_rx.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">UART connection between two devices.</span><a class="headerlink" href="#project-uart-tx-rx" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Asynchronous means that the communication interface does not make use of a dedicated line for a clock signal. Both the receiver and transmitter therefore needs to be aware of the frequency used to transmit and receive data, referred to as the baud rate.</p>
+<p>Data is transmitted in the form of a UART packet consisting of a start bit, a data frame, an optional parity bit, and 1 or 2 stop bits. The UART data packet is illustrated in figure <a class="reference internal" href="#project-uart-packet"><span class="std std-numref">Fig. 48</span></a>.</p>
+<figure class="align-center" id="project-uart-packet">
+<a class="reference internal image-reference" href="../_images/project_uart_packet.png"><img alt="../_images/project_uart_packet.png" src="../_images/project_uart_packet.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">The General UART packet.</span><a class="headerlink" href="#project-uart-packet" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#fig-project-uart-tx-example"><span class="std std-numref">Fig. 49</span></a> show an example of a TX transmission with 1 start bit, 8 data bits, no parity bit, and 1 stop bit. The TX line is usually held high when no data is transmitted. Start of transmission is initiated by pulling the TX line low for the duration of a bit period. This corresponds to the start bit position. The data frame is transmitted with the least significant bit first. A transmission is completed by pulling the TX line high for the duration of one bit period – the stop bit.</p>
+<figure class="align-center" id="fig-project-uart-tx-example">
+<a class="reference internal image-reference" href="../_images/wave_project_uart_tx_example.png"><img alt="../_images/wave_project_uart_tx_example.png" src="../_images/wave_project_uart_tx_example.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Example of an 8 bit data frame transmitted on the TX line with 1 stop bit, no parity bit, and 1 stop bit.</span><a class="headerlink" href="#fig-project-uart-tx-example" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="tip dropdown admonition">
+<p class="admonition-title">What is value of the 8 bit data frame transmitted in the figure above?</p>
+<p>From LSB to MSB the data bits are : 1 0 1 1  1 0 1 0</p>
+<p>Since we are more used to read the value with the MSB to the left the reversed order is shown below.</p>
+<p>From MSB to LSB the data bits are : 0 1 0 1  1 1 0 1</p>
+<p>This corresponds to the the byte “5D” in hexadecimal format.</p>
+</div>
+<div class="admonition-additional-reading-material admonition">
+<p class="admonition-title">Additional reading material</p>
+<p>AnalogDialogue gives a nice overview of the UART communication protocol:</p>
+<ul class="simple">
+<li><p>PDF: <a class="reference external" href="https://www.analog.com/media/en/analog-dialogue/volume-54/number-4/uart-a-hardware-communication-protocol.pdf">https://www.analog.com/media/en/analog-dialogue/volume-54/number-4/uart-a-hardware-communication-protocol.pdf</a></p></li>
+<li><p>HTML: <a class="reference external" href="https://www.analog.com/en/analog-dialogue/articles/uart-a-hardware-communication-protocol.html">https://www.analog.com/en/analog-dialogue/articles/uart-a-hardware-communication-protocol.html</a></p></li>
+</ul>
+</div>
+<section id="baud-rate">
+<h3>Baud rate<a class="headerlink" href="#baud-rate" title="Permalink to this heading">#</a></h3>
+<p>In communication system, the baud rate is the rate at which symbols or information is transferred. The unit is symbols per second. The baud rate is related to raw bit rate which can be expressed in bits per seconds. For a digital system with only two possible states (0 and 1) the baud rate is equivalent to the bit rate.</p>
+<p>A commonly used baud rate for a UART transmission is 115200 bits/s. This means that a bit is transferred every 8.68 <span class="math notranslate nohighlight">\(\mu\)</span>s. The transfer of a full UART data frame with 1 start bit, 8 data bits, and 1 stop bit is therefore 10*8 <span class="math notranslate nohighlight">\(\mu\)</span>s = 86.8 <span class="math notranslate nohighlight">\(\mu\)</span>s.</p>
+</section>
+</section>
+<section id="tx-module">
+<span id="project-uart-tx"></span><h2>TX module<a class="headerlink" href="#tx-module" title="Permalink to this heading">#</a></h2>
+<p>Your first task will be to write the VHDL description for the TX module. The format of the UART packet for this project will be 1 start bit, 8 data bits, and 1 stop bit, as shown in <a class="reference internal" href="#project-uart-packet-used"><span class="std std-numref">Fig. 50</span></a>. And the baud rate will be 115200 bits/s.
+bit.</p>
+<figure class="align-center" id="project-uart-packet-used">
+<a class="reference internal image-reference" href="../_images/project_uart_packet_used.png"><img alt="../_images/project_uart_packet_used.png" src="../_images/project_uart_packet_used.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">The UART packet used for this project has 1 start bit, 8 data bits, and 1 stop bit.</span><a class="headerlink" href="#project-uart-packet-used" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The main task of the TX module is to serialize an 8-bit data word on to the TX line at the specified baud rate of 115200 bits/s. The module will run on the 50 MHz system clock and have an asynchronous active low reset.</p>
+<div class="admonition-a-few-words-about-design-practice admonition">
+<p class="admonition-title">A few words about design practice!</p>
+<p>It is often tempting to start to code immediately without thinking much about how to structure the module. This may work well for very simple modules but will very quickly lead to difficulties for more complex design. It is therefore recommended that you first spend some time to design the architecture of your module. This includes how to split the required functionality into smaller sub-modules, and how these sub-modules are interconnected. This will lead to a modular and hirarchical design that is easier to verify and understand.</p>
+<p>In general it is also a good practice to strive to follow the <strong>KISS</strong> principle – <strong>keep it simple stupid</strong>. This principle states that <em>most systems work best if they are kept simple rather then complicated; therefore, simplicity should be a key goal in design, and unnecessary complexity should be avoided.</em></p>
+<p>Identifying the various sub-functions of your system and splitting your design into respecitve modules can therefore help to reduced the complexity of each module, and thus reduced the probability of errors.</p>
+</div>
+<p>Both the TX and RX modules have a few common or similar sub-functions:</p>
+<ul class="simple">
+<li><p><strong>State machine</strong>: A finite state machine to control to start and stop transmission. See <a class="reference internal" href="../part-exercises/exercises_state_machine.html#exercises-state-machine"><span class="std std-ref">EX4: State machine</span></a> for the case of the TX module. A slightly modified version must be designed for the RX module.</p></li>
+<li><p><strong>Bit counter</strong>: A module that keeps track of the number of bits that have been transferred or received.</p></li>
+<li><p><strong>Shift register</strong>: A module that loads an 8-bit data word into a 10-bit internal data buffer (including also the start and stop bit) before shifting these 10 bits serially on to the TX line (TX module); or that serially shifts in 10-bits (start bit, 8-bit data, stop bit) from the RX line and stores these bits in an internal 10-bit data buffer (RX module).</p></li>
+<li><p><strong>Baud rate generator</strong>: A module that generates an internal signal with a period corresponding to the required baud rate. This signal will drive the transmit/receive data shift register and bit counter.</p></li>
+</ul>
+<p>The bit counter and baud rate generator can be reused for both the TX and RX module as their functionality is the same for both cases. On the other hand, the controlling state machine and shift register must be adapted to each case, although with only marginal difference.</p>
+<p>Considering the four sub-modules introduced above, a suggested architecture of the TX module is shown in <a class="reference internal" href="#fig-project-tx-uart-architecture"><span class="std std-numref">Fig. 51</span></a>.</p>
+<figure class="align-center" id="fig-project-tx-uart-architecture">
+<a class="reference internal image-reference" href="../_images/project_tx_uart_architecture.png"><img alt="../_images/project_tx_uart_architecture.png" src="../_images/project_tx_uart_architecture.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Internal architecture of the TX module. The diagram is created using the <a class="reference external" href="http://Draw.io">Draw.io</a> Integration in VS Code, and the source file can be downloaded from <a class="reference download internal" download="" href="../_downloads/259ccf55cad7b59de41dc0be911949fa/project_tx_uart_architecture.drawio"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>. You can edit the file in VS Code or online at <a class="reference external" href="http://www.draw.io">www.draw.io</a>. A desktop version of <a class="reference external" href="http://Draw.io">Draw.io</a> is also available on <a class="reference external" href="https://github.com/jgraph/drawio-desktop/releases/tag/v20.3.0">Github</a>.</span><a class="headerlink" href="#fig-project-tx-uart-architecture" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The corresponding ports of the top level entity is listed in the table below.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Port name</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Width</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>clk</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>50 MHz system clock</p></td>
+</tr>
+<tr class="row-odd"><td><p>areset_n</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Asynchronous active low reset</p></td>
+</tr>
+<tr class="row-even"><td><p>tx_data</p></td>
+<td><p>in</p></td>
+<td><p>std_logic_vector</p></td>
+<td><p>8</p></td>
+<td><p>Input data to be transmitted on the RX line</p></td>
+</tr>
+<tr class="row-odd"><td><p>tx_data_valid</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Valid data on tx_data. Start transmission.</p></td>
+</tr>
+<tr class="row-even"><td><p>tx_busy</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Module busy, transmission ongoing (active high)</p></td>
+</tr>
+<tr class="row-odd"><td><p>tx</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>UART TX output</p></td>
+</tr>
+</tbody>
+</table>
+<p>To start the tranmission of data the <code class="docutils literal notranslate"><span class="pre">tx_data_valid</span></code> input is pulled to a high level for one system clock cycle when the data is made available on the input <code class="docutils literal notranslate"><span class="pre">tx_data</span></code>. This condition loads <code class="docutils literal notranslate"><span class="pre">tx_data</span></code> into the internal data buffer of the TX shift register, and triggers the state machine to move from its idle state to its transmit state.</p>
+<p>Write the VHDL descriptions for each of the sub-modules and included them in the TX module <em>tx_uart.vhd</em>. You should already have written the VHDL description for the TX FSM in <a class="reference internal" href="../part-exercises/exercises_state_machine.html#exercises-state-machine"><span class="std std-ref">EX4: State machine</span></a>. Ideally, each of the sub-modules should be verified with individual test benches. However, since we only have a limited amount of time available, an acceptable shortcut is to write a test bench for the TX module and run incremental simulations as you write and include the individual sub-modules. Start by including the TX FSM module and run a simulation with only this module included. Add the baud rate generator and rerun the simulation to check that you have a running baud rate signal. Then add the bit counter module. After each baud rate period, this module should increment a counter. When the counter has reach the required number of bits (10), puts a pulse of one system clock cycle on the <em>tx_complete</em> port. Rerun the simulation to verify this behaviour. Finally, add the TX shift regiser. After each baud rate period, the internal TX data buffer is shifted one position. The data is shifted out with the least significant bit first.</p>
+<p>Write a stimuli process in the test bench that sets a data value on the <code class="docutils literal notranslate"><span class="pre">tx_data</span></code> input and then toggles the <code class="docutils literal notranslate"><span class="pre">tx_data_valid</span></code> port for one system clock cycle. For the TX module the main verification method is to study the wave diagram.</p>
+<!--
+```{figure} ../graphics/wavedrom/uart_tx_start_example.png
+---
+width: 80%
+align: center
+name: project-uart-tx-start-example.
+---
+This wave diagram shows the start condition for transmitting data. Data is made available on `tx_data` and the `tx_data_valid` is toggled. The TX module then reads the data on the `tx_data` input and starts the transmission. The signals `tx_data`, `tx_data_valid`, and the system clock is in this part controlled from the testbench.
+```
+-->
+<!--
+Since the TX signal runs at much lower frequency than the system clock, it is necessary to implement a mechanism that can be used to generate the correct length of the bit period. 
+
+```{admonition} Can you think of a way to do this?
+:class: tip, dropdown
+
+We know that the system clock runs at 50 MHz and the RX signal at 115200 bits/s. The trick is to find the number of system clock cycles in one bit period and then implement a counter that is incremented by the system clock. When the counter reaches the given number of clock cycles, we have reach the end of the bit period, and a new bit value can be put on the TX line. 
+
+$$
+ N_{cycles} = \frac{\textrm{system clock frequency}}{\textrm{bit rate}} = \frac{50000000}{115200} \approx 434
+$$
+
+The counter should start to increment at the start of a transmission when the TX line is pulled to a low value for the start bit. 
+
+```
+-->
+</section>
+<section id="rx-module">
+<span id="project-uart-rx"></span><h2>RX module<a class="headerlink" href="#rx-module" title="Permalink to this heading">#</a></h2>
+<p>After writing the VHDL description for the TX module, writing the RX module should be very similar. The main difference of course being that the RX module now must convert the incoming serial data on the RX line to an 8-bit parallel data vector. The format of the UART packet and the  baud rate will be the same as for the TX module.</p>
+<p>Start by designing a top level architecture for the RX module inspired by the architecture for the TX module. Create a similar digram to the one in <a class="reference internal" href="#fig-project-tx-uart-architecture"><span class="std std-numref">Fig. 51</span></a>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Review of design architecture required before writing the code!</p>
+<p>The diagram of your design architecture must be reviewed by the course instructors before you start to write the VHDL description of the RX module. Export the diagram in the format <em>png</em> and add it to your Github repository. Open and issue on Github and assign the issue to the course instructors. Provide a link to your diagram.</p>
+<p>I encourage you to discuss and prepare the diagram together with one of the other students in the course. You can then submit one diagram together, naming the responsible persons in the issue description.</p>
+<p>To help you identify some of the differences, a proposed microarchitecture of the <em>rx_shift_reg.vhd</em> module is shown in <a class="reference internal" href="#fig-project-rx-shiftreg-architecture"><span class="std std-numref">Fig. 52</span></a>. Different from the TX UART, the RX uart must sample the input RX in the center of the bit period. This can be done by detecting the rising edge of the signal <em>baud_rate</em> and use this event as an enable for the shift register. When all bits have been received, the <em>rx_complete</em> signal can be used to register the <em>rx_data</em> to the output, and to signal an error if either the start or stop bit have values other than expected.</p>
+<figure class="align-center" id="fig-project-rx-shiftreg-architecture">
+<a class="reference internal image-reference" href="../_images/project_rx_shiftreg_architecture.png"><img alt="../_images/project_rx_shiftreg_architecture.png" src="../_images/project_rx_shiftreg_architecture.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 52 </span><span class="caption-text">The diagram shows the microarchitecture for the RX shift register.</span><a class="headerlink" href="#fig-project-rx-shiftreg-architecture" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>An example of how to describe the serial shifting of bits is shown in the code block below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- rx_buffer is declared as a 10-bit std_logic_vector</span>
+<span class="nc">p_serial_shift</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="n">rx_buffer</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">rx_buffer</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="w">      </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>As already mentioned, the bit counter and baud rate generator modules can be reused without modifications. The few noticable difference are listed below:</p>
+<ul class="simple">
+<li><p>Transmission is now started on a high to low transition on the RX line. The RX FSM should therefore also read the RX input and move to the receive state when the RX line goes to ‘0’.</p></li>
+<li><p>The shift register should now shift in 10 bits, including start bit, 8 data bits, and a stop bit.</p></li>
+<li><p>The data on the RX line should be sampled in the center of a baud period when the data is expected to be stable.</p></li>
+</ul>
+<p>The suggested list of top level ports for the RX module’s entity description is shown in the table below.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Port name</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Width</p></th>
+<th class="head"><p>Comment</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>clk</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>50 MHz system clock</p></td>
+</tr>
+<tr class="row-odd"><td><p>areset_n</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Asynchronous active low reset</p></td>
+</tr>
+<tr class="row-even"><td><p>rx_data</p></td>
+<td><p>out</p></td>
+<td><p>std_logic_vector</p></td>
+<td><p>8</p></td>
+<td><p>Received data</p></td>
+</tr>
+<tr class="row-odd"><td><p>rx_err</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Flag incorrect stop or start bit (active high).</p></td>
+</tr>
+<tr class="row-even"><td><p>rx_busy</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>Module busy, reception ongoing (active high)</p></td>
+</tr>
+<tr class="row-odd"><td><p>rx</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+<td><p>1</p></td>
+<td><p>UART RX input</p></td>
+</tr>
+</tbody>
+</table>
+<p>Write the VHDL description for the RX module and a test bench to verify expected behaviour. When testing the TX module, it was reasonable easy write a test bench that assigned data to the <em>tx_data</em> port and then toggled the <em>tx_data_valid</em> port for one clock cycle. However, for the RX module you know need to provide a stream of data on the RX input port corresponding to a 10 bit serial transmission at the expected baud rate. This can of course be done setting the respective values and waiting for a baud period like shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_stimuli</span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- rx high when no activity.</span>
+<span class="w">  </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- Start transactions</span>
+<span class="w">  </span><span class="c1">-- start bit</span>
+<span class="w">  </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- data bit 0</span>
+<span class="w">   </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- data bit 1</span>
+<span class="w">  </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">;</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="p">.</span>
+<span class="w">  </span><span class="c1">-- data bit 7</span>
+<span class="w">  </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- stop bit</span>
+<span class="w">  </span><span class="n">rx</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>However, this is not so flexible if you want to test multiple transactions. Then you would have to repeat all these lines for each transaction. This is a perfect case for writing a procedure that can be reused easily. To see how this can be done, study the example in <a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html#vhdl-package-example-procedure"><span class="std std-numref">Section 2.14.3.2</span></a>.</p>
+<p>The choice of method is up to you. Either the more simple approach shown above, or the procedure example.</p>
+<!--
+```{figure} ../graphics/wavedrom/uart_rx.png
+---
+width: 100%
+align: center
+name: project-uart-rx-graphics/wavedrom
+---
+UART receive protocol
+```
+-->
+</section>
+<section id="processor-interface">
+<span id="project-uart-pif"></span><h2>Processor interface<a class="headerlink" href="#processor-interface" title="Permalink to this heading">#</a></h2>
+<p>In this section you will write the memory mapped register interface that will allow the software running on the microcontroller system to access and controll your UART module.</p>
+<div class="tip admonition">
+<p class="admonition-title">Reading tip!</p>
+<p>Make sure you study <a class="reference internal" href="../part-embedded/embedded_memory_mapped.html#embedded-memory-mapped"><span class="std std-numref">Section 3.3</span></a> <a class="reference internal" href="../part-embedded/embedded_memory_mapped.html#embedded-memory-mapped"><span class="std std-ref">Memory mapped interfaces</span></a> before you continue.</p>
+</div>
+<p>To connect the TX and RX modules to a microcontroller system we need define a set of registers that can be accessed by the the CPU. These registers should contain information about the data to be transmitted and received, and the status of the modules. A suggested set of registers can be:</p>
+<ul class="simple">
+<li><p>An 8-bit data transmit register (<em>mm_tx_data</em>)</p></li>
+<li><p>A 8-bit data receive register (<em>mm_rx_data</em>)</p></li>
+<li><p>A 8-bit status register (<em>mm_status</em>)</p></li>
+</ul>
+<div class="admonition-status-register admonition">
+<p class="admonition-title">Status register</p>
+<p>The status registeri should consist of the following information:</p>
+<p>Bit 0: tx_data_valid<br />
+Bit 1: tx_busy<br />
+Bit 2: rx_busy<br />
+Bit 3: rx_err<br />
+Bit 4: tx_irq<br />
+Bit 5: rx_irq<br />
+Bit 6–7: Not in use</p>
+<p>The <em>tx_data_valid</em> is the bit used to start a transaction for the UART TX module. This bit can be set when the CPU writes to the <em>tx_data register</em>. It should remain high until the TX module has started a transmission, and then be automatically reset to ‘0’ from the internal logic of this processor interface. How can you detect when a transmission has started?</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>By monitoring the <em>tx_busy</em> signal. We know from the TX state machine that the <em>tx_busy</em> signal is initially low when there is no activity, and that it goes high after the state machine has detected a high value on <em>tx_data_valid</em>. Therefore, the <em>tx_data_valid</em> bit position can be reset when a rising edge is detected on the TX busy signal.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Reset tx_data_valid when tx busy goes high</span>
+<span class="k">if</span><span class="w"> </span><span class="n">tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">mm_tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="n">tx_data_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">--reset tx data valid</span>
+<span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Where <em>mm_tx_busy</em> is the registered version of the TX busy signal in the processor interface. And <em>mm_tx_busy</em> is defined as an alias:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">alias</span><span class="w"> </span><span class="n">mm_tx_busy</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">mm_tx_status</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>To control the flow of data you will use two interrupt signals, <em>tx_irq</em> and <em>rx_irq</em>. These interrupts are used to indicate when a transmission has been completed on the UART TX and when the UART RX has received data.  Can you think of a solution that would set these bits accordingly?</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Solution</p>
+<p>The signal that indicates whether a module transmitting og receiving data is the busy signal. When the busy signal changes from high to low, this means that the operation has been completed. Assuming
+that the busy signals are registered in the status register (called mm_status here), the following implementation can be used:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="n">mm_tx_busy</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tx_busy</span><span class="p">;</span>
+<span class="w">  </span><span class="n">mm_rx_busy</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">rx_busy</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">mm_tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">tx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">tx_irq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">  </span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">mm_rx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">rx_busy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">rx_irq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span><span class="w">  </span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+</pre></div>
+</div>
+<p>These two bits will be used to signal an interrupt to the CPU. The CPU can only receive one interrupt from the module, and the two interrupts must therefore be or’ed</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">irq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">tx_irq</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">rx_irq</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The CPU can check which interrupt bit has been set by reading the statuts register. The CPU also needs to reset the IRQ bits when the interrupt has been registerd. This can be done by for example making a write transaction to the status register.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="n">addr</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">when</span><span class="w"> </span><span class="s">&quot;10&quot;</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">      </span><span class="n">rx_irq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="n">tx_irq</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+</pre></div>
+</div>
+<p>You will see how this can be utilized in software when we come to the RTOS part of the project.</p>
+</div>
+</div>
+<p>The Nios II is a 32-bit CPU with a 32-bit wide data and instruction bus. The data read and write lines of the processor interface therefore needs to be 32 bits wide even though fewer bits are needed in the case of the UART.  This can be solved as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span><span class="w"> </span><span class="n">mm_tx_data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">mm_rx_data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">uart</span><span class="w"> </span><span class="k">is</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="k">elsif</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="c1">-- Write to registers</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">addr</span><span class="w"> </span><span class="k">is</span>
+<span class="w">      </span><span class="k">when</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">      </span><span class="n">mm_tx_data</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">wdata</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">re</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">addr</span><span class="w"> </span><span class="k">is</span>
+<span class="w">      </span><span class="k">when</span><span class="w"> </span><span class="s">&quot;01&quot;</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">      </span><span class="n">rdata</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">x&quot;000000&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">mm_rx_data</span><span class="p">;</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+</pre></div>
+</div>
+<p>You task is to write the register interface and connect the TX and RX module. Create a file called <code class="docutils literal notranslate"><span class="pre">uart.vhd</span></code> and include both the TX and RX modules as well as the register interface.
+Connect the relevant ports from the TX and RX modules to the respective register locations.</p>
+<div class="warning admonition">
+<p class="admonition-title">Warning</p>
+<p>If you want to make use of the test bench example provided in the next section it is important that you adhere to the ordering of the bits in the status regiser
+as described above and the naming of the ports in the top level entity shown below.</p>
+<p>If you use different names or locations, you will need to modify the test bench accordingly.</p>
+</div>
+<p>The top level entity of the <em>uart.vhd</em> should be as shown below:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span><span class="w"> </span><span class="nc">uart</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">generic</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">GC_SYSTEM_CLK</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">50</span><span class="n">_000_000</span><span class="p">;</span>
+<span class="w">    </span><span class="n">GC_BAUD_RATE</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">115</span><span class="n">_200</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">clk</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">arst_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- processor interface</span>
+<span class="w">    </span><span class="n">we</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">re</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">wdata</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">rdata</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="n">addr</span><span class="w">   </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">-- uart interface</span>
+<span class="w">    </span><span class="n">rx</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">tx</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- interrupt interface</span>
+<span class="w">    </span><span class="n">irq</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">uart</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="verifying-the-uart">
+<h2>Verifying the UART<a class="headerlink" href="#verifying-the-uart" title="Permalink to this heading">#</a></h2>
+<p>To verify the behaviour of the UART we need to test both the processor interface and the TX and RX lines. This would require you to write support procedures to control and monitor each port according to the Avalon bus specification and the UART packet structure and timing. An example procedure for stimulating the RX port was already shown in <a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html#vhdl-package-example-procedure"><span class="std std-numref">Section 2.14.3.2</span></a>.</p>
+<!--
+A very basic example of a procedure that can be used to generate stimuli on the RX port is shown below. 
+
+```{admonition} Notice
+The procodure below is only provided as an example to demonstrate the concept.  We will not use this procedure. Instead we will be using procedures from an already existing Verification library as described from {numref}`project-uart-uvvm`.
+```
+
+```vhdl
+-- Support procedure to write serial data
+procedure uart_write_data (
+  constant data                   : in  std_logic_vector(7 downto 0);
+  signal serial_data              : out std_logic;
+  constant inject_error_stop_bit  :     boolean := false;
+  constant inject_error_start_bit :     boolean := false
+      ) is
+begin 
+  -- Send start bit with or without error
+  if inject_error_start_bit then
+    serial_data <= '1';
+  else
+    serial_data <= '0';
+  end if;
+  wait for C_BIT_PERIOD;
+  
+  -- Send the data bits LSB first
+  for bit_pos in 0 to data'length-1 loop
+    serial_data <= data(bit_pos);
+    wait for C_BIT_PERIOD;
+  end loop;
+  -- Send stop bit with or without error
+  if inject_error_stop_bit then
+    serial_data <= '0';
+  else
+    serial_data <= '1';
+  end if;
+  wait for C_BIT_PERIOD;
+  -- Return to default value for RX.
+  serial_data <= '1'; 
+end procedure;
+```
+-->
+<p>Similar procedures would also be needed to test the TX interface and the Avalon Memory Mapped register interface. The procedures can then be used in the test bench if they are placed either in the declaration area of the test bench’s architecture, or in a separate VHDL package.</p>
+<!--
+```vhdl
+-- write x55 to the rx input
+uart_write_data(x"55", rx);
+
+-- or with error
+uart_write_data( x"22", rx, inject_error_stop_bit => true);
+```
+
+```{admonition} Reading tip!
+See the section on {ref}`vhdl-packages` for more information on how to write a VHDL package.
+```
+-->
+<p>Writing dedicate test procedures can be very valuable for the process of learning, but it can also be time-consuming. When you have first nailed the concept of writing such test procedurece, it is generally more efficient to make use of already existing libraries. There is no point “reinventing the wheel” when someone else has already written these procedures and made them available in open source verification libraries like e.g., Universal VHDL Verification Methodology (UVVM) library available from <a class="reference external" href="http://www.github.com/uvvm">www.github.com/uvvm</a> and <a class="reference external" href="http://www.uvvm.org">www.uvvm.org</a>, or Open source VHDL verification methodology (OSVVM) available from www.osvvm.rog. In this course we will demonstrate the use of UVVM.</p>
+<div class="admonition-reading-tip admonition">
+<p class="admonition-title">Reading tip!</p>
+<p>If you would like to read more about UVVM here are a few relevant links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.newelectronics.co.uk/electronics-technology/faster-fpga-verification/228138/">Tallasken and Saho, <em>Faster FPGA verification</em>, New Electronics, 22 June 2020.</a></p></li>
+<li><p><a class="reference external" href="https://osda.gitlab.io/19/tallaksen.pdf">Espen Tallaksen, <em>The Fastet Growing FPGA Verification Methodology Worldwide!</em>, Invited paper at the first Workshop on Open-Source Design Automation (OSDA), 29 March 2019, Florence, Italy.</a></p></li>
+<li><p><a class="reference external" href="https://elektronikknett.no/Artikkelarkiv/2017/September/ESA-satser-paa-norsk-verifikasjonssystem">Einar Karlsen, <em>ESA satser på norsk verifikasjonssystem</em>, Elektronikknett 7. september 2017 (Norwegian only).</a></p></li>
+</ul>
+</div>
+<p>In the video below, Espen Tallaksen from EmLogic gives an introductory talk on UVVM.  UVVM is an extensive library and we will limit our use to the reduced version called UVVM Light (<a class="github reference external" href="https://github.com/UVVM/UVVM_Light">UVVM/UVVM_Light</a>), and its respective <a class="reference external" href="https://en.wikipedia.org/wiki/Bus_functional_model">Bus Functional Models (BFM)</a> for the UART and Avalon interfaces. The most relevant part of the video are the first 15 minutes. After this, more advanced concepts which are less relevant for this course are covered. Of course, you are welcome to watch the full presenation if you like.</p>
+<div class="video-container">
+<iframe width="806" height="453" src="https://www.youtube.com/embed/6720XWkkANk" title="UVVM: UVM for VHDL designers – An introduction" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p>These first 15 minutes cover the basics of UVVM exemplified by testing a UART. The test procedures that you will use in your project are different from the ones use in the example, but the concepts are the same. The example uses so called bus functional models to interface and test the UART. A BFM is a VHDL description that models the signaling protocal of the various interface. Similar to the procedure used to stimulate the RX port in the previous section. In the example the processor to UART interface  a simple bus interface (SBI). You will instead use an Avalon interface in your project, which is a bus interface specific for the Nios-II processor.</p>
+<p>The relevant procedures that will be used from the UVVM library for this project are:</p>
+<ul class="simple">
+<li><p>avalon_mm_write()</p></li>
+<li><p>avalon_mm_read()</p></li>
+<li><p>avalon_mm_check()</p></li>
+</ul>
+<p>from the <a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/src_bfm/avalon_mm_bfm_pkg.vhd">Avalon BFM</a>, and</p>
+<ul class="simple">
+<li><p>uart_transmit()</p></li>
+<li><p>uart_receive()</p></li>
+<li><p>uart_expect()</p></li>
+</ul>
+<p>from the <a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/src_bfm/avalon_mm_bfm_pkg.vhd">UART BFM</a>.</p>
+<div class="admonition-uvvm-resources admonition">
+<p class="admonition-title">UVVM resources</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/doc/uvvm_guide.pdf">UVVM Guide</a></p></li>
+<li><p><a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/doc/uvvm_getting_started.pdf">UVVM Getting started</a></p></li>
+<li><p><a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/doc/util_quick_ref.pdf">UVVM Light Quick Reference</a></p></li>
+<li><p><a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/doc/avalon_mm_bfm_QuickRef.pdf">UVVM Avalon MM BFM Quick reference</a></p></li>
+<li><p><a class="reference external" href="https://github.com/UVVM/UVVM_Light/blob/master/doc/uart_bfm_QuickRef.pdf">UVVM UART BFM Quick reference</a></p></li>
+</ul>
+<p>All documents can be found in the  <a class="reference external" href="https://github.com/UVVM/UVVM_Light/tree/master/doc"><em>UVVM_Light/doc</em></a> folder of the UVVM Github repository.</p>
+</div>
+<section id="setting-up-the-simulation">
+<span id="project-uart-uvvm"></span><h3>Setting up the simulation<a class="headerlink" href="#setting-up-the-simulation" title="Permalink to this heading">#</a></h3>
+<p>The description below assume that you will have the following directory structure. If you have different directory structure you must adopot the commands and decsription below accordingly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">project</span>
+  <span class="o">-</span> <span class="n">UVVM_Light</span> <span class="p">(</span><span class="n">will</span> <span class="n">be</span> <span class="n">cloned</span> <span class="kn">from</span> <span class="nn">Github</span><span class="p">)</span>
+  <span class="o">-</span> <span class="n">tb</span>
+    <span class="o">-</span> <span class="n">uart_tb</span><span class="o">.</span><span class="n">vhd</span>
+  <span class="o">-</span> <span class="n">src</span>
+    <span class="o">-</span> <span class="n">uart_rx</span><span class="o">.</span><span class="n">vhd</span>
+    <span class="o">-</span> <span class="n">uart_tx</span><span class="o">.</span><span class="n">vhd</span>
+    <span class="o">-</span> <span class="n">uart</span><span class="o">.</span><span class="n">vhd</span>
+  <span class="o">-</span> <span class="n">scripts</span>
+    <span class="o">-</span> <span class="n">compile_src</span><span class="o">.</span><span class="n">do</span>
+    <span class="o">-</span> <span class="n">run</span><span class="o">.</span><span class="n">do</span>
+  <span class="o">-</span> <span class="n">simulation</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To run a simulation using the UVVM Light, you first have to download the library from Github. Navigate to your project directory and clone the repository.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">UVVM</span><span class="o">/</span><span class="n">UVVM_Light</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Add the following basic VHDL description to your UART test bench (<code class="docutils literal notranslate"><span class="pre">uart_tb.vhd</span></code>). This is the most basic setup to needed to activate the use of the UVVM library.</p></li>
+</ul>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-------------------------------------------------------------------------------</span>
+<span class="c1">-- UVVM Utility Library</span>
+<span class="c1">-------------------------------------------------------------------------------</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">uvvm_util</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">uvvm_util</span><span class="p">.</span><span class="n">uvvm_util_context</span><span class="p">;</span>
+<span class="c1">-- The context statement is a way to group together packages that you would</span>
+<span class="c1">-- like to include in your test bench.</span>
+<span class="c1">-- The uvvm context can be found here:</span>
+<span class="c1">-- https://github.com/UVVM/UVVM_Light/blob/master/src_util/uvvm_util_context.vhd</span>
+<span class="c1">-- Have a look at the following description on how to use context</span>
+<span class="c1">-- https://www.doulos.com/knowhow/vhdl/vhdl-2008-incorporates-existing-standards/#context</span>
+<span class="c1">-------------------------------------------------------------------------------</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">uart_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">uart_tb</span><span class="p">;</span>
+
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">uart_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- Main test sequencer</span>
+<span class="w">  </span><span class="n">p_main_test_sequencer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;TB seq.&quot;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="c1">----------------------------------------------------------------------------------</span>
+<span class="w">    </span><span class="c1">-- Set and report init conditions</span>
+<span class="w">    </span><span class="c1">----------------------------------------------------------------------------------</span>
+<span class="w">    </span><span class="n">report_global_ctrl</span><span class="p">(</span><span class="n">VOID</span><span class="p">);</span>
+<span class="w">    </span><span class="n">report_msg_id_panel</span><span class="p">(</span><span class="n">VOID</span><span class="p">);</span>
+<span class="w">    </span><span class="n">enable_log_msg</span><span class="p">(</span><span class="n">ALL_MESSAGES</span><span class="p">);</span>
+<span class="w">   </span>
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="c1">-- Begin simulation</span>
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_LOG_HDR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Start Simulation of TB for UART controller&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="c1">-- End simulation</span>
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="n">report_alert_counters</span><span class="p">(</span><span class="n">FINAL</span><span class="p">);</span><span class="w">  </span><span class="c1">-- Report final counters and print conclusion for simulation (Success/Fail)</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_LOG_HDR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SIMULATION COMPLETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="k">wait</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Open Modelsim and change directory to the <em>Simulation</em> directory (*File-&gt;Change Directory).</p></li>
+<li><p>In the Modelsim Transcript window write the following command to compile the UVVM library.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">do</span> <span class="o">../</span><span class="n">UVVM_Light</span><span class="o">/</span><span class="n">script</span><span class="o">/</span><span class="nb">compile</span><span class="o">.</span><span class="n">do</span> <span class="o">../</span><span class="n">UVVM_Light</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>A library called <em>uvvm_util</em> should now be visible in the Library window of Modelsim.</p>
+<ul class="simple">
+<li><p>Compile the basic UART test bench provided above (<em>uart_tb.vhd</em>):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vcom</span> <span class="o">-</span><span class="mi">2008</span> <span class="o">../</span><span class="n">tb</span><span class="o">/</span><span class="n">uart_tb</span><span class="o">.</span><span class="n">vhd</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Initiate the simulation</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vsim</span> <span class="n">uart_tb</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Run the simulation</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">run</span> <span class="o">-</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>If successful, you should see the following output at the end of the Transcript window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># UVVM:      ====================================================================================================================================================================</span>
+<span class="c1"># UVVM:      *** FINAL SUMMARY OF ALL ALERTS ***</span>
+<span class="c1"># UVVM:      ====================================================================================================================================================================</span>
+<span class="c1"># UVVM:                                REGARDED   EXPECTED  IGNORED      Comment?</span>
+<span class="c1"># UVVM:                NOTE         :      0         0         0         ok</span>
+<span class="c1"># UVVM:                TB_NOTE      :      0         0         0         ok</span>
+<span class="c1"># UVVM:                WARNING      :      0         0         0         ok</span>
+<span class="c1"># UVVM:                TB_WARNING   :      0         0         0         ok</span>
+<span class="c1"># UVVM:                MANUAL_CHECK :      0         0         0         ok</span>
+<span class="c1"># UVVM:                ERROR        :      0         0         0         ok</span>
+<span class="c1"># UVVM:                TB_ERROR     :      0         0         0         ok</span>
+<span class="c1"># UVVM:                FAILURE      :      0         0         0         ok</span>
+<span class="c1"># UVVM:                TB_FAILURE   :      0         0         0         ok</span>
+<span class="c1"># UVVM:      ====================================================================================================================================================================</span>
+<span class="c1"># UVVM:      &gt;&gt; Simulation SUCCESS: No mismatch between counted and expected serious alerts</span>
+<span class="c1"># UVVM:      ====================================================================================================================================================================</span>
+<span class="c1"># UVVM:      </span>
+<span class="c1"># UVVM:      </span>
+<span class="c1"># UVVM: </span>
+<span class="c1"># UVVM: </span>
+<span class="c1"># UVVM: ID_LOG_HDR                         0.0 ns  TB seq.                        SIMULATION COMPLETED</span>
+<span class="c1"># UVVM: -------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+
+</pre></div>
+</div>
+<p>The same information should also be printed to the file <code class="docutils literal notranslate"><span class="pre">_Log.txt</span></code> in the <code class="docutils literal notranslate"><span class="pre">simluation</span></code> directory.  If any alerst would occur during the simulation they will be printet to the Transcript window as well as the file <code class="docutils literal notranslate"><span class="pre">_Alert.txt</span></code> in the simulation directory.</p>
+<p>It is now time to add and make use of the relevant Bus Functional Models to test your UART component. The full VHDL test bench is shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-------------------------------------------------------------------------------</span>
+<span class="c1">-- UVVM Utility Library</span>
+<span class="c1">-------------------------------------------------------------------------------</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">uvvm_util</span><span class="p">;</span>
+<span class="n">context</span><span class="w"> </span><span class="n">uvvm_util</span><span class="p">.</span><span class="n">uvvm_util_context</span><span class="p">;</span>
+
+<span class="c1">-- The UVVM library contains a bus functional models (BFMs) for the Avalon memory mapped</span>
+<span class="c1">-- interface, and the UART TX and RX protocol</span>
+<span class="c1">-- These two package provide access to procedures that can be used to write to and read from an Avalon Memory mapped</span>
+<span class="c1">-- interface, and to read and write to a UART.</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">uvvm_util.uart_bfm_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">uvvm_util.avalon_mm_bfm_pkg.</span><span class="k">all</span><span class="p">;</span>
+<span class="c1">-------------------------------------------------------------------------------</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">uart_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">uart_tb</span><span class="p">;</span>
+
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">sim</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">uart_tb</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">GC_SYSTEM_CLK</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">50</span><span class="n">_000_000</span><span class="p">;</span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">GC_BAUD_RATE</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kt">integer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">115</span><span class="n">_200</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">time</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">sec</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">GC_BAUD_RATE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">time</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">sec</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">GC_SYSTEM_CLK</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk_ena</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w">   </span><span class="o">:=</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">arst_n</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">rx</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">tx</span><span class="w">      </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">irq</span><span class="w">     </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+
+<span class="w">  </span><span class="c1">--------------------</span>
+<span class="w">  </span><span class="c1">-- Avalon BFM setup</span>
+<span class="w">  </span><span class="c1">--------------------</span>
+
+<span class="w">  </span><span class="c1">-- The UVVM avalon bus functional model (BFM) has a certain set of default configuration parameters that needs to be updated in order to be used in this project. Use the following settings.</span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">t_avalon_mm_bfm_config</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">max_wait_cycles</span><span class="w">          </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="n">max_wait_cycles_severity</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">TB_FAILURE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clock_period</span><span class="w">             </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clock_period_margin</span><span class="w">      </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">ns</span><span class="p">,</span>
+<span class="w">    </span><span class="n">clock_margin_severity</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">TB_ERROR</span><span class="p">,</span>
+<span class="w">    </span><span class="n">setup_time</span><span class="w">               </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="w">  </span><span class="c1">-- recommended</span>
+<span class="w">    </span><span class="n">hold_time</span><span class="w">                </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="w">  </span><span class="c1">-- recommended</span>
+<span class="w">    </span><span class="n">bfm_sync</span><span class="w">                 </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">SYNC_ON_CLOCK_ONLY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">match_strictness</span><span class="w">         </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">MATCH_STD_INCL_Z</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_wait_states_read</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_wait_states_write</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">use_waitrequest</span><span class="w">          </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">use_readdatavalid</span><span class="w">        </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">use_response_signal</span><span class="w">      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">use_begintransfer</span><span class="w">        </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm</span><span class="w">               </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_wait</span><span class="w">          </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_WAIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_poll</span><span class="w">          </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_POLL</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">-- The UVVM BFM package uses a record type to group the MM IF signals</span>
+<span class="w">  </span><span class="c1">-- Create interface signal of record type t_avalon_mm_if;</span>
+<span class="w">  </span><span class="c1">-- See avalon_mm_if_bfm_pkg.vhd for definition</span>
+<span class="w">  </span><span class="c1">-- Records are similar to structures in C, and are often used to define a new VHDL type.  This new type contains a group of signals that the user desire to e.g. simplify an interface.</span>
+<span class="w">  </span><span class="c1">-- The t_avalon_mm_if needs to be constrained as some of the record members are defined as std_logic_vector without specifying the length of the vector.</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">t_avalon_mm_if</span><span class="p">(</span><span class="n">address</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">                                       </span><span class="n">byte_enable</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">                                       </span><span class="n">writedata</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="w">                                       </span><span class="n">readdata</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+
+<span class="w">  </span><span class="c1">--------------------</span>
+<span class="w">  </span><span class="c1">-- UART BFM setup</span>
+<span class="w">  </span><span class="c1">--------------------</span>
+
+<span class="w">  </span><span class="c1">-- Similar to the Avalon MM BFM, the UART BFM has set of default</span>
+<span class="w">  </span><span class="c1">-- configuration parameters that needs to be updated for this specific test bench.</span>
+<span class="w">  </span><span class="c1">-- In particular the baud rate (bit_time), number of bits, and parity and</span>
+<span class="w">  </span><span class="c1">-- stop bits. </span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_UART_BFM_CONFIG_DEFAULT</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">t_uart_bfm_config</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">bit_time</span><span class="w">                              </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">68</span><span class="w"> </span><span class="n">us</span><span class="p">,</span><span class="w">  </span><span class="c1">-- 115 200</span>
+<span class="w">    </span><span class="n">num_data_bits</span><span class="w">                         </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="n">idle_state</span><span class="w">                            </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_stop_bits</span><span class="w">                         </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">STOP_BITS_ONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">parity</span><span class="w">                                </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">PARITY_NONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">timeout</span><span class="w">                               </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">,</span>
+<span class="w">    </span><span class="n">timeout_severity</span><span class="w">                      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">error</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_bytes_to_log_before_expected_data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">match_strictness</span><span class="w">                      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">MATCH_EXACT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm</span><span class="w">                            </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_wait</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_WAIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_poll</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_POLL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_poll_summary</span><span class="w">               </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_POLL_SUMMARY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">error_injection</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_BFM_ERROR_INJECTION_INACTIVE</span>
+<span class="w">    </span><span class="p">);</span>
+
+
+
+<span class="w">  </span><span class="c1">-- To test the error flag of the RX module, we can active error injection on</span>
+<span class="w">  </span><span class="c1">-- these bits.</span>
+<span class="w">  </span><span class="c1">-- Testing stop bit. This will set a low value during the stop bit period. </span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_BFM_ERROR_INJECTION_ACTIVE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">t_bfm_error_injection</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">parity_bit_error</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">false</span><span class="p">,</span>
+<span class="w">    </span><span class="n">stop_bit_error</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">true</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">-- Create a new set of defaults for error injection purpose</span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">C_UART_BFM_CONFIG_STOP_ERROR</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">t_uart_bfm_config</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">bit_time</span><span class="w">                              </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">.</span><span class="mi">68</span><span class="w"> </span><span class="n">us</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_data_bits</span><span class="w">                         </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="n">idle_state</span><span class="w">                            </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_stop_bits</span><span class="w">                         </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">STOP_BITS_ONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">parity</span><span class="w">                                </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">PARITY_NONE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">timeout</span><span class="w">                               </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">,</span><span class="w">  </span><span class="c1">-- will default never time out</span>
+<span class="w">    </span><span class="n">timeout_severity</span><span class="w">                      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">error</span><span class="p">,</span>
+<span class="w">    </span><span class="n">num_bytes_to_log_before_expected_data</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="n">match_strictness</span><span class="w">                      </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">MATCH_EXACT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm</span><span class="w">                            </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_wait</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_WAIT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_poll</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_POLL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">id_for_bfm_poll_summary</span><span class="w">               </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ID_BFM_POLL_SUMMARY</span><span class="p">,</span>
+<span class="w">    </span><span class="n">error_injection</span><span class="w">                       </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_BFM_ERROR_INJECTION_ACTIVE</span>
+<span class="w">    </span><span class="p">);</span>
+
+
+<span class="w">  </span><span class="c1">-- The UART receive BFM can be terminated prematurely by setting the</span>
+<span class="w">  </span><span class="c1">-- terminate_loop to 1. We do not use this functionality.</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">terminate_loop</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- Generate clock signal</span>
+<span class="w">  </span><span class="n">clk</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="k">after</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">clk_ena</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">-- Connect UART module</span>
+<span class="w">  </span><span class="n">UUT</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">work</span><span class="p">.</span><span class="n">uart</span><span class="p">(</span><span class="n">rtl</span><span class="p">)</span>
+<span class="w">    </span><span class="k">generic</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">GC_SYSTEM_CLK</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">GC_SYSTEM_CLK</span><span class="p">,</span>
+<span class="w">      </span><span class="n">GC_BAUD_RATE</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">GC_BAUD_RATE</span>
+<span class="w">      </span><span class="p">)</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">clk</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span>
+<span class="w">      </span><span class="n">arst_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">arst_n</span><span class="p">,</span>
+<span class="w">      </span><span class="c1">-- processor interface</span>
+<span class="w">      </span><span class="n">we</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">.</span><span class="n">write</span><span class="p">,</span>
+<span class="w">      </span><span class="n">re</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">.</span><span class="n">read</span><span class="p">,</span>
+<span class="w">      </span><span class="n">addr</span><span class="w">   </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">.</span><span class="n">address</span><span class="p">,</span>
+<span class="w">      </span><span class="n">wdata</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">.</span><span class="n">writedata</span><span class="p">,</span>
+<span class="w">      </span><span class="n">rdata</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">.</span><span class="n">readdata</span><span class="p">,</span>
+<span class="w">      </span><span class="n">irq</span><span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">irq</span><span class="p">,</span>
+<span class="w">      </span><span class="c1">-- UART interface</span>
+<span class="w">      </span><span class="n">rx</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">rx</span><span class="p">,</span>
+<span class="w">      </span><span class="n">tx</span><span class="w">     </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">tx</span>
+<span class="w">      </span><span class="p">);</span>
+
+
+
+<span class="w">  </span><span class="c1">-- Main test sequencer</span>
+<span class="w">  </span><span class="n">p_main_test_sequencer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">    </span><span class="k">constant</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w">                       </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;TB seq.&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">variable</span><span class="w"> </span><span class="n">tx_data</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">variable</span><span class="w"> </span><span class="n">rx_data</span><span class="w">               </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">31</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="k">variable</span><span class="w"> </span><span class="n">uart_bfm_send_data</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">variable</span><span class="w"> </span><span class="n">uart_bfm_receive_data</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">variable</span><span class="w"> </span><span class="n">mm_reg_addr</span><span class="w">           </span><span class="o">:</span><span class="w"> </span><span class="kt">unsigned</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="c1">----------------------------------------------------------------------------------</span>
+<span class="w">    </span><span class="c1">-- Set and report init conditions</span>
+<span class="w">    </span><span class="c1">----------------------------------------------------------------------------------</span>
+<span class="w">    </span><span class="c1">-- Increment alert counter as one warning is expected when testing writing</span>
+<span class="w">    </span><span class="c1">-- to ID register which is read only</span>
+<span class="w">    </span><span class="c1">--increment_expected_alerts(warning, 0);</span>
+<span class="w">    </span><span class="c1">-- Print the configuration to the log: report/enable logging/alert conditions</span>
+<span class="w">    </span><span class="n">report_global_ctrl</span><span class="p">(</span><span class="n">VOID</span><span class="p">);</span>
+<span class="w">    </span><span class="n">report_msg_id_panel</span><span class="p">(</span><span class="n">VOID</span><span class="p">);</span>
+<span class="w">    </span><span class="n">enable_log_msg</span><span class="p">(</span><span class="n">ALL_MESSAGES</span><span class="p">);</span>
+<span class="w">    </span><span class="n">disable_log_msg</span><span class="p">(</span><span class="n">ID_POS_ACK</span><span class="p">);</span><span class="w">        </span><span class="c1">--make output a bit cleaner</span>
+
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="c1">-- Begin simulation</span>
+<span class="w">    </span><span class="c1">------------------------</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_LOG_HDR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Start Simulation of TB for UART controller&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_SEQUENCER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Set default values for I/O and enable clock and reset system&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- default values</span>
+<span class="w">    </span><span class="n">arst_n</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">clk_ena</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">true</span><span class="p">;</span><span class="w">                    </span><span class="c1">--Enable the system clk</span>
+<span class="w">    </span><span class="n">rx</span><span class="w">      </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span><span class="w">   </span><span class="c1">-- set initial default value of rx line.</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-----------------------</span>
+<span class="w">    </span><span class="c1">-- Toggle reset</span>
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_SEQUENCER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Activate async. reset for clk periods&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">arst_n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">after</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="p">;</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">C_CLK_PERIOD</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+
+
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="c1">--Test TX</span>
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="c1">-- Write to processor interface to initiate transactions</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_SEQUENCER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Testing TX&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">tx_data</span><span class="w">     </span><span class="o">:=</span><span class="w"> </span><span class="mh">x&quot;000000AA&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="p">;</span><span class="w">                </span><span class="c1">-- data register</span>
+<span class="w">    </span><span class="n">avalon_mm_write</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="n">tx_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF Write transaction to UART data reg -- enabeling TX transaction&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">-- Use UART BFM to monitor RX line and check that received data matches tx_data</span>
+<span class="w">    </span><span class="n">uart_receive</span><span class="p">(</span><span class="n">uart_bfm_receive_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART receive transaction&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">terminate_loop</span><span class="p">,</span><span class="w"> </span><span class="n">C_UART_BFM_CONFIG_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">);</span>
+<span class="w">    </span><span class="n">check_value</span><span class="p">(</span><span class="n">uart_bfm_receive_data</span><span class="p">,</span><span class="w"> </span><span class="n">tx_data</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Checking tx data&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">-- wait for irq signal to be activated indicating transmitting complete</span>
+<span class="w">    </span><span class="n">await_value</span><span class="p">(</span><span class="n">irq</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Interrupt expected&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">-- Read status register to check for tx irq</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;10&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avalon_mm_check</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000010&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF transaction to verify correct TX IRQ value in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- write any value to the status register to reset the tx irq</span>
+<span class="w">    </span><span class="n">avalon_mm_write</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF Write transaction to reset irq in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">100</span><span class="o">*</span><span class="n">C_CLK_PERIOD</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="c1">--Test RX</span>
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_SEQUENCER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Testing RX&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- USE UART BFM to send data to RX line</span>
+<span class="w">    </span><span class="n">uart_bfm_send_data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mh">x&quot;55&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">uart_transmit</span><span class="p">(</span><span class="n">uart_bfm_send_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART TX&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="n">C_UART_BFM_CONFIG_DEFAULT</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">-- wait for irq signal to be activated indicating receive completed    </span>
+<span class="w">    </span><span class="n">await_value</span><span class="p">(</span><span class="n">irq</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Interrupt expected&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">-- Read rx register of UART moduel to check if data has been received.</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w">        </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;01&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avalon_mm_check</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000055&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF transaction to verify correct value in RX data register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- Read status register to check for rx irq</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w">        </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;10&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avalon_mm_check</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000020&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF transaction to verify correct RX IRQ value in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- Reset tx irq</span>
+<span class="w">    </span><span class="n">avalon_mm_write</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF Write transaction to reset irq in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="c1">--Test RX with error injection for stop bit.</span>
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_SEQUENCER</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Testing RX with error injections on stop bit&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- USE UART BFM to send data to RX line</span>
+<span class="w">    </span><span class="n">uart_bfm_send_data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mh">x&quot;55&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">uart_transmit</span><span class="p">(</span><span class="n">uart_bfm_send_data</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART TX&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">rx</span><span class="p">,</span><span class="w"> </span><span class="n">C_UART_BFM_CONFIG_STOP_ERROR</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">----------------------</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">-- wait for irq signal to be activated indicating receive completed    </span>
+<span class="w">    </span><span class="n">await_value</span><span class="p">(</span><span class="n">irq</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">ns</span><span class="p">,</span><span class="w"> </span><span class="n">C_BIT_PERIOD</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Interrupt expected&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">-- First read rx register of UART moduel to check if data has been received.</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;01&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avalon_mm_check</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000055&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF transaction to verify correct value in RX data register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- Then read status register and check that rx_err and rx irq bits are set.</span>
+<span class="w">    </span><span class="n">mm_reg_addr</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;10&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avalon_mm_check</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000028&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF transaction to verify correct value in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">-- Reset tx irq</span>
+<span class="w">    </span><span class="n">avalon_mm_write</span><span class="p">(</span><span class="n">mm_reg_addr</span><span class="p">,</span><span class="w"> </span><span class="mh">x&quot;00000000&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MM IF Write transaction to reset irq in status register&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">avalon_mm_if</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">,</span><span class="w"> </span><span class="n">shared_msg_id_panel</span><span class="p">,</span><span class="w"> </span><span class="n">C_AVALON_MM_BFM_CONFIG</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">5</span><span class="o">*</span><span class="n">C_CLK_PERIOD</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">clk_ena</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">    </span><span class="n">report_alert_counters</span><span class="p">(</span><span class="n">FINAL</span><span class="p">);</span><span class="w">  </span><span class="c1">-- Report final counters and print conclusion for simulation (Success/Fail)</span>
+<span class="w">    </span><span class="n">log</span><span class="p">(</span><span class="n">ID_LOG_HDR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;SIMULATION COMPLETED&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">C_SCOPE</span><span class="p">);</span>
+
+
+<span class="w">    </span><span class="k">wait</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<!--
+```{admonition} Notice
+Since the description has been updated to include the IRQ signals, the previous version of the test bench is provided below. This version does not check for the IRQ bits in the status register, and is no longer relevent after these IRQ bits have been added to your UART module's status register. 
+```
+
+
+````{admonition} Test bench without checking for interrupt
+:class: dropdown
+This is the previous test bench used before adding the interrupt functionality. 
+
+```vhdl
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+-------------------------------------------------------------------------------
+-- UVVM Utility Library
+-------------------------------------------------------------------------------
+library uvvm_util;
+context uvvm_util.uvvm_util_context;
+-- The context statement is a way to group together packages that you would
+-- like to include in your test bench.
+-- The uvvm context can be found here:
+-- https://github.com/UVVM/UVVM_Light/blob/master/src_util/uvvm_util_context.vhd
+-- Have a look at the following description on how to use context
+-- https://www.doulos.com/knowhow/vhdl/vhdl-2008-incorporates-existing-standards/#context
+
+-- The UVVM library contains a bus functional models (BFMs) for the Avalon memory mapped
+-- interface, and the UART TX and RX protocol
+-- These two package provide access to procedures that can be used to write to and read from an Avalon Memory mapped
+-- interface, and to read and write to a UART.
+use uvvm_util.uart_bfm_pkg.all;
+use uvvm_util.avalon_mm_bfm_pkg.all;
+-------------------------------------------------------------------------------
+
+entity uart_tb is
+end uart_tb;
+
+architecture tb of uart_tb is
+
+  constant GC_SYSTEM_CLK : integer := 50_000_000;
+  constant GC_BAUD_RATE  : integer := 115_200;
+
+  constant C_BIT_PERIOD : time := 1 sec / GC_BAUD_RATE;
+  constant C_CLK_PERIOD : time := 1 sec / GC_SYSTEM_CLK;
+
+  signal clk_ena : boolean   := false;
+  signal clk     : std_logic := '1';
+  signal arst_n  : std_logic := '1';
+  signal rx      : std_logic;
+  signal tx      : std_logic;
+
+  --------------------
+  -- Avalon BFM setup
+  --------------------
+
+  -- The UVVM avalon bus functional model (BFM) has a certain set of default configuration parameters that needs to be updated in order to be used in this project. Use the following settings.
+  constant C_AVALON_MM_BFM_CONFIG : t_avalon_mm_bfm_config := (
+    max_wait_cycles          => 10,
+    max_wait_cycles_severity => TB_FAILURE,
+    clock_period             => C_CLK_PERIOD,
+    clock_period_margin      => 0 ns,
+    clock_margin_severity    => TB_ERROR,
+    setup_time               => C_CLK_PERIOD/4,  -- recommended
+    hold_time                => C_CLK_PERIOD/4,  -- recommended
+    bfm_sync                 => SYNC_ON_CLOCK_ONLY,
+    match_strictness         => MATCH_STD_INCL_Z,
+    num_wait_states_read     => 1,
+    num_wait_states_write    => 0,
+    use_waitrequest          => false,
+    use_readdatavalid        => false,
+    use_response_signal      => false,
+    use_begintransfer        => false,
+    id_for_bfm               => ID_BFM,
+    id_for_bfm_wait          => ID_BFM_WAIT,
+    id_for_bfm_poll          => ID_BFM_POLL
+    );
+
+  -- The UVVM BFM package uses a record type to group the MM IF signals
+  -- Create interface signal of record type t_avalon_mm_if;
+  -- See avalon_mm_if_bfm_pkg.vhd for definition
+  -- Records are similar to structures in C, and are often used to define a new VHDL type.  This new type contains a group of signals that the user desire to e.g. simplify an interface.
+  -- The t_avalon_mm_if needs to be constrained as some of the record members are defined as std_logic_vector without specifying the length of the vector.
+  signal avalon_mm_if : t_avalon_mm_if(address(1 downto 0),
+                                       byte_enable(3 downto 0),
+                                       writedata(31 downto 0),
+                                       readdata(31 downto 0));
+
+  --------------------
+  -- UART BFM setup
+  --------------------
+
+  -- Similar to the Avalon MM BFM, the UART BFM has set of default
+  -- configuration parameters that needs to be updated for this specific test bench.
+  -- In particular the baud rate (bit_time), number of bits, and parity and
+  -- stop bits. 
+  constant C_UART_BFM_CONFIG_DEFAULT : t_uart_bfm_config := (
+    bit_time                              => 8.68 us,  -- Baude rate of 115 200
+    num_data_bits                         => 8,
+    idle_state                            => '1',
+    num_stop_bits                         => STOP_BITS_ONE,
+    parity                                => PARITY_NONE,
+    timeout                               => 20 * C_BIT_PERIOD,
+    timeout_severity                      => error,
+    num_bytes_to_log_before_expected_data => 0,
+    match_strictness                      => MATCH_EXACT,
+    id_for_bfm                            => ID_BFM,
+    id_for_bfm_wait                       => ID_BFM_WAIT,
+    id_for_bfm_poll                       => ID_BFM_POLL,
+    id_for_bfm_poll_summary               => ID_BFM_POLL_SUMMARY,
+    error_injection                       => C_BFM_ERROR_INJECTION_INACTIVE
+    );
+
+
+  -- To test the error flag of the RX module, we can active error injection on
+  -- these bits.
+  -- Testing stop bit. This will set a low value during the stop bit period. 
+  constant C_BFM_ERROR_INJECTION_ACTIVE : t_bfm_error_injection := (
+    parity_bit_error => false,
+    stop_bit_error   => true
+    );
+
+  -- Create a new set of defaults for error injection purpose
+  constant C_UART_BFM_CONFIG_STOP_ERROR : t_uart_bfm_config := (
+    bit_time                              => 8.68 us,
+    num_data_bits                         => 8,
+    idle_state                            => '1',
+    num_stop_bits                         => STOP_BITS_ONE,
+    parity                                => PARITY_NONE,
+    timeout                               => 20 * C_BIT_PERIOD,  -- will default never time out
+    timeout_severity                      => error,
+    num_bytes_to_log_before_expected_data => 0,
+    match_strictness                      => MATCH_EXACT,
+    id_for_bfm                            => ID_BFM,
+    id_for_bfm_wait                       => ID_BFM_WAIT,
+    id_for_bfm_poll                       => ID_BFM_POLL,
+    id_for_bfm_poll_summary               => ID_BFM_POLL_SUMMARY,
+    error_injection                       => C_BFM_ERROR_INJECTION_ACTIVE
+    );
+
+
+  -- The UART receive BFM can be terminated prematurely by setting the
+  -- terminate_loop to 1. We do not use this functionality.
+  signal terminate_loop : std_logic := '0';
+
+begin
+  -- Generate clock signal
+  clk <= not clk after C_CLK_PERIOD / 2 when clk_ena else '0';
+
+  -- Connect UART module
+  UUT : entity work.uart(rtl)
+    generic map(
+      GC_SYSTEM_CLK => GC_SYSTEM_CLK,
+      GC_BAUD_RATE  => GC_BAUD_RATE
+      )
+    port map(
+      clk    => clk,
+      arst_n => arst_n,
+      -- processor interface
+      we     => avalon_mm_if.write,
+      re     => avalon_mm_if.read,
+      addr   => avalon_mm_if.address,
+      wdata  => avalon_mm_if.writedata,
+      rdata  => avalon_mm_if.readdata,
+      -- UART interface
+      rx     => rx,
+      tx     => tx
+      );
+
+
+  -- Main test sequencer
+  p_main_test_sequencer : process
+    constant C_SCOPE               : string                       := "TB seq.";
+    variable tx_data               : std_logic_vector(31 downto 0);
+    variable rx_data               : std_logic_vector(31 downto 0);
+    variable uart_bfm_send_data    : std_logic_vector(7 downto 0) := (others => '0');
+    variable uart_bfm_receive_data : std_logic_vector(7 downto 0) := (others => '0');
+    variable mm_reg_addr           : unsigned(1 downto 0)         := (others => '0');
+
+  begin
+    ----------------------------------------------------------------------------------
+    -- Set and report init conditions
+    ----------------------------------------------------------------------------------
+    -- Increment alert counter as one warning is expected when testing writing
+    -- to ID register which is read only
+    --increment_expected_alerts(warning, 0);
+    -- Print the configuration to the log: report/enable logging/alert conditions
+    report_global_ctrl(VOID);
+    report_msg_id_panel(VOID);
+    enable_log_msg(ALL_MESSAGES);
+    disable_log_msg(ID_POS_ACK);        --make output a bit cleaner
+
+    ------------------------
+    -- Begin simulation
+    ------------------------
+    log(ID_LOG_HDR, "Start Simulation of TB for UART controller", C_SCOPE);
+    log(ID_SEQUENCER, "Set default values for I/O and enable clock and reset system", C_SCOPE);
+    -- default values
+    arst_n  <= '1';
+    clk_ena <= true;                    --Enable the system clk
+    rx      <= '1'; -- set initial default value of rx line.
+    wait for 5 * C_CLK_PERIOD;
+
+    -----------------------
+    -- Toggle reset
+    ----------------------
+    log(ID_SEQUENCER, "Activate async. reset for clk periods", C_SCOPE);
+    arst_n <= '0', '1' after 5 * C_CLK_PERIOD;
+    wait for C_CLK_PERIOD * 10;
+
+
+    ----------------------
+    --Test TX
+    ----------------------
+    -- Write to processor interface to initiate transactions
+    tx_data     := x"000000AA";
+    mm_reg_addr := "00";                -- data register
+    avalon_mm_write(mm_reg_addr, tx_data, "MM IF Write transaction to UARY data reg -- enabeling TX transaction", clk, avalon_mm_if, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
+
+    -- Use UART BFM to monitor RX line and check that received data matches tx_data
+    uart_receive(uart_bfm_receive_data, "UART receive transaction", tx, terminate_loop, C_UART_BFM_CONFIG_DEFAULT, C_SCOPE, shared_msg_id_panel);
+    check_value(uart_bfm_receive_data, tx_data(7 downto 0), warning, "Checking tx data");
+
+
+    ----------------------
+    -- Test RX
+    ----------------------
+
+    -- USE UART BFM to send data to RX line
+    uart_bfm_send_data := x"55";
+    uart_transmit(uart_bfm_send_data, "UART TX", rx, C_UART_BFM_CONFIG_DEFAULT, C_SCOPE, shared_msg_id_panel);
+    wait for 5*C_CLK_PERIOD;
+    -- Read rx register of UART moduel to check if data has been received.
+    mm_reg_addr        := "01";
+    avalon_mm_check(mm_reg_addr, x"00000055", "MM IF transaction to verify correct value in RX data register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
+
+
+     ----------------------
+    -- Test RX with error injection for stop bit.
+    ----------------------
+     -- USE UART BFM to send data to RX line
+    uart_bfm_send_data := x"55";
+    uart_transmit(uart_bfm_send_data, "UART TX", rx, C_UART_BFM_CONFIG_STOP_ERROR, C_SCOPE, shared_msg_id_panel);
+    -- with error injection for stop bit.
+    wait for 5*C_CLK_PERIOD;
+    -- First read rx register of UART moduel to check if data has been received.
+    mm_reg_addr        := "01";
+    avalon_mm_check(mm_reg_addr, x"00000055", "MM IF transaction to verify correct value in RX data register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
+    -- Then read status register and check that rx_err bit is set.
+      mm_reg_addr        := "10";
+    avalon_mm_check(mm_reg_addr, x"0000000" & "1000", "MM IF transaction to verify correct value in RX data register", clk, avalon_mm_if, warning, C_SCOPE, shared_msg_id_panel, C_AVALON_MM_BFM_CONFIG);
+  
+    wait for 5*C_CLK_PERIOD;
+
+    clk_ena <= false;
+    report_alert_counters(FINAL);  -- Report final counters and print conclusion for simulation (Success/Fail)
+    log(ID_LOG_HDR, "SIMULATION COMPLETED", C_SCOPE);
+
+    wait;
+  end process;
+```
+````
+
+
+%- Add the following commands to the `compile_uvvm.do` script:
+
+%```tcl
+%do ../UVVM_Light/script/compile.do ../UVVM_Light .
+%```
+-->
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-project"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="project_intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Project overview</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="project_nios2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">P2: Microcontroller system</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-data-transmission">UART data transmission</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baud-rate">Baud rate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tx-module">TX module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rx-module">RX module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processor-interface">Processor interface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifying-the-uart">Verifying the UART</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-the-simulation">Setting up the simulation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

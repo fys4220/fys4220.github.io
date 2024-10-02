@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX1: Your first FPGA project &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_your_first_fpga_project';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EX2: Adder" href="exercises_adder.html" />
+    <link rel="prev" title="VHDL" href="exercises_vhdl.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_your_first_fpga_project.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX1: Your first FPGA project</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-a-new-git-branch-for-the-development-of-exercise-1">Prepare a new Git branch for the development of exercise 1.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-video">Supporting video</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-quartus-prime-project">Create the Quartus Prime Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-your-first-vhdl-design">Write your first VHDL design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-and-push-the-new-file">Commit and push the new file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinning-assignment">Pinning assignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-project">Compile the project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-the-fpga">Program the FPGA:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-git-repository">Update the git repository:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-pull-request-to-complete-the-exercise">Create a pull request to complete the exercise</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex1-your-first-fpga-project">
+<span id="exercises-first-project"></span><h1>EX1: Your first FPGA project<a class="headerlink" href="#ex1-your-first-fpga-project" title="Permalink to this heading">#</a></h1>
+<p>The most simple FPGA design that can be made is to make a connection between two pins of the FPGA, where we configure one pin an input and the other pin as an output. In this exercise you will use the 10 slide switches on the DE10-Lite board to control (turn on and off) the red Light Emitting Diodes (LED). The slide switches and LEDs can be seen in <a class="reference internal" href="#fig-assignment-de10-lite"><span class="std std-numref">Fig. 17</span></a>. Both the LEDs and the slide switches are physically connected to pins on the FPGA. Your task will be to create a VHDL design that connects these ports together. This will include:</p>
+<ul class="simple">
+<li><p>Writing the VHDL statement that describes this connection.</p></li>
+<li><p>Create a project in the Quartus design tools.</p></li>
+<li><p>Setup the correct pinning assignments.</p></li>
+<li><p>Synthesise the project and program the FPGA.</p></li>
+<li><p>Verify that the design works by changing the position of the slide switches and observing the LEDs.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">The learning outcome of this exercise is to:</p>
+<ul class="simple">
+<li><p>Get familiar with the Quartus Prime design tool and the DE10-Lite board.</p></li>
+<li><p>Be able to write and synthesize your first basic VHDL design.</p></li>
+<li><p>And program the FPGA.</p></li>
+</ul>
+</div>
+<figure class="align-center" id="fig-assignment-de10-lite">
+<a class="reference internal image-reference" href="../_images/de10-lite_layout_top.jpg"><img alt="../_images/de10-lite_layout_top.jpg" src="../_images/de10-lite_layout_top.jpg" style="width: 600px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">DE10-Lite board.</span><a class="headerlink" href="#fig-assignment-de10-lite" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="prepare-a-new-git-branch-for-the-development-of-exercise-1">
+<h2>Prepare a new Git branch for the development of exercise 1.<a class="headerlink" href="#prepare-a-new-git-branch-for-the-development-of-exercise-1" title="Permalink to this heading">#</a></h2>
+<p>Clone your git repository to the local disk and create a new branch called <em>ex1</em>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.uio.no/FYS4220-2023/&lt;name<span class="w"> </span>of<span class="w"> </span>your<span class="w"> </span>git<span class="w"> </span>repository&gt;
+git<span class="w"> </span>branch<span class="w"> </span>ex1
+</pre></div>
+</div>
+<p>Check that you have created the new branch by running the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>branch
+<span class="w">  </span>ex1
+*<span class="w"> </span>main
+</pre></div>
+</div>
+<p>This command lists the available branches. The branch marked with a star is the active branch. The new branch can be activated by running the command <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>checkout<span class="w"> </span>ex1
+$<span class="w"> </span>git<span class="w"> </span>branch
+*<span class="w"> </span>ex1
+<span class="w">  </span>main
+</pre></div>
+</div>
+<p>The branch <em>ex1</em> is now marked with a star, which indicates that this branch is the active branch.</p>
+</section>
+<section id="supporting-video">
+<h2>Supporting video<a class="headerlink" href="#supporting-video" title="Permalink to this heading">#</a></h2>
+<p>In the following video I work through the exercise below. Note that the video is a few years old – some details like file and folder names will therefore be different. You should follow the naming convention as specified in the description on this page.</p>
+<div class="video-container">
+<iframe width="912" height="568" src="https://www.youtube.com/embed/hQx_fcnzPks" title="EX1: First FPGA project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</section>
+<section id="create-the-quartus-prime-project">
+<h2>Create the Quartus Prime Project<a class="headerlink" href="#create-the-quartus-prime-project" title="Permalink to this heading">#</a></h2>
+<p>To start you first need to create a project in the Quartus Prime development tool. Creating a project in Quartus will generate a number of related project files. I therefore recommended that you organize your files in a dedicated directory for each exercise.</p>
+<ul class="simple">
+<li><p>Create a new directory called e.g., <em>ex1</em> in your local Git repository directory</p></li>
+<li><p>Start the Quartus Prime program.</p></li>
+<li><p>Create a new Quartus project (from File -&gt; New Project Wizard) using the following settings:</p>
+<ul>
+<li><p>Project directory: <em>ex1</em></p></li>
+<li><p>Project name: <em>ex1</em></p></li>
+<li><p>Name of top-level design entity: <em>ex1</em></p></li>
+<li><p>Project Type: <em>Empty project</em></p></li>
+<li><p>Device Family: <em>MAX 10</em></p></li>
+<li><p>Device name: <em>10M50DAF484C7G</em></p></li>
+<li><p>Add files: <em>Do not add any files at this stage</em></p></li>
+<li><p>Under EDA Tool settings choose: <em>No changes – use default settings</em>.</p></li>
+</ul>
+</li>
+</ul>
+<p>For more information on the meaning of the device name see page 5 in <em>Intel MAX10 FPGA device overview</em>: <a class="reference external" href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/max-10/m10_overview.pdf">https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/max-10/m10_overview.pdf</a></p>
+</section>
+<section id="write-your-first-vhdl-design">
+<h2>Write your first VHDL design<a class="headerlink" href="#write-your-first-vhdl-design" title="Permalink to this heading">#</a></h2>
+<p>The overall structure of the most typical VHDL-file can be divided in three parts as introduced in the section <a class="reference internal" href="../part-vhdl/vhdl_design_units.html#vhdl-design-units"><span class="std std-ref">Design units and structure</span></a>.
+You will now create a VHDL file and write the respective description for these three parts.</p>
+<ul class="simple">
+<li><p>Create a new directory called <em>src</em> inside your <em>ex1</em> directory</p></li>
+<li><p>Open your favourite text editor (e.g. Notepad++ or VS Code) and create a file called <em>ex1.vhd</em> in the <em>src</em> directory. Remember to save the file in order to activate syntax highlighting.</p></li>
+<li><p>Add the new VHDL file to the project. (Project -&gt; Add/Remove Files in Project). Locate the file, press <em>Add</em> and then press <em>OK</em>.</p></li>
+<li><p>Add the following template VHDL desciption to <em>ex1.vhd</em>.</p></li>
+</ul>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- The entity describes the interface</span>
+<span class="c1">-- between the outside and the internal</span>
+<span class="c1">-- functionality.</span>
+<span class="k">entity</span><span class="w"> </span><span class="nc">ex1</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="c1">-- sw is a 10-bit wide input port</span>
+<span class="w">      </span><span class="n">sw</span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">      </span><span class="c1">-- led is a 10-bit wide output port</span>
+<span class="w">      </span><span class="n">led</span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">      </span><span class="p">);</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">ex1</span><span class="p">;</span>
+
+<span class="c1">-- The architecture describes the internal functionality</span>
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">ex1</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- The following statement will connect the input signal vector _sw_ to </span>
+<span class="w">  </span><span class="c1">-- the output signal vector _led_ </span>
+<span class="w">  </span><span class="n">led</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">sw</span><span class="p">;</span>
+<span class="w">  </span>
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>When you have multiple signals or ports of the same name these can be bundled together using the <em>std_logic_vector</em> type. The <em>std_logic</em> is the most commonly used type in VHDL, and the <em>std_logic_vector</em> is the array version of it.</p>
+<p>You can read more about <em>std_logic</em> and <em>std_logic_vector</em> in the section <a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html#vhdl-data-types"><span class="std std-ref">Data types</span></a>.</p>
+</div>
+<!-- For more information about how to write basic VHDL description using entity and architecture.  -->
+<!-- ```vhdl
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity ex1 is
+  port (
+      -- YOUR TASK:
+      -- Insert the needed port declarations
+      -- Use identifier names led and sw when naming the ports.
+      );
+    end entity ex1;
+
+architecture rtl of ex1 is
+
+begin
+
+  -- YOUR TASK:
+  -- Insert the required statement(s) to connect
+  -- the slide switches (inputs) to the LEDs (outputs).
+
+end architecture rtl;
+``` -->
+<!-- Your task is now to add the needed ports to the *entity* description and the appropriate signal assignment(s) to connect the input ports to the output ports in the *architecture* description. This will physically connect the slide switches to the LEDs through the FPGA. -->
+<section id="commit-and-push-the-new-file">
+<h3>Commit and push the new file<a class="headerlink" href="#commit-and-push-the-new-file" title="Permalink to this heading">#</a></h3>
+<p>It is generally recommended to regularly commit your work to keep track of your development. This allows you to easily roll back to previous working version of your code. To exercise this, you will now add the new file under version control and push it online to your Github repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>ex1.vhd
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;created the new file ex1.vhd&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>ex1
+</pre></div>
+</div>
+<p>Go online and verify that the new file is visible under the <em>ex1</em> branch of your repository. You can change which branch is visible by using the dropdown button to the top left above your listed files as shown in the figure below.</p>
+<figure class="align-center" id="fig-assignment-ex1-branch">
+<a class="reference internal image-reference" href="../_images/assignments_ex1_branch.png"><img alt="../_images/assignments_ex1_branch.png" src="../_images/assignments_ex1_branch.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">The dropdown menu shows the to available branches.</span><a class="headerlink" href="#fig-assignment-ex1-branch" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="pinning-assignment">
+<h2>Pinning assignment<a class="headerlink" href="#pinning-assignment" title="Permalink to this heading">#</a></h2>
+<p>The slides switches and the LEDs are hardwired to specific FPGA pins. It is therefore necessary to inform Quartus about which pins to use, that is, the “address” of the relevant pins.</p>
+<p>The correct pin assignments can be found in the DE10-Lite User Manual which can be download from <a class="reference external" href="https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&amp;CategoryNo=218&amp;No=1021&amp;PartNo=4">Terasic</a>. For example, the manual specifies that <em>sw[0]</em> is connected to the FPGA <em>PIN C10</em> and <em>led[0]</em> is connected to <em>PIN A8</em>. Each pin can be assigned manually through the Quartus Prime pin assignment manager, however, a more elegant and time saving approach is to make the pin assignment using a <a class="reference external" href="https://en.wikipedia.org/wiki/Tcl">Tcl</a> scripting file.</p>
+<ul class="simple">
+<li><p>Create a new file called <em>de10-lite-pinning.tcl</em> in your <em>ex1</em> directory.</p></li>
+<li><p>Open the new Tcl-file in your favourite text editor and enter the required pinning constraints as show below.</p></li>
+</ul>
+<!-- Examples for the first LED and SW pin assignment is shown below. -->
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c">#Toggle switches</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_C10<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">0</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_C11<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">1</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_D12<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">2</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_C12<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">3</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A12<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">4</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_B12<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">5</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A13<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">6</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A14<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">7</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_B14<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">8</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_F15<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>sw<span class="k">[</span><span class="nv">9</span><span class="k">]</span>
+
+<span class="c">#LED outputs</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A8<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">0</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A9<span class="w"> </span><span class="o">-</span>to<span class="w">  </span>led<span class="k">[</span><span class="nv">1</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A10<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">2</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_B10<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">3</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_D13<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">4</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_C13<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">5</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_E14<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">6</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_D14<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">7</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_A11<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">8</span><span class="k">]</span>
+<span class="nv">set_location_assignment</span><span class="w"> </span>PIN_B11<span class="w"> </span><span class="o">-</span>to<span class="w"> </span>led<span class="k">[</span><span class="nv">9</span><span class="k">]</span>
+
+<span class="c">#To avoid that the FPGA is driving an unintended value on pins that are not in use:</span>
+<span class="nv">set_global_assignment</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP<span class="w"> </span><span class="s2">&quot;AS INPUT TRI-STATED&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Add the new Tcl-file to the project (Project -&gt; Add/Remove Files in Project). The Tcl-file may not be visible by default. Change file file filter to <em>All Files (*.*)</em>.</p></li>
+<li><p>Run the tcl script to activate the pin assignments (Tools -&gt; Tcl Scripts). The Tcl-script should be visible under the project folder. Mark the file and click RUN. Verify that the correct assignments have been performed by opening the pin assignment editor (Assignments -&gt; Assignment editor). You should see a similar list as shown in figure ref{fig:assignment_editor}.</p></li>
+</ul>
+<figure class="align-center" id="fig-assignments-quartus-editor">
+<a class="reference internal image-reference" href="../_images/assignment_quartus_assignment_editor.png"><img alt="../_images/assignment_quartus_assignment_editor.png" src="../_images/assignment_quartus_assignment_editor.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">The Quartus assignment editor lists all connections between entity port names and physical pins of the FPGA as a result of running the <em>DE10-lite-pinning.tcl</em> script.</span><a class="headerlink" href="#fig-assignments-quartus-editor" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>When the Tcl file is added to the project, you can also (re)run the script from the Tcl Console Window using the command <em>source DE10-lite-pinning.tcl</em>. The Tcl Console Window can be opened from  (View –&gt; Utility Windows) or through the short-cut <em>Alt+2</em>. Make sure you are in the same directory as the source file. You can check the current director using the command <code class="docutils literal notranslate"><span class="pre">pwd</span></code>. Change directory using the command <em>cd ..</em> to go up one level, or <em>cd <dir-name></em> to enter a directory.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>It is important that the <em>entity</em> port names match the names used in the Tcl <em>set_location_assignment</em> statement. If not, the ports of the VHDL <em>entity</em> description will not be connected to the corret physical pin of the FPGA.</p></li>
+<li><p>If the <em>entity</em> port names are not associated to specific pins, Quartus will still have to connect the ports to pins when the design is synthesized. This will result in random connections. As a result, the slides swithces will not be connected to the LEDs.</p></li>
+<li><p>Whenever you make changes to the pinning file or include it in a new project, you will ned to (re-)run the Tcl-script.</p></li>
+</ul>
+</div>
+</section>
+<section id="compile-the-project">
+<h2>Compile the project<a class="headerlink" href="#compile-the-project" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Compile the project: (Processing -&gt; Start Compilation)</p></li>
+<li><p>During compilation of the project you will see some warning and critical warning messages related to missing constraint information, e.g. :</p>
+<ul>
+<li><p>Some pins have incomplete I/O assignments.</p></li>
+<li><p>No clocks defined in design.</p></li>
+<li><p>Synopsys Design Constraints File file not found.</p></li>
+</ul>
+</li>
+</ul>
+<p>These warnings can for the moment be ignored. If the compilation of the project was successful, Quartus has generated and SRAM object file (.sof), either in the project directory itself or in the directory output-files under the project directory. This is the programming file that will be downloaded to the FPGA.</p>
+</section>
+<section id="program-the-fpga">
+<h2>Program the FPGA:<a class="headerlink" href="#program-the-fpga" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Make sure to connect the USB cable to the USB connector on the DE10-Lite.</p></li>
+<li><p>Open the Quartus programmer (Tools -&gt; Programmer).</p></li>
+<li><p>If the field next to the button ”Hardware Setup” shows ”No Hardware”, make sure the USB cable is connect to both the PC and the DE10-Lite board, and that the power is turned on. Press the ”Hardware Setup and choose ”USB-Blaster [USB-0]” under the ”Currently selected hardware”. Press Close.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">Note!</p>
+<p>USB-Blaster driver installation on Windows:</p>
+<ul class="simple">
+<li><p>If you have connected DE10-Lite board to you computer, and the USB-blaster does not show up in the Quartus programmer tool, you might need to <a class="reference external" href="http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions">install the driver</a>.</p></li>
+</ul>
+</div>
+  <!-- * If you still do not see the USB-blaster you might need to install the drivers:http://www.terasic.com.tw/wiki/Altera_USB_Blaster_Driver_Installation_Instructions first. -->
+<ul class="simple">
+<li><p>If you do not see an entry in the File filed, press auto detect to automatically detect the FPGA device. If you are asked to choose a specific device, choose the 10M50DA.</p></li>
+<li><p>Double click on the File field of the listed device and select the correct programming file (.sof extension). Tick the box for ”Programming/Configure”.</p></li>
+<li><p>To program the FPGA press Start.</p></li>
+<li><p>Verify that your design works by changing the position of the toggle switches on the DE10-Lite board.</p></li>
+<li><p>Remember to update your assignment progress status in the <em><a class="reference external" href="http://readme.md">readme.md</a></em> file before updating the Git repository.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">Question to consider!</p>
+<p>What value is required on the ouputs to turn on the LEDs? Can you explain why?</p>
+<p>With value we here mean whether you have to set it to a high voltage or low voltage. That is, assign the value ‘1’ or ‘0’.</p>
+</div>
+</section>
+<section id="update-the-git-repository">
+<h2>Update the git repository:<a class="headerlink" href="#update-the-git-repository" title="Permalink to this heading">#</a></h2>
+<p>When you have completed this exercise make sure to save your changes and push them to the git repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;First FPGA project completed&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>ex1
+</pre></div>
+</div>
+<p>To check which files have been added to the git repository write the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>ls-files
+</pre></div>
+</div>
+<p>You should see a similar result:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.gitignore
+readme.md
+ex1/de10-lite-pinning.tcl
+ex1/src/ex1.vhd
+ex1/ex1.qpf
+ex1/ex1.qsf
+</pre></div>
+</div>
+<!-- git tag -a first-fpga-project -m "First FPGA project completed" -->
+<!-- git push origin first-fpga-project -->
+</section>
+<section id="create-a-pull-request-to-complete-the-exercise">
+<h2>Create a pull request to complete the exercise<a class="headerlink" href="#create-a-pull-request-to-complete-the-exercise" title="Permalink to this heading">#</a></h2>
+<p>You have now created and programmed your first FPGA design and are ready to merge your solution into the main branch using a pull request. Press the <em>Compare &amp; pull request</em> button, write a descriptive text briefly explaining what you have done. If you want your solution reviewed by the course instructor, add the user <em>ketilroe</em> as both reviewer and assignee, then finally press the <em>Create pull request</em> button. If you are content with your solution and don’t need it reviewed, create the pull request and complete by merging the pull request yourself.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_vhdl.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">VHDL</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_adder.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EX2: Adder</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-a-new-git-branch-for-the-development-of-exercise-1">Prepare a new Git branch for the development of exercise 1.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-video">Supporting video</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-quartus-prime-project">Create the Quartus Prime Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-your-first-vhdl-design">Write your first VHDL design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commit-and-push-the-new-file">Commit and push the new file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinning-assignment">Pinning assignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-project">Compile the project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-the-fpga">Program the FPGA:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-git-repository">Update the git repository:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-pull-request-to-complete-the-exercise">Create a pull request to complete the exercise</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2.8. Description styles &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-vhdl/vhdl_description_models';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.9. Testbenches" href="vhdl_testbenches.html" />
+    <link rel="prev" title="2.7. Concurrent statements" href="vhdl_concurrent_statements.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="vhdl.html">2. VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-vhdl/vhdl_description_models.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Description styles</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural">2.8.1. Structural</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-flow">2.8.2. Data-flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavioral">2.8.3. Behavioral</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#register-transfer-level-rtl">2.8.4. Register Transfer Level (RTL)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="description-styles">
+<span id="vhdl-description-styles"></span><h1><span class="section-number">2.8. </span>Description styles<a class="headerlink" href="#description-styles" title="Permalink to this heading">#</a></h1>
+<div class="video-container">
+<iframe width="1012" height="759" src="https://www.youtube.com/embed/ZFT7vDt6U-U" title="VHDL description models" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p><a class="reference external" href="https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/vhdl_description_models.pdf">Slides</a></p>
+<p>The architecture body of a VHDL description can be divided in two sections:</p>
+<ul class="simple">
+<li><p>the declaration section,</p></li>
+<li><p>and the section between the keywords <code class="docutils literal notranslate"><span class="pre">begin</span></code>  and  <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">architecture</span></code>.</p></li>
+</ul>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">example</span><span class="w"> </span><span class="k">is</span>
+
+<span class="c1">-- Declaration section</span>
+
+<span class="k">begin</span>
+
+<span class="c1">-- The internal implementation/description of the entity&#39;s functinality</span>
+<span class="c1">-- All statements are concurrent statments</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The declaration section is used to declare any objects that should only be used within this architecture. That is, these objects are not visible outside of the architecture. The section between <code class="docutils literal notranslate"><span class="pre">begin</span></code> and <code class="docutils literal notranslate"><span class="pre">end</span></code> is the area where the functionality of the system or modules is described. Any VHDL statement within this area are is concurrent statements, which means that each statement will be translated into a piece of logic that will be implemented into hardware resources of the FPGA.</p>
+<p>As mentioned in the section <a class="reference internal" href="vhdl_history.html#vhdl-history"><span class="std std-ref">History</span></a>, VHDL was originally developed to document and describe the behaviour of a circuit. Tools to synthesize a VHDL description into actual hardware were only developed later, and only for a limted part of the language. Today VHDL is most commonly used to:</p>
+<ul class="simple">
+<li><p>Write a VHDL description that can be synthesized to run on an FPGA.</p></li>
+<li><p>Simulate and verify another VHDL description (usually another description that can be synthesized to hardware). In this case the extended VHDL language can be used.</p></li>
+</ul>
+<p>The following coding styles are usually considered when writing a VHDL description:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#vhdl-structural"><span class="std std-ref">Structural</span></a></p></li>
+<li><p><a class="reference internal" href="#vhdl-data-flow"><span class="std std-ref">Data-flow</span></a></p></li>
+<li><p><a class="reference internal" href="#vhdl-behavioral"><span class="std std-ref">Behavioral</span></a></p></li>
+</ul>
+<p>These are not exclusive to each other, but are instead often combined. For a VHDL decsription to be synthesized into FPGA hardware, the description has to be limited into using a syntax that can be translated into combinational logic operations and storage units (registers). This is referred to as a <a class="reference internal" href="#vhdl-rtl"><span class="std std-ref">Register Transfer Level (RTL)</span></a> description.</p>
+<section id="structural">
+<span id="vhdl-structural"></span><h2><span class="section-number">2.8.1. </span>Structural<a class="headerlink" href="#structural" title="Permalink to this heading">#</a></h2>
+<p>A structural description is used when the architecture is used to interconnected submodules or components (“black boxes”). Relevant analogies can be the schematic entry, the <a class="reference external" href="https://en.wikipedia.org/wiki/Breadboard">bread board</a>, or printed circuit board (PCB), which are used to connect together components using wires or PCB traces. <a class="reference internal" href="#fig-vhdl-cern-readout-pcb"><span class="std std-numref">Fig. 2.10</span></a> shows an example of a complex PCB consisting of many interconnected ICs. The PCB does not reveal anything about the behaviour of the design, only how they are connected together.</p>
+<figure class="align-center" id="fig-vhdl-cern-readout-pcb">
+<a class="reference internal image-reference" href="../_images/vhdl_cern_sat_readout_pcb.jpg"><img alt="../_images/vhdl_cern_sat_readout_pcb.jpg" src="../_images/vhdl_cern_sat_readout_pcb.jpg" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.10 </span><span class="caption-text">An example of a complex PCB layout connecting multiple ICs together on a PCB. The PCB is designed by Jon Wikne (UiO) in 1989 and was used for the readout of a detector at CERN. The board is approximately 40 cm x 40 cm, and today this design could easily be implemented into a single FPGA.</span><a class="headerlink" href="#fig-vhdl-cern-readout-pcb" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Similarly, a structural design approach in VHDL is used to specify how components are interconnected. Figure <a class="reference internal" href="#fig-vhdl-description-models-hierarchy"><span class="std std-numref">Fig. 2.11</span></a> shows how the structural appoarch can be used to achieve a hierarchical design. Here the architecture makes use of other components that can be interconnected and where each component also has an internal entity and architecture description.</p>
+<figure class="align-center" id="fig-vhdl-description-models-hierarchy">
+<a class="reference internal image-reference" href="../_images/vhdl_structural.png"><img alt="../_images/vhdl_structural.png" src="../_images/vhdl_structural.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.11 </span><span class="caption-text">Hierarchical structure of a design.</span><a class="headerlink" href="#fig-vhdl-description-models-hierarchy" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In VHDL the keywords <code class="docutils literal notranslate"><span class="pre">component</span></code> and <code class="docutils literal notranslate"><span class="pre">port</span> <span class="pre">map</span></code> are used to build structural designs. An example is shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">IEEE</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">IEEE.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">struct_ex</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">A_IN</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B_IN</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">C_IN</span><span class="w">  </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Y_OUT</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="nc">struct_ex</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">structural</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">struct_ex</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="c1">-- Declare signals internal to this architecture</span>
+<span class="w">  </span><span class="c1">-- These signals will be used to connect together the components declared below.</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">int1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">int2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">int3</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">-- declare components which has already been described in another file</span>
+<span class="w">  </span><span class="k">component</span><span class="w"> </span><span class="nc">AND_GATE</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">      </span><span class="n">Y</span><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">      </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">component</span><span class="w"> </span><span class="nc">OR_GATE</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">      </span><span class="n">Y</span><span class="w">       </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">      </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="p">;</span>
+
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- connect the components together using the VHDL port map functionality.</span>
+<span class="w">  </span><span class="n">A1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">AND_GATE</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">A_IN</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">B_IN</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int1</span><span class="p">);</span>
+<span class="w">  </span><span class="n">A2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">AND_GATE</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">B_IN</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_IN</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int2</span><span class="p">);</span>
+<span class="w">  </span><span class="n">A3</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">AND_GATE</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">A_IN</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">C_IN</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int3</span><span class="p">);</span>
+<span class="w">  </span><span class="n">O1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">OR_GATE</span><span class="w"> </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span><span class="n">A</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int1</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int2</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">int3</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">Y_OUT</span><span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="w"> </span><span class="nc">structural</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This structural description makes use of two different components, a 2-input and-gate and a 3-input or-gate. The components and signals used to interconnect the components are declared in the declaration section of the architecture while the implementation of the interconnections are described as concurrent statements between the <em>begin</em> and <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">architecture</span></code> keywords. The <code class="docutils literal notranslate"><span class="pre">port</span> <span class="pre">map</span></code> statement is used to connect the ports of the component to the internal signals of the top level architecture. The and-gate and or-gate are described in a separate VHDL file. The advantage of an hierarchical approach is that components can easily be reused. E.g., the implementation above makes use of three and-gates and one or-gate to achieve the design shown in figure <a class="reference internal" href="#fig-vhdl-description-models-schematic-tmr"><span class="std std-numref">Fig. 2.12</span></a>. However, the VHDL description above does not reveal anything about the functionality or behaviour of the design, only how the components are interconnected.</p>
+<figure class="align-center" id="fig-vhdl-description-models-schematic-tmr">
+<a class="reference internal image-reference" href="../_images/vhdl_tmr_structural.png"><img alt="../_images/vhdl_tmr_structural.png" src="../_images/vhdl_tmr_structural.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.12 </span><span class="caption-text">Schematic illustration of basic TMR logic.</span><a class="headerlink" href="#fig-vhdl-description-models-schematic-tmr" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="data-flow">
+<span id="vhdl-data-flow"></span><h2><span class="section-number">2.8.2. </span>Data-flow<a class="headerlink" href="#data-flow" title="Permalink to this heading">#</a></h2>
+<p>Data-flow modelling describes the flow of data using concurrent statements between the <code class="docutils literal notranslate"><span class="pre">begin</span></code> and <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">architecture</span></code> area. Concurrent statements are executed in parallell and the order of the statements is irrelevant. The execution is event driven, which means that the statment is only executed if there is a transition/change on the input. In other words, whenever there is a change in any of the signals listed on the right-hand side of the signal assigment operator, the signal on the left-hand side of the operator is re-evaluated.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- order of statements is irrelevant</span>
+
+<span class="c1">-- Alternative A</span>
+<span class="n">B</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">C</span><span class="p">;</span><span class="w">  </span><span class="c1">--evaluated if transition on C</span>
+<span class="n">A</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w">  </span><span class="c1">--evaluated if transition on B</span>
+
+<span class="c1">-- is equivalent to</span>
+
+<span class="c1">-- Alternative B</span>
+<span class="n">A</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="n">B</span><span class="w">  </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">C</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Both alternatives above will generate the same logic. However, in a case where there are multiple drivers for the same signal, this will result in a conflict that must be resolved.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">concurrent</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">multiple</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">signal</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">Z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">Z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">D</span><span class="p">;</span><span class="w"> </span><span class="c1">-- Multiple signal assignments to the same signal are not allowed</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">concurrent</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For simulation purposes this will be resolved by the resolution table of the <em>std_logic</em> type. However, this will not work when synthesized to hardware.</p>
+<p>You then have to make sure that it is either one or the other that is assigned at any given time. E.g., using a conditional statement like shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">concurrent</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">multiple</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">signal</span><span class="w"> </span><span class="n">Z</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">C</span><span class="p">,</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">ena</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">Z</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">(</span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">ena</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">else</span><span class="w">  </span><span class="p">(</span><span class="n">C</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">D</span><span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="nc">concurrent</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The design above also shows an example of a conditional signal assignment using the <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">-</span> <span class="pre">else</span></code> statement. The syntax for this statement is shown below:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">result_signal</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">expression_1</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_1</span><span class="w"> </span><span class="k">else</span>
+<span class="w">               </span><span class="n">expression_2</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_2</span><span class="w"> </span><span class="k">else</span>
+<span class="w">               </span><span class="n">expression_3</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_3</span><span class="w"> </span><span class="k">else</span>
+<span class="w">               </span><span class="o">:</span>
+<span class="w">               </span><span class="n">expression_n</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Another useful syntax that can be used as a concurrent statement in VHDL is the selected signal assignment:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">with</span><span class="w"> </span><span class="n">input_signal</span><span class="w"> </span><span class="k">select</span>
+<span class="w">  </span><span class="n">result_signal</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">expression_1</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_1</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">expression_2</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_2</span><span class="p">,</span>
+<span class="w">                   </span><span class="n">expression_3</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">condition_3</span><span class="p">,</span>
+<span class="w">                    </span><span class="o">:</span>
+<span class="w">                   </span><span class="n">expression_n</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="k">others</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The main difference between the <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">-</span> <span class="pre">else</span></code> and <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">-</span> <span class="pre">select</span></code> syntax is that the latter makes a decision based on the condition of only one input, while for the <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">-</span> <span class="pre">else</span></code> multiple and different inputs can be evaluated. A <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">-</span> <span class="pre">else</span></code> syntex can therefore be used to implement a nested conditional statement. A <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">-</span> <span class="pre">select</span></code> corresponds more to a multiplexer functionality.</p>
+</section>
+<section id="behavioral">
+<span id="vhdl-behavioral"></span><h2><span class="section-number">2.8.3. </span>Behavioral<a class="headerlink" href="#behavioral" title="Permalink to this heading">#</a></h2>
+<p>A behavioral approach models the circuit at the highest absraction level. It describes how the circuit should behave, and can be considered to be more of an algorithmic appoarch – without considering how it may be implemented in hardware.</p>
+<p>While the behavioral description style is extensively used to write test benches, it can be argued that it also can be used to implement hardware if constrained to a limited set the the VHDL language. The part of the VHDL langauge that can be tranlasted into hardware – logic gates and registers. This is further discussed in the section <a class="reference internal" href="#vhdl-rtl"><span class="std std-ref">Register Transfer Level (RTL)</span></a>.</p>
+<p>Consider the example below where two different VHDL descriptions results in the same logic behavior. The first descriptions uses a basic data flow approach  with logic operations on the signals. The second description uses a process statement with an if-else syntax to decide which of the signals A or B is connected to Y. You can read more about the process statement in <a class="reference internal" href="vhdl_process.html#vhdl-process"><span class="std std-numref">Section 2.10</span></a>.</p>
+<p><em>Entity description:</em></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span><span class="w"> </span><span class="nc">mux</span><span class="w"> </span><span class="k">is</span>
+<span class="k">port</span><span class="p">(</span>
+<span class="w">  </span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="p">,</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">  </span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Example 1: Data-flow description:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">description_model</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">mux</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">((</span><span class="k">not</span><span class="w"> </span><span class="n">sel</span><span class="p">)</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="p">(</span><span class="n">sel</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">);</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Example 2: A higher abstraction level description using the VHDL process statement:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">description_model</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">mux</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="k">process</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">sel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Question</p>
+<p>Both examples above will result in the same logic. Can you tell what type of logic behaviour or functionallity these description will implement?</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Answer!</p>
+<p>Both describe the behaviour of a multiplexer where <code class="docutils literal notranslate"><span class="pre">A</span></code> is connected to <code class="docutils literal notranslate"><span class="pre">Y</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is low and <code class="docutils literal notranslate"><span class="pre">B</span></code> is connected to <code class="docutils literal notranslate"><span class="pre">Y</span></code> if <code class="docutils literal notranslate"><span class="pre">sel</span></code> is high. However, if you run these two descriptions through Quartus and look at the intepreted results in Quartus’ netlist viewer, you would see the to different results shown below.</p>
+<p><strong>Example 1</strong></p>
+<a class="reference internal image-reference" href="../_images/vhdl_mux_data_flow.png"><img alt="../_images/vhdl_mux_data_flow.png" class="align-center" src="../_images/vhdl_mux_data_flow.png" style="width: 60%;" /></a>
+<p><strong>Example 2</strong></p>
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer.png"><img alt="../_images/vhdl_multiplexer.png" class="align-center" src="../_images/vhdl_multiplexer.png" style="width: 48%;" /></a>
+<p>For Example 1, Quartus has understood the implemention on a gate level, while for Example 2, Quartus has in fact interpreted the behaviour as a multiplexer. Which is at a higher abstraction level. The focus in Example 2 is more on the functionality or behaviour of the design rather than how it will be implementation in hardware.</p>
+</div>
+</div>
+</section>
+<section id="register-transfer-level-rtl">
+<span id="vhdl-rtl"></span><h2><span class="section-number">2.8.4. </span>Register Transfer Level (RTL)<a class="headerlink" href="#register-transfer-level-rtl" title="Permalink to this heading">#</a></h2>
+<p>An FPGA is a matrix of interconnected logic blocks. A simplified schematic representation of a logic block is shown in <a class="reference internal" href="#fig-vhdl-fpga-logic-block"><span class="std std-numref">Fig. 2.13</span></a>. The two essential parts of a logic block is the look-up table (LUT) and the register. These can be configured to implement combinational and sequential logic.</p>
+<figure class="align-center" id="fig-vhdl-fpga-logic-block">
+<a class="reference internal image-reference" href="../_images/fpga_logic_block.png"><img alt="../_images/fpga_logic_block.png" src="../_images/fpga_logic_block.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.13 </span><span class="caption-text">A basic schematic representation of the basic building block of and FPGA: The Logic block.</span><a class="headerlink" href="#fig-vhdl-fpga-logic-block" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The process of translating or converting a VHDL description into FPGA hardware is referred to as FPGA synthesis. The task of the synthesis tool is to map the desribed functionality into the available hardware resources such LUTs and registers. LUTs for combinational logic and registers to store the result of a combinational operation. The result is system that can be describe in terms of units of data storage (registers) and transformation of date between these storage units(combinational logic).<span id="id1">[<a class="reference internal" href="../references.html#id7" title="P. J. Ashenden. The Designer’s guide to VHDL. Elsevier Science, 2010.">Ash10</a>]</span>. This is referred to as a Register Transfer Level (RTL) description. <a class="reference internal" href="#fig-vhdl-description-models-schematic-rtl"><span class="std std-numref">Fig. 2.14</span></a> illustrates this flow or transfer of data between registers.</p>
+<figure class="align-center" id="fig-vhdl-description-models-schematic-rtl">
+<a class="reference internal image-reference" href="../_images/vhdl_rtl.png"><img alt="../_images/vhdl_rtl.png" src="../_images/vhdl_rtl.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.14 </span><span class="caption-text">Illustration of the Register Transfer Level.</span><a class="headerlink" href="#fig-vhdl-description-models-schematic-rtl" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>RTL is the style of code that is required for a synthesis tool to translate the VHDL description into hardware. RTL can be a mixture of the structural, data-flow, and a limited set of the behavioral styles.</p>
+<hr class="docutils" />
+<div class="admonition-supplementary-suggested-reading admonition">
+<p class="admonition-title">Supplementary suggested reading:</p>
+<p>Chapter 5, section 5.1 and 5.2, and chapter 9 and 10 <a class="reference download internal" download="" href="../_downloads/d65f452f259ef1a6ff0a4c680ba7d46b/free_range_vhdl.pdf"><code class="xref download docutils literal notranslate"><span class="pre">in</span> <span class="pre">Mealy</span> <span class="pre">and</span> <span class="pre">Teppero,</span> <span class="pre">Free</span> <span class="pre">Range</span> <span class="pre">VHDL.</span></code></a></p>
+<p>Chapter 5, section 5.6 <em>Structural design using components</em> in LaMeres <span id="id2">[<a class="reference internal" href="../references.html#id10" title="Brock K. LaMeres. Introduction to Logic Circuits &amp; Logic Design with VHDL. Springer Cham, 2019.">LaM19</a>]</span>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://link-springer-com.ezproxy.uio.no/chapter/10.1007/978-3-030-12489-2_5#Sec1">Direct link html-version</a></p></li>
+<li><p><a class="reference external" href="https://link.springer.com/content/pdf/10.1007%2F978-3-030-12489-2_5">Direct link pdf-version</a></p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-vhdl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vhdl_concurrent_statements.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2.7. </span>Concurrent statements</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="vhdl_testbenches.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.9. </span>Testbenches</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structural">2.8.1. Structural</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-flow">2.8.2. Data-flow</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#behavioral">2.8.3. Behavioral</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#register-transfer-level-rtl">2.8.4. Register Transfer Level (RTL)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

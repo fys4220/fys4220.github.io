@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2.5. Objects and data types &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-vhdl/vhdl_objects_data_types';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.6. Operators" href="vhdl_operators.html" />
+    <link rel="prev" title="2.4. Design flow" href="vhdl_design_flow.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="vhdl.html">2. VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-vhdl/vhdl_objects_data_types.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Objects and data types</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objects">2.5.1. Objects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signals">2.5.1.1. Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable">2.5.1.2. Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">2.5.1.3. Constants:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">2.5.2. Data types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commonly-used-types">2.5.2.1. Commonly used types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#std-ulogic">2.5.2.2. std_ulogic</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="objects-and-data-types">
+<span id="vhdl-objects-and-data-types"></span><h1><span class="section-number">2.5. </span>Objects and data types<a class="headerlink" href="#objects-and-data-types" title="Permalink to this heading">#</a></h1>
+<section id="objects">
+<h2><span class="section-number">2.5.1. </span>Objects<a class="headerlink" href="#objects" title="Permalink to this heading">#</a></h2>
+<p>An object in VHDL is a named item that has a value of a specific type <span id="id1">[<a class="reference internal" href="../references.html#id7" title="P. J. Ashenden. The Designer’s guide to VHDL. Elsevier Science, 2010.">Ash10</a>]</span>. The most important objects in VHDL are:</p>
+<ul class="simple">
+<li><p>Signals</p></li>
+<li><p>Variables</p></li>
+<li><p>Constants</p></li>
+</ul>
+<section id="signals">
+<h3><span class="section-number">2.5.1.1. </span>Signals<a class="headerlink" href="#signals" title="Permalink to this heading">#</a></h3>
+<p>A signal can be thought of as a wire or interconnection (real physical signal).  Signals are most commonly declared in the declaration part of the architecture, for signals internal to the module; in the entity declaration for signals that are used to interface the module; in packages for signal declarations that are meant to be visible or reused in multiple modules. Port declarations are implicit signal declarations, and thus the keyword <em>signal</em> is omitted. A port declaration is visible in all architectures assigned to that entity. A signal is declared using the signal keyword, an identifier, a type, and an optional default value:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span><span class="w"> </span><span class="o">&lt;</span><span class="n">identifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="k">type</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="o">:=</span><span class="w"> </span><span class="n">initial_value</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>An example of an internally declared signal <code class="docutils literal notranslate"><span class="pre">C</span></code> is shown in <a class="reference internal" href="#vhdl-internal-signal"><span class="std std-numref">Fig. 2.8</span></a>. This example also demonstrates the concept of concurrent signal assignment in VHDL.  Signal assignment in VHDL uses the operator “&lt;=”. In this example the inverted value of <code class="docutils literal notranslate"><span class="pre">A</span></code> will be assigned to C, while the result of the operation <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">and</span> <span class="pre">C</span></code> will be assigned to <code class="docutils literal notranslate"><span class="pre">Y</span></code>. These two lines are concurrent statements which both will be translated to hardware operating in parallel. In this case, an inverter operating on the input <code class="docutils literal notranslate"><span class="pre">A</span></code> in addition to an AND-gate with inputs <code class="docutils literal notranslate"><span class="pre">B</span></code> and <code class="docutils literal notranslate"><span class="pre">C</span></code>. If you consider that all gates are associated with a gate delay, that is, a change on the input needs to propagate through the logic gate and is therefore not instantaneously reflected on the output, you can maybe appreciate the fact that signal assignments are associated with a delay. <a class="reference internal" href="#vhdl-internal-signal"><span class="std std-numref">Fig. 2.8</span></a> illustrates this case where a change on A is reflected on the output C after a time t1, and then the change on C is again reflected on the output Y after a time t2.</p>
+<figure class="align-center" id="vhdl-internal-signal">
+<a class="reference internal image-reference" href="../_images/vhdl_internal_signal.jpg"><img alt="../_images/vhdl_internal_signal.jpg" src="../_images/vhdl_internal_signal.jpg" style="width: 90%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.8 </span><span class="caption-text">Example ciruict with internal signal <strong>C</strong>.</span><a class="headerlink" href="#vhdl-internal-signal" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">circuit1</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="p">(</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">func</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">circuit1</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">signal</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="c1">-- Concurrent statements</span>
+
+<span class="n">C</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">C</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="vhdl-example-wave">
+<a class="reference internal image-reference" href="../_images/wave_example_delay.png"><img alt="../_images/wave_example_delay.png" src="../_images/wave_example_delay.png" style="width: 90%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.9 </span><span class="caption-text">Wavediagram for circuit in figure <a class="reference internal" href="#vhdl-internal-signal"><span class="std std-numref">Fig. 2.8</span></a>.</span><a class="headerlink" href="#vhdl-example-wave" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="variable">
+<h3><span class="section-number">2.5.1.2. </span>Variable<a class="headerlink" href="#variable" title="Permalink to this heading">#</a></h3>
+<p>Variables are different from signals in that they do not represent a physical wire, but may be used for intermediate storage. Different from signals, assignments to variables are made instantaneously. Variables only exist within a VHDL <em>process</em> statement, which will be introduced later. A variable is declared in the declaration part of a process, before the <em>begin</em> statement. The declaration syntax is similar to that of signals:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">variable</span><span class="w"> </span><span class="o">&lt;</span><span class="n">identifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="k">type</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="o">:=</span><span class="w"> </span><span class="n">initial_value</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="constants">
+<h3><span class="section-number">2.5.1.3. </span>Constants:<a class="headerlink" href="#constants" title="Permalink to this heading">#</a></h3>
+<p>Constants are useful objects for representing values that will not change and that will be used multiple times in a design. Constants can be declared in the declaration part of the architecture, in the entity declaration, and in a package. The declaration syntax is similar to that of signals and variables:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">constant</span><span class="w"> </span><span class="o">&lt;</span><span class="n">identifier</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="k">type</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="o">:=</span><span class="w"> </span><span class="n">initial_value</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="data-types">
+<span id="vhdl-data-types"></span><h2><span class="section-number">2.5.2. </span>Data types<a class="headerlink" href="#data-types" title="Permalink to this heading">#</a></h2>
+<p>The concept of type is very important in VHDL. The type of an object defines the set of values that the object can assume, as well as the set of operations that can be performed on those values <span id="id2">[<a class="reference internal" href="../references.html#id7" title="P. J. Ashenden. The Designer’s guide to VHDL. Elsevier Science, 2010.">Ash10</a>]</span>. VHDL is said to be a strongly typed languages, meaning that an object can only be assigned values of the same type that was used to declare the object. The advantage of a strongly typed language is that errors will be detected at an early phase of the design process.</p>
+<section id="commonly-used-types">
+<h3><span class="section-number">2.5.2.1. </span>Commonly used types<a class="headerlink" href="#commonly-used-types" title="Permalink to this heading">#</a></h3>
+<p>The two most commonly used types in VHDL are probably:</p>
+<ul class="simple">
+<li><p><em>std_logic</em></p></li>
+<li><p><em>std_logic_vector</em></p></li>
+</ul>
+<p>The <em>std_logic</em> type was introduced in the IEEE <em>std_logic_1164</em> standard to represent all logic values that can be modelled and synthesised in a modern programmable logic device. It can be thought of as representing a single wire or bit. A <em>std_logic_vector</em> is an efficient way of grouping together a set of signals with the same name, e.g. an 8-bit data bus.</p>
+<p>In an electronic circuit logic values of 0 (low) and 1 (high) are represented by using voltages. E.g. 0 V for a logic low value and 1.2 V, 3.3 V or 5 V for a logic high value depending on the technology used. In VHDL these values can be represented by a <em>std_logic</em> value of ‘0’ or ‘1’.</p>
+<p>Since <em>std_logic</em> can be use to represent synthesizable logic values, this is also the type that must be used on the top level entity of a design where the ports will connect to physical pins of the FPGA. For ports in entities that are internal to your system and will not be connected to FPGA pins, other types can also be used.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">entity</span><span class="w"> </span><span class="nc">top_level</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">clk</span><span class="o">:</span><span class="w">  </span><span class="k">in</span><span class="w">  </span><span class="kt">std_logic</span><span class="p">;</span><span class="w"> </span><span class="c1">-- Single line input line</span>
+<span class="w">    </span><span class="n">data</span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="c1">-- 8-bit wide output line</span>
+<span class="w">     </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">top_level</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The type <em>std_logic</em> is also frequently used to declare signals internal to the architecture. An internal signal as declared in the example below, does not represent an inherent direction as when declared in the entity port declaration.
+The flow of data is decided by how the signal is connected in your design.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">signal</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">data_internal</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">15</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Since VHDL is a strongly typed languages, this means that not only the type but also the width has to match when connecting objects. If the width is different, a subset of a vector can be accessed as shown below. If the type is different, an appropriate type conversion is needed.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">data_out</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">data_internal</span><span class="p">(</span><span class="mi">7</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Other relevant types in VHDL are:</p>
+<ul class="simple">
+<li><p><em>enumerated</em></p></li>
+<li><p><em>boolean</em></p></li>
+<li><p><em>integer</em></p></li>
+<li><p><em>bit</em>, <em>bit_vector</em></p></li>
+<li><p><em>std_ulogic</em></p></li>
+<li><p><em>std_ulogic_vector</em></p></li>
+<li><p><em>unsigned</em>, <em>signed</em></p></li>
+</ul>
+<p>Of these, <em>unsigned</em>, <em>integer</em>, <em>enumerated</em>, <em>boolean</em> are the types that will be used in FYS4220.</p>
+</section>
+<section id="std-ulogic">
+<h3><span class="section-number">2.5.2.2. </span>std_ulogic<a class="headerlink" href="#std-ulogic" title="Permalink to this heading">#</a></h3>
+<p>As already introduced, the <em>std_logic</em> type is used to represent a synthesizable logic value or wire, and is defined in and available after the declaration of the VHDL package:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="nn">ieee.std_logic_1164</span><span class="p">.</span><span class="k">all</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In fact, <em>std_logic</em> is a subtype resolved of <em>std_ulogic</em>. In the IEEE-1164 package, <em>std_logic</em> is declared as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">subtype</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">resolved</span><span class="w"> </span><span class="kt">STD_ULOGIC</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Where <em>std_ulogic</em> is declared as an enumerated type:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">type</span><span class="w"> </span><span class="kt">std_ulogic</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">U</span><span class="p">&#39;,</span><span class="w"> </span><span class="c1">-- uninitialised,</span>
+<span class="w">                     </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- forcing unknown</span>
+<span class="w">                     </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- forcing 0</span>
+<span class="w">                     </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- forcing 1</span>
+<span class="w">                     </span><span class="sc">&#39;Z&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- high impedance</span>
+<span class="w">                     </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- weak unknown</span>
+<span class="w">                     </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- weak 0</span>
+<span class="w">                     </span><span class="sc">&#39;H&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">-- weak 1</span>
+<span class="w">                     </span><span class="sc">&#39;-&#39;</span><span class="w">  </span><span class="c1">-- unspecified (do not care)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>This means that an object of type <em>std_logic</em> also can assume the values listed above. The value ‘U’ is the first of the listed values. That is reason for why a signal of the type <em>std_logic</em> or <em>std_ulogic</em> will get the value ‘U’ if you do not specify an initial value for the signal.</p>
+<p>The list of enumerated values are due to the desire to model the more complex values that a digital signal can assume, e.g. tristate drivers, pull-up and pull-down outputs, high impedance state.</p>
+<p>The IEEE-1164 library also defines functions for the various logic operations that can be applied to VHDL objects. E.g., it defines a function <em>and</em> that describes the result of the logical operation <em>and</em> between two objects. When these two objects are of the type <em>std_ulogic</em> and assume either of the values ‘0’ and ‘1’, the outcome can be defined. However, if any of the other values are assumed, the outcome of a logic operation will be undefined ‘U’ or forced into an unknown value ‘X’. For <em>std_ulogic</em> the result is decided by a resolution table that for an <em>and</em> operation is defined as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- truth table for &quot;and&quot; function</span>
+<span class="w"> </span><span class="k">constant</span><span class="w"> </span><span class="n">and_table</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">stdlogic_table</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">   </span><span class="c1">--      ----------------------------------------------------</span>
+<span class="w">   </span><span class="c1">--      |  U    X    0    1    Z    W    L    H    -         |   |</span>
+<span class="w">   </span><span class="c1">--      ----------------------------------------------------</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | U |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | X |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | 0 |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | 1 |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | Z |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | W |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | L |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | H |</span>
+<span class="w">            </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">)</span><span class="w">   </span><span class="c1">-- | - |</span>
+<span class="w">            </span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To resolve this, and to define an appropriate resolved value for all combinations of the values that an object of type <em>std_ulogic</em> can assume, the IEEE-1164 package introduces the type <em>std_logic</em> which is resolved subtype of <em>std_ulogic</em>. The resolved keyword means that a resolution function is applied to make sure that the value is resolved if there are multiple drivers. The applied resolution table is shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-------------------------------------------------------------------</span>
+<span class="w">  </span><span class="c1">-- resolution function</span>
+<span class="w">  </span><span class="c1">-------------------------------------------------------------------</span>
+<span class="w">  </span><span class="k">constant</span><span class="w"> </span><span class="n">resolution_table</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">stdlogic_table</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">--      ---------------------------------------------------------</span>
+<span class="w">    </span><span class="c1">--      |  U    X    0    1    Z    W    L    H    -        |   |</span>
+<span class="w">    </span><span class="c1">--      ---------------------------------------------------------</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;U&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | U |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | X |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | 0 |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | 1 |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;Z&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;H&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | Z |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | W |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;L&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | L |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;H&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;W&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;H&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">),</span><span class="w">  </span><span class="c1">-- | H |</span>
+<span class="w">             </span><span class="p">(</span><span class="sc">&#39;U&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">)</span><span class="w">   </span><span class="c1">-- | - |</span>
+<span class="w">             </span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition-supplementary-suggested-reading admonition">
+<p class="admonition-title">Supplementary suggested reading</p>
+<p>Read more about objects and types in chapter 11 in  <a class="reference download internal" download="" href="../_downloads/d65f452f259ef1a6ff0a4c680ba7d46b/free_range_vhdl.pdf"><code class="xref download docutils literal notranslate"> <span class="pre">Mealy</span> <span class="pre">and</span> <span class="pre">Teppero,</span> <span class="pre">Free</span> <span class="pre">Range</span> <span class="pre">VHDL.</span></code></a></p>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-vhdl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vhdl_design_flow.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2.4. </span>Design flow</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="vhdl_operators.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.6. </span>Operators</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objects">2.5.1. Objects</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#signals">2.5.1.1. Signals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variable">2.5.1.2. Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constants">2.5.1.3. Constants:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">2.5.2. Data types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#commonly-used-types">2.5.2.1. Commonly used types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#std-ulogic">2.5.2.2. std_ulogic</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

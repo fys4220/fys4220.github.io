@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX3: 4-bit up-counter &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_counter';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EX4: State machine" href="exercises_state_machine.html" />
+    <link rel="prev" title="EX2: Adder" href="exercises_adder.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_counter.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX3: 4-bit up-counter</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex3-a-combinational-adder-based-design">EX3.A: Combinational adder based design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-considerations">Design considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex3-b-high-level-implementation">EX3.B: High level implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-the-project-to-hardware">Compiling the project to hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#program-the-fpga">Program the FPGA</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex3-4-bit-up-counter">
+<span id="exercises-counter"></span><h1>EX3: 4-bit up-counter<a class="headerlink" href="#ex3-4-bit-up-counter" title="Permalink to this heading">#</a></h1>
+<p>The previous exercises demonstrated how to describe purely combinational logic. However, most FPGA designs also make use of synchronous logic. This means that the design also uses the flip-flops (or registers) that can be found in the FPGA’s logic blocks. This allows the output of the combinational operation implemented in the look-up table to be synchronized to a clock signal, as illustrated in figure <a class="reference internal" href="#fig-exercises-synchronous-logic"><span class="std std-numref">Fig. 21</span></a>. The output of the flip-flop is remains constant an active edge of the clock triggers the flip-flop to latch th input value of the register to the register’s output.</p>
+<figure class="align-center" id="fig-exercises-synchronous-logic">
+<a class="reference internal image-reference" href="../_images/exercises_synchronous_logic2.png"><img alt="../_images/exercises_synchronous_logic2.png" src="../_images/exercises_synchronous_logic2.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">In synchronous logic the combinational logic is synchronized to a clock signal.</span><a class="headerlink" href="#fig-exercises-synchronous-logic" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>By adding a feedback loop to the circuit the logic becomes sequential, as illustrated in figure <a class="reference internal" href="#fig-exercises-sequential-logic"><span class="std std-numref">Fig. 22</span></a> That is, the output is dependent not only on the present state of the inputs, but also on the previous state. Sequential logic can be used to implement control logic such as finite state machines.</p>
+<figure class="align-center" id="fig-exercises-sequential-logic">
+<a class="reference internal image-reference" href="../_images/exercises_sequential_logic.png"><img alt="../_images/exercises_sequential_logic.png" src="../_images/exercises_sequential_logic.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">By adding a feedback loop the ciruit becomes sequential.</span><a class="headerlink" href="#fig-exercises-sequential-logic" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In this exercise you will write the VHDL description for a 4-bit up-counter. A counter is essentially a simple finite state machine where the next value is dependent on the value of the input (‘1’ for an up-counter) and the current value of the counter. Figure <a class="reference internal" href="#fig-exercises-counter-block-diagram"><span class="std std-numref">Fig. 23</span></a> shows a basic block diagram of a counter.</p>
+<figure class="align-center" id="fig-exercises-counter-block-diagram">
+<a class="reference internal image-reference" href="../_images/exercises_counter_block_diagram.png"><img alt="../_images/exercises_counter_block_diagram.png" src="../_images/exercises_counter_block_diagram.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">A basic block diagram of a 4-bit up-counter with an enable signal.</span><a class="headerlink" href="#fig-exercises-counter-block-diagram" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition-the-learning-outcome-of-this-exercise-is-to admonition">
+<p class="admonition-title">The learning outcome of this exercise is to:</p>
+<ul class="simple">
+<li><p>Be able to implement a basic counter in VHDL using two different approaches: a low level and high level approach. This will help you to better understand the power of the high level VHDL language for designing complex logic circuits.</p></li>
+<li><p>Be able to use the process statement in VHDL to describe synchronous logic.</p></li>
+<li><p>Be able to use the unsigned signal type and the IEEE numeric standard library to implement the counter.</p></li>
+<li><p>Be able to detect the edge of a signal and use it as a counter enable signal</p></li>
+</ul>
+</div>
+<p>The main functional requirements of the counter are:</p>
+<ul class="simple">
+<li><p>The counter shall increment its output by 1 when one of the FPGA board’s push buttons (KEY1) is pressed. That is, the button will act as a count enable.</p></li>
+<li><p>The count enable signal shall be active high.</p></li>
+<li><p>The counter design shall run on a clock frequency of 50 MHz (frequency provided by the external clocking circuit on the DE10-Lite board).</p></li>
+<li><p>The counter shall count from 0 to 15. When the counter reaches 15, the counter shall roll over and the next output value shall be 0.</p></li>
+<li><p>The counter shall be reset (output shall be 0) when one of the FPGA board´s buttons (KEY0) is pressed. The reset shall be synchronous to the clock signal.</p></li>
+</ul>
+<p>The main test requirements are:</p>
+<ul class="simple">
+<li><p>The counter shall be verified using a testbench.</p></li>
+<li><p>Verify that all valid values of the counter are reached in the correct order.</p></li>
+<li><p>The duration of the count enable signal shall be longer than 5 system clock cycles.</p></li>
+<li><p>Verify correct transition from 15 to 0 on the output</p></li>
+<li><p>Verify that the counter can be reset. This does not have to be done for all values, but verify at least for one other value than 0.</p></li>
+</ul>
+<section id="ex3-a-combinational-adder-based-design">
+<h2>EX3.A: Combinational adder based design<a class="headerlink" href="#ex3-a-combinational-adder-based-design" title="Permalink to this heading">#</a></h2>
+<p>In the first part of this exercise you will design the counter using the 4-bit adder from the previous exercise.<br />
+An up-counter is a piece of logic that increments a value when triggerd by an input condition.  When the input condition is not present, the counter needs to store the current value. To store a value in an FPGA a memory element is needed. The most simple memory element that can be used in an FPGA is the flip-flop of the FPGA’s logic block. To implement a register in VHDL, you will need to use a clock triggered <em>process</em> statement.  Read more about the process statement in VHDL in the section <a class="reference internal" href="../part-vhdl/vhdl_process.html#vhdl-process"><span class="std std-ref">VHDL Process</span></a>, and in particular the section on <a class="reference internal" href="../part-vhdl/vhdl_process.html#vhdl-synchronous-process"><span class="std std-ref">Synchronous process</span></a>.</p>
+<p>Verify the counter in simulation according to the test requirements above. Ask a fellow student to review your testbench and verify your simulation results. This can be done either by asking her/him to inspect your code and results on Github, or by discussing your code and results in person in the lab or on Zoom.</p>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>Both the <em>CIN</em> and <em>COUT</em> ports of the 4-bit full adder are not used in this counter design. <em>CIN</em> is an input and can be driven to ‘0’ directly in the port map. The connection of port <em>COUT</em> also has to be completed in the port map. Since it is not used, it can be specified to be an open connection as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">        </span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">counter_i</span><span class="p">,</span>
+<span class="w">        </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;0001&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">CIN</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">COUT</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">open</span>
+<span class="w">        </span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Do your design behave as expected?</p>
+<p>If your design increments by more than 1 when the enable signal is active, you have probably implemented your design similar to the description below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_counter</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">           </span><span class="k">begin</span>
+<span class="w">             </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">               </span><span class="k">if</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">                  </span><span class="n">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+<span class="w">               </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">             </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">           </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Since the process is running on 50 MHz clock, and the enable signal is longer than a clock cycle, the condition <code class="docutils literal notranslate"><span class="pre">enable</span> <span class="pre">=</span> <span class="pre">'1'</span></code> will be valid for more than one clock cycle. Thus the flip-flop will update its output more than once for each active pulse on the enable input, resulting in that the counter increments by more than 1.</p>
+<p>How can you make sure that the output of the counter will only update once during an enable pulse?</p>
+<p>Read the section <a class="reference internal" href="../part-vhdl/vhdl_metastability.html#vhdl-metastability"><span class="std std-ref">Metastability and synchronization</span></a> to find the solution, and particularly the section <a class="reference internal" href="../part-vhdl/vhdl_metastability.html#vhdl-metastability-edge-detection"><span class="std std-ref">Edge detection</span></a></p>
+</div>
+<!--
+Think about this for a moment before you continue to read below.
+
+The answer is that you need to create an internal enable signal that has the duration of one single clock cycle. Read the section {ref}`vhdl`
+a unique condition on the external enable. The external enable signal has to unique conditions, either the falling edge or the rising edge. In addition, since the source of the enable signal is external and asynchronous to the clock, you also need to make sure to first synchronize the signal to the system clock of you FPGA. Read the following resource to learn how to solve these two issues [Synchronization and edge-detectionr](https://www.doulos.com/knowhow/fpga/synchronisation/).
+
+
+``````
+-->
+</section>
+<section id="design-considerations">
+<h2>Design considerations<a class="headerlink" href="#design-considerations" title="Permalink to this heading">#</a></h2>
+<p>The multiplexer shown above is a very simple design and can easily be written using a single process. However, as you design becomes more complex, it is recommended to think about how you can partition you design into multiple processes and even entities/modules.  If you include too much logic or functionality within a single process, it may become difficult to read as well as more prone to errors.</p>
+<p>Assume that the multiplexer example is to be implemented in hardware, and that the select signal is controlled from an external switch or button.</p>
+<p>You will get more experience with this when you start working on the project where you will</p>
+</section>
+<section id="ex3-b-high-level-implementation">
+<h2>EX3.B: High level implementation<a class="headerlink" href="#ex3-b-high-level-implementation" title="Permalink to this heading">#</a></h2>
+<p>Designing a simple 4-bit up-counter using the combinational 4-bit adder design is not a very effective approach. It is better to make use of the high level features in the VHDL language.
+In general, an up-counter can be described by the following or similar syntax in most programming languages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>In VHDL we will use a signal object to implement the up-counter. The only syntax difference is to use the language specific assignment operator and add a semicolon at the end.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Since this signal is not implemented at the port level of the design, it has to be declared as an internal signal. Arithmetic operations are not supported by the IEEE standard logic 1164 package. The solution is to use the IEEE numeric standard package and declare the signal of type <em>unsigned</em>. Some background on the numeric package <a class="reference external" href="https://www.doulos.com/knowhow/vhdl/vhdl-vector-arithmetic-using-numeric_std/">here</a>. This package also includes functions to convert between e.g., a standard logic vector and unsigned.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- include the numeric std library</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.numeric_std.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- Declare the counter signal in the appropriate place</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">unsigned</span><span class="p">(</span><span class="mi">3</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Add the high level description of the counter to your existing code, that is, in parallel to your already existing adder-based design. Connect the output of the high level counter to 4 additional LEDs. In this way you can compare the two counter implementations both in simulation and in hardware.</p>
+</section>
+<section id="compiling-the-project-to-hardware">
+<h2>Compiling the project to hardware<a class="headerlink" href="#compiling-the-project-to-hardware" title="Permalink to this heading">#</a></h2>
+<p>Before compiling the project you will need to add the new pin assignments to the Tcl-script script file. Remember to re-run the tcl-script before compiling the project. If you have used different identifier names for your port entries, make sure to match them with the one used in the Tcl-file. You will find the correct pin assignment for the push buttons, LEDs, and external 50 MHz clock source in the DE10-Lite user guide.</p>
+<!--
+```tcl
+#50MHz clock MAX10_CLK1_50
+set_location_assignment PIN_P11 -to clk
+
+#External asynchronous inputs
+#Push buttons for external reset and key
+#key0 - used as reset
+set_location_assignment PIN_B8 -to arst_n
+#key1
+set_location_assignment PIN_A7 -to ext_ena_n
+```
+-->
+<p>When compiling the project in Quartus you will notice the following warning ”Timing requirements not met”. This warning indicates that the design now has a register-to-register path that exceeds the clock period. However, we have not yet specified the actual clock period for our design and a default clock period of 1000 MHz have therefore been set by Quartus as a default value.</p>
+<ul class="simple">
+<li><p>Verify this setting by opening the compilation report and navigate to the ”Clocks” part of the Timing Analyzer. ”Processing -&gt; Compilation Report” (Ctrl+R) as shown in <a class="reference internal" href="#fig-exercises-counter-clk1000"><span class="std std-numref">Fig. 24</span></a></p></li>
+</ul>
+<figure class="align-center" id="fig-exercises-counter-clk1000">
+<a class="reference internal image-reference" href="../_images/exercises_counter_clk1000.png"><img alt="../_images/exercises_counter_clk1000.png" src="../_images/exercises_counter_clk1000.png" style="width: 700px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Compilation report.</span><a class="headerlink" href="#fig-exercises-counter-clk1000" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Timing settings are critically important for a successful design. For this tutorial we will specify the correct clock frequency of 50 MHz by creating a basic Synopsys Design Constraints File (.sdc) that the Quartus Prime Timing Analyzer will use during design compilation. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.</p>
+<p>To create an SDC, perform the following steps:</p>
+<ul class="simple">
+<li><p>Open the Quartus Prime Timing Analyzer by choosing Tools -&gt; Timing Analyzer.</p></li>
+<li><p>Create the timing netlist by double clicking on ”Create Timing Netlist” under the Tasks pane.</p></li>
+<li><p>Choose File -&gt; New SDC file. The SDC editor opens.</p></li>
+<li><p>Choose ”Edit -&gt; Insert constraint -&gt; Create clock”. This will open the window shown in <a class="reference internal" href="#fig-exercises-counter-getports"><span class="std std-numref">Fig. 25</span></a></p></li>
+<li><p>Fill in the clock name and correct period value corresponding to 50 MHz.</p></li>
+<li><p>You willl need to connect this generated clock to an actual target / port in your design. Click the button with the three dots right of the <em>Targets</em> field. Click the <em>List</em> button in the new window that just opened and select the <em>clk</em> port as shown in <a class="reference internal" href="#fig-exercises-counter-selectclock"><span class="std std-numref">Fig. 26</span></a>. The corresponding SDC command is also shown.</p></li>
+<li><p>Click <em>OK</em> and then <em>Insert</em> and this SDC command will be added to the SDC editor.</p></li>
+</ul>
+<figure class="align-center" id="fig-exercises-counter-getports">
+<a class="reference internal image-reference" href="../_images/exercises_counter_getports.png"><img alt="../_images/exercises_counter_getports.png" src="../_images/exercises_counter_getports.png" style="width: 700px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Create the clock.</span><a class="headerlink" href="#fig-exercises-counter-getports" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-exercises-counter-selectclock">
+<a class="reference internal image-reference" href="../_images/exercises_counter_selectclock.png"><img alt="../_images/exercises_counter_selectclock.png" src="../_images/exercises_counter_selectclock.png" style="width: 700px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Select the clock port.</span><a class="headerlink" href="#fig-exercises-counter-selectclock" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>Save this file in your project directory with the name <em>de10-lite.sdc</em>.</p></li>
+<li><p>Add this file to the Quartus project: ”Project -&gt; Add current file to project”.</p></li>
+<li><p>Close the SDC editor window and recompile the Quartus project.</p></li>
+<li><p>Verify that the warning ”Timing requirements not met” is no longer present and that the clock has been constraint to 50 MHz in the compliation report.</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>The short-cut to setting up the clock constraint is to create a file called <em>DE10-lite.sdc</em> in your project directory and then save the the following SDC command in the file.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">20.000</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="nv">clk</span><span class="k">}]</span>
+</pre></div>
+</div>
+</div>
+<section id="program-the-fpga">
+<h3>Program the FPGA<a class="headerlink" href="#program-the-fpga" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Open the Quartus programmer and download the recompiled design to your FPGA.</p></li>
+<li><p>Press KEY1 to increment the counters.</p></li>
+<li><p>Press KEY0 to reset the counters</p></li>
+</ul>
+<!--
+### Update the git repository
+
+When you have completed this part of the lab, including your final documentation in the README.md file, make sure to update the git repository:
+
+```bash
+git add -A
+git commit -am "Synchronous logic and test benches completed"
+git push origin master
+git tag -a synchronous-logic-test-benches -m "Synchronous logic and test benches completed"
+git push origin synchronous-logic-test-benches
+```%
+
+-->
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_adder.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EX2: Adder</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_state_machine.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EX4: State machine</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex3-a-combinational-adder-based-design">EX3.A: Combinational adder based design</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-considerations">Design considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ex3-b-high-level-implementation">EX3.B: High level implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compiling-the-project-to-hardware">Compiling the project to hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#program-the-fpga">Program the FPGA</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

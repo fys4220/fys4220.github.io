@@ -1,0 +1,1021 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2.10. VHDL Process &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-vhdl/vhdl_process';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.11. Metastability and synchronization" href="vhdl_metastability.html" />
+    <link rel="prev" title="2.9. Testbenches" href="vhdl_testbenches.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="vhdl.html">2. VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-vhdl/vhdl_process.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>VHDL Process</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-videos">2.10.1. Supporting videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-execution">2.10.2. Process execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivity-list">2.10.3. Sensitivity list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-types">2.10.4. Process types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combinational-process">2.10.4.1. Combinational process</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#incomplete-sensitivity-list">2.10.4.1.1. Incomplete sensitivity list</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-unintentional-latches">2.10.4.1.2. Avoid unintentional latches</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronous-process">2.10.4.2. Synchronous process</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reset-of-synchronous-processes">2.10.4.2.1. Reset of synchronous processes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronous-process-with-enable">2.10.4.2.2. Synchronous process with enable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-synchronous-and-combinational-logic">2.10.5. Combining synchronous and combinational logic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-with-multiple-processes">2.10.6. Design with multiple processes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-process-internal-variables-in-modelsim">2.10.7. Finding the process internal variables in Modelsim</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="vhdl-process">
+<span id="id1"></span><h1><span class="section-number">2.10. </span>VHDL Process<a class="headerlink" href="#vhdl-process" title="Permalink to this heading">#</a></h1>
+<p>In VHDL a process can be used to model both</p>
+<ul class="simple">
+<li><p>combinational logic,</p></li>
+<li><p>and synchronous logic.</p></li>
+</ul>
+<p>The process statement is particularly useful and needed when writing test benches. The process statement itself is a concurrent statement identified by its label, its sensitivity list, a declaration area and a begin-end area containing instructions executed sequentially. Within the process each line of code is read sequentially and assignments are scheduled to be updated/effectuated next time the process is suspended. The general syntax for a process is shown below. Elements in square brackets are optional.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span>[process-label] : process[( sensitivity list )] [is]
+  -- declaration area
+  begin
+    -- sequential statement part
+end [process] [process-label];
+</pre></div>
+</div>
+<p>The <em>process-label</em> is an optional identifer of the process, e.g. a name given to the process, which can be used e.g. to easily find/identify the process when performing simulations in Modelsim.</p>
+<section id="supporting-videos">
+<h2><span class="section-number">2.10.1. </span>Supporting videos<a class="headerlink" href="#supporting-videos" title="Permalink to this heading">#</a></h2>
+<p>The 3 following videos gives an introduction to process in VHDL. The first video discusses how the process statement works and how it can be used to write combinational logic. The second video then follows up with a testbench to simulate the combinational process from video 1. These two videos also demonstrates how a process can be used differently when writing code for synthesis and for a testbench purpose. Finally, the third video covers the synchronous process, and shows an example of how to write a process that describes and simulates a 1-bit memory element (D flip-flop). It also covers how to implement both synchronous and asynchronous resets, and a short discussion on the actual hardware that is utilized in the FPGA for synchronous logic.</p>
+<p>Video 1: Combinational process</p>
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/TvnNbY7dLQA" title="Combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p>Video link: <a class="reference external" href="https://www.youtube.com/watch?v=TvnNbY7dLQA">https://www.youtube.com/watch?v=TvnNbY7dLQA</a></p>
+<p>Video 2: Testbench example to simulate the combinational process from video 1.</p>
+<div class="video-container">
+<iframe width="1219" height="759" src="https://www.youtube.com/embed/kEU-dkICHxg" title="Example of combinational process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p>Video link: <a class="reference external" href="https://www.youtube.com/watch?v=kEU-dkICHxg">https://www.youtube.com/watch?v=kEU-dkICHxg</a></p>
+<p>Video 3: Synchronous process in VHDL</p>
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/xnml2JUfbWI" title="Synchronous process in VHDL" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p>Video tink: <a class="reference external" href="https://www.youtube.com/watch?v=kEU-dkICHxg">https://www.youtube.com/watch?v=kEU-dkICHxg</a></p>
+</section>
+<section id="process-execution">
+<h2><span class="section-number">2.10.2. </span>Process execution<a class="headerlink" href="#process-execution" title="Permalink to this heading">#</a></h2>
+<p>When a process is activated, the statements within the process are read sequentially from <code class="docutils literal notranslate"><span class="pre">begin</span></code> to <code class="docutils literal notranslate"><span class="pre">end</span></code>. The process will then return to the <code class="docutils literal notranslate"><span class="pre">begin</span></code> keyword and read all statements again. The process can therefore be viewed as a loop that repeats all its statements.
+It is important to note that the signal values do not change immediately when the signal assignment statements are read. Rather, an assignment schedules a transaction for the signal, which is effectuated after all the statement of the process has been read, and the process is suspended. All assignments are therefore updated first when the process suspends.</p>
+<p>Consider the process description below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Compiling this in Modelsim will give the following warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Warning: test.vhd(19): (vcom-1090) Possible infinite loop: Process contains no WAIT statement.</span>
+</pre></div>
+</div>
+<p>This process would be an infinite loop, with no progress being made in the simulation since the process is not suspended.</p>
+<p>To control the loop and keep it from running infinately fast, and allow the signal assignments to be effectuated, the process must be suspended.  This can be done by placing a <code class="docutils literal notranslate"><span class="pre">wait</span></code> statement at the end of the process.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A simple wait statement like this will suspend the process for ever. The signal A will be updated only once before the process suspends for ever. This approach is good for process that describes a sequence assignmetns that will be executed only once. For example, the main test sequencer of a testbench used for simulation. If instead we want the process to repeat, we need to specify a finite time for how long the process should be suspended before it repeats itself.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Adding a <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">for</span> <span class="pre">20</span> <span class="pre">ns</span></code> will suspend the process for 20 ns before it starts over. This process will generate a signal which value changes every 20 ns.</p>
+<p>Using <em>wait for</em> statements to suspend the process is a good approach when writing behavioral VHDL for simulation purposes. However, it will not work if the VHDL description is meant to be translated into actual hardware and downloaded to an FPGA. The synthesis tools will not be able to translate a statement like <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">for</span> <span class="pre">20</span> <span class="pre">ns</span></code>. For synthesis we therefore need to make use of the process’ sensitivity list.</p>
+</section>
+<section id="sensitivity-list">
+<h2><span class="section-number">2.10.3. </span>Sensitivity list<a class="headerlink" href="#sensitivity-list" title="Permalink to this heading">#</a></h2>
+<p>For the first example above, without an explicit <code class="docutils literal notranslate"><span class="pre">wait</span></code> statment, there is an implicit <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">on</span></code> statement, just before the <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">process</span></code> keywords, that includes the signals listed in the sensitivty list. The <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">on</span></code> statement will suspend the process until one of the specified signal changes. These signals therefore need to be listed in the sensitivity list.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w"> </span><span class="c1">--process statement 1</span>
+<span class="w">  </span><span class="n">Q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">C</span><span class="p">;</span><span class="w"> </span><span class="c1">--process statement 2</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Every time there is a change in the signals in the process sensitivity list, all of the sequential statements in the process are re-evaluated. That is, the evaluation of the process statements are controlled by the signals placed in the sensitivity list. This can be compared to the data-flow style, where whenever a there is a change on the signals on the right-hand side of the signal assigment operator, the signal on the left-hand side of the operator will be re-evaluated.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">test</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span><span class="w"> </span><span class="c1">-- data-flow statement 1</span>
+<span class="w">  </span><span class="n">Q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">C</span><span class="p">;</span><span class="w"> </span><span class="c1">-- data-flow statement 2</span>
+
+<span class="k">end</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>As such, the signals on the right hand side of the operator, can be compared to the sensitivity list of the process statement. However, for the data-flow style, only the statement where the changing signal is present will be evaluated, while for a process statement, all statements within the process will be evaluated when one of the signals in the sensitivity list is activated. If there was a change on the signal <code class="docutils literal notranslate"><span class="pre">C</span></code> in the two examples above, the process would be activate and both the statements in the process would be read and their respective outputs <code class="docutils literal notranslate"><span class="pre">Y</span></code> and <code class="docutils literal notranslate"><span class="pre">Q</span></code> updated. For the concurrent statments in the data-flow example, only the statement containing the signal <code class="docutils literal notranslate"><span class="pre">C</span></code> will be executed.</p>
+</section>
+<section id="process-types">
+<h2><span class="section-number">2.10.4. </span>Process types<a class="headerlink" href="#process-types" title="Permalink to this heading">#</a></h2>
+<p>There are two types of processes for hardware implementation:</p>
+<ul class="simple">
+<li><p>Combinational</p></li>
+<li><p>Synchronous (will result in storage element)</p></li>
+</ul>
+<section id="combinational-process">
+<h3><span class="section-number">2.10.4.1. </span>Combinational process<a class="headerlink" href="#combinational-process" title="Permalink to this heading">#</a></h3>
+<p>A combinational process is used to describe combinational logic like the multiplexer example below. The synthesis tool’s interpretation of this description is shown in figure <a class="reference internal" href="#fig-vhdl-process-multiplexer"><span class="std std-numref">Fig. 2.21</span></a>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-vhdl-process-multiplexer">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer.png"><img alt="../_images/vhdl_multiplexer.png" src="../_images/vhdl_multiplexer.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.21 </span><span class="caption-text">Multiplexer</span><a class="headerlink" href="#fig-vhdl-process-multiplexer" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For a combinational process all signals read by the process must be present in the sensitivity list. For the multiplexer example above, the signals <em>A</em>, <em>B</em>, and <em>SEL</em> are all read by the process. The wave diagram in figure <a class="reference internal" href="#fig-vhdl-process-multiplexer-wave-withsel"><span class="std std-numref">Fig. 2.22</span></a> shows the expected behaviour of the multiplexer. As can be seen, the output <em>Y</em> follows the input <em>B</em> as long as <em>SEL</em> = ‘0’, otherwise it follows <em>A</em>.</p>
+<figure class="align-center" id="fig-vhdl-process-multiplexer-wave-withsel">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_wave_withsel.png"><img alt="../_images/vhdl_multiplexer_wave_withsel.png" src="../_images/vhdl_multiplexer_wave_withsel.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.22 </span><span class="caption-text">Wave diagram for multiplexer</span><a class="headerlink" href="#fig-vhdl-process-multiplexer-wave-withsel" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="incomplete-sensitivity-list">
+<h4><span class="section-number">2.10.4.1.1. </span>Incomplete sensitivity list<a class="headerlink" href="#incomplete-sensitivity-list" title="Permalink to this heading">#</a></h4>
+<p>What would then happen in the case where a signal read by the process is not present in the sensitivity list? For the example below <em>SEL</em> is omitted from the sensitivity list.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>The simulation result show that the change in <em>SEL</em> no longer has an effect. When <em>SEL</em> changes, the input <em>B</em> is still feed to the output <em>Y</em>. As <em>SEL</em> is no longer in the sensitivity list, any changes on <em>SEL</em> will not trigger the process to run.</p>
+<figure class="align-center" id="vhdl-process-multiplexer-wave-nosel">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_wave_nosel.png"><img alt="../_images/vhdl_multiplexer_wave_nosel.png" src="../_images/vhdl_multiplexer_wave_nosel.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.23 </span><span class="caption-text">Wave diagram for multiplexer where change occurs on the signal <em>SEL</em> which is omitted from the sensitivity list.</span><a class="headerlink" href="#vhdl-process-multiplexer-wave-nosel" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>However, if e.g. the signal <em>B</em> is changed, this triggers the process to run and the if-statement is re-evaluated, this time feeding through the value of <em>A</em> to the output.</p>
+<figure class="align-center" id="vhdl-process-multiplexer-wave-nosel-change-b">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_wave_nosel_change_b.png"><img alt="../_images/vhdl_multiplexer_wave_nosel_change_b.png" src="../_images/vhdl_multiplexer_wave_nosel_change_b.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.24 </span><span class="caption-text">Wave diagram for multiplexer where a change occurs on the signal <em>B</em> and where the signal <em>SEL</em>  is omitted from the sensitivity list.</span><a class="headerlink" href="#vhdl-process-multiplexer-wave-nosel-change-b" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="avoid-unintentional-latches">
+<h4><span class="section-number">2.10.4.1.2. </span>Avoid unintentional latches<a class="headerlink" href="#avoid-unintentional-latches" title="Permalink to this heading">#</a></h4>
+<p>Another common problem when writing combinational processes or non-clocked process is to forget to assign an ouput value for all possible paths through the logic. In this case the synthesis tool will assume that you want to use the previous value.
+#to not make sure that all possible paths will assign a value to the ouput.</p>
+<p>In the example below the input SEL to the process is a 2-bit vector that can take 4 values: “00”, “01”, “10”, and “11”.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- SEL is defined as std_logic_vector(1 downto 0)</span>
+<span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">elsif</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>When synthesizing this VHDL description in Quartus the following <em>Warning</em> is listed:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Warning (10631): VHDL Process Statement warning at multiplexer.vhd(18):</span>
+<span class="go">inferring latch(es) for signal or variable &quot;Y&quot;, which holds its previous</span>
+<span class="go">value in one or more paths through the process</span>
+</pre></div>
+</div>
+<p>In the process above, the output <em>Y</em> is not determined for all possible values of the input <em>SEL</em>. E.g., when <em>SEL=”10”</em> or <em>SEL=”11”</em> the synthesizer does not know which value to assign to <em>Y</em>. Instead a latch is inferred to keep the previous value. The inferred logic which is shown in figure <a class="reference internal" href="#fig-vhdl-process-multiplexer-with-latch"><span class="std std-numref">Fig. 2.25</span></a> can be generated by opening the <em>RTL viewer</em> in Quartus (<em>Tools -&gt; Netlist viewers -&gt; RTL viewer</em>)</p>
+<figure class="align-center" id="fig-vhdl-process-multiplexer-with-latch">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_with_latch.png"><img alt="../_images/vhdl_multiplexer_with_latch.png" src="../_images/vhdl_multiplexer_with_latch.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.25 </span><span class="caption-text">Inferred latch.</span><a class="headerlink" href="#fig-vhdl-process-multiplexer-with-latch" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>If you have not specified what the output should be for every possible set of input values, the option taken by VHDL is to not change the current output. A latch adds an extra path for the signal to travel and may impact the timing closure of the design. To avoid this make sure to assign a value to the output for all possible values of the inputs read by the process as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- SEL is defined as std_logic_vector(1 downto 0)</span>
+<span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">elsif</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>or using a default value</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span><span class="w"> </span><span class="c1">-- assign A as a default value</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">elsif</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>The inferred logic will now be combinational only and without any memory element as seen in figure <a class="reference internal" href="#fig-vhdl-process-multiplexer-without-latch"><span class="std std-numref">Fig. 2.26</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-process-multiplexer-without-latch">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_without_latch.png"><img alt="../_images/vhdl_multiplexer_without_latch.png" src="../_images/vhdl_multiplexer_without_latch.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.26 </span><span class="caption-text">A purely combinational results.</span><a class="headerlink" href="#fig-vhdl-process-multiplexer-without-latch" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For the second process above using a default assignment to <em>Y</em>, the order of the statements are important. While a process statement itself is concurrent, the statments within a process is read and evaluated sequentially. For multiple assignments to the same output signal, only the last assignment will be valid. For the example shown below, this means that <em>A</em> will always be assigned to <em>Y</em>, and the if-sentence will have no effect.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;00&quot;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">elsif</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;01&quot;</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>The corresponding RTL viewer output is shown in figure <a class="reference internal" href="#fig-vhdl-process-multiplexer-default-value"><span class="std std-numref">Fig. 2.27</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-process-multiplexer-default-value">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_default_value.png"><img alt="../_images/vhdl_multiplexer_default_value.png" src="../_images/vhdl_multiplexer_default_value.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.27 </span><span class="caption-text">Only the last statement in the VHDL description will be implemented.</span><a class="headerlink" href="#fig-vhdl-process-multiplexer-default-value" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="synchronous-process">
+<span id="vhdl-synchronous-process"></span><h3><span class="section-number">2.10.4.2. </span>Synchronous process<a class="headerlink" href="#synchronous-process" title="Permalink to this heading">#</a></h3>
+<p>In VHDL a storage element can be implemented by making a process synchronous to the a clock. This is nothing else than a edge sensitive storing device, or D flip-flop.</p>
+<figure class="align-center" id="fig-vhdl-process-synchronous-logic">
+<a class="reference internal image-reference" href="../_images/vhdl_synchronous_logic.png"><img alt="../_images/vhdl_synchronous_logic.png" src="../_images/vhdl_synchronous_logic.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.28 </span><span class="caption-text">Example where to D-flip-flops have been generated with logic in the path between them.</span><a class="headerlink" href="#fig-vhdl-process-synchronous-logic" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>A synchronous process is a clocked process</p></li>
+<li><p>A synchronous process is activated only on a clock transition</p></li>
+<li><p>Input data must be stable at start of process</p></li>
+<li><p>A synchronous proecess will always result in a storage element for all signals which are assigned a value in the process</p></li>
+</ul>
+<p>The most basic synchronous process without any reset is shown below:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_reg</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="c1">-- your logic is described solely within the rising_edge(clk)</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The implied storage capability is a result of not providing a condition that indicates what should happen if the listed if condition is not met. In other words, if the if condition is not met, the device does not change the value of Y and therefore it must remember the current value. When synthesized in Quartus this generates the following logic:</p>
+<figure class="align-center" id="fig-vhdl-process-register">
+<a class="reference internal image-reference" href="../_images/vhdl_process_register.png"><img alt="../_images/vhdl_process_register.png" src="../_images/vhdl_process_register.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.29 </span><span class="caption-text">Inferred register.</span><a class="headerlink" href="#fig-vhdl-process-register" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><strong>Sensitivity list:</strong> For a synchronous process, only the clock signal shall be present in the sensitivity list, unless the process has an asynchronous reset.</p>
+<section id="reset-of-synchronous-processes">
+<h4><span class="section-number">2.10.4.2.1. </span>Reset of synchronous processes<a class="headerlink" href="#reset-of-synchronous-processes" title="Permalink to this heading">#</a></h4>
+<p>A synchronous process can be reset using either</p>
+<ul class="simple">
+<li><p>a synchronous reset signal</p></li>
+<li><p>or an asynchronous reset signals</p></li>
+</ul>
+<p><em>Asynchronous reset:</em></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_reg</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">areset</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">areset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">elsif</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-vhdl-process-register-areset">
+<a class="reference internal image-reference" href="../_images/vhdl_process_register_areset.png"><img alt="../_images/vhdl_process_register_areset.png" src="../_images/vhdl_process_register_areset.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.30 </span><span class="caption-text">Inferred register with asynchronous reset.</span><a class="headerlink" href="#fig-vhdl-process-register-areset" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p><em>Synchronous reset:</em></p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_reg</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">reset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">      </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-vhdl-process-register-reset">
+<a class="reference internal image-reference" href="../_images/vhdl_process_register_reset.png"><img alt="../_images/vhdl_process_register_reset.png" src="../_images/vhdl_process_register_reset.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.31 </span><span class="caption-text">Register with synchronous reset. In this case separate reset logic is inferred.</span><a class="headerlink" href="#fig-vhdl-process-register-reset" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="synchronous-process-with-enable">
+<h4><span class="section-number">2.10.4.2.2. </span>Synchronous process with enable<a class="headerlink" href="#synchronous-process-with-enable" title="Permalink to this heading">#</a></h4>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">p_reg</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">enable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="c1">-- do not write anything here</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-vhdl-process-register-enable">
+<a class="reference internal image-reference" href="../_images/vhdl_process_register_enable.png"><img alt="../_images/vhdl_process_register_enable.png" src="../_images/vhdl_process_register_enable.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.32 </span><span class="caption-text">Inferred register with enable</span><a class="headerlink" href="#fig-vhdl-process-register-enable" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="combining-synchronous-and-combinational-logic">
+<h2><span class="section-number">2.10.5. </span>Combining synchronous and combinational logic<a class="headerlink" href="#combining-synchronous-and-combinational-logic" title="Permalink to this heading">#</a></h2>
+<p>A general rule of thumb is that all signal assignments within a synchronous process will lead to the generation of a register (D flip-flop). If we take the example of the multiplexer and enclose it within a synchronous process making it dependent on the clock, a register will be added to the output.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">      </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<figure class="align-center" id="fig-vhdl-process-multiplexer-with-register">
+<a class="reference internal image-reference" href="../_images/vhdl_multiplexer_with_register.png"><img alt="../_images/vhdl_multiplexer_with_register.png" src="../_images/vhdl_multiplexer_with_register.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.33 </span><span class="caption-text">Combinational and synchronous logic.</span><a class="headerlink" href="#fig-vhdl-process-multiplexer-with-register" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="design-with-multiple-processes">
+<h2><span class="section-number">2.10.6. </span>Design with multiple processes<a class="headerlink" href="#design-with-multiple-processes" title="Permalink to this heading">#</a></h2>
+<p>As mentioned earlier, the process statement is itself a concurrent statement; and multiple process statements can be written in the same architecture.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">more_complex_design</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="nc">proc1</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="c1">-- put your synchronous logic here</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="c1">-- A second synchronous process</span>
+<span class="nc">proc2</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">  </span><span class="c1">-- put your other synchronous logic here</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="c1">-- A combinational process</span>
+<span class="nc">proc3</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">signal1</span><span class="p">,</span><span class="w"> </span><span class="n">signal2</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="c1">-- put your combinational logic here</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="c1">-- You can also add separate dataflow statements in the same architecture.</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For example, you could consider splitting the combinational and synchronous part of the design in <a class="reference internal" href="#fig-vhdl-process-multiplexer-with-register"><span class="std std-numref">Fig. 2.33</span></a> into two processes. The result will be exactly the same.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">multiple_process_example</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">Y_i</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="c1">-- Combinational process that will output</span>
+<span class="c1">-- either A or B depending on the value of the select signal SEL</span>
+<span class="nc">p_comb_mult</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">SEL</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">SEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">Y_i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">      </span><span class="n">Y_i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="p">;</span>
+
+<span class="c1">-- Add a register on the output of the multiplexer to keep the value</span>
+<span class="c1">-- stable for a clock cycle.</span>
+<span class="nc">p_synch_reg</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">Y_i</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>This is of course a very simple example. However, as your design becomes more complex, it is recommended to think about how you can partition your design into multiple processes or even entities/modules, according to their different functionalities and purposes. This will reduce the complexity of each process or module, which in turn will make it easier to write the VHDL description for the smaller unit of functionality, and improve readability.
+You will gain some experience with how to partition a design when you will write a basic UART controller in the first part of the project in this course: <a class="reference internal" href="../part-project/project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a>.</p>
+</section>
+<section id="finding-the-process-internal-variables-in-modelsim">
+<h2><span class="section-number">2.10.7. </span>Finding the process internal variables in Modelsim<a class="headerlink" href="#finding-the-process-internal-variables-in-modelsim" title="Permalink to this heading">#</a></h2>
+<p>The process below uses a variable internal to the process. If you would like to add this variable to the wave view in Modelsim, it is not located in the <em>Objects</em> window where you can find the signals but in a different window called <em>Locals</em>.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="nc">proc_var</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">is</span>
+<span class="w"> </span><span class="k">variable</span><span class="w"> </span><span class="n">intern</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="k">begin</span>
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">   </span><span class="n">intern</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">   </span><span class="n">Y</span><span class="w">      </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">intern</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">C</span><span class="p">;</span>
+<span class="w"> </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <em>Locals</em> window can be opened through the <em>View</em> tab in the menubar as shown below.</p>
+<figure class="align-center" id="fig-vhdl-process-modelsim-locals">
+<a class="reference internal image-reference" href="../_images/vhdl_modelsim_locals.png"><img alt="../_images/vhdl_modelsim_locals.png" src="../_images/vhdl_modelsim_locals.png" style="width: 40%;" /></a>
+</figure>
+<p>At first you will not see any local variables unless you have marked the relevant process in the <em>Sim default</em> window. It will then look like the figure below.</p>
+<figure class="align-center" id="fig-vhdl-process-var-find-modelsim2">
+<a class="reference internal image-reference" href="../_images/vhdl_var_find_modelsim2.png"><img alt="../_images/vhdl_var_find_modelsim2.png" src="../_images/vhdl_var_find_modelsim2.png" style="width: 100%;" /></a>
+</figure>
+<p>To view the internal variables of a process, mark the relevant process and you should see the variable listed as shown below.</p>
+<figure class="align-center" id="fig-vhdl-process-var-find-modelsim3">
+<a class="reference internal image-reference" href="../_images/vhdl_var_find_modelsim3.png"><img alt="../_images/vhdl_var_find_modelsim3.png" src="../_images/vhdl_var_find_modelsim3.png" style="width: 100%;" /></a>
+</figure>
+<p>Here you can also see the process label which help you to identify the process you are looking for. The figure below shows how the process would be labelled if you do not give it a specific name. The process now has the unrecognizable label <code class="docutils literal notranslate"><span class="pre">line__17</span></code>.</p>
+<figure class="align-center" id="fig-vhdl-process-var-find-modelsim1">
+<a class="reference internal image-reference" href="../_images/vhdl_var_find_modelsim1.png"><img alt="../_images/vhdl_var_find_modelsim1.png" src="../_images/vhdl_var_find_modelsim1.png" style="width: 100%;" /></a>
+</figure>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-vhdl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vhdl_testbenches.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2.9. </span>Testbenches</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="vhdl_metastability.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.11. </span>Metastability and synchronization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-videos">2.10.1. Supporting videos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-execution">2.10.2. Process execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivity-list">2.10.3. Sensitivity list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#process-types">2.10.4. Process types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combinational-process">2.10.4.1. Combinational process</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#incomplete-sensitivity-list">2.10.4.1.1. Incomplete sensitivity list</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-unintentional-latches">2.10.4.1.2. Avoid unintentional latches</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronous-process">2.10.4.2. Synchronous process</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reset-of-synchronous-processes">2.10.4.2.1. Reset of synchronous processes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#synchronous-process-with-enable">2.10.4.2.2. Synchronous process with enable</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-synchronous-and-combinational-logic">2.10.5. Combining synchronous and combinational logic</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-with-multiple-processes">2.10.6. Design with multiple processes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-process-internal-variables-in-modelsim">2.10.7. Finding the process internal variables in Modelsim</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

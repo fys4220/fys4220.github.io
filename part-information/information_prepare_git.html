@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Git &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-information/information_prepare_git';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Other resources" href="../references.html" />
+    <link rel="prev" title="Quartus and ModelSim" href="information_download_tools.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-information/information_prepare_git.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Git</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-git">Install Git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-of-github-repository">Setup of  Github repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-git-for-fys4220">Using Git for FYS4220</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="git">
+<span id="information-prepare-git"></span><h1>Git<a class="headerlink" href="#git" title="Permalink to this heading">#</a></h1>
+<p>This section will give you a brief introduction to Git and how we will use <a class="reference external" href="http://Github.uio.no">Github.uio.no</a> in this course.</p>
+<div class="note admonition">
+<p class="admonition-title">Note!</p>
+<p>Notice that we are using a UiO managed version of Github – <a class="reference external" href="http://Github.uio.no">Github.uio.no</a> – and <strong>NOT</strong> <a class="reference external" href="http://Github.com">Github.com</a>.</p>
+</div>
+<p>Git is a version control system that lets you manage and keep track of you source code history. Git uses so called repositories to store a collection of files of a project, including previous versions of these files (file history). There is no need to become an expert at Git, however, that are a few commands that you will use frequently and that it is worth spending some time to familiarise yourself with:</p>
+<ul class="simple">
+<li><p><strong>git init</strong>: initialize an existing directory as a Git repository</p></li>
+<li><p><strong>git clone</strong>: retrieve an entire repository from a hosted location via URL</p></li>
+<li><p><strong>git add</strong>: add a file as it looks now to your next commit (stage)</p></li>
+<li><p><strong>git commit</strong>: commit your staged content as a new commit snapshot</p></li>
+<li><p><strong>git pull</strong>: fetch and merge any commits from the tracking remote branch</p></li>
+<li><p><strong>git push</strong>: transmit local branch commits to the remote repository branch</p></li>
+<li><p><strong>git status</strong>: show modified files in working directory, staged for your next commit (use this abundantly)</p></li>
+<li><p><strong>git log</strong>: show all commits in the current branch’s history</p></li>
+</ul>
+<p>When working with branches, these commands are</p>
+<ul class="simple">
+<li><p><strong>git branch</strong>: list branches</p></li>
+<li><p><strong>git branch [branch-name]</strong>: create a new branch at the current commit</p></li>
+<li><p><strong>git checkout [existing-branch-name]</strong>: switch to another branch and check it out into your working directory</p></li>
+<li><p><strong>git merge [branch]</strong>: merge the specified branch’s history into the current one</p></li>
+</ul>
+<!--* [*git tag*]():--> 
+<p>Checkout the Github cheat sheet for more commands: <a class="reference external" href="https://education.github.com/git-cheat-sheet-education.pdf">https://education.github.com/git-cheat-sheet-education.pdf</a></p>
+<!--
+A list of basic Git commands can be found here: Basic Git commands from https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
+-->
+<p>There are many good resources on Git online and we encourage you to have a look at them. Some examples are listed below:</p>
+<ul class="simple">
+<li><p>Informasjon on Github at UiO (Norwegian only): <a class="reference external" href="http://www.uio.no/tjenester/it/maskin/filer/versjonskontroll/github.html">http://www.uio.no/tjenester/it/maskin/filer/versjonskontroll/github.html</a></p></li>
+<li><p>Git Guide by Github: <a class="github reference external" href="https://github.com/git-guides">git-guides</a></p></li>
+<li><p>Git tutorials from Atlassian: <a class="reference external" href="https://www.atlassian.com/git/tutorials/">https://www.atlassian.com/git/tutorials/</a></p></li>
+<li><p>Pro Git: <a class="reference external" href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a></p></li>
+<li><p>Git Reference : <a class="reference external" href="http://git.github.io/git-reference/">http://git.github.io/git-reference/</a></p></li>
+<li><p>Become a Git pro in just one blog. A thorough guide to Git architecture and command line interface: <a class="reference external" href="https://itnext.io/become-a-git-pro-in-just-one-blog-a-thorough-guide-to-git-architecture-and-command-line-interface-93fbe9bdb395">https://itnext.io/become-a-git-pro-in-just-one-blog-a-thorough-guide-to-git-architecture-and-command-line-interface-93fbe9bdb395</a> (Tip: open page in your browser’s private mode if you have exceeded the <a class="reference external" href="http://medium.com">medium.com</a>’s free readings.)</p></li>
+</ul>
+<p>It can also be worth watching the introduction lecture (about 53 min)  on Git from one of the popular CS50 courses at Harvard:</p>
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/NcoBAfJ6l2Q" title="CS50W - Lecture 1 - Git" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<!--
+*An introduction to Git by "Higher level programming" (around 20 minutes):*
+
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/vWdmXunGQC8" title="Introduction to Git" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+---
+-->
+<!--
+---
+
+*A lecture (about 1.5 hours) on Git from the "Missing semester" class at MIT: https://missing.csail.mit.edu*
+
+<div class="video-container">
+<iframe width="912" height="513" src="https://www.youtube.com/embed/2sjqTHE0zok" title="Lecture 6: Version Control (git) (2020)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+-->
+<section id="install-git">
+<h2>Install Git<a class="headerlink" href="#install-git" title="Permalink to this heading">#</a></h2>
+<p>Git often comes installed by default on most Mac and Linux machines.</p>
+<p>On Windows you can use Git for Windows: <a class="reference external" href="https://git-for-windows.github.io">https://git-for-windows.github.io</a>. We have installed Git for Windows on the Windows computers in the student lab (V329).</p>
+<p>Git for Windows provides a BASH emulation <em>Git BASH</em> used to run Git from the command line.</p>
+<p>It also provides a graphical user interface <em>Git GUI</em>. However, we recommend using the command line interface to get familiar with the basic Git commands.</p>
+<p>There should be a link to <em>Git BASH</em> on the desktop. Double-click on <em>Git BASH</em>, navigate to an appropriate directory and clone your <a class="reference external" href="http://Github.uio.no">Github.uio.no</a> repository. The default path when starting <em>Git BASH</em> is typically your UiO home directory.</p>
+<p>A guide on how to install Git is provided by Github here: <a class="github reference external" href="https://github.com/git-guides/install-git">git-guides/install-git</a></p>
+</section>
+<section id="setup-of-github-repository">
+<h2>Setup of  Github repository<a class="headerlink" href="#setup-of-github-repository" title="Permalink to this heading">#</a></h2>
+<p>Before you start to work on the exercises and project, you will have to create a git repository on <a class="reference external" href="http://Github.uio.no">Github.uio.no</a>. A Github <em>Organization</em> site called <em>FYS4220-2024</em> has already been created for FYS4220. <em>If this organization is not visible after you have logged in to <a class="reference external" href="http://Github.uio.no">Github.uio.no</a>, contact the course instructor.</em> You can only be added to the organization after you have logged in for the first time and your user has been created.</p>
+<p>The direct link to the organization is <a class="reference external" href="https://github.uio.no/FYS4220-2024">https://github.uio.no/FYS4220-2024</a>.</p>
+<ul class="simple">
+<li><p>Login in to <a class="reference external" href="http://Github.uio.no">Github.uio.no</a> and create a new repository in the <em>FYS4220-2024</em> organization (click the green button called <em>New</em>). Name the repository as shown in <a class="reference internal" href="#assignments-gitrep-name"><span class="std std-numref">Fig. 10</span></a> replacing <em>lastname</em> and <em>firstname</em> with your respective lastname and firstname.</p></li>
+</ul>
+<figure class="align-center" id="assignments-gitrep-name">
+<a class="reference internal image-reference" href="../_images/assignments_create_gitrep_name.png"><img alt="../_images/assignments_create_gitrep_name.png" src="../_images/assignments_create_gitrep_name.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Name your Git repository accordingly. The example image is from 2020. An organization with the current year has been create. Please use this.</span><a class="headerlink" href="#assignments-gitrep-name" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="note admonition">
+<p class="admonition-title">Note!</p>
+<p>Please stick to the naming convention for the repository name as specified above. This makes the instructors’ life easier!</p>
+</div>
+<ul class="simple">
+<li><p>Choose your preferred visibility [Public | Internal | Private]. If you choose <em>Public</em> or <em>Internal</em> your repository will be visible for everyone who is logged in to <a class="reference external" href="http://Github.uio.no">Github.uio.no</a>. If you choose <em>Private</em> only you and the course instructor can see your repository.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">A note on sharing and collaboration</p>
+<p>In general we encourage collaboration and therefore suggest that you set the visibility to the default value, which is <em>Internal</em> (not sure if there is practical difference between <em>Public</em> and <em>Internal</em> for our usage). However, keep in mind that to learn any programming language there is no way around doing the hard work yourself (practice, practice, practice). If you try to take the “easy way” out by copying and pasting from your fellow students repository, you only fool yourself. Instead, if you get stuck, discuss the problem with other students and use instead their repositories as inspiration rather than just a simple copy and paste. Also, for this purpose it is recommend that you do your best to document your code – write structured and easily readable code with relevant comments explaining the purpose of your code.</p>
+</div>
+<ul class="simple">
+<li><p>Enable the <em>“Initialize this repository with a README”</em> and leave <em>.gitignore</em> initialization as <em>None</em> as shown in <a class="reference internal" href="#assignments-gitrep-initialize"><span class="std std-numref">Fig. 11</span></a>. Github does not provide a template <em>.gitignore</em>-file for VHDL. We will therefore add this file manually later.</p></li>
+</ul>
+<figure class="align-center" id="assignments-gitrep-initialize">
+<a class="reference internal image-reference" href="../_images/assignments_create_gitrep_initialize.png"><img alt="../_images/assignments_create_gitrep_initialize.png" src="../_images/assignments_create_gitrep_initialize.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Initialize with readme and no <em>.gitignore</em></span><a class="headerlink" href="#assignments-gitrep-initialize" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A Git repository has now been created and is ready to be cloned as shown in <a class="reference internal" href="#assignments-github-first-repo"><span class="std std-numref">Fig. 12</span></a>. You can choose to clone either using SSH og HTTPS. If you know how to <a class="reference external" href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">setup SSH keys</a>, cloning the repository using SSH is generally favorable as you do not have to write your username and password everytime you clone or push. However, if you do not know how to use SSH keys, it is recommended to clone using HTTPS, but you will need to write your username and password everytime you clone or push.</p>
+<figure class="align-center" id="assignments-github-first-repo">
+<a class="reference internal image-reference" href="../_images/assignments_github_first_repo.png"><img alt="../_images/assignments_github_first_repo.png" src="../_images/assignments_github_first_repo.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">First view of newly create Git repository.</span><a class="headerlink" href="#assignments-github-first-repo" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>Open a Git Bash terminal  window. (Windows start menu –&gt; Git Bash) and navigate to the directory where you would like to clone the repository.  (On Linux or Mac open a standard terminal window).</p></li>
+<li><p>Copy the path to the repository and use the <em>git clone</em> command to download the repository’s content.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.uio.no/FYS4220-2024/fys4220-lastname-firstname.git
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Navigate into the directory that was just created and open the readme file with your favourite text editor.</p></li>
+<li><p>Write the following headline:</p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">FYS4220 Git repository for &lt;firstname&gt; &lt;lastname&gt;</span>
+</pre></div>
+</div>
+<p>You are encouraged to use the readme file to document your work and to keep track of your progress. The content of this file, as well as the code uploaded to your Git repository, will be the basis for the final evaluation and approval of the project.</p>
+<p>A <em>.gitignore</em> file is used by Git to filter out files that are not subject to version control.</p>
+<ul class="simple">
+<li><p>To add this file write the following command inside the directory of the Git repository. Do not forget the leading punctuation mark.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>.gitignore
+</pre></div>
+</div>
+<p>A file with a leading punctuation mark is a hidden file and is normally not visible in a directory browser. In a terminal window you can write <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-a</span></code> followed by enter to see all files in the directory. To view the file in the Windows File Explorer, enable <em>Show hidden files, folders and drivers</em> from the <em>View</em> tab of (File –&gt; Change folder and search options).</p>
+<ul class="simple">
+<li><p>Open the <em>.gitignore</em> file and add the following lines and save the file.</p></li>
+</ul>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>ignore<span class="w"> </span>Quartus<span class="w">  </span>generated<span class="w"> </span>folders
+<span class="go">db/</span>
+<span class="go">incremental_db/</span>
+<span class="go">simulation/</span>
+<span class="go">timing/</span>
+<span class="go">*_sim/</span>
+<span class="go">output_files/</span>
+
+<span class="gp"># </span>ignore<span class="w"> </span>special<span class="w"> </span>files<span class="w"> </span>except<span class="w"> </span>.gitignore
+<span class="go">.#*</span>
+<span class="go">\#*</span>
+<span class="go">*~</span>
+<span class="go">_*</span>
+<span class="go">.*</span>
+<span class="go">!.gitignore</span>
+
+<span class="gp"># </span>ignore<span class="w"> </span>Quartus<span class="w"> </span>generated<span class="w"> </span>files
+<span class="go">*.rpt</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>When you have completed this part, make sure to update the git repository by writing the following Git commands. Remember that at any point in the process you can write <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> to see the current status of the Git repository.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.gitignore
+git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Added .gitignore and updated readme.md&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</pre></div>
+</div>
+<p>Verify that you repository has been updated online.</p>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>If you would like check what a Git command is about to do, you can add the dry-run option:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>&lt;command&gt;<span class="w"> </span>--dry-run
+
+The<span class="w"> </span>dry-run<span class="w"> </span>option<span class="w"> </span>will<span class="w"> </span>check<span class="w"> </span>what<span class="w"> </span>the<span class="w"> </span>git<span class="w"> </span><span class="nb">command</span><span class="w"> </span>is<span class="w"> </span>about<span class="w"> </span>to<span class="w"> </span><span class="k">do</span>,<span class="w"> </span>before<span class="w"> </span>actually<span class="w"> </span>doing<span class="w"> </span>so.
+</pre></div>
+</div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Organisation and naming conventions</p>
+<p>When working on the individual exercises, it is recommended to follow the suggested structure and naming of directories, files, signals, variable, constants, etc.. You are free to choose your own structure and names, but keep in mind that this will create a mismatch between your stucture and names, and that of the description. For some exercises you may make use of pre-made code, and you will therefore have to check if changes to this code is needed to match your setup.</p>
+</div>
+<p>You are now ready to start working on the first exercise. Remember to update the assignment progress status in the readme file as you move forward, and whenever you start or complete an assignment problem.</p>
+</section>
+<section id="using-git-for-fys4220">
+<h2>Using Git for FYS4220<a class="headerlink" href="#using-git-for-fys4220" title="Permalink to this heading">#</a></h2>
+<p>If this is the first time you use Git on a computer you should “Tell Git who you are”:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Sam Smith&quot;</span>
+<span class="gp">$ </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span>sam@example
+</pre></div>
+</div>
+<p>Please use you UiO e-mail address.</p>
+<p>A normal command line based working flow is shown in figure <a class="reference internal" href="#fig-information-git-workflow"><span class="std std-numref">Fig. 13</span></a>.</p>
+<figure class="align-default" id="fig-information-git-workflow">
+<a class="reference internal image-reference" href="../_images/mermaid_git_workflow.pdf"><img alt="../_images/mermaid_git_workflow.pdf" src="../_images/mermaid_git_workflow.pdf" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">The most basic workflow when using Git.</span><a class="headerlink" href="#fig-information-git-workflow" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Login to <a class="reference external" href="http://Github.uio.no">Github.uio.no</a> and clone your repository <em>fys4220-lastname-firstname</em>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.uio.no/fys4220-2021/fys4220-lastname-firstname.git</span>
+</pre></div>
+</div>
+<p>This will create a local copy of your git repository.</p>
+<p><a class="reference external" href="https://docs.github.com/en/get-started/quickstart/github-flow">https://docs.github.com/en/get-started/quickstart/github-flow</a></p>
+<div class="note admonition">
+<p class="admonition-title">Recommended workflow</p>
+<p>It is generally good practice to not work directly on the main branch. In this course we will follow the Github flow approach where the main branch always will contain a reviewed and working version of your code, and where dedicated branches are created when developing new features. A new branch is a safe place to make changes. During the development you commit and push changes to the new branch. When you have completed the feature or modification to your code, it can be merged into the main branch. In this course we will use a feature called pull request to review and merge the changes. We will demonstrate this feature below where you will make a change to the README file.</p>
+<p>You can read more about the Github flow <a class="reference external" href="https://docs.github.com/en/get-started/quickstart/github-flow">here</a>.</p>
+</div>
+<p>Create and checkout a new branch called <em>development</em>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>branch<span class="w"> </span>development
+git<span class="w"> </span>checkout<span class="w"> </span>development
+<span class="c1"># Check that you are on the correct branch</span>
+git<span class="w"> </span>branch
+</pre></div>
+</div>
+<p>Edit the README file add some text. Then add the file to the staging area.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>README.md
+</pre></div>
+</div>
+<p>Commit the change with a relevant/informative message.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Made changes to file README.md&quot;</span>
+</pre></div>
+</div>
+<p>Push these changes to the development branch on the remote repository on <a class="reference external" href="http://Github.uio.no">Github.uio.no</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>development
+</pre></div>
+</div>
+<!-- The local copy of the repository can now be deleted if wanted. -->
+<p>It is possible to combine the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> and <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> command in one step by adding <em>-a</em> to <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>-am<span class="w"> </span><span class="s2">&quot;Made changes to file README.md&quot;</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-h</span></code> and find out what the <em>-a</em> argument means.</p>
+<p>If there are changes on the remote repository which are not yet updated locally, you will first have to download these changes using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> before  you can upload your local changes.</p>
+<div class="tip admonition">
+<p class="admonition-title">Tip</p>
+<p>To reduce the risk of merge conflicts, only make changes to your local repository on your PC. Do not edit the files directly in the browser.
+See the CS50W lecture on Git above for an example of how to handle merge conflicts.</p>
+</div>
+<p>After the local changes have been pushed to the development branch on <a class="reference external" href="http://Github.uio.no">Github.uio.no</a>, you can create a pull request</p>
+<figure class="align-center" id="assignments-pullrequest">
+<a class="reference internal image-reference" href="../_images/assignments_pullrequest.png"><img alt="../_images/assignments_pullrequest.png" src="../_images/assignments_pullrequest.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Press the <em>Compare &amp; pull request</em> to create the pull request.</span><a class="headerlink" href="#assignments-pullrequest" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This will open a new page where you should write a message to explain the changes you would like to have reviewed and merged to the main branch. Press the <em>Create pull request</em> button.</p>
+<figure class="align-center" id="assignments-pullrequest2">
+<a class="reference internal image-reference" href="../_images/assignments_pullrequest2_noprotection.png"><img alt="../_images/assignments_pullrequest2_noprotection.png" src="../_images/assignments_pullrequest2_noprotection.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Write a message to explain the changes that should be reviewed for a merge to the main branch.</span><a class="headerlink" href="#assignments-pullrequest2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<!-- If your repository has been configured with a branch protection rule (this will be taken care of by the instructor), you should now see a page similar to the one shown below, indicating that a review is required to complete the pull request. You now have to add a reviewer and assignee to complete the review and merged. Choose the course instructor *ketilroe*.  -->
+<p>If you are happy with your code and don’t want anyone else to review it go ahead and merge the pull request your self. However, if you would like the code to be reviewed by the course instructor or anyone else, add their respective usernames under <em>Reviewers</em> and <em>Assignees</em>. The username of the course instructore is <em>ketilroe</em>.</p>
+<figure class="align-center" id="assignments-pullrequest3">
+<a class="reference internal image-reference" href="../_images/assignments_pullrequest3_noprotection.png"><img alt="../_images/assignments_pullrequest3_noprotection.png" src="../_images/assignments_pullrequest3_noprotection.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">The pull request have been created and the merge to the main branch is awaiting a review.</span><a class="headerlink" href="#assignments-pullrequest3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>We will use the same procedure when you are working on the exercises and project.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-information"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="information_download_tools.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Quartus and ModelSim</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Other resources</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-git">Install Git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-of-github-repository">Setup of  Github repository</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-git-for-fys4220">Using Git for FYS4220</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

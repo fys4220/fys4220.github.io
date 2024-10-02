@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX7: Nios II interrupt handling &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_nios2_interrupt';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="RTOS" href="exercises_rtos.html" />
+    <link rel="prev" title="EX6: Accessing Nios II memory mapped modules" href="exercises_memory_mapped_sw.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_nios2_interrupt.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX7: Nios II interrupt handling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-top-level-hdl-and-pinning">Updating top level HDL and pinning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-software-application">Update the software application</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex7-nios-ii-interrupt-handling">
+<span id="exercises-nios2-interrupt"></span><h1>EX7: Nios II interrupt handling<a class="headerlink" href="#ex7-nios-ii-interrupt-handling" title="Permalink to this heading">#</a></h1>
+<p>In this exercise you will add interrupt handling to the microcontroller system.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Be able to configure the PIO modules as an interrupt source.</p></li>
+<li><p>Be able to write software routines to handle the interrupt.</p></li>
+</ul>
+</div>
+<p>To demonstrate interrupt handing in the Nios II system we will use one of the two push buttons on the DE10-Lite board as the interrupt source. KEY0 is already in use for the asynchronous active low reset. For this example we will therfore use KEY1, which is connected to PIN_A7 of the MAX10 FPGA. To implement the interrupt functionality we need to add new hardware and software. The required software API was already introduced above, while the hardware can be implemented with the appropriate configuration of a PIO core.</p>
+<p><a class="reference internal" href="#fig-embedded-interrupt-pio-register-map"><span class="std std-numref">Fig. 41</span></a> shows an overriew of the system. For completness, this figure now also includes the clock source component that is required by the system to connect and distribute the system clock and reset signal to system modules.</p>
+<figure class="align-center" id="fig-embedded-basic-nios2-system-with-pio-interrupt">
+<a class="reference internal image-reference" href="../_images/embedded_basic_nios2_system_with_pio_interrupt.png"><img alt="../_images/embedded_basic_nios2_system_with_pio_interrupt.png" src="../_images/embedded_basic_nios2_system_with_pio_interrupt.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">An overview of the system with the PIO module that will be configured to handle an interrupt event from an external push button.</span><a class="headerlink" href="#fig-embedded-basic-nios2-system-with-pio-interrupt" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A PIO core has a memory mapped register space with four main registers: data, direction, interruptmask, and edgecapture, as seen in <a class="reference internal" href="#fig-embedded-interrupt-pio-register-map"><span class="std std-numref">Fig. 41</span></a>. The additonal registers, outset and outclear, are implemented if the option Enable individual bit set/clear output register is enabled.</p>
+<figure class="align-center" id="fig-embedded-interrupt-pio-register-map">
+<a class="reference internal image-reference" href="../_images/embedded_nios_pio_register_map.png"><img alt="../_images/embedded_nios_pio_register_map.png" src="../_images/embedded_nios_pio_register_map.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">Register map for the PIO module. Table 273 on page 311 in the Intel <a class="reference external" href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf">Embedded Peripherals IP User Guide</a>.</span><a class="headerlink" href="#fig-embedded-interrupt-pio-register-map" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The PIO core is configured when it is added to the Nios II system in the Platform designer.  For this example we want to turn on synchronously capture to include the edge capture register in the core. This register allows the core to detect and generate an interrupt when an edge of the specified type (falling or rising) occurs on an input port. We must therefore also specify the type of edge detect to be falling edge, and turn on Generate IRQ to assert an IRQ output. For the IRQ event, we must also specify that this should happen on the Edge of the input event. The core will then generate an IRQ whenever a specific bit in the edge capture register is high and interrupts are enabled for that bit in the interruptmask register. The configuration of the PIO core is show in <a class="reference internal" href="#fig-embedded-pio-interrupt-config"><span class="std std-numref">Fig. 42</span></a>.</p>
+<figure class="align-center" id="fig-embedded-pio-interrupt-config">
+<a class="reference internal image-reference" href="../_images/embedded_pio_interrupt_config.png"><img alt="../_images/embedded_pio_interrupt_config.png" src="../_images/embedded_pio_interrupt_config.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Configure PIO core as a 1-bit input with synchronous capture of interrupt on falling edge.</span><a class="headerlink" href="#fig-embedded-pio-interrupt-config" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-embedded-system-with-pio-interrupt">
+<a class="reference internal image-reference" href="../_images/embedded_system_with_pio_interrupt.png"><img alt="../_images/embedded_system_with_pio_interrupt.png" src="../_images/embedded_system_with_pio_interrupt.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Nios II system with added PIO core for handling an interrupt.</span><a class="headerlink" href="#fig-embedded-system-with-pio-interrupt" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>And the final system should now look similar to <a class="reference internal" href="#fig-embedded-system-with-pio-interrupt"><span class="std std-numref">Fig. 43</span></a>. Make sure to regenerate the system.</p>
+<section id="updating-top-level-hdl-and-pinning">
+<h2>Updating top level HDL and pinning<a class="headerlink" href="#updating-top-level-hdl-and-pinning" title="Permalink to this heading">#</a></h2>
+<p>Since we have added a new PIO core configured as an input, we also need to update the top level VHDL description.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">system_top</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">arst_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">    </span><span class="n">led</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">sw</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">irq</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="c1">-- KEY1</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">system_top</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="w"> </span><span class="k">is</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">clk_clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- clk</span>
+<span class="w">      </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">-- reset_n</span>
+<span class="w">      </span><span class="n">pio_sw_external_connection_export</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">-- export</span>
+<span class="w">      </span><span class="n">pio_led_external_connection_export</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">9</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">(</span><span class="k">others</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="sc">&#39;X&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">-- export</span>
+<span class="w">      </span><span class="n">pio_irq_external_connection_export</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">-- To bit register for synchronization</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">irq_sync</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- The irq input signal is a button press which is asynchronous to the system clock</span>
+<span class="w">  </span><span class="c1">-- The irq input must therefore be synchronized</span>
+<span class="w">  </span><span class="nc">p_sync</span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">  </span><span class="k">begin</span><span class="w"> </span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="n">irq_sync</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">irq_sync</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">irq</span><span class="p">;</span><span class="w"> </span><span class="c1">--synchronization shift register</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="w">  </span><span class="n">u0</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">component</span><span class="w"> </span><span class="nc">nios2_system</span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">clk_clk</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="c1">--   clk.clk</span>
+<span class="w">      </span><span class="n">reset_reset_n</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">arst_n</span><span class="p">,</span><span class="w"> </span><span class="c1">-- reset.reset_n</span>
+<span class="w">      </span><span class="n">pio_sw_external_connection_export</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">sw</span><span class="p">,</span>
+<span class="w">      </span><span class="n">pio_led_external_connection_export</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">led</span><span class="p">,</span>
+<span class="w">      </span><span class="n">pio_irq_external_connection_export</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">irq_sync</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Remember to also add the required pin assignment for the newly added interrupt input and rerun the Tcl pinning script.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># key1 - used as interrupt</span>
+<span class="n">set_location_assignment</span> <span class="n">PIN_A7</span> <span class="o">-</span><span class="n">to</span> <span class="n">irq</span>
+</pre></div>
+</div>
+<p>Recompile the Quartus project to create a new programming file.</p>
+</section>
+<section id="update-the-software-application">
+<h2>Update the software application<a class="headerlink" href="#update-the-software-application" title="Permalink to this heading">#</a></h2>
+<p>To handle the interrupt in software we need to use the API introduced in <a class="reference internal" href="../part-embedded/embedded_interrupt.html#embedded-interrupt-api"><span class="std std-numref">Section 3.6.1</span></a>. This included writing an interrupt service routine to handle the interrupt, and then to register this ISR in the system.</p>
+<p>The flow of the interrupt execution is a follows:</p>
+<ul class="simple">
+<li><p>The button is pressed, generating an IRQ from hardware</p></li>
+<li><p>The ISR gains control:</p>
+<ul>
+<li><p>The processor branches to the address in the vector table, which transfers control to the ISR (<em>handle_interrupts()</em>)</p></li>
+</ul>
+</li>
+<li><p><em>handle_interrupts()</em> services the hardware interrupt, stores relevant information about the interrupt (<em>edge_caputure</em>) and returns.</p></li>
+<li><p>Normal program operation continues with an updated value of <em>edge_capture</em> variable</p></li>
+</ul>
+<p>When writing an interrupt service routine you want to minimize the impact running the ISR will have on the system. Interrupts are by nature asynchronous and non-deterministic, and adding application code to the ISR will therefore increase the execution jitter of the system. When used in a real-time operating system, this will make the system less predicitable and increase the chance of not meeting deadlines.</p>
+<p>The code example below demonstrates interrupt handling in a Nios II system.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;system.h&quot;</span><span class="c1"> //access Nios II system info</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;io.h&quot;</span><span class="c1"> //access to IORD and IORW</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;unistd.h&quot;</span><span class="c1"> //access to usleep</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;altera_avalon_pio_regs.h&quot;</span><span class="c1"> //access to PIO macros</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;sys/alt_irq.h&gt;</span><span class="c1"> // access to the IRQ routines</span>
+
+<span class="cm">/* Declare a global variable to holds the edge capture value</span>
+<span class="cm">Declaring a variable as volatile tells the compiler that</span>
+<span class="cm">the value of the variable may change at any time without</span>
+<span class="cm">any action being taken by the code the compiler finds nearby.</span>
+<span class="cm">This variable will be connected to the interrupt register which</span>
+<span class="cm">is controlled from HW and not SW. The compile will therefor not</span>
+<span class="cm">find any code that controls this variable, and if not declared as</span>
+<span class="cm">volatile, the compile may decided to optimize and remove this variable. */</span>
+<span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">edge_capture</span><span class="p">;</span>
+
+<span class="cm">/* This is the ISR which will be called when the system signals an interrupt. */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handle_interrupts</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="p">{</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">//Cast context to edge_capture&#39;s type</span>
+<span class="w">    </span><span class="c1">//Volatile to avoid compiler optimization</span>
+<span class="w">    </span><span class="c1">//this will point to the edge_capture variable.</span>
+<span class="w">    </span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">volatile</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">//Read the edge capture register on the PIO and store the value</span>
+<span class="w">    </span><span class="c1">//The value will be stored in the edge_capture variable and accessible</span>
+<span class="w">    </span><span class="c1">//from other parts of the code.</span>
+<span class="w">    </span><span class="o">*</span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IORD_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">//Write to edge capture register to reset it</span>
+<span class="w">    </span><span class="n">IOWR_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="p">}</span>
+
+<span class="cm">/* This function is used to initializes and registers the interrupt handler. */</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">init_interrupt_pio</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">//Recast the edge_capture point to match the</span>
+<span class="w">    </span><span class="c1">//alt_irq_register() function prototypo</span>
+<span class="w">    </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">edge_capture</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">//Enable a single interrupt input by writing a one to the corresponding interruptmask bit locations</span>
+<span class="w">    </span><span class="n">IOWR_ALTERA_AVALON_PIO_IRQ_MASK</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mh">0x1</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">//Reset the edge capture register</span>
+<span class="w">    </span><span class="n">IOWR_ALTERA_AVALON_PIO_EDGE_CAP</span><span class="p">(</span><span class="n">PIO_IRQ_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">//Register the interrupt handler in the system</span>
+<span class="w">    </span><span class="c1">//The ID and PIO_IRQ number is available from the system.h file.</span>
+<span class="w">    </span><span class="n">alt_ic_isr_register</span><span class="p">(</span><span class="n">PIO_IRQ_IRQ_INTERRUPT_CONTROLLER_ID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">PIO_IRQ_IRQ</span><span class="p">,</span><span class="w"> </span><span class="n">handle_interrupts</span><span class="p">,</span><span class="w"> </span><span class="n">edge_capture_ptr</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0</span><span class="p">);</span>
+
+<span class="w">    </span><span class="cm">/* In order to keep the impact of interrupts on the execution of the main program to a minimum,</span>
+<span class="cm">    it is important to keep interrupt routines short. If additional processing is necessary for a</span>
+<span class="cm">    particular interrupt, it is better to do this outside of the ISR. E.g., checking the value</span>
+<span class="cm">    of the edge_capture variable.*/</span>
+
+<span class="p">}</span>
+
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sw_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Initialize the interrupt</span>
+<span class="w">    </span><span class="n">init_interrupt_pio</span><span class="p">();</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">        </span><span class="c1">//Access registers using IORD and IOWR from io.h</span>
+<span class="w">        </span><span class="n">sw_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IORD</span><span class="p">(</span><span class="n">PIO_SW_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">IOWR</span><span class="p">(</span><span class="n">PIO_LED_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">sw_data</span><span class="p">);</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="c1">//Alternative solution using PIO macros</span>
+<span class="w">        </span><span class="c1">//sw_data = IORD_ALTERA_AVALON_PIO_DATA(PIO_SW_BASE);</span>
+<span class="w">        </span><span class="c1">//IOWR_ALTERA_AVALON_PIO_DATA(PIO_LED_BASE,sw_data);</span>
+
+<span class="w">        </span><span class="c1">// When an interrupt event has occurred, the edge_capture variable has been updated</span>
+<span class="w">        </span><span class="c1">// Poll the edge capture variable check for interrupt</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">edge_capture</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">0x1</span><span class="p">)</span><span class="w"> </span><span class="c1">//bit position 0 corresponds to button press</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Interrupt detected, Key1 was pressed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">edge_capture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="c1">// reset variable to &quot;unregister&quot; event</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="n">usleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span><span class="w"> </span><span class="c1">//sleep 100 us</span>
+
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Update the software application <em>app.c</em>. Since the hardware of the Nios II system also has been updated, we must also regenerate the board support package.  Navigate to the <em>software</em> folder and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-bsp hal app_bsp ../quartus/nios2_system.sopcinfo
+</pre></div>
+</div>
+<p>Recompile the software application</p>
+<p>Navigate to the <em>software</em> folder and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
+</pre></div>
+</div>
+<p>Reprogram the FPGA, download the new software application, and start the *nios2-terminal.exe” application. Press the push button KEY1. The expected result should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-terminal.exe
+nios2-terminal: connected to hardware target using JTAG UART on cable
+nios2-terminal: &quot;USB-Blaster [USB-0]&quot;, device 1, instance 0
+nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
+
+Hello, World!
+Interrupt detected, Key1 was pressed!
+
+</pre></div>
+</div>
+<div class="admonition-example-code-on-github admonition">
+<p class="admonition-title">Example code on Github</p>
+<p>The code for this example can be found here: <a class="github reference external" href="https://github.com/fys4220/fys4220_nios2_example">fys4220/fys4220_nios2_example</a></p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_memory_mapped_sw.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EX6: Accessing Nios II memory mapped modules</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_rtos.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">RTOS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-top-level-hdl-and-pinning">Updating top level HDL and pinning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-software-application">Update the software application</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

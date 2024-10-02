@@ -1,0 +1,1091 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>P2: Microcontroller system &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-project/project_nios2';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="P3: RTOS" href="data_rate.html" />
+    <link rel="prev" title="P1: UART controller" href="project_uart.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-project/project_nios2.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>P2: Microcontroller system</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware">Hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-designer">Platform designer</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-uart-ip">Creating the UART IP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-uart-module">Add the UART module</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-spi-module">Add an SPI module</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-interval-timer">Add an Interval Timer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-pio-interrupt">Update the PIO interrupt</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rebuild-the-hardware">Rebuild the hardware</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-vhdl">Top level VHDL</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-spi-interface">Connecting the SPI interface</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-uart">Connecting the UART</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-quartus-project">Compile the Quartus project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software">Software</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-board-support-package">Update the board support package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-loopback-test">UART loopback test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-usb-to-uart-cable">Using the USB to UART cable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-test">SPI test</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-driver">SPI driver</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adxl345-spi-transaction">ADXL345 SPI transaction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="p2-microcontroller-system">
+<span id="project-nios2"></span><h1>P2: Microcontroller system<a class="headerlink" href="#p2-microcontroller-system" title="Permalink to this heading">#</a></h1>
+<p>In this part of the project you will build and implement the soft core processor that will be used to read out data from the digital accelerometer sensor.</p>
+<div class="admonition-preparation admonition">
+<p class="admonition-title">Preparation</p>
+<p>Before continuing you should work through the example described in <a class="reference internal" href="../part-exercises/exercises_nios2_example.html#exercises-nios2-example"><span class="std std-ref">EX5: A basic Nios II system</span></a>, <a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html#exercises-memory-mapped-sw"><span class="std std-ref">EX6: Accessing Nios II memory mapped modules</span></a> and <a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html#exercises-nios2-interrupt"><span class="std std-ref">EX7: Nios II interrupt handling</span></a>.</p>
+<p>The system described and developed in these examples will be used in this part to build the final system.</p>
+</div>
+<p>The microcontroller system will now be expended with the remaining components needed for the final system. These are:</p>
+<ul class="simple">
+<li><p>The UART module from <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a> to communicate between the microcontroller system and the host PC.</p></li>
+<li><p>An SPI module to communicate with the accelerometer.</p></li>
+<li><p>An Interval Timer module to provide a periodic tick every 1 ms – to be used when adding the real-time kernel in <a class="reference internal" href="data_rate.html#project-rtos"><span class="std std-ref">P3: RTOS</span></a>.</p></li>
+</ul>
+<p>In addition the ADXL345 accelerometer <span id="id1">[<a class="reference internal" href="../references.html#id12" title="Analog Devices. ADXL345 Digital Accelerometer. URL: https://www.analog.com/en/products/adxl345.html.">Deva</a>]</span> has two interrupt lines that will be connected to the system. A PIO module was already used in <a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html#exercises-nios2-interrupt"><span class="std std-ref">EX7: Nios II interrupt handling</span></a> to handle an interrupt from an external push button. The two interrupt lines can easily be added to this module by increasing the number of inputs from 1 to 3.</p>
+<p>An overview of the full system is shown in <a class="reference internal" href="#fig-project-final-system"><span class="std std-numref">Fig. 53</span></a>.</p>
+<figure class="align-center" id="fig-project-final-system">
+<a class="reference internal image-reference" href="../_images/project_final_system.png"><img alt="../_images/project_final_system.png" src="../_images/project_final_system.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Overview of full Nios II system for the FYS4220 project.</span><a class="headerlink" href="#fig-project-final-system" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The two main tasks in this part of the project is to:</p>
+<ul class="simple">
+<li><p>Update the hardware of the microcontroller system in <a class="reference internal" href="#project-nios2-hardware"><span class="std std-ref">Hardware</span></a></p></li>
+<li><p>Test the  UART and SPI interface in <a class="reference internal" href="#project-nios2-software"><span class="std std-ref">Software</span></a></p></li>
+</ul>
+<p>You will start by integrating the UART module developed in <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a>.</p>
+<div class="admonition-useful-check-list admonition">
+<p class="admonition-title">Useful check list</p>
+<p>During the hardware development part it is important that you remember to:</p>
+<ul class="simple">
+<li><p>Regenerate the microcontroller system’s HDL description files after updating the system in the Platform Desginer.</p></li>
+<li><p>Modify the top level VHDL file to include the new Nios II system including new ports for UART, SPI, and interrupt lines.</p></li>
+<li><p>Update and rerun the pinning Tcl-script to assign the correct FPGA pin numbers to the respective ports.</p></li>
+<li><p>Recompile the Quartus project.</p></li>
+</ul>
+<p>Before you develop the software application it is important that you remember to regenerate the board support package files to reflect this changes for the software application.</p>
+</div>
+<section id="hardware">
+<span id="project-nios2-hardware"></span><h2>Hardware<a class="headerlink" href="#hardware" title="Permalink to this heading">#</a></h2>
+<p>With today’s large FPGA designs it can be difficult to design all the needed functionality from scratch. Using already developed blocks for parts of the design, where these are available, is therefore recommend. These blocks are often referred to as Intellectual Properties (IPs). A large number of IPs are available from the FPGA manufacturers or from third-party supplier. When choosing the various components to add to your Nios II system, like for example the PIO modules, these are in fact IP components provided by Intel. IP components may be free and open source or commercial and available for a fee. In cases where no appropriate IP module is available, or considered to be too expensive, the only solution is to develop your own IP. The following sections will demonstrate how to make the UART controller available as an IP in the Platform Designer’s IP catalog, and how to include and use an already available SPI core from the IP catalog.</p>
+<section id="platform-designer">
+<h3>Platform designer<a class="headerlink" href="#platform-designer" title="Permalink to this heading">#</a></h3>
+<section id="creating-the-uart-ip">
+<h4>Creating the UART IP<a class="headerlink" href="#creating-the-uart-ip" title="Permalink to this heading">#</a></h4>
+<p>In order to describe and package IP components for use in the Nios II system, you must create a Hardware Definition File (_hw.tcl) which will describe your component, its interfaces, and associated HDL files. This file will be used by the Platform Designer to identify and include the module in the IP catalog. The Platform designer tool provides a Component Editor GUI to help create a simple _hw.tcl file.
+A component can have any number of interfaces in any combination. Each interface represents a set of signals that you can connect within the Platform designer, or export outside of the system (e.g., our RX and TX ports). For this project and for uart.vhd component designed in <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a>, the following interfaces will be used:</p>
+<ul class="simple">
+<li><p>a memory mapped interface to provide the Nios II CPU access to the components register space</p>
+<ul>
+<li><p>Signals: <em>we</em>, <em>re</em>, <em>wdata</em>, <em>rdata</em>, <em>addr</em></p></li>
+</ul>
+</li>
+<li><p>a clock interface</p>
+<ul>
+<li><p>Signals: <em>clk</em></p></li>
+</ul>
+</li>
+<li><p>a reset interface</p>
+<ul>
+<li><p>Signals: <em>arst_n</em></p></li>
+</ul>
+</li>
+<li><p>a conduit interface to export the RX and TX ports</p>
+<ul>
+<li><p>Signals <em>rx</em>, <em>tx</em></p></li>
+</ul>
+</li>
+<li><p>an interrupt interface</p>
+<ul>
+<li><p>Signals: <em>irq</em></p></li>
+</ul>
+</li>
+</ul>
+<p>If you continue to work with the example from sections <a class="reference internal" href="../part-exercises/exercises_nios2_example.html#exercises-nios2-example"><span class="std std-ref">EX5: A basic Nios II system</span></a>, <a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html#exercises-memory-mapped-sw"><span class="std std-ref">EX6: Accessing Nios II memory mapped modules</span></a> and <a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html#exercises-nios2-interrupt"><span class="std std-ref">EX7: Nios II interrupt handling</span></a>, you should now copy your UART source files into the <em>hdl</em> directory.</p>
+<p>In Platform designer start the Component editor: File-&gt;New Component. Give the new component a name and provide other relevant information similar to what is shown in <a class="reference internal" href="#fig-project-component-info"><span class="std std-numref">Fig. 54</span></a>.</p>
+<figure class="align-center" id="fig-project-component-info">
+<a class="reference internal image-reference" href="../_images/project_component_info.png"><img alt="../_images/project_component_info.png" src="../_images/project_component_info.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 54 </span><span class="caption-text">Component editor. Specify component information.</span><a class="headerlink" href="#fig-project-component-info" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Change to the <em>Files</em> tab and and click the <em>Add File…</em> button under the first section <em>Synthesis Files</em>. Navigate to the <em>hdl</em> directory and add your all your UART source files as shown in
+<a class="reference internal" href="#fig-project-component-files"><span class="std std-numref">Fig. 55</span></a>.</p>
+<figure class="align-center" id="fig-project-component-files">
+<a class="reference internal image-reference" href="../_images/project_component_files.png"><img alt="../_images/project_component_files.png" src="../_images/project_component_files.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 55 </span><span class="caption-text">Add the UART source files.</span><a class="headerlink" href="#fig-project-component-files" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="warning admonition">
+<p class="admonition-title">Note</p>
+<p>Note that you may have different files and filenames than shown in the figure. Make sure to add all of YOUR UART design files.</p>
+</div>
+<p>Make sure to set the correct top level file. For the example here this is <em>uart.vhd</em> as shown in <a class="reference internal" href="#fig-project-component-files-top-level"><span class="std std-numref">Fig. 56</span></a>.</p>
+<figure class="align-center" id="fig-project-component-files-top-level">
+<a class="reference internal image-reference" href="../_images/project_component_files_top_level.png"><img alt="../_images/project_component_files_top_level.png" src="../_images/project_component_files_top_level.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 56 </span><span class="caption-text">Click on the no Attributes column for the <em>uart.vhd</em> file and choose <em>Top-Level File</em>.</span><a class="headerlink" href="#fig-project-component-files-top-level" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Then click the <em>Analyse Synthesis files</em> button to analyse the source files as shown in <a class="reference internal" href="#fig-project-component-files-analyze"><span class="std std-numref">Fig. 57</span></a>. This process will identify the top-level file as well as making an attempt to identify and assign the appropriate interfaces.</p>
+<figure class="align-center" id="fig-project-component-files-analyze">
+<a class="reference internal image-reference" href="../_images/project_component_files_analyze.png"><img alt="../_images/project_component_files_analyze.png" src="../_images/project_component_files_analyze.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 57 </span><span class="caption-text">Analyze the VHDL source files.</span><a class="headerlink" href="#fig-project-component-files-analyze" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>A number of warnings and error messages will appear after the analysis has been completed. If you change to the <em>Signals and interfaces</em> tab, you will see the list of interfaces and assosicate signals that has been identified. <a class="reference internal" href="#fig-project-component-signals"><span class="std std-numref">Fig. 58</span></a> shows that only a few signals and interface has been sucessfully identified. You therefore need to manually add the relevant interfaces and types, and sort the signals under their associated interface.</p>
+<figure class="align-center" id="fig-project-component-signals">
+<a class="reference internal image-reference" href="../_images/project_component_signals.png"><img alt="../_images/project_component_signals.png" src="../_images/project_component_signals.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 58 </span><span class="caption-text">Project component signals</span><a class="headerlink" href="#fig-project-component-signals" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>First, add the reset input interface. Click the <code class="docutils literal notranslate"><span class="pre">&lt;&lt;add</span> <span class="pre">interface&gt;&gt;</span></code> field at the bottom of the list, and choose <em>Reset Input</em> as shown in <a class="reference internal" href="#fig-project-component-reset"><span class="std std-numref">Fig. 59</span></a>.</p>
+<figure class="align-center" id="fig-project-component-reset">
+<a class="reference internal image-reference" href="../_images/project_component_reset.png"><img alt="../_images/project_component_reset.png" src="../_images/project_component_reset.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 59 </span><span class="caption-text">Add a reset interface.</span><a class="headerlink" href="#fig-project-component-reset" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The reset interface must be configured with the correct signal type. Since we have an active low reset we choose <em>reset_n</em> as shown in <a class="reference internal" href="#fig-project-component-reset2"><span class="std std-numref">Fig. 60</span></a>. The <em>arst_n</em> has been incorrectly identified as a <em>beginbursttransfer</em> signal associated with the Avalon slave interface. The <em>arst_n</em> signal must therefore be moved to the reset interface by a click and drag operation.</p>
+<figure class="align-center" id="fig-project-component-reset2">
+<a class="reference internal image-reference" href="../_images/project_component_reset2.png"><img alt="../_images/project_component_reset2.png" src="../_images/project_component_reset2.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 60 </span><span class="caption-text">Change the signal type of the reset signal.</span><a class="headerlink" href="#fig-project-component-reset2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The TX and RX signals should not be associated with the Avalon slave interface. These signals should be exported out of the CPU system and connected to FPGA pins. The correct interface to use is a <a class="reference external" href="https://www.merriam-webster.com/dictionary/conduit">Conduit</a> interface. Rename the Conduit interface to <em>uart</em> and add the two signals <em>rx</em> and <em>tx</em> as shown in <a class="reference internal" href="#fig-project-component-uart"><span class="std std-numref">Fig. 61</span></a>.</p>
+<figure class="align-center" id="fig-project-component-uart">
+<a class="reference internal image-reference" href="../_images/project_component_uart.png"><img alt="../_images/project_component_uart.png" src="../_images/project_component_uart.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 61 </span><span class="caption-text">Add a Conduit interface to export the UART signals out of the CPU system.</span><a class="headerlink" href="#fig-project-component-uart" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Since these are UART signals that will be exported out of the system, there are no relevant signal types to choose from. Instead you can manually rename the <em>Signal Type</em> to <em>rx</em> and <em>tx</em> respectively, as seen for the <em>rx</em> signal in <a class="reference internal" href="#fig-project-component-uart2"><span class="std std-numref">Fig. 62</span></a>.</p>
+<figure class="align-center" id="fig-project-component-uart2">
+<a class="reference internal image-reference" href="../_images/project_component_uart2.png"><img alt="../_images/project_component_uart2.png" src="../_images/project_component_uart2.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 62 </span><span class="caption-text">Change the signal type of the UART signals.</span><a class="headerlink" href="#fig-project-component-uart2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The last interface to add is the interrupt interface. Since the UART component generates an interrupt that will be sent to the CPU, use an <em>Interrupt Sender</em> interface as shown in <a class="reference internal" href="#fig-project-component-irq"><span class="std std-numref">Fig. 63</span></a>. Choose the signal type to be <em>irq</em>.</p>
+<figure class="align-center" id="fig-project-component-irq">
+<a class="reference internal image-reference" href="../_images/project_component_irq.png"><img alt="../_images/project_component_irq.png" src="../_images/project_component_irq.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 63 </span><span class="caption-text">Add an interrupt sender interface.</span><a class="headerlink" href="#fig-project-component-irq" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The interrupt must be associated with an addressable Avalon slave interface. Choose <em>avalon_slave_0</em> as shown in <a class="reference internal" href="#fig-project-component-irq2"><span class="std std-numref">Fig. 64</span></a>.</p>
+<figure class="align-center" id="fig-project-component-irq2">
+<a class="reference internal image-reference" href="../_images/project_component_irq2.png"><img alt="../_images/project_component_irq2.png" src="../_images/project_component_irq2.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 64 </span><span class="caption-text">Associate the interrupt sender to the Avalon interface.</span><a class="headerlink" href="#fig-project-component-irq2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To complete the signal configuration, set the correct signal types of the signals for the Avalon slave interface as shown in <a class="reference internal" href="#fig-project-component-avalon"><span class="std std-numref">Fig. 65</span></a>. These are the signals which will be used to read and write data from and to the UART’s register interface. Rename the Avalon slave interface to <em>avalon_slave</em>.</p>
+<figure class="align-center" id="fig-project-component-avalon">
+<a class="reference internal image-reference" href="../_images/project_component_avalon.png"><img alt="../_images/project_component_avalon.png" src="../_images/project_component_avalon.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Set the correct signal types for the signals of the Avalon interface.</span><a class="headerlink" href="#fig-project-component-avalon" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Finally, a reset interface must associted with the Avalon slave interface. Choose the newly added reset interface as shown in <a class="reference internal" href="#fig-project-component-avalon2"><span class="std std-numref">Fig. 66</span></a>.</p>
+<figure class="align-center" id="fig-project-component-avalon2">
+<a class="reference internal image-reference" href="../_images/project_component_avalon2.png"><img alt="../_images/project_component_avalon2.png" src="../_images/project_component_avalon2.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Associate the reset interface with the Avalon interface.</span><a class="headerlink" href="#fig-project-component-avalon2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>After completing the configuration of the UART IP press the <em>Finish</em> button to generate the Hardware Definition file. The file should take the name that was provided in <a class="reference internal" href="#fig-project-component-info"><span class="std std-numref">Fig. 54</span></a>, and will be stored in the Quartus folder project. E.g., <em>uart_basic_hw.tcl</em>.</p>
+<p>After refreshing (File–&gt;Refresh system or F5), the <em>UART basic</em> IP should now be available under the <em>FYS4220</em> group in the IP catalog as shown in <a class="reference internal" href="#fig-project-component-ipcatalog"><span class="std std-numref">Fig. 67</span></a>.</p>
+<figure class="align-center" id="fig-project-component-ipcatalog">
+<a class="reference internal image-reference" href="../_images/project_component_ipcatalog.png"><img alt="../_images/project_component_ipcatalog.png" src="../_images/project_component_ipcatalog.png" style="width: 30%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">The newly create UART basic IP is now available in the IP catalog.</span><a class="headerlink" href="#fig-project-component-ipcatalog" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="add-the-uart-module">
+<h4>Add the UART module<a class="headerlink" href="#add-the-uart-module" title="Permalink to this heading">#</a></h4>
+<p>In Platform Designer, add and connect the UART module as shown in <a class="reference internal" href="#fig-project-platform-designer-with-uart"><span class="std std-numref">Fig. 68</span></a>. Remember to assign an interrupt priority number and to export the UART conduit lines.</p>
+<figure class="align-center" id="fig-project-platform-designer-with-uart">
+<a class="reference internal image-reference" href="../_images/project_platform_designer_with_uart.png"><img alt="../_images/project_platform_designer_with_uart.png" src="../_images/project_platform_designer_with_uart.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text">Add and connect the UART module to the Nios II system.</span><a class="headerlink" href="#fig-project-platform-designer-with-uart" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="add-an-spi-module">
+<span id="project-spi-module"></span><h4>Add an SPI module<a class="headerlink" href="#add-an-spi-module" title="Permalink to this heading">#</a></h4>
+<p>The ADXL345 <span id="id2">[<a class="reference internal" href="../references.html#id12" title="Analog Devices. ADXL345 Digital Accelerometer. URL: https://www.analog.com/en/products/adxl345.html.">Deva</a>]</span> digital accelerometer supports serial communication using either <a class="reference external" href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">SPI</a> (3- and 4-wire) or <a class="reference external" href="https://en.wikipedia.org/wiki/I2C">I2C</a>. For this project we will include an SPI core from the IP catalog as shown in <a class="reference internal" href="#fig-project-ipcatalog-spi"><span class="std std-numref">Fig. 69</span></a>.</p>
+<figure class="align-center" id="fig-project-ipcatalog-spi">
+<a class="reference internal image-reference" href="../_images/project_ipcatalog_spi.png"><img alt="../_images/project_ipcatalog_spi.png" src="../_images/project_ipcatalog_spi.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text">Choose the SPI (3 Wire Serial) Inter FPGA IP from the IP catalog.</span><a class="headerlink" href="#fig-project-ipcatalog-spi" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>SPI uses 4 lines to communicate data:</p>
+<ul class="simple">
+<li><p>MISO: Master In Slave Out (data from slave to master)</p></li>
+<li><p>MOSI: Master Out Slave In (data from master to slave)</p></li>
+<li><p>SCLK: SPI clock</p></li>
+<li><p>SS_n: Chips select</p></li>
+</ul>
+<p>If more than one slave device is connected to the SPI interface, each slave device requires a separete chip select line. If run in 3-wire mode, only one line is used for data, which means that this data line is bi-directional. In this project we will be using a 4-wire connection with only one slave device. Although the name of the Intel FPGA SPI core specifies <em>3 Wire Serial</em>, it supports 4-wire communication. E.g., all 4 lines are present in the block diagram in <a class="reference internal" href="#fig-project-spi-configuration"><span class="std std-numref">Fig. 70</span></a>.</p>
+<p>Configure the SPI module as shown in <a class="reference internal" href="#fig-project-spi-configuration"><span class="std std-numref">Fig. 70</span></a>. The SPI serial interface will run at a clock frequency of 1 MHz with the required clock polarity and phase settings supported by the ADXL345 accelerometer (see page 15 of the ADXL345 datasheet.<span id="id3">[<a class="reference internal" href="../references.html#id13" title="Analog Devices. ADXL345 Digital Accelerometer datasheet. URL: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf.">Devb</a>]</span>). For more information about SPI clock polarity and phase settings, read the corresponding section on the <a class="reference external" href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">SPI wikipedia page</a>. When the clock polarity is 1, the clock idles at 1, e.g., the SPI clock line is high when there is no activity. When the clock phase is set to 1, this means that data is changed on the rising edge of the SPI clock and captured on the falling edge.</p>
+<figure class="align-center" id="fig-project-spi-configuration">
+<a class="reference internal image-reference" href="../_images/project_spi_configuration.png"><img alt="../_images/project_spi_configuration.png" src="../_images/project_spi_configuration.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Configuration window for SPI module. Change the SPI clock frequency to 1 MHz and clock polarity and phase to the value 1.</span><a class="headerlink" href="#fig-project-spi-configuration" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Add and connect the SPI module as shown in <a class="reference internal" href="#fig-project-platform-designer-with-spi"><span class="std std-numref">Fig. 71</span></a>. Remember to assign the interrupt priority number and to export the UART conduit lines.</p>
+<figure class="align-center" id="fig-project-platform-designer-with-spi">
+<a class="reference internal image-reference" href="../_images/project_platform_designer_with_spi.png"><img alt="../_images/project_platform_designer_with_spi.png" src="../_images/project_platform_designer_with_spi.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Add and connect the SPI module to the Nios II system.</span><a class="headerlink" href="#fig-project-platform-designer-with-spi" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="add-an-interval-timer">
+<h4>Add an Interval Timer<a class="headerlink" href="#add-an-interval-timer" title="Permalink to this heading">#</a></h4>
+<p>Most control systems use a timer component to enable precise calculation of time. This timer component generates a periodic timer tick signal
+that can be used by the CPU to keep track of time. It will set the time resolution for the system’s response time.</p>
+<p>Search for and add the Interval Timer module from the IP catalog.  Keep the default configuration settings for the component (e.g., timeout of 1 millisecond) as shown in <a class="reference internal" href="#fig-project-timer-configuration"><span class="std std-numref">Fig. 72</span></a>. The interval timer will provide a system clock tick to the CPU every 1 millisecond.</p>
+<figure class="align-center" id="fig-project-timer-configuration">
+<a class="reference internal image-reference" href="../_images/project_timer_configuration.png"><img alt="../_images/project_timer_configuration.png" src="../_images/project_timer_configuration.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Configuration window for Interval Timer module.</span><a class="headerlink" href="#fig-project-timer-configuration" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Connect the Interval Timer to the system. The purpose of this module is to provide accurate timing, its priority level should therefore be higher than for the other modules. See <a class="reference internal" href="#fig-project-platform-designer-with-timer"><span class="std std-numref">Fig. 73</span></a>.</p>
+<figure class="align-center" id="fig-project-platform-designer-with-timer">
+<a class="reference internal image-reference" href="../_images/project_platform_designer_with_timer.png"><img alt="../_images/project_platform_designer_with_timer.png" src="../_images/project_platform_designer_with_timer.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 73 </span><span class="caption-text">Add and connect the Interval Timer to the Nios II system.</span><a class="headerlink" href="#fig-project-platform-designer-with-timer" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="warning admonition">
+<p class="admonition-title">Important!</p>
+<p>The software drivers for the uC/OS-II real-time kernel expects the Interval Timer module to be named <code class="docutils literal notranslate"><span class="pre">sys_clk_timer</span></code>. It is therefore highly recommended to use this name. A different name would required manual modifications of the drivers.</p>
+</div>
+</section>
+<section id="update-the-pio-interrupt">
+<h4>Update the PIO interrupt<a class="headerlink" href="#update-the-pio-interrupt" title="Permalink to this heading">#</a></h4>
+<p>The final modification of the system will be to increase the number of inputs to the PIO module that handles interrupts. In <a class="reference internal" href="../part-embedded/embedded_interrupt.html#embedded-interrupt"><span class="std std-numref">Section 3.6</span></a> this module was configured with one input and connected to the second push button on the board (KEY1). In addition, we now want to connect the two interrupt lines coming from the ADXL345 accelerometer. Increase the number of inputs to three as show in See <a class="reference internal" href="#fig-project-update-pio-interrupt"><span class="std std-numref">Fig. 74</span></a>.</p>
+<figure class="align-center" id="fig-project-update-pio-interrupt">
+<a class="reference internal image-reference" href="../_images/project_update_pio_interrupt.png"><img alt="../_images/project_update_pio_interrupt.png" src="../_images/project_update_pio_interrupt.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 74 </span><span class="caption-text">Increase the number of inputs for the PIO interrupt module to also support the two interrupt lines from the accelerometer.</span><a class="headerlink" href="#fig-project-update-pio-interrupt" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="rebuild-the-hardware">
+<h4>Rebuild the hardware<a class="headerlink" href="#rebuild-the-hardware" title="Permalink to this heading">#</a></h4>
+<p>After making changes to the Nios II system it needs to be regenerated before it can be included in the Quartus project, compiled, and finally downloaded to the FPGA.</p>
+<p>Press the “Generate HDL…” to regenerate the system with corresponding VHDL description files.</p>
+</section>
+</section>
+<section id="top-level-vhdl">
+<h3>Top level VHDL<a class="headerlink" href="#top-level-vhdl" title="Permalink to this heading">#</a></h3>
+<p>The newly generated Nios II system has now been extended with additional input and output ports for the UART, SPI, and interrupt interfaces. These new ports must be added to the component declaraction and instantiation of the Nios II system as well as the top level ports of the <em>system_top.vhd</em>. In addition the correct pin assignments must also be made.</p>
+<section id="connecting-the-spi-interface">
+<h4>Connecting the SPI interface<a class="headerlink" href="#connecting-the-spi-interface" title="Permalink to this heading">#</a></h4>
+<p>The required connections between the MAX 10 FPGA and the accelerometer are shown in <a class="reference internal" href="#fig-project-adxl345-connections"><span class="std std-numref">Fig. 75</span></a>. Since the accelerometer supports both SPI and I2C, the lines are labelled accordingly. More information on how to configure the accelerometer for either SPI or I2C communication can be found on page 15 in the ADXL345 datasheet <span id="id4">[<a class="reference internal" href="../references.html#id13" title="Analog Devices. ADXL345 Digital Accelerometer datasheet. URL: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf.">Devb</a>]</span>.</p>
+<figure class="align-center" id="fig-project-adxl345-connections">
+<a class="reference internal image-reference" href="../_images/project_adxl345_connections.png"><img alt="../_images/project_adxl345_connections.png" src="../_images/project_adxl345_connections.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 75 </span><span class="caption-text">Connections between the accelerometer sensor and MAX 10 FPGA. Figure 3-24 (p. 39) in the <a class="reference external" href="https://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&amp;No=1021&amp;FID=a13a2782811152b477e60203d34b1baa">DE10-Lite User Manual</a>`.</span><a class="headerlink" href="#fig-project-adxl345-connections" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The corresponding FPGA pin numbers can be found on page 40 in the DE10-Lite User Manual <span id="id5">[<a class="reference internal" href="../references.html#id14" title="Terasic Inc. DE10-Lite User Manual. URL: https://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&amp;No=1021&amp;FID=a13a2782811152b477e60203d34b1baa.">Inc</a>]</span> and is shown in <a class="reference internal" href="#fig-project-adxl345-pinning"><span class="std std-numref">Fig. 76</span></a>.</p>
+<figure class="align-center" id="fig-project-adxl345-pinning">
+<a class="reference internal image-reference" href="../_images/project_adxl345_pinning.png"><img alt="../_images/project_adxl345_pinning.png" src="../_images/project_adxl345_pinning.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 76 </span><span class="caption-text">Pin Assignment for the ADXL345 accelerometer. Table  3-13 (p. 40) in the <a class="reference external" href="https://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&amp;No=1021&amp;FID=a13a2782811152b477e60203d34b1baa">DE10-Lite User Manuel</a>.</span><a class="headerlink" href="#fig-project-adxl345-pinning" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Add the four SPI ports and the two interrupt ports to the top level VHDL file. Update the pinning Tcl file with the correct pin assignments. The two interrupt pins can be added by expending the already present <em>irq</em> input from <a class="reference internal" href="../part-embedded/embedded_interrupt.html#embedded-interrupt"><span class="std std-numref">Section 3.6</span></a> to a standard logic vector of length 3.</p>
+</section>
+<section id="connecting-the-uart">
+<h4>Connecting the UART<a class="headerlink" href="#connecting-the-uart" title="Permalink to this heading">#</a></h4>
+<p>The UART will be connected to the host PC using a UART to USB converter cable <span id="id6">[<a class="reference internal" href="../references.html#id15" title="FTDI Chip. TTL-232R-RPi Debug Cable for Raspberry Pi Datasheet. URL: https://docs.rs-online.com/12f1/0900766b811b9e83.pdf.">Chi</a>]</span> from FTDI Chip. The female pin connectors (TX, RX and GND) can easily be connected to the RaspberryPi header of the DE10-Lite board.</p>
+<figure class="align-center" id="fig-project-de10-lite-rpi-header">
+<a class="reference internal image-reference" href="../_images/project_de10_lite_rpi_header.png"><img alt="../_images/project_de10_lite_rpi_header.png" src="../_images/project_de10_lite_rpi_header.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 77 </span><span class="caption-text">RaspberryPi header and pin number for the DE10-Lite board. Figure 3-18 in the <a class="reference external" href="https://www.terasic.com.tw/cgi-bin/page/archive_download.pl?Language=English&amp;No=1021&amp;FID=a13a2782811152b477e60203d34b1baa">DE10-Lite User Manual</a>`.</span><a class="headerlink" href="#fig-project-de10-lite-rpi-header" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The ground cable must of course be connected to a ground pin on the pin header, while the RX and TX can be connected to any GPIO pin as long as the correct corresponding pin assignment is performed before compling the Quartus project. The solution example that later will be made available for this project will use:</p>
+<ul class="simple">
+<li><p>PIN_V10 as TX</p></li>
+<li><p>PIN_W10 as RX</p></li>
+<li><p>Pin 12 as GND.</p></li>
+</ul>
+<p>To identify the orientation of the pin header you can check the back side of the board. Pin number 1 will be marked with a square solder pad as shown in <a class="reference internal" href="#fig-project-de10-lite-rpi-header-backside"><span class="std std-numref">Fig. 78</span></a>. Checking the pin values with a mulitmeter to identify the ground and voltage supply pins before making any connections can also be useful.</p>
+<figure class="align-center" id="fig-project-de10-lite-rpi-header-backside">
+<a class="reference internal image-reference" href="../_images/project_de10_lite_rpi_header_backside.jpeg"><img alt="../_images/project_de10_lite_rpi_header_backside.jpeg" src="../_images/project_de10_lite_rpi_header_backside.jpeg" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Backside of the RaspberryPi pin header. Pin 1 is marked using a square solder pad.</span><a class="headerlink" href="#fig-project-de10-lite-rpi-header-backside" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="warning admonition">
+<p class="admonition-title">Important</p>
+<p>Make sure to carefully read Table 4.2 in the FTDI cable’s datasheet <span id="id7">[<a class="reference internal" href="../references.html#id15" title="FTDI Chip. TTL-232R-RPi Debug Cable for Raspberry Pi Datasheet. URL: https://docs.rs-online.com/12f1/0900766b811b9e83.pdf.">Chi</a>]</span> to find out which color of the cable corresponds TX, RX or ground.</p>
+<p>Remember that the TX on the FPGA side must be connected to the RX on the cable side and vice versa.</p>
+<p><span style="color: red">AN INCORRECT CONNECTION MAY DAMAGE THE DEVICE! PLEASE DOUBLE CHECK BEFORE MAKING ANY CONNECTIONS.</span></p>
+</div>
+<p>Add the TX and RX ports to the top level VHDL-file and update the pinning Tcl-file with the correct pin assignments.</p>
+</section>
+<section id="compile-the-quartus-project">
+<h4>Compile the Quartus project<a class="headerlink" href="#compile-the-quartus-project" title="Permalink to this heading">#</a></h4>
+<p>The updated VDHL design now handles several input signals which are external to the design’s clock domain. A 2-register synchronizer must therefore be added to these signals before you can compile the project.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Which signals need synchronizers?</p>
+<p>The RX, SPI_MISO, and all 3 interrupt signals are all external input signals that must be synchronized. An example for the 3 interrupt inputs is shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">system_top</span><span class="w"> </span><span class="k">is</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="c1">-- Two synchronization registers for the 3-input interrupts</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">irq_sync_r1</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="k">signal</span><span class="w"> </span><span class="n">irq_sync_r2</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic_vector</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="k">downto</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="k">begin</span>
+
+<span class="n">p_sync</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">process</span><span class="w"> </span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<span class="w">      </span><span class="c1">-- synchronize interrupt inputs</span>
+<span class="w">      </span><span class="n">irq_sync_r1</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">irq</span><span class="p">;</span>
+<span class="w">      </span><span class="n">irq_sync_r2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">irq_sync_r1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span><span class="w"> </span><span class="k">if</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The <em>irq_sync_r2</em> must then be connected to the IRQ input in the port map of the microcontroller system.</p>
+</div>
+<p>Make sure to rerun the updated pinning Tcl-script before the Quartus project finally can be compiled to generate a new programming file. Download the new FPGA design to the MAX10 FPGA.</p>
+</section>
+</section>
+</section>
+<section id="software">
+<span id="project-nios2-software"></span><h2>Software<a class="headerlink" href="#software" title="Permalink to this heading">#</a></h2>
+<p>In this part you will test the recently added UART and SPI interfaces.</p>
+<p>To test the UART interface, you will expand the software application to:</p>
+<ul class="simple">
+<li><p>Read the <em>rx_data</em> register of the UART module when new data has been received from the host PC. This involves adding the required interrupt handling for UART module.</p></li>
+<li><p>Send the received data back to the host PC by writing the data to the <em>tx_data</em> register of the UART module.</p></li>
+<li><p>Use Putty or Screen to send and receive data from the host PC.</p></li>
+</ul>
+<p>To test the SPI interface, you will use the provided SPI drivers to read back the identification number of the ADXL345 accelerometer.</p>
+<section id="update-the-board-support-package">
+<h3>Update the board support package<a class="headerlink" href="#update-the-board-support-package" title="Permalink to this heading">#</a></h3>
+<p>Whenever the hardware of the microcontroller system has been changes, it is required to regenerate the board support package. See section <a class="reference internal" href="../part-exercises/exercises_nios2_example.html#embedded-bsp"><span class="std std-ref">Board Support Package</span></a> for how to do this.</p>
+</section>
+<section id="uart-loopback-test">
+<h3>UART loopback test<a class="headerlink" href="#uart-loopback-test" title="Permalink to this heading">#</a></h3>
+<p>The UART loopback test will be performed by sending and receving characters from the host PC over the USB to UART cable. You will implement the required software application to receive and send back these characters.</p>
+<p>From the development of the UART controller in <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a> we know that an interrupt will be signaled when data has been received by the UART RX module. You therefore need to add the required interrupt handling to the software application. An example of interrupt handling has already been demonstrated in <a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html#exercises-nios2-interrupt"><span class="std std-ref">EX7: Nios II interrupt handling</span></a>. Use this as a starting point for adding interrupt handling for the UART. Try first to write the required code before looking at the tip provided below.</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Tip</p>
+<p>The interrupts from the UART are enabled by default. That is, they are automatically set when there is a falling edge on either the <em>tx_busy</em> or <em>rx_busy</em> signal. Thus, there is no need to manually enable interrupts as was done for the example shown in <a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html#exercises-nios2-interrupt"><span class="std std-ref">EX7: Nios II interrupt handling</span></a>. You therefore only need to register the interrupt with the Nios II system using the <em>alt_ic_isr_register</em> function.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">alt_ic_isr_register</span><span class="p">(</span><span class="n">UART_BASIC_IRQ_INTERRUPT_CONTROLLER_ID</span><span class="p">,</span>
+<span class="w">			</span><span class="n">UART_BASIC_IRQ</span><span class="p">,</span><span class="w"> </span><span class="n">handle_interrupt_uart</span><span class="p">,</span><span class="w"> </span><span class="n">uart_status_ptr</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The names of the arguments provided here may be different for your design depending on how you named the respective components when designing the system in Platform Designer. These names can be found in the <em>system.h</em> file of the board support package.</p>
+<p>To service the interrupt you will need to write a dedicated interrupt handling routine (suggested name <em>handle_interrupt_uart</em>). When called, this routine will:</p>
+<ul class="simple">
+<li><p>Read the UART module’s status register and store the value in the <em>volatile int</em> variable <em>uart_status</em>. This is a similar operation as was done for the <em>edge_capture</em> variable from the example in <a class="reference internal" href="project_uart.html#project-uart-controller"><span class="std std-ref">P1: UART controller</span></a>.</p></li>
+<li><p>Reset the interrupt bits in the UART module’s status register. This is done by performing a write operation to the UART’s status register.</p></li>
+<li><p>In the main function, check whether the <em>tx_irq</em> og <em>rx_irq</em> bit has been set.</p></li>
+<li><p>If the <em>rx_irq</em> bit has been set, read the <em>rx_data</em> register and send back the receive data by writing to the <em>tx_data</em> register.</p></li>
+</ul>
+<p>A shift operation combined with a bitwise AND operation can be used to check if a given bit position is set:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">//Check if rx_irq bit is set</span>
+<span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">uart_status</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="c1">// read rx_data register and write the returned value to the tx_data register</span>
+<span class="p">}</span>
+<span class="c1">// Reset the status registers IRQ bits.</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="using-the-usb-to-uart-cable">
+<h3>Using the USB to UART cable<a class="headerlink" href="#using-the-usb-to-uart-cable" title="Permalink to this heading">#</a></h3>
+<p>The UART will be connected to the host PC using a UART to USB converter cable <span id="id8">[<a class="reference internal" href="../references.html#id15" title="FTDI Chip. TTL-232R-RPi Debug Cable for Raspberry Pi Datasheet. URL: https://docs.rs-online.com/12f1/0900766b811b9e83.pdf.">Chi</a>]</span> from FTDI Chip. The cable has an FT232R chip that converts from TTL UART signals to USB. With the correct <a class="reference external" href="https://ftdichip.com/drivers/vcp-drivers/">FTDI drivers</a> installed, the cable will apear as a <a class="reference external" href="https://en.wikipedia.org/wiki/Virtual_COM_port">virtual COM port (VCP)</a>. This then allows us to communicate with the USB interface, and therefore our UART interface on the FPGA, via a standard PC serial emulation port.</p>
+<p>When connected, the cable should be visible in the <em>Device Manager</em> or under <em>Devices and Printers</em> in the Windows control panel as shown in <a class="reference internal" href="#fig-project-device-manager"><span class="std std-numref">Fig. 79</span></a> and <a class="reference internal" href="#fig-project-devices-and-printers"><span class="std std-numref">Fig. 80</span></a>. If the cable is not visible, you may have to installed the VCP driver.</p>
+<figure class="align-center" id="fig-project-device-manager">
+<a class="reference internal image-reference" href="../_images/project_device_manager.png"><img alt="../_images/project_device_manager.png" src="../_images/project_device_manager.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Windows 10 Device Manager.</span><a class="headerlink" href="#fig-project-device-manager" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-project-devices-and-printers">
+<a class="reference internal image-reference" href="../_images/project_devices_and_printers.png"><img alt="../_images/project_devices_and_printers.png" src="../_images/project_devices_and_printers.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Windows 10 Devices and Printers. The corresponding COM-port number can be found in the hardware tab under properties when right clicking on the device.</span><a class="headerlink" href="#fig-project-devices-and-printers" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For Linux and Mac OS, the cable will be listed under the <em>/dev</em> folder as shown in <a class="reference internal" href="#fig-project-dev-tty"><span class="std std-numref">Fig. 81</span></a>.</p>
+<figure class="align-center" id="fig-project-dev-tty">
+<a class="reference internal image-reference" href="../_images/project_dev_tty.png"><img alt="../_images/project_dev_tty.png" src="../_images/project_dev_tty.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">The FTDI cable will show up as TTY device and usually with an extension consisting of <em>usbserial</em> and a serial number.</span><a class="headerlink" href="#fig-project-dev-tty" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The cable can be accessed by opening a serial port using e.g., Putty on windows (<a class="reference internal" href="#fig-project-putty"><span class="std std-numref">Fig. 82</span></a>) or Screen (<a class="reference internal" href="#fig-project-screen"><span class="std std-numref">Fig. 83</span></a>) on Linux/Mac OS.</p>
+<figure class="align-center" id="fig-project-putty">
+<a class="reference internal image-reference" href="../_images/project_putty.png"><img alt="../_images/project_putty.png" src="../_images/project_putty.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">Putty: choose the correct COM-port and baud rate.</span><a class="headerlink" href="#fig-project-putty" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="fig-project-screen">
+<a class="reference internal image-reference" href="../_images/project_screen.png"><img alt="../_images/project_screen.png" src="../_images/project_screen.png" style="width: 90%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">Screen can be started from the command line with the device path and baud rates as arguments.</span><a class="headerlink" href="#fig-project-screen" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In Python the cable can be accessed using the <a class="reference external" href="https://pyserial.readthedocs.io/en/latest/">PySerial module</a>.</p>
+</section>
+<section id="spi-test">
+<h3>SPI test<a class="headerlink" href="#spi-test" title="Permalink to this heading">#</a></h3>
+<p>To test the SPI interface you will read back the device identification number from the ADXL345 accelerometer using the SPI IP module added to the microntroller system in <a class="reference internal" href="#project-spi-module"><span class="std std-ref">Add an SPI module</span></a>.</p>
+<section id="spi-driver">
+<h4>SPI driver<a class="headerlink" href="#spi-driver" title="Permalink to this heading">#</a></h4>
+<p>The SPI module comes with a driver that can be used to easily communicate with any attached SPI device. By including the driver’s header file <em>altera_avalon_spi.h</em>, this gives access to function <em>alt_avalon_spi_command</em> shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">alt_avalon_spi_command</span><span class="p">(</span><span class="n">alt_u32</span><span class="w"> </span><span class="n">base</span><span class="p">,</span><span class="w">  </span><span class="c1">// base address of SPI module in Nios II system</span>
+<span class="w">                            </span><span class="n">alt_u32</span><span class="w"> </span><span class="n">slave</span><span class="p">,</span><span class="w"> </span><span class="c1">// slave select line (0 in for this project)</span>
+<span class="w">                            </span><span class="n">alt_u32</span><span class="w"> </span><span class="n">write_length</span><span class="p">,</span><span class="w"> </span><span class="c1">// number of bytes to write</span>
+<span class="w">                            </span><span class="k">const</span><span class="w"> </span><span class="n">alt_u8</span><span class="o">*</span><span class="w"> </span><span class="n">wdata</span><span class="p">,</span><span class="w"> </span><span class="c1">// pointer to write buffer</span>
+<span class="w">                            </span><span class="n">alt_u32</span><span class="w"> </span><span class="n">read_length</span><span class="p">,</span><span class="w"> </span><span class="c1">// number of bytes to read</span>
+<span class="w">                            </span><span class="n">alt_u8</span><span class="o">*</span><span class="w"> </span><span class="n">read_data</span><span class="p">,</span><span class="w"> </span><span class="c1">// pointer to read buffer</span>
+<span class="w">                            </span><span class="n">alt_u32</span><span class="w"> </span><span class="n">flags</span><span class="p">)</span><span class="w"> </span><span class="c1">// configuration options (0 for this project)</span>
+</pre></div>
+</div>
+<p>This function is described on page 49 in the Embedded Peripherals IP User Guide <span id="id9">[<a class="reference internal" href="../references.html#id11" title="Intel. Embedded Peripherals IP USER Guide. 2021. URL: https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf.">Int21</a>]</span>. It performs a control sequence on the SPI bus. It supports only SPI hosts with a data width less than or equal to 8 bits. A single call to this function writes a data buffer of arbitrary length to the mosi port, and then reads back an arbitrary amount of data from the miso port.</p>
+<p>The driver source files can be found in the <em>/app_bsp/drivers/inc</em> and <em>/app_bsp/drivers/src</em> folders.</p>
+<div class="admonition-hal-alternative-types admonition">
+<p class="admonition-title">HAL alternative types</p>
+<p>For embedded processors it is often important to know the exact width and precision of data. ANSI C data types are supported when writing software for embedded systems but their widths are dependent on the compiler’s convention. For the Nios II hardware abstraction layer these types are defined in the alt_types.h header file that can be located in the HAL/inc folder of the boad support package project. This header types provides the following alternative type definitions:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">char</span><span class="w">  </span><span class="n">alt_8</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w">  </span><span class="n">alt_u8</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">alt_16</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="w"> </span><span class="n">alt_u16</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">alt_32</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">alt_u32</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">alt_64</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">alt_u64</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To declare a 8-bit unsigned variable you can therefore also use:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">alt_u8</span><span class="w"> </span><span class="n">data</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Defining a variable as int, corresponds to signed 32-bit.</p>
+</div>
+</section>
+<section id="adxl345-spi-transaction">
+<h4>ADXL345 SPI transaction<a class="headerlink" href="#adxl345-spi-transaction" title="Permalink to this heading">#</a></h4>
+<p><a class="reference internal" href="#project-spi-module"><span class="std std-ref">Add an SPI module</span></a> shows how the SPI read transaction wave diagram for the ADXL345. The most significant bit is use to set a write (low) or read condition (high). To read or write multiple bytes in one transaction the MB bit must be set to 1.</p>
+<figure class="align-center" id="fig-project-adxl345-read-wave">
+<a class="reference internal image-reference" href="../_images/project_adxl345_read_wave.png"><img alt="../_images/project_adxl345_read_wave.png" src="../_images/project_adxl345_read_wave.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 84 </span><span class="caption-text">An SPI read transaction for the ADXL345. Figure 38 on page 39 in the ADXL345 datasheet <a class="reference external" href="https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf">ADXL345 datasheet</a>. The write transaction can be found on the same page.</span><a class="headerlink" href="#fig-project-adxl345-read-wave" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The ADXL345 can be configured support 3-wire and 4-wire SPI by writing respectively 1 or 0 to the corresponding SPI-bit in the DATA_FORMAT register. Our system has been built to support 4-wire SPI with both the MISO and MOSI ports active. Although the datasheet claims that the default reset value of this register is 0x0, which corresponds to 4-wire SPI, some of you may experience that the DEVID register can not be read back correctly without explicitly also first writing to the DATA_FORMAT register.</p>
+<p>Write the necessary code to first configure the DATA_FORMAT register to set the SPI bit to support 4-wire SPI, and then read back the DEVID register and print the device ID to the terminal. Register addresses are listed in Table 19 in the ADXL345 datasheet <span id="id10">[<a class="reference internal" href="../references.html#id13" title="Analog Devices. ADXL345 Digital Accelerometer datasheet. URL: https://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf.">Devb</a>]</span>.</p>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Tip</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// tx and rx data buffers</span>
+<span class="n">alt_u8</span><span class="w"> </span><span class="n">spi_rx_data</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<span class="n">alt_u8</span><span class="w"> </span><span class="n">spi_tx_data</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">no_bytes</span><span class="p">;</span>
+
+<span class="c1">// ADXL345 command byte configuration</span>
+<span class="c1">// bit 7: RnW (0: Write, 1: Read)</span>
+<span class="c1">// bit 6: For multi byte read or write from the accelerometer</span>
+<span class="c1">// bit 5-0: register address</span>
+
+<span class="c1">// Configure SPI bit in DATA_FORMAT register</span>
+<span class="c1">// bit 7: 0 (Write) </span>
+<span class="c1">// bit 6: Single </span>
+<span class="n">spi_tx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x00</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mh">0x31</span><span class="p">;</span><span class="w"> </span><span class="c1">// Single byte write (cmd byte + 1 data byte) + register address</span>
+<span class="n">spi_tx_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span><span class="w"> </span><span class="c1">// register data to write</span>
+<span class="n">no_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alt_avalon_spi_command</span><span class="p">(</span><span class="n">SPI_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">spi_tx_data</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">spi_rx_data</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// To read device ID register send 0x80</span>
+<span class="n">spi_tx_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x80</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="mh">0x0</span><span class="p">;</span><span class="w"> </span><span class="c1">//Single byte read + address</span>
+<span class="n">no_bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alt_avalon_spi_command</span><span class="p">(</span><span class="n">SPI_BASE</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">spi_tx_data</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">spi_rx_data</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Remember to include the necessary header files.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;alt_types.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;altera_avalon_spi.h&quot;</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-project"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="project_uart.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">P1: UART controller</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data_rate.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">P3: RTOS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware">Hardware</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-designer">Platform designer</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-uart-ip">Creating the UART IP</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-the-uart-module">Add the UART module</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-spi-module">Add an SPI module</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#add-an-interval-timer">Add an Interval Timer</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-pio-interrupt">Update the PIO interrupt</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rebuild-the-hardware">Rebuild the hardware</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-level-vhdl">Top level VHDL</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-spi-interface">Connecting the SPI interface</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-uart">Connecting the UART</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compile-the-quartus-project">Compile the Quartus project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#software">Software</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-board-support-package">Update the board support package</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uart-loopback-test">UART loopback test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-usb-to-uart-cable">Using the USB to UART cable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-test">SPI test</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-driver">SPI driver</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#adxl345-spi-transaction">ADXL345 SPI transaction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,821 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX8: A basic RTOS application &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_rtos_basic_example';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EX9: Semaphore example" href="exercises_rtos_semaphores_example.html" />
+    <link rel="prev" title="RTOS" href="exercises_rtos.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_rtos_basic_example.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX8: A basic RTOS application</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#board-support-package">Board support package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#makefile">Makefile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-code">Application code</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex8-a-basic-rtos-application">
+<span id="exercises-rtos-basic-example"></span><h1>EX8: A basic RTOS application<a class="headerlink" href="#ex8-a-basic-rtos-application" title="Permalink to this heading">#</a></h1>
+<p>In this part you will create a RTOS software application that will run two simple tasks. The job of the two tasks is to write “Hello from task1” and “Hello from task2” to the standard output.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Be able to setup an run a basic <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II RTOS system.</p></li>
+<li><p>Be able to write RTOS task functions.</p></li>
+</ul>
+</div>
+<p>We will use the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II (Micro-controller Operating System version 2) <span id="id1">[<a class="reference internal" href="../references.html#id17" title="The µ/OS RTOS and Stacks. URL: https://weston-embedded.com/micrium-kernels.">uco</a>]</span> developed by Micrium in 1998. It is a priority-based pre-emptive multitasking operating system kernel. This means that it will always run the highest priority task that is ready. The kernel is ported to many processer, e.g., Nios-II, and supports all types from 8-bit to 64-bit.</p>
+<p>As of February 28, 2020, the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II comes with a permissive, open-source license model <a class="reference external" href="https://weston-embedded.com/micrium-licensing">Link</a>.</p>
+<p>A commercial version of the kernel is also available under the name Cesium RTOS. A commercial license includes e.g., technical support. <a class="reference external" href="http://www.sightsys.co.il/product/real-time-operating-systems/cesium-rtos-the-next-commercial-generation-of-micrium-uc-os-ii-uc-os-iii-and-its-options/">Link</a>.</p>
+<p>Another popular open-source real-time operating system for microcontrollers is <a class="reference external" href="https://www.freertos.org">FreeRTOS</a>. Although FreeRTOS also is available for the Nios-II system, <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II comes integrated into the Nios-II software build tools, which makes is very easy to use. We will therefore use <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II in this project.</p>
+<p>The <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II documentation is available as both HTML and PDF here: <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/overview">https://micrium.atlassian.net/wiki/spaces/osiidoc/overview</a>.</p>
+<p>It is recommended to read the chapter on <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163855/Real-Time+Systems+Concepts">real-time system concepts</a>, as well as watching the RTOS related videos available on the FYS4220 webpage page: <a class="reference internal" href="../part-rtos/rtos_intro.html#rtos-intro"><span class="std std-ref">RTOS</span></a>.</p>
+<p>Before you start developing the application, you need to generate the required board support package and Makefile.</p>
+<section id="board-support-package">
+<h2>Board support package<a class="headerlink" href="#board-support-package" title="Permalink to this heading">#</a></h2>
+<p>In <a class="reference internal" href="exercises_nios2_example.html#embedded-software"><span class="std std-ref">Building the Software</span></a> the software application used a board support package that included the basic drivers needed to control and communicate with the hardware platform. In this part we will use board support package which is extended with the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II real-time kernel <span id="id2">[<a class="reference internal" href="../references.html#id17" title="The µ/OS RTOS and Stacks. URL: https://weston-embedded.com/micrium-kernels.">uco</a>]</span>. This BSP provides access to <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II services for time management and task management, and /ntertask communication.</p>
+<p>The Nios-II software build tools already includes the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II real-time kernel. This can be added to the BSP by replacing the second argument used for the <em>nios2-bsp</em> command in <a class="reference internal" href="exercises_nios2_example.html#embedded-bsp"><span class="std std-ref">Board Support Package</span></a> with <em>ucosii</em> as shown below.</p>
+<p>Navigate to the <em>software</em> folder of your project and create the folder <em>app_rtos_bsp</em>.</p>
+<p>Create the board support package using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">bsp</span> <span class="n">ucosii</span> <span class="n">app_rtos_bsp</span> <span class="o">../</span><span class="n">quartus</span><span class="o">/</span><span class="n">nios2_system</span><span class="o">.</span><span class="n">sopcinfo</span>
+</pre></div>
+</div>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>Your microcontroller system needs a timer module for the RTOS to work. This has already been included in the Microcontroller system built for the second part of the Project. It is therefore recommended to use this hardware for this exercise.</p>
+</div>
+</section>
+<section id="makefile">
+<h2>Makefile<a class="headerlink" href="#makefile" title="Permalink to this heading">#</a></h2>
+<p>Under the <em>software</em> folder, create a new folder called <em>app_rtos</em>, and inside this folder a new for the moment empty file called <em>app_rtos.c</em>.</p>
+<p>The Makefile is generated by running the following command from within the <em>software</em> folder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nios2</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">generate</span><span class="o">-</span><span class="n">makefile</span><span class="o">.</span><span class="n">exe</span> <span class="o">--</span><span class="n">bsp</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app_rtos_bsp</span> <span class="o">--</span><span class="n">src</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app_rtos</span> <span class="o">--</span><span class="n">app</span><span class="o">-</span><span class="nb">dir</span> <span class="n">app_rtos</span>
+</pre></div>
+</div>
+<p>Make sure the paths to the board support package folder, source and application folder corresponds to the relevant folders, and not to the folders used for the previous software application developed in <a class="reference internal" href="exercises_nios2_example.html#embedded-software"><span class="std std-ref">Building the Software</span></a>.</p>
+<p>A Makefile should now be avaible inside the <em>app_rtos</em> folder.</p>
+</section>
+<section id="application-code">
+<h2>Application code<a class="headerlink" href="#application-code" title="Permalink to this heading">#</a></h2>
+<p>A <span class="math notranslate nohighlight">\(\mu\)</span>C\OS-II software application consists of the following parts:</p>
+<ul class="simple">
+<li><p>Declaration of individual stack areas and stack priorities for each task</p></li>
+<li><p>The task functions</p></li>
+<li><p>A main function to create the task and start the multi-tasking system.</p></li>
+</ul>
+<p>The stack area area is used by each task to hold the context for the task execution. This includes e.g., the local variables used by the stack as well as the context of any functions called by the task. If a task is preemted, its context is maintained in the task’s stack while the system executes another task. When the other task has completed, the original task executes again and continues from the context stored in its stack.</p>
+<p>The stack space required for each task is not necessarily easy to estimate. It is therfore usual to start with a larger stack space and eventuelly reduce its size as the final system has been developed. E.g., if you call functions from a task, the stack usage will increase when it is active and decrease when it has completed. If a function calls a another function, the stack usage will increase with each nested function. It is therefore important to profile the stack usage during the development to optimize the stack size.</p>
+<p>For the <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II the stack must be declared of the type <em>OS_STK</em> and must consit of contiguous memory locations. The declaration is made outside a function.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">OS_STK</span><span class="w"> </span><span class="n">MyTaskStack</span><span class="p">[</span><span class="n">stack_size</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>The <em>OS_STK</em> is availble when including the <em>includes.h</em> header from the board support package</p>
+<div class="dropdown admonition">
+<p class="admonition-title">include.h</p>
+<p>The <em>includes.h</em> can be found in the <em>software/app_rtos_bsp/HAL/inc</em> folder. It again includes header files relevant for using <span class="math notranslate nohighlight">\(\mu\)</span>OS-II.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __INCLUDES_H__</span>
+<span class="cp">#define __INCLUDES_H__</span>
+
+<span class="cm">/*</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*                                                uC/OS-II</span>
+<span class="cm">*                                          The Real-Time Kernel</span>
+<span class="cm">*</span>
+<span class="cm">*                        (c) Copyright 1992-1998, Jean J. Labrosse, Plantation, FL</span>
+<span class="cm">*                                           All Rights Reserved</span>
+<span class="cm">*</span>
+<span class="cm">*                                           MASTER INCLUDE FILE</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*/</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span>
+<span class="p">{</span>
+<span class="cp">#endif </span><span class="cm">/* __cplusplus */</span>
+
+<span class="cp">#include</span><span class="w">    </span><span class="cpf">&quot;os_cpu.h&quot;</span>
+<span class="cp">#include</span><span class="w">    </span><span class="cpf">&quot;os_cfg.h&quot;</span>
+<span class="cp">#include</span><span class="w">    </span><span class="cpf">&quot;ucos_ii.h&quot;</span>
+
+<span class="cp">#ifdef      ONT_GLOBALS</span>
+<span class="cp">#define     ONT_EXT</span>
+<span class="cp">#else</span>
+<span class="cp">#define     ONT_EXT  extern</span>
+<span class="cp">#endif</span>
+
+<span class="cm">/*</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*                                             DATA TYPES</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*/</span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w">    </span><span class="n">TaskName</span><span class="p">[</span><span class="mi">30</span><span class="p">];</span>
+<span class="w">    </span><span class="n">INT16U</span><span class="w">  </span><span class="n">TaskCtr</span><span class="p">;</span>
+<span class="w">    </span><span class="n">INT16U</span><span class="w">  </span><span class="n">TaskExecTime</span><span class="p">;</span>
+<span class="w">    </span><span class="n">INT32U</span><span class="w">  </span><span class="n">TaskTotExecTime</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">TASK_USER_DATA</span><span class="p">;</span>
+
+<span class="cm">/*</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*                                              VARIABLES</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*/</span>
+
+<span class="n">ONT_EXT</span><span class="w">  </span><span class="n">TASK_USER_DATA</span><span class="w">  </span><span class="n">TaskUserData</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+
+<span class="cm">/*</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*                                         FUNCTION PROTOTYPES</span>
+<span class="cm">*********************************************************************************************************</span>
+<span class="cm">*/</span>
+
+<span class="kt">void</span><span class="w">   </span><span class="nf">DispTaskStat</span><span class="p">(</span><span class="n">INT8U</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>
+<span class="cp">#endif </span><span class="cm">/* __cplusplus */</span>
+
+<span class="cp">#endif </span><span class="cm">/* __INCLUDES_H__ */</span>
+</pre></div>
+</div>
+</div>
+<p>The example below shows an example where the stack aread has been declared for two tasks. The definition of the task priorities is also included.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;includes.h&quot;</span>
+
+<span class="cm">/* Definition of Task stacks */</span>
+<span class="cp">#define TASK_STACKSIZE 2048  </span><span class="c1">// Number of 32 bit words (e.g. 8192 bytes)</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+
+<span class="cp">#define TASK1_PRIORITY 4</span>
+<span class="cp">#define TASK2_PRIORITY 5</span>
+</pre></div>
+</div>
+<p>More information about the task stack can be found in the <span class="math notranslate nohighlight">\(uC/OS-II\)</span> documentation <span id="id3">[<a class="reference internal" href="../references.html#id16" title="Micrium. µC/OS-II Documentation. URL: https://micrium.atlassian.net/wiki/spaces/osiidoc/overview.">Mic</a>]</span>. <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163900/Task+Management#TaskManagement-TaskStacks">Direct link</a>.</p>
+<p>In addition to the stack area, you need to write the task functions. A task is typically an infinite loop function as shown below:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>void YourTask (void *pdata)                                            
+{
+   for (;;) {                                                          
+	  /* USER CODE */
+	  Call one of uC/OS-II&#39;s services:
+	  OSFlagPend();
+	  OSMboxPend();
+	  OSMutexPend();
+	  OSQPend();
+	  OSSemPend();
+	  OSTaskDel(OS_PRIO_SELF);
+	  OSTaskSuspend(OS_PRIO_SELF);
+	  OSTimeDly();
+	  OSTimeDlyHMSM();
+	  /* USER CODE */
+   }
+}
+</pre></div>
+</div>
+<p>The example uses a <em>for</em> statement , but you could also use a <em>while(1)</em> statement.</p>
+<p>A task looks like any other c function containing a return type and argument. However, since the task function is a continuous loop that is not meant to return any value, the return type must be declared <em>void</em>. An argument is passed to the code when the task first runs. Notice that the argument is a pointer to <em>void</em>, which means that an kind of data kan be passed to the task. The data to pass to the function is specified when the task is created and registerd with the multi-tasking system.  In this project we will not pass any data to the function.</p>
+<p>A task can be thought of as function that beleives it has the CPU to itself. In a multi-tasking system it is therefore importent to provide a mechanism for switching between tasks. The is referred to as a context switch and is taken care of by the schedular in the system.</p>
+<p>The task is either in an active state where it is being executed by the CPU, or it can be in various inactive state where it is e.g., is waiting for an event or for the schedular to active the task. The various task states for <span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II are described <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/pages/163854/Kernel+Structure#KernelStructure-TaskStates">here</a> and shown in <a class="reference internal" href="#fig-rtos-ucosii-task-states"><span class="std std-numref">Fig. 44</span></a>.</p>
+<figure class="align-center" id="fig-rtos-ucosii-task-states">
+<a class="reference internal image-reference" href="../_images/rtos_ucosii_task_states.png"><img alt="../_images/rtos_ucosii_task_states.png" src="../_images/rtos_ucosii_task_states.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">The various task states a <span class="math notranslate nohighlight">\(\mu\)</span>C/-II task. Figure from the <a class="reference external" href="https://micrium.atlassian.net/wiki/spaces/osiidoc/overview"><span class="math notranslate nohighlight">\(\mu\)</span>C/OS-II manual</a>.</span><a class="headerlink" href="#fig-rtos-ucosii-task-states" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For a task to give up its use of the CPU, it needs to include a call to a function that blocks the execution of the task for a short moment. The list of functions that can be used for this purpose is shown in the example above. These functions are use to either wait for a given event or to block the execution of the task for a specified time period. While the task is blocked, the schedular can evaluate whether another task has higher priority and needs to run. If the task is never block, it will run continuously and never allow any other task to run.</p>
+<p>The example below shows the function description for a task called <em>task1</em> that prints to the standart output and then block for specified time using the <em>OSTimeDlyHMSM</em> function. In this case it blocks for 3 seconds. As a result the task will print to the standard output every 3 seconds.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from task1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// (hours, minutes, seconds, milliseconds)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>After declaring the task stack sizes, the task priorities, and the tasks functions, the only thing left to to is to register the task to run in the system and to start the multi-tasking system. This is done within the <em>main</em>-function as shown in the example below for <em>task1</em>.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/* The main function creates two task and starts multi-tasking */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">//Create the task</span>
+<span class="w">    </span><span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task1</span><span class="p">,</span><span class="w"> </span><span class="c1">//Pointer to task function</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// pointer to argument that is passed to task</span>
+<span class="w">                </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="c1">// Pointer to top of task stack</span>
+<span class="w">                </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task priority</span>
+<span class="w">                </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task ID - same as priority</span>
+<span class="w">                </span><span class="n">task1_stk</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to bottom of task stack</span>
+<span class="w">                </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span><span class="w"> </span><span class="c1">// Stacksize</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to user supplied memory</span>
+<span class="w">                </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Various task options</span>
+
+<span class="w">    </span><span class="c1">//Start the multi-tasking system.</span>
+<span class="w">    </span><span class="n">OSStart</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To complete the application add the code to describe the second task called <em>task2</em> that will also print to the standard output very 3 seconds. Store the code in the <em>app_rtos.c</em> file. Compile the code and download it to the microcontroller system running on the FPGA. Connect to the JTAG UART using the <em>nios2-terminal</em> application to see a result similar to what is shown below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-terminal.exe
+nios2-terminal: connected to hardware target using JTAG UART on cable
+nios2-terminal: &quot;USB-Blaster [USB-0]&quot;, device 1, instance 0
+nios2-terminal: (Use the IDE stop button or Ctrl-C to terminate)
+
+Hello from Task1
+Hello from Task2
+Hello from Task1
+Hello from Task2
+Hello from Task1
+Hello from Task2
+Hello from Task1
+Hello from Task2
+Hello from Task1
+Hello from Task2
+Hello from Task1
+Hello from Task2
+Hello from Task1
+</pre></div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Complete code example</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;includes.h&quot;</span>
+
+<span class="cm">/* Definition of Task stacks */</span>
+<span class="cp">#define TASK_STACKSIZE 2048  </span><span class="c1">// Number of 32 bit words (e.g. 8192 bytes)</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+<span class="n">OS_STK</span><span class="w"> </span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="p">];</span>
+
+<span class="cp">#define TASK1_PRIORITY 4</span>
+<span class="cp">#define TASK2_PRIORITY 5</span>
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task1</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from task1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// (hours, minutes, seconds, milliseconds)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">task2</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pdata</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello from task2</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">OSTimeDlyHMSM</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="c1">// (hours, minutes, seconds, milliseconds)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* The main function creates two task and starts multi-tasking */</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span><span class="w">   </span>
+<span class="w">    </span><span class="c1">//Create the task</span>
+<span class="w">    </span><span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task1</span><span class="p">,</span><span class="w"> </span><span class="c1">//Pointer to task function</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// pointer to argument that is passed to task</span>
+<span class="w">                </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task1_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="c1">// Pointer to top of task stack</span>
+<span class="w">                </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task priority</span>
+<span class="w">                </span><span class="n">TASK1_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task ID - same as priority</span>
+<span class="w">                </span><span class="n">task1_stk</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to bottom of task stack</span>
+<span class="w">                </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span><span class="w"> </span><span class="c1">// Stacksize</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to user supplied memory</span>
+<span class="w">                </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Various task options</span>
+
+<span class="w">    </span><span class="c1">//Create the task</span>
+<span class="w">    </span><span class="n">OSTaskCreateExt</span><span class="p">(</span><span class="n">task2</span><span class="p">,</span><span class="w"> </span><span class="c1">//Pointer to task function</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// pointer to argument that is passed to task</span>
+<span class="w">                </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">task2_stk</span><span class="p">[</span><span class="n">TASK_STACKSIZE</span><span class="mi">-1</span><span class="p">],</span><span class="w"> </span><span class="c1">// Pointer to top of task stack</span>
+<span class="w">                </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task priority</span>
+<span class="w">                </span><span class="n">TASK2_PRIORITY</span><span class="p">,</span><span class="w"> </span><span class="c1">// Task ID - same as priority</span>
+<span class="w">                </span><span class="n">task2_stk</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to bottom of task stack</span>
+<span class="w">                </span><span class="n">TASK_STACKSIZE</span><span class="p">,</span><span class="w"> </span><span class="c1">// Stacksize</span>
+<span class="w">                </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="c1">// Pointer to user supplied memory</span>
+<span class="w">                </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// Various task options</span>
+
+<span class="w">    </span><span class="c1">//Start the multi-tasking system.</span>
+<span class="w">    </span><span class="n">OSStart</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span>
+<span class="p">}</span>
+
+
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_rtos.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">RTOS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_rtos_semaphores_example.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EX9: Semaphore example</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#board-support-package">Board support package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#makefile">Makefile</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-code">Application code</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

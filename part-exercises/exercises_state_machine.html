@@ -1,0 +1,729 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX4: State machine &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_state_machine';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Embedded systems" href="exercises_embedded.html" />
+    <link rel="prev" title="EX3: 4-bit up-counter" href="exercises_counter.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_state_machine.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX4: State machine</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-based-simulation">Script based simulation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex4-state-machine">
+<span id="exercises-state-machine"></span><h1>EX4: State machine<a class="headerlink" href="#ex4-state-machine" title="Permalink to this heading">#</a></h1>
+<p>In this exercise you will design state machine to control the transmission of data for the UART transceiver that you need for the embedded system project in this course.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>To be able to describe and simulate a simple finite state machine in VHDL.</p></li>
+<li><p>To be able to run simulations in Modelsim using scripting commands.</p></li>
+</ul>
+</div>
+<p>The state machine itself is rather simple with only two states as shown in the state diagram in <a class="reference internal" href="#fig-exercise-fsm-tx-uart-sd"><span class="std std-numref">Fig. 27</span></a>. The state machine is activated on a high level of the signal <code class="docutils literal notranslate"><span class="pre">tx_data_valid</span></code> and changes to the <em>sTRANSMIST</em> state. In this state the state machine signals that the system is busy and waits for a high level on the signal <code class="docutils literal notranslate"><span class="pre">tx_complete</span></code>, which indicates that the transmission has completed, and that the state machine can return to the <em>sIDLE</em> state. The two control signals <code class="docutils literal notranslate"><span class="pre">tx_data_valid</span></code> and <code class="docutils literal notranslate"><span class="pre">tx_complete</span></code> are controlled by other modules that will be introduced later. Reset is asynchronous and active low; <em>a</em> and <em>_n</em> in <em>areset_n</em>.</p>
+<figure class="align-center" id="fig-exercise-fsm-tx-uart-sd">
+<a class="reference internal image-reference" href="../_images/fsm_tx_uart_sd.gv.png"><img alt="../_images/fsm_tx_uart_sd.gv.png" src="../_images/fsm_tx_uart_sd.gv.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">State diagram for the TX UART FSM.</span><a class="headerlink" href="#fig-exercise-fsm-tx-uart-sd" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Design the state machine and verify the correct behaviour through simulation in Modelsim. This exercise will not be tested in hardware.</p>
+<p>The suggested top level entity connections are listed in <a class="reference internal" href="#tab-tx-fsm-entity"><span class="std std-numref">Table 1</span></a>. You are free to choose your own names for entities and signals, but it will be easier to follow the description and use any provided code or scripts if you follow the suggested names.</p>
+<table class="table" id="tab-tx-fsm-entity">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Top level entity signals for the module <em>tx_fsm.vhd</em>.</span><a class="headerlink" href="#tab-tx-fsm-entity" title="Permalink to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Direction</p></th>
+<th class="head"><p>Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>clk</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+</tr>
+<tr class="row-odd"><td><p>areset_n</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+</tr>
+<tr class="row-even"><td><p>tx_data_valid</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+</tr>
+<tr class="row-odd"><td><p>tx_complete</p></td>
+<td><p>in</p></td>
+<td><p>std_logic</p></td>
+</tr>
+<tr class="row-even"><td><p>tx_enable</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+</tr>
+<tr class="row-odd"><td><p>tx_busy</p></td>
+<td><p>out</p></td>
+<td><p>std_logic</p></td>
+</tr>
+</tbody>
+</table>
+<p>When setting up the test conditions in the test bench, the inputs <em>tx_data_valid</em> and <em>tx_complete</em> signals shall be assumed to be synchronous to the clock and have a duration of one single clock cycle. Creating a single clock cycle pulse which is synchronous to the clock can be achieved with the following statements.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">);</span>
+<span class="n">tx_data_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="k">wait</span><span class="w"> </span><span class="k">until</span><span class="w"> </span><span class="n">rising_edge</span><span class="p">(</span><span class="n">clk</span><span class="p">);</span>
+<span class="n">tx_data_valid</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="#fig-fsm-tx-uart-test-condition"><span class="std std-numref">Fig. 28</span></a> shows an example behaviour of the input test signals.</p>
+<figure class="align-center" id="fig-fsm-tx-uart-test-condition">
+<a class="reference internal image-reference" href="../_images/wave_fsm_tx_uart_test_condition.png"><img alt="../_images/wave_fsm_tx_uart_test_condition.png" src="../_images/wave_fsm_tx_uart_test_condition.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Test signals for the state machine.</span><a class="headerlink" href="#fig-fsm-tx-uart-test-condition" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="script-based-simulation">
+<h2>Script based simulation<a class="headerlink" href="#script-based-simulation" title="Permalink to this heading">#</a></h2>
+<p>Until now, you have run your simulations from Modelsim in a manual fashion, using mouse to perform relevant actions such as compile the code, start the simulation, add signals to the wave diagram. This works fine, but in the long run and for more complex designs, it is highly recommended to use a command and script based approach where the relevant commands can be typed and run directly in Modelsim’s Transcript window, or collected and grouped in one or several script files. The simulation can then be automated by simply calling the script file from the Transcript window.</p>
+<p>The most relevant commands to learn are listed and explained below:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># The vlib command creates the work library into which all your code</span>
+<span class="c"># will be compiled. This is also creates a folder with the </span>
+<span class="c"># same name inside the directory where you run the command</span>
+<span class="nv">vlib</span><span class="w"> </span>work
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># The vmap command maps the logical work library with the</span>
+<span class="c"># folder of the same name in your file system</span>
+<span class="nv">vmap</span><span class="w"> </span>work<span class="w"> </span>work
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># The vcom command compiles your code. Add the -2008</span>
+<span class="c"># argument to compile using VHDL-2008. Provide the</span>
+<span class="c"># path to the file you want to compile relative to the </span>
+<span class="c"># folder from which you run the command</span>
+<span class="c"># Remember that the files need to be compiled in the</span>
+<span class="c"># correct order.</span>
+<span class="nv">vcom</span><span class="w"> </span><span class="o">-</span><span class="mi">2008</span><span class="w"> </span>..<span class="o">/</span>src<span class="o">/</span>tx_fsm.vhd
+<span class="nv">vcom</span><span class="w"> </span><span class="o">-</span><span class="mi">2008</span><span class="w"> </span>..<span class="o">/</span>tb<span class="o">/</span>tx_fsm_tb.vhd
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># To start the simulation you use the command vsim. </span>
+<span class="c"># The argument to the command is the design entity you</span>
+<span class="c"># want to simulation. This is usually the testbench</span>
+<span class="nv">vsim</span><span class="w"> </span>tx_fsm_tb
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Open wave window</span>
+<span class="nv">view</span><span class="w"> </span>wave<span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Delete all waves </span>
+<span class="nv">delete</span><span class="w"> </span>wave<span class="w"> </span><span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># add waves and dividers. The label argument </span>
+<span class="c"># is optional. If not applied, the full path of the </span>
+<span class="c"># signal will be use. </span>
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>divider<span class="w"> </span>TX_FSM_TB
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>clk<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>clk
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>areset_n<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>areset_n
+
+<span class="c"># To access signals in submodules, use the </span>
+<span class="c"># label name given when instantiating the modules,</span>
+<span class="c"># e.g., dut.</span>
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>divider<span class="w"> </span>TX_FSM
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_data_valid<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_data_valid
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_complete<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_complete
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_enable<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_enable
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_busy<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_busy
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>state<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>state
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Run the complete simulation</span>
+<span class="nv">run</span><span class="w"> </span><span class="o">-</span>all
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span># Restart the simulation reloading any changes after a recompilation of the code
+restart 
+# A pop-up window will open and ask you to confirm to keep all settings. 
+# To automatically accept add the flag -f
+restart -f
+</pre></div>
+</div>
+<p>I recommend to split the commands into separate files depending on their function. This allows you to easily rerun only the relevant part during development and debugging. E.g., to avoid quitting and restarting the simulation when you change your design, your only rerun the commands that will recompile your code. A suggested setup is shown below:</p>
+<p>Add commands related to compilation in a file called <em><a class="reference external" href="http://compile.do">compile.do</a></em>.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="c"># Filename: compile.do</span>
+<span class="nv">vlib</span><span class="w"> </span>work
+<span class="nv">vmap</span><span class="w"> </span>work<span class="w"> </span>work
+<span class="nv">vcom</span><span class="w"> </span><span class="o">-</span><span class="mi">2008</span><span class="w"> </span>..<span class="o">/</span>src<span class="o">/</span>tx_fsm.vhd
+<span class="nv">vcom</span><span class="w"> </span><span class="o">-</span><span class="mi">2008</span><span class="w"> </span>..<span class="o">/</span>tb<span class="o">/</span>tx_fsm_tb.vhd
+</pre></div>
+</div>
+<p>Add commands related to populating the wave diagram in a file called <em><a class="reference external" href="http://wave.do">wave.do</a></em>.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">view</span><span class="w"> </span>wave<span class="w"> </span>
+delete<span class="w"> </span>wave<span class="w"> </span><span class="o">*</span>
+
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>divider<span class="w"> </span>TX_FSM_TB
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>clk<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>clk
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>areset_n<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>areset_n
+
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>divider<span class="w"> </span>TX_FSM
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_data_valid<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_data_valid
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_complete<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_complete
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_enable<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_enable
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>tx_busy<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>tx_busy
+<span class="nv">add</span><span class="w"> </span>wave<span class="w"> </span><span class="o">-</span>label<span class="w"> </span>state<span class="w"> </span><span class="o">/</span>tx_fsm_tb<span class="o">/</span>dut<span class="o">/</span>state
+</pre></div>
+</div>
+<p>You can run the script files in the Modelsim Transcript window by writin <em>do</em> and then the filename, e.g.,:</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">do</span><span class="w"> </span>compile.do
+</pre></div>
+</div>
+<p>Create a file than automates the full process.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">do</span><span class="w"> </span>compile.do
+<span class="nv">vsim</span><span class="w"> </span>tx_fsm_tb
+<span class="nv">do</span><span class="w"> </span>wave.do
+<span class="nv">run</span><span class="w"> </span><span class="o">-</span>all
+</pre></div>
+</div>
+<p>You can now run the individual files depending on the need. A typical scenario would be that you have made a small change to your code and want to recompile and rerun the simulation. You would then like to avoid calling the <em>vsim</em> command which makes a full reinitialization and restart of your simulation – with all the mad blinking of Modelsim windows!
+Instead, call the <em><a class="reference external" href="http://compile.do">compile.do</a></em> script and restart the simulation with the <code class="docutils literal notranslate"><span class="pre">restart</span> <span class="pre">-f</span></code> command.</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">do</span><span class="w"> </span>compile.do
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">restart</span><span class="w"> </span><span class="o">-</span>f
+</pre></div>
+</div>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">run</span><span class="w"> </span><span class="o">-</span>all
+</pre></div>
+</div>
+<p>You can combine commands by separating them with a semicolon.&#64;</p>
+<div class="highlight-tcl notranslate"><div class="highlight"><pre><span></span><span class="nv">do</span><span class="w"> </span>compile.do<span class="w"> </span><span class="k">;</span><span class="w"> </span><span class="nv">restart</span><span class="w"> </span><span class="o">-</span>f<span class="w"> </span><span class="k">;</span><span class="w"> </span><span class="nv">run</span><span class="w"> </span><span class="o">-</span>all
+</pre></div>
+</div>
+<p>I would also recommend to organize the various files in different folders according to their function as shown in <a class="reference internal" href="#fig-exercises-tree-folder"><span class="std std-numref">Fig. 29</span></a>. E.g., simulation script files in the <em>sim</em> folder, HDL design files in <em>src</em> and HDL test bench files in <em>tb</em>.</p>
+<figure class="align-center" id="fig-exercises-tree-folder">
+<a class="reference internal image-reference" href="../_images/exercises_tree_folder.png"><img alt="../_images/exercises_tree_folder.png" src="../_images/exercises_tree_folder.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">A suggested folder structure.</span><a class="headerlink" href="#fig-exercises-tree-folder" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<!--
+Navigating to the simulation folder in Modelsim and running the simulation from there you will have to provide the relative path the script file.
+
+```{code-block} tcl
+do ../scripts/compile_and_run.do
+```
+
+-->
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_counter.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EX3: 4-bit up-counter</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_embedded.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Embedded systems</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#script-based-simulation">Script based simulation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

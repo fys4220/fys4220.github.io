@@ -1,0 +1,1148 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>EX6: Accessing Nios II memory mapped modules &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-exercises/exercises_memory_mapped_sw';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EX7: Nios II interrupt handling" href="exercises_nios2_interrupt.html" />
+    <link rel="prev" title="EX5: A basic Nios II system" href="exercises_nios2_example.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-vhdl/vhdl.html">2. VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_testbenches.html">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-vhdl/vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="exercises_embedded.html">Embedded systems</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-exercises/exercises_memory_mapped_sw.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EX6: Accessing Nios II memory mapped modules</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-pio-cores">Adding the PIO cores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-top-level-hdl">Updating the top level HDL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-bsp">Updating the BSP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nios-ii-hal-macro">Nios II HAL macro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-software">Update software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-register-access-options">Additional register access options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-register-access">Direct register access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pio-macros">PIO macros</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ex6-accessing-nios-ii-memory-mapped-modules">
+<span id="exercises-memory-mapped-sw"></span><h1>EX6: Accessing Nios II memory mapped modules<a class="headerlink" href="#ex6-accessing-nios-ii-memory-mapped-modules" title="Permalink to this heading">#</a></h1>
+<p>In this part we will look closer at how we from software can access and control a memory mapped module in the Nios II system.</p>
+<div class="admonition-the-learning-outcome-of-this-problem-is-to admonition">
+<p class="admonition-title">The learning outcome of this problem is to:</p>
+<ul class="simple">
+<li><p>Be able to write and read data from memory mapped peripherals.</p></li>
+<li><p>Be able to use the PIO module to access external resources such as LEDs and switches.</p></li>
+</ul>
+</div>
+<p>For this purpose we can use the PIO (Parallel Input/Output) IP core. This core can provide general purpose input and output (GPIO) access to peripherals. These I/O ports can connect either to on-chip user logic, or to I/O pins that connect to devices external to the FPGA. For the example presented here we will use the PIO to acquire data from switches and to control LEDs, as shown in <a class="reference internal" href="#fig-embedded-basic-nios2-system-with-pio"><span class="std std-numref">Fig. 35</span></a>.</p>
+<figure class="align-center" id="fig-embedded-basic-nios2-system-with-pio">
+<a class="reference internal image-reference" href="../_images/embedded_basic_nios2_system_with_pio.png"><img alt="../_images/embedded_basic_nios2_system_with_pio.png" src="../_images/embedded_basic_nios2_system_with_pio.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Simplified overview of a basic Nios II system with PIO cores.</span><a class="headerlink" href="#fig-embedded-basic-nios2-system-with-pio" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The PIO module can also be used to assert an interrupt to the CPU based on input signals. This will be explored and demonstrated in <a class="reference internal" href="../part-embedded/embedded_interrupt.html#embedded-interrupt"><span class="std std-numref">Section 3.6</span></a>.</p>
+<div class="admonition-tip admonition">
+<p class="admonition-title">Tip</p>
+<p>More information on available IP cores can be found in the Intel <a class="reference external" href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf">Embedded Peripherals IP User Guide</a> <span id="id1">[<a class="reference internal" href="../references.html#id11" title="Intel. Embedded Peripherals IP USER Guide. 2021. URL: https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf.">Int21</a>]</span>. The PIO core is described in chapter 27 on page 307.</p>
+</div>
+<div class="admonition-example-code-on-github admonition">
+<p class="admonition-title">Example code on Github</p>
+<p>The code for this example can be found here: <a class="github reference external" href="https://github.com/fys4220/fys4220_nios2_example">fys4220/fys4220_nios2_example</a></p>
+</div>
+<section id="adding-the-pio-cores">
+<h2>Adding the PIO cores<a class="headerlink" href="#adding-the-pio-cores" title="Permalink to this heading">#</a></h2>
+<p>Open the <em>nios2_system.qsys</em> from <a class="reference internal" href="exercises_nios2_example.html#exercises-nios2-example"><span class="std std-ref">EX5: A basic Nios II system</span></a> in Platform Designer. From the IP catalog, add a PIO core.</p>
+<p>Each PIO core can provide upt to 32 I/O ports which can be configured either as intput or output or both. In this example we will use two PIO cores, one with 10 inputs connected to the slide switches, and one with 10 ouputs connected to the LEDs. Name the two PIOs <em>pio_sw</em> and <em>pio_led</em>. Configure the widht of the two PIOs to be 10 bits, and set the direction according to each PIO core’s operation. See example in <a class="reference internal" href="#fig-embedded-pio-input"><span class="std std-numref">Fig. 36</span></a>.</p>
+<figure class="align-center" id="fig-embedded-pio-input">
+<a class="reference internal image-reference" href="../_images/embedded_pio_input.png"><img alt="../_images/embedded_pio_input.png" src="../_images/embedded_pio_input.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">Example for PIO core configures as a 10 bit wide input.</span><a class="headerlink" href="#fig-embedded-pio-input" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Complete the both components interface connections, connecting to them to data interface of the CPU and to the clock and reset interface of the clock source.</p>
+<p>Since the PIO components will be used to connect to FPGA hardware outside of the Nios-II system, the external connection interface has to be exported correctly. This can be done by double clicking the corresponding location in the Export column. Keep the default suggested names of led_pio_external_connection and sw_pio_external_connection.</p>
+<p>Remember to remove and errors related to overlapping addresses by automatically assigned the base address for the newly integrated PIO cores (System–&gt;Assign Base Address). The system should now look similar to <a class="reference internal" href="#fig-embedded-system-with-pio"><span class="std std-numref">Fig. 37</span></a>.</p>
+<figure class="align-center" id="fig-embedded-system-with-pio">
+<a class="reference internal image-reference" href="../_images/embedded_system_with_pio.png"><img alt="../_images/embedded_system_with_pio.png" src="../_images/embedded_system_with_pio.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Nios II system with PIO cores.</span><a class="headerlink" href="#fig-embedded-system-with-pio" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Save and regenerated the HDL description of the system. This will update the HDL files found in the <em>nios2_system</em> folder as well as the <em>nios2_system.sopc</em> and <em>nios2_system.qsys</em> files.</p>
+</section>
+<section id="updating-the-top-level-hdl">
+<h2>Updating the top level HDL<a class="headerlink" href="#updating-the-top-level-hdl" title="Permalink to this heading">#</a></h2>
+<p>With the two PIO cores added to the system, it is necessary to also update the top level HDL description with the added external connections to the LEDs and switches. The updated instantiation template can be viewed from (Generate–&gt;Show Instantiation Template). Or from the files <em>nios2_system/nios2_system_inst.vhd</em>. Add the additional ports and connect the top level ports to the respective ports on the Nios II system.</p>
+<p>Remember to also add the relevant pin assignments for the LEDs and slide switches in the pinning assigment file. Run the updated Tcl-script to assign the pins.</p>
+<p>Recompile the Quartus project to generate a new programming file with the updated system.</p>
+</section>
+<section id="updating-the-bsp">
+<h2>Updating the BSP<a class="headerlink" href="#updating-the-bsp" title="Permalink to this heading">#</a></h2>
+<p>Whenever the hardware description of the microcontroller system is modified, the corresponding board support package must also be updated to reflect these change. This can be done by regenerating the BSP project using the command demonstrated in <a class="reference internal" href="exercises_nios2_example.html#embedded-bsp"><span class="std std-ref">Board Support Package</span></a>. Navigate to the <em>software</em> folder and type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nios2-bsp hal app_bsp ../quartus/nios2_system.sopcinfo
+</pre></div>
+</div>
+</section>
+<section id="nios-ii-hal-macro">
+<h2>Nios II HAL macro<a class="headerlink" href="#nios-ii-hal-macro" title="Permalink to this heading">#</a></h2>
+<p>To access a memory mapped module of the Nios II system, its low level interface needs to be specified as part of the hardware abstraction layer. A driver may not be provided for all modules, but as a minium all modules must have a header file that defines the the low level interface. Therefore, all modules support the hardware abstraction layer to some extent. If drivers are not available, the definitions in the header file must be used to access the hardware.</p>
+<p>The most basic method to access a memory mapped module is through the HAL macros provided in the <em>io.h</em> header file of the BSP.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">io.h</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span>
+<span class="cp">#ifndef __IO_H__</span>
+<span class="cp">#define __IO_H__</span>
+
+<span class="cm">/******************************************************************************</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* License Agreement                                                           *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* Copyright (c) 2003 Altera Corporation, San Jose, California, USA.           *</span>
+<span class="cm">* All rights reserved.                                                        *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* Permission is hereby granted, free of charge, to any person obtaining a     *</span>
+<span class="cm">* copy of this software and associated documentation files (the &quot;Software&quot;),  *</span>
+<span class="cm">* to deal in the Software without restriction, including without limitation   *</span>
+<span class="cm">* the rights to use, copy, modify, merge, publish, distribute, sublicense,    *</span>
+<span class="cm">* and/or sell copies of the Software, and to permit persons to whom the       *</span>
+<span class="cm">* Software is furnished to do so, subject to the following conditions:        *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* The above copyright notice and this permission notice shall be included in  *</span>
+<span class="cm">* all copies or substantial portions of the Software.                         *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR  *</span>
+<span class="cm">* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,    *</span>
+<span class="cm">* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE *</span>
+<span class="cm">* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER      *</span>
+<span class="cm">* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING     *</span>
+<span class="cm">* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER         *</span>
+<span class="cm">* DEALINGS IN THE SOFTWARE.                                                   *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* This agreement shall be governed in all respects by the laws of the State   *</span>
+<span class="cm">* of California and by the laws of the United States of America.              *</span>
+<span class="cm">*                                                                             *</span>
+<span class="cm">* Altera does not recommend, suggest or require that this reference design    *</span>
+<span class="cm">* file be used in conjunction or combination with any other product.          *</span>
+<span class="cm">******************************************************************************/</span>
+
+<span class="cm">/* IO Header file for Nios II Toolchain */</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;alt_types.h&quot;</span>
+<span class="cp">#ifdef __cplusplus</span>
+<span class="k">extern</span><span class="w"> </span><span class="s">&quot;C&quot;</span>
+<span class="p">{</span>
+<span class="cp">#endif </span><span class="cm">/* __cplusplus */</span>
+
+<span class="cp">#ifndef SYSTEM_BUS_WIDTH</span>
+<span class="cp">#define SYSTEM_BUS_WIDTH 32</span>
+<span class="cp">#endif</span>
+
+<span class="cm">/* Dynamic bus access functions */</span>
+
+<span class="cp">#define __IO_CALC_ADDRESS_DYNAMIC(BASE, OFFSET) \</span>
+<span class="cp">  ((void *)(((alt_u8*)BASE) + (OFFSET)))</span>
+
+<span class="cp">#define IORD_32DIRECT(BASE, OFFSET) \</span>
+<span class="cp">  __builtin_ldwio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)))</span>
+<span class="cp">#define IORD_16DIRECT(BASE, OFFSET) \</span>
+<span class="cp">  __builtin_ldhuio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)))</span>
+<span class="cp">#define IORD_8DIRECT(BASE, OFFSET) \</span>
+<span class="cp">  __builtin_ldbuio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)))</span>
+
+<span class="cp">#define IOWR_32DIRECT(BASE, OFFSET, DATA) \</span>
+<span class="cp">  __builtin_stwio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)), (DATA))</span>
+<span class="cp">#define IOWR_16DIRECT(BASE, OFFSET, DATA) \</span>
+<span class="cp">  __builtin_sthio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)), (DATA))</span>
+<span class="cp">#define IOWR_8DIRECT(BASE, OFFSET, DATA) \</span>
+<span class="cp">  __builtin_stbio (__IO_CALC_ADDRESS_DYNAMIC ((BASE), (OFFSET)), (DATA))</span>
+
+<span class="cm">/* Native bus access functions */</span>
+
+<span class="cp">#define __IO_CALC_ADDRESS_NATIVE(BASE, REGNUM) \</span>
+<span class="cp">  ((void *)(((alt_u8*)BASE) + ((REGNUM) * (SYSTEM_BUS_WIDTH/8))))</span>
+
+<span class="cp">#define IORD(BASE, REGNUM) \</span>
+<span class="cp">  __builtin_ldwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)))</span>
+<span class="cp">#define IOWR(BASE, REGNUM, DATA) \</span>
+<span class="cp">  __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))</span>
+
+<span class="cp">#ifdef __cplusplus</span>
+<span class="p">}</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#endif </span><span class="cm">/* __IO_H__ */</span>
+</pre></div>
+</div>
+</div>
+<p>This file can be located in the <em>HAL/inc</em> folder of your BSP project and amongst others it provides the following macro functions. For more information about how to define macro objects and functions see section <a class="reference external" href="https://publications.gbdirect.co.uk/c_book/chapter7/directives.html">7.3</a> in <span id="id2">[<a class="reference internal" href="../references.html#id8" title="M. Banahan, D. Brady, and M. Moran. The C book. Addison Wesley, 1991. URL: https://publications.gbdirect.co.uk/c_book/.">BBM91</a>]</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IORD</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">)</span>
+<span class="n">IOWR</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">,</span> <span class="n">DATA</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>IORD</strong>: Returns data from forom a module with its memory mapped address at location BASE. The OFFSET specifies the relative register address within the module with respecte to the BASE address.</p>
+<p><strong>IOWR</strong>: Writes the value DATA to a module with its memory mapped address at location BASE. The OFFSET specifies the relative register address within the module with respecte to the BASE address.</p>
+<p>The base address of a module is defined when building the Nios II system. To avoid hardcoding the address when using these macro functions, a macro object is generated by the software build tools that defines this address. The macro object is stored in the <em>system.h</em> file which can be found as part of the board support package project.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">system.h</p>
+<p>The <em>system.h</em> file for the example presented here, and found in the folder <em>software/app_bsp</em></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * system.h - SOPC Builder system and BSP software package information</span>
+<span class="cm"> *</span>
+<span class="cm"> * Machine generated for CPU &#39;cpu&#39; in SOPC Builder design &#39;nios2_system&#39;</span>
+<span class="cm"> * SOPC Builder design path: ../../quartus/nios2_system.sopcinfo</span>
+<span class="cm"> *</span>
+<span class="cm"> * Generated: Mon Oct 11 14:35:33 CEST 2021</span>
+<span class="cm"> */</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * DO NOT MODIFY THIS FILE</span>
+<span class="cm"> *</span>
+<span class="cm"> * Changing this file will have subtle consequences</span>
+<span class="cm"> * which will almost certainly lead to a nonfunctioning</span>
+<span class="cm"> * system. If you do modify this file, be aware that your</span>
+<span class="cm"> * changes will be overwritten and lost when this file</span>
+<span class="cm"> * is generated again.</span>
+<span class="cm"> *</span>
+<span class="cm"> * DO NOT MODIFY THIS FILE</span>
+<span class="cm"> */</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * License Agreement</span>
+<span class="cm"> *</span>
+<span class="cm"> * Copyright (c) 2008</span>
+<span class="cm"> * Altera Corporation, San Jose, California, USA.</span>
+<span class="cm"> * All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Permission is hereby granted, free of charge, to any person obtaining a</span>
+<span class="cm"> * copy of this software and associated documentation files (the &quot;Software&quot;),</span>
+<span class="cm"> * to deal in the Software without restriction, including without limitation</span>
+<span class="cm"> * the rights to use, copy, modify, merge, publish, distribute, sublicense,</span>
+<span class="cm"> * and/or sell copies of the Software, and to permit persons to whom the</span>
+<span class="cm"> * Software is furnished to do so, subject to the following conditions:</span>
+<span class="cm"> *</span>
+<span class="cm"> * The above copyright notice and this permission notice shall be included in</span>
+<span class="cm"> * all copies or substantial portions of the Software.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="cm"> * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This agreement shall be governed in all respects by the laws of the State</span>
+<span class="cm"> * of California and by the laws of the United States of America.</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef __SYSTEM_H_</span>
+<span class="cp">#define __SYSTEM_H_</span>
+
+<span class="cm">/* Include definitions from linker script generator */</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;linker.h&quot;</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * CPU configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_CPU_ARCHITECTURE &quot;altera_nios2_gen2&quot;</span>
+<span class="cp">#define ALT_CPU_BIG_ENDIAN 0</span>
+<span class="cp">#define ALT_CPU_BREAK_ADDR 0x00080820</span>
+<span class="cp">#define ALT_CPU_CPU_ARCH_NIOS2_R1</span>
+<span class="cp">#define ALT_CPU_CPU_FREQ 50000000u</span>
+<span class="cp">#define ALT_CPU_CPU_ID_SIZE 1</span>
+<span class="cp">#define ALT_CPU_CPU_ID_VALUE 0x00000000</span>
+<span class="cp">#define ALT_CPU_CPU_IMPLEMENTATION &quot;tiny&quot;</span>
+<span class="cp">#define ALT_CPU_DATA_ADDR_WIDTH 0x14</span>
+<span class="cp">#define ALT_CPU_DCACHE_LINE_SIZE 0</span>
+<span class="cp">#define ALT_CPU_DCACHE_LINE_SIZE_LOG2 0</span>
+<span class="cp">#define ALT_CPU_DCACHE_SIZE 0</span>
+<span class="cp">#define ALT_CPU_EXCEPTION_ADDR 0x00040020</span>
+<span class="cp">#define ALT_CPU_FLASH_ACCELERATOR_LINES 0</span>
+<span class="cp">#define ALT_CPU_FLASH_ACCELERATOR_LINE_SIZE 0</span>
+<span class="cp">#define ALT_CPU_FLUSHDA_SUPPORTED</span>
+<span class="cp">#define ALT_CPU_FREQ 50000000</span>
+<span class="cp">#define ALT_CPU_HARDWARE_DIVIDE_PRESENT 0</span>
+<span class="cp">#define ALT_CPU_HARDWARE_MULTIPLY_PRESENT 0</span>
+<span class="cp">#define ALT_CPU_HARDWARE_MULX_PRESENT 0</span>
+<span class="cp">#define ALT_CPU_HAS_DEBUG_CORE 1</span>
+<span class="cp">#define ALT_CPU_HAS_DEBUG_STUB</span>
+<span class="cp">#define ALT_CPU_HAS_ILLEGAL_INSTRUCTION_EXCEPTION</span>
+<span class="cp">#define ALT_CPU_HAS_JMPI_INSTRUCTION</span>
+<span class="cp">#define ALT_CPU_ICACHE_LINE_SIZE 0</span>
+<span class="cp">#define ALT_CPU_ICACHE_LINE_SIZE_LOG2 0</span>
+<span class="cp">#define ALT_CPU_ICACHE_SIZE 0</span>
+<span class="cp">#define ALT_CPU_INST_ADDR_WIDTH 0x14</span>
+<span class="cp">#define ALT_CPU_NAME &quot;cpu&quot;</span>
+<span class="cp">#define ALT_CPU_OCI_VERSION 1</span>
+<span class="cp">#define ALT_CPU_RESET_ADDR 0x00040000</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * CPU configuration (with legacy prefix - don&#39;t use these anymore)</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define NIOS2_BIG_ENDIAN 0</span>
+<span class="cp">#define NIOS2_BREAK_ADDR 0x00080820</span>
+<span class="cp">#define NIOS2_CPU_ARCH_NIOS2_R1</span>
+<span class="cp">#define NIOS2_CPU_FREQ 50000000u</span>
+<span class="cp">#define NIOS2_CPU_ID_SIZE 1</span>
+<span class="cp">#define NIOS2_CPU_ID_VALUE 0x00000000</span>
+<span class="cp">#define NIOS2_CPU_IMPLEMENTATION &quot;tiny&quot;</span>
+<span class="cp">#define NIOS2_DATA_ADDR_WIDTH 0x14</span>
+<span class="cp">#define NIOS2_DCACHE_LINE_SIZE 0</span>
+<span class="cp">#define NIOS2_DCACHE_LINE_SIZE_LOG2 0</span>
+<span class="cp">#define NIOS2_DCACHE_SIZE 0</span>
+<span class="cp">#define NIOS2_EXCEPTION_ADDR 0x00040020</span>
+<span class="cp">#define NIOS2_FLASH_ACCELERATOR_LINES 0</span>
+<span class="cp">#define NIOS2_FLASH_ACCELERATOR_LINE_SIZE 0</span>
+<span class="cp">#define NIOS2_FLUSHDA_SUPPORTED</span>
+<span class="cp">#define NIOS2_HARDWARE_DIVIDE_PRESENT 0</span>
+<span class="cp">#define NIOS2_HARDWARE_MULTIPLY_PRESENT 0</span>
+<span class="cp">#define NIOS2_HARDWARE_MULX_PRESENT 0</span>
+<span class="cp">#define NIOS2_HAS_DEBUG_CORE 1</span>
+<span class="cp">#define NIOS2_HAS_DEBUG_STUB</span>
+<span class="cp">#define NIOS2_HAS_ILLEGAL_INSTRUCTION_EXCEPTION</span>
+<span class="cp">#define NIOS2_HAS_JMPI_INSTRUCTION</span>
+<span class="cp">#define NIOS2_ICACHE_LINE_SIZE 0</span>
+<span class="cp">#define NIOS2_ICACHE_LINE_SIZE_LOG2 0</span>
+<span class="cp">#define NIOS2_ICACHE_SIZE 0</span>
+<span class="cp">#define NIOS2_INST_ADDR_WIDTH 0x14</span>
+<span class="cp">#define NIOS2_OCI_VERSION 1</span>
+<span class="cp">#define NIOS2_RESET_ADDR 0x00040000</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * Define for each module class mastered by the CPU</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define __ALTERA_AVALON_JTAG_UART</span>
+<span class="cp">#define __ALTERA_AVALON_ONCHIP_MEMORY2</span>
+<span class="cp">#define __ALTERA_AVALON_PIO</span>
+<span class="cp">#define __ALTERA_NIOS2_GEN2</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * System configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_DEVICE_FAMILY &quot;MAX 10&quot;</span>
+<span class="cp">#define ALT_ENHANCED_INTERRUPT_API_PRESENT</span>
+<span class="cp">#define ALT_IRQ_BASE NULL</span>
+<span class="cp">#define ALT_LOG_PORT &quot;/dev/null&quot;</span>
+<span class="cp">#define ALT_LOG_PORT_BASE 0x0</span>
+<span class="cp">#define ALT_LOG_PORT_DEV null</span>
+<span class="cp">#define ALT_LOG_PORT_TYPE &quot;&quot;</span>
+<span class="cp">#define ALT_NUM_EXTERNAL_INTERRUPT_CONTROLLERS 0</span>
+<span class="cp">#define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1</span>
+<span class="cp">#define ALT_NUM_INTERRUPT_CONTROLLERS 1</span>
+<span class="cp">#define ALT_STDERR &quot;/dev/jtag_uart&quot;</span>
+<span class="cp">#define ALT_STDERR_BASE 0x81020</span>
+<span class="cp">#define ALT_STDERR_DEV jtag_uart</span>
+<span class="cp">#define ALT_STDERR_IS_JTAG_UART</span>
+<span class="cp">#define ALT_STDERR_PRESENT</span>
+<span class="cp">#define ALT_STDERR_TYPE &quot;altera_avalon_jtag_uart&quot;</span>
+<span class="cp">#define ALT_STDIN &quot;/dev/jtag_uart&quot;</span>
+<span class="cp">#define ALT_STDIN_BASE 0x81020</span>
+<span class="cp">#define ALT_STDIN_DEV jtag_uart</span>
+<span class="cp">#define ALT_STDIN_IS_JTAG_UART</span>
+<span class="cp">#define ALT_STDIN_PRESENT</span>
+<span class="cp">#define ALT_STDIN_TYPE &quot;altera_avalon_jtag_uart&quot;</span>
+<span class="cp">#define ALT_STDOUT &quot;/dev/jtag_uart&quot;</span>
+<span class="cp">#define ALT_STDOUT_BASE 0x81020</span>
+<span class="cp">#define ALT_STDOUT_DEV jtag_uart</span>
+<span class="cp">#define ALT_STDOUT_IS_JTAG_UART</span>
+<span class="cp">#define ALT_STDOUT_PRESENT</span>
+<span class="cp">#define ALT_STDOUT_TYPE &quot;altera_avalon_jtag_uart&quot;</span>
+<span class="cp">#define ALT_SYSTEM_NAME &quot;nios2_system&quot;</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * hal configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_INCLUDE_INSTRUCTION_RELATED_EXCEPTION_API</span>
+<span class="cp">#define ALT_MAX_FD 32</span>
+<span class="cp">#define ALT_SYS_CLK none</span>
+<span class="cp">#define ALT_TIMESTAMP_CLK none</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * jtag_uart configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_MODULE_CLASS_jtag_uart altera_avalon_jtag_uart</span>
+<span class="cp">#define JTAG_UART_BASE 0x81020</span>
+<span class="cp">#define JTAG_UART_IRQ 16</span>
+<span class="cp">#define JTAG_UART_IRQ_INTERRUPT_CONTROLLER_ID 0</span>
+<span class="cp">#define JTAG_UART_NAME &quot;/dev/jtag_uart&quot;</span>
+<span class="cp">#define JTAG_UART_READ_DEPTH 64</span>
+<span class="cp">#define JTAG_UART_READ_THRESHOLD 8</span>
+<span class="cp">#define JTAG_UART_SPAN 8</span>
+<span class="cp">#define JTAG_UART_TYPE &quot;altera_avalon_jtag_uart&quot;</span>
+<span class="cp">#define JTAG_UART_WRITE_DEPTH 64</span>
+<span class="cp">#define JTAG_UART_WRITE_THRESHOLD 8</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * onchip_mem configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_MODULE_CLASS_onchip_mem altera_avalon_onchip_memory2</span>
+<span class="cp">#define ONCHIP_MEM_ALLOW_IN_SYSTEM_MEMORY_CONTENT_EDITOR 0</span>
+<span class="cp">#define ONCHIP_MEM_ALLOW_MRAM_SIM_CONTENTS_ONLY_FILE 0</span>
+<span class="cp">#define ONCHIP_MEM_BASE 0x40000</span>
+<span class="cp">#define ONCHIP_MEM_CONTENTS_INFO &quot;&quot;</span>
+<span class="cp">#define ONCHIP_MEM_DUAL_PORT 0</span>
+<span class="cp">#define ONCHIP_MEM_GUI_RAM_BLOCK_TYPE &quot;AUTO&quot;</span>
+<span class="cp">#define ONCHIP_MEM_INIT_CONTENTS_FILE &quot;nios2_system_onchip_mem&quot;</span>
+<span class="cp">#define ONCHIP_MEM_INIT_MEM_CONTENT 0</span>
+<span class="cp">#define ONCHIP_MEM_INSTANCE_ID &quot;NONE&quot;</span>
+<span class="cp">#define ONCHIP_MEM_IRQ -1</span>
+<span class="cp">#define ONCHIP_MEM_IRQ_INTERRUPT_CONTROLLER_ID -1</span>
+<span class="cp">#define ONCHIP_MEM_NAME &quot;/dev/onchip_mem&quot;</span>
+<span class="cp">#define ONCHIP_MEM_NON_DEFAULT_INIT_FILE_ENABLED 0</span>
+<span class="cp">#define ONCHIP_MEM_RAM_BLOCK_TYPE &quot;AUTO&quot;</span>
+<span class="cp">#define ONCHIP_MEM_READ_DURING_WRITE_MODE &quot;DONT_CARE&quot;</span>
+<span class="cp">#define ONCHIP_MEM_SINGLE_CLOCK_OP 0</span>
+<span class="cp">#define ONCHIP_MEM_SIZE_MULTIPLE 1</span>
+<span class="cp">#define ONCHIP_MEM_SIZE_VALUE 153600</span>
+<span class="cp">#define ONCHIP_MEM_SPAN 153600</span>
+<span class="cp">#define ONCHIP_MEM_TYPE &quot;altera_avalon_onchip_memory2&quot;</span>
+<span class="cp">#define ONCHIP_MEM_WRITABLE 1</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * pio_led configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_MODULE_CLASS_pio_led altera_avalon_pio</span>
+<span class="cp">#define PIO_LED_BASE 0x81000</span>
+<span class="cp">#define PIO_LED_BIT_CLEARING_EDGE_REGISTER 0</span>
+<span class="cp">#define PIO_LED_BIT_MODIFYING_OUTPUT_REGISTER 0</span>
+<span class="cp">#define PIO_LED_CAPTURE 0</span>
+<span class="cp">#define PIO_LED_DATA_WIDTH 10</span>
+<span class="cp">#define PIO_LED_DO_TEST_BENCH_WIRING 0</span>
+<span class="cp">#define PIO_LED_DRIVEN_SIM_VALUE 0</span>
+<span class="cp">#define PIO_LED_EDGE_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_LED_FREQ 50000000</span>
+<span class="cp">#define PIO_LED_HAS_IN 0</span>
+<span class="cp">#define PIO_LED_HAS_OUT 1</span>
+<span class="cp">#define PIO_LED_HAS_TRI 0</span>
+<span class="cp">#define PIO_LED_IRQ -1</span>
+<span class="cp">#define PIO_LED_IRQ_INTERRUPT_CONTROLLER_ID -1</span>
+<span class="cp">#define PIO_LED_IRQ_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_LED_NAME &quot;/dev/pio_led&quot;</span>
+<span class="cp">#define PIO_LED_RESET_VALUE 0</span>
+<span class="cp">#define PIO_LED_SPAN 16</span>
+<span class="cp">#define PIO_LED_TYPE &quot;altera_avalon_pio&quot;</span>
+
+
+<span class="cm">/*</span>
+<span class="cm"> * pio_sw configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_MODULE_CLASS_pio_sw altera_avalon_pio</span>
+<span class="cp">#define PIO_SW_BASE 0x81010</span>
+<span class="cp">#define PIO_SW_BIT_CLEARING_EDGE_REGISTER 0</span>
+<span class="cp">#define PIO_SW_BIT_MODIFYING_OUTPUT_REGISTER 0</span>
+<span class="cp">#define PIO_SW_CAPTURE 0</span>
+<span class="cp">#define PIO_SW_DATA_WIDTH 10</span>
+<span class="cp">#define PIO_SW_DO_TEST_BENCH_WIRING 0</span>
+<span class="cp">#define PIO_SW_DRIVEN_SIM_VALUE 0</span>
+<span class="cp">#define PIO_SW_EDGE_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_SW_FREQ 50000000</span>
+<span class="cp">#define PIO_SW_HAS_IN 1</span>
+<span class="cp">#define PIO_SW_HAS_OUT 0</span>
+<span class="cp">#define PIO_SW_HAS_TRI 0</span>
+<span class="cp">#define PIO_SW_IRQ -1</span>
+<span class="cp">#define PIO_SW_IRQ_INTERRUPT_CONTROLLER_ID -1</span>
+<span class="cp">#define PIO_SW_IRQ_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_SW_NAME &quot;/dev/pio_sw&quot;</span>
+<span class="cp">#define PIO_SW_RESET_VALUE 0</span>
+<span class="cp">#define PIO_SW_SPAN 16</span>
+<span class="cp">#define PIO_SW_TYPE &quot;altera_avalon_pio&quot;</span>
+
+<span class="cp">#endif </span><span class="cm">/* __SYSTEM_H_ */</span>
+</pre></div>
+</div>
+</div>
+<p>This file also includes a number of other macro objects for each module of the system. An example of all the macros that are defined for a Nios II PIO module is shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * pio_led configuration</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#define ALT_MODULE_CLASS_pio_led altera_avalon_pio</span>
+<span class="cp">#define PIO_LED_BASE 0x81000</span>
+<span class="cp">#define PIO_LED_BIT_CLEARING_EDGE_REGISTER 0</span>
+<span class="cp">#define PIO_LED_BIT_MODIFYING_OUTPUT_REGISTER 0</span>
+<span class="cp">#define PIO_LED_CAPTURE 0</span>
+<span class="cp">#define PIO_LED_DATA_WIDTH 10</span>
+<span class="cp">#define PIO_LED_DO_TEST_BENCH_WIRING 0</span>
+<span class="cp">#define PIO_LED_DRIVEN_SIM_VALUE 0</span>
+<span class="cp">#define PIO_LED_EDGE_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_LED_FREQ 50000000</span>
+<span class="cp">#define PIO_LED_HAS_IN 0</span>
+<span class="cp">#define PIO_LED_HAS_OUT 1</span>
+<span class="cp">#define PIO_LED_HAS_TRI 0</span>
+<span class="cp">#define PIO_LED_IRQ -1</span>
+<span class="cp">#define PIO_LED_IRQ_INTERRUPT_CONTROLLER_ID -1</span>
+<span class="cp">#define PIO_LED_IRQ_TYPE &quot;NONE&quot;</span>
+<span class="cp">#define PIO_LED_NAME &quot;/dev/pio_led&quot;</span>
+<span class="cp">#define PIO_LED_RESET_VALUE 0</span>
+<span class="cp">#define PIO_LED_SPAN 16</span>
+<span class="cp">#define PIO_LED_TYPE &quot;altera_avalon_pio&quot;</span>
+</pre></div>
+</div>
+<p>This module is generated as part of the embedded systems project in this course and will be used to access the LEDs on the DE10-Lite board. For this example the base address is defined as PIO_LED_BASE replaces the need to use the hardcoded addres value of 0x81000. This address corresponds to the base address shown for the LED PIO module in <a class="reference internal" href="#fig-embedded-system-with-pio"><span class="std std-numref">Fig. 37</span></a>.</p>
+<p>If changes are made to a system the base addresses of the modules may change. As a consequence the <em>system.h</em> file will also be updated with the new address values. By using the defined macro object instead of the hardcoded address value, you therefore avoid having to also update your user application or driver code.</p>
+<div class="warning admonition">
+<p class="admonition-title">Important</p>
+<p>The <em>system.h</em> file is automatically generated when generating the board support package and should <strong>NEVER</strong> be manually edited!</p>
+</div>
+<p>All modules connected to the Nios II system as part of the Avalon bus has a memory mapped register interface. The IOWR and IORD macros can be used to read from and write to these registers by providing the correct module or base address and internal register offset. The register map for the PIO module is shown in figure 52.</p>
+<figure class="align-center" id="fig-embedded-pio-register-map">
+<a class="reference internal image-reference" href="../_images/embedded_nios_pio_register_map.png"><img alt="../_images/embedded_nios_pio_register_map.png" src="../_images/embedded_nios_pio_register_map.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Register map for the PIO module. Table 273 on page 311 in the Intel <a class="reference external" href="https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_embedded_ip.pdf">Embedded Peripherals IP User Guide</a>.</span><a class="headerlink" href="#fig-embedded-pio-register-map" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<!--{cite}`intel-embedded-ip-user-guide` -->
+<p>By writing and reading to these registers it is possible to configure the PIO module dynamically when running the system. The data register can be used to access the PIO core’s input and output ports. For a PIO module configured as a 10 bit wide output, which will be used to turn on and off LEDs, all LEDs can be turned on by using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IOWR</span><span class="p">(</span><span class="n">LED_PIO_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mh">0x3FF</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For a module that is configure as an input, e.g. the PIO module connected to the slide switches in the embedded systems project of this coures, the value of the slides swithces can be read by the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">sw_data</span> <span class="o">=</span> <span class="n">IORD</span><span class="p">(</span><span class="n">LED_PIO_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To connect the slide switches and LEDs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">sw_data</span> <span class="o">=</span> <span class="n">IORD</span><span class="p">(</span><span class="n">LED_PIO_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">IOWR</span><span class="p">(</span><span class="n">LED_PIO_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">sw_data</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="update-software">
+<h2>Update software<a class="headerlink" href="#update-software" title="Permalink to this heading">#</a></h2>
+<p>We will now update the software application from <a class="reference internal" href="exercises_nios2_example.html#exercises-nios2-example"><span class="std std-ref">EX5: A basic Nios II system</span></a> to allow the slide switches to turn of and on the LEDs.</p>
+<p>Modify the <em>app.c</em> as shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;system.h&quot;</span><span class="c1"> //access Nios II system info</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;io.h&quot;</span><span class="c1"> //access to IORD and IORW</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;unistd.h&quot;</span><span class="c1"> //access to usleep</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">sw_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
+<span class="w">        </span><span class="n">sw_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IORD</span><span class="p">(</span><span class="n">PIO_SW_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">IOWR</span><span class="p">(</span><span class="n">PIO_LED_BASE</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">sw_data</span><span class="p">);</span>
+<span class="w">        </span><span class="n">usleep</span><span class="p">(</span><span class="mi">100000</span><span class="p">);</span><span class="w"> </span><span class="c1">//sleep 100 us</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Recompile the software application, reprogram the FPGA with the updated hardware system, and then download the updated application. Verify that the application works by changing the positions of the slide switches.</p>
+</section>
+<section id="additional-register-access-options">
+<h2>Additional register access options<a class="headerlink" href="#additional-register-access-options" title="Permalink to this heading">#</a></h2>
+<section id="direct-register-access">
+<h3>Direct register access<a class="headerlink" href="#direct-register-access" title="Permalink to this heading">#</a></h3>
+<p>The Nios II CPU is a 32-bit architecture. That means that all registers of the memory mapped interface will be accessed as 32-bit wide registers. When using the IORD and IOWR macro functions, the word size is assumed to be 32-bit. While the registers are 32-bit wide, the addressing scheme can either be word oriented or byte oriented. The <em>io.h</em> header file also provides macro functions for byte-oriented addressing. The numbers 8, 16, 32 corresponds to the number of bits accessed by the macro.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IORD_8DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">)</span>
+<span class="n">IORD_16DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">)</span>
+<span class="n">IORD_32DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">)</span>
+
+<span class="n">IOWR_8DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">,</span> <span class="n">DATA</span><span class="p">)</span>
+<span class="n">IOWR_16DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">,</span> <span class="n">DATA</span><span class="p">)</span>
+<span class="n">IOWR_32DIRECT</span><span class="p">(</span><span class="n">BASE</span><span class="p">,</span> <span class="n">OFFSET</span><span class="p">,</span> <span class="n">DATA</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here the BASE address corresponds to the module base address similar as for the IORD and IOWR, but the offset on the other hand now corresponds to the byte position. <a class="reference internal" href="#fig-embedded-hal-addressing"><span class="std std-numref">Fig. 39</span></a> illustrates the different addressing scheme. When using the IORD macro function, an OFFSET value of 0x1 refers to the second 32-bit register for the memory mapped module that is being accessed. To read the same register when using the byte oriented IORD_32DIRECT macro, the OFFSET value needs to correpsond to the lowest byte position of this register, that is 0x4.</p>
+<figure class="align-center" id="fig-embedded-hal-addressing">
+<a class="reference internal image-reference" href="../_images/embedded_hal_addressing.png"><img alt="../_images/embedded_hal_addressing.png" src="../_images/embedded_hal_addressing.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">HAL macro addressing scheme. The numbers indicate the byte positions within a 32-bit wide register.</span><a class="headerlink" href="#fig-embedded-hal-addressing" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="pio-macros">
+<h3>PIO macros<a class="headerlink" href="#pio-macros" title="Permalink to this heading">#</a></h3>
+<p>The Nios II HAL also provides a dedicated set of macro functions for the PIO module in the <em>altera_avalon_pio_regs.h</em> header file. This file can be located in the <em>/drivers/inc</em> folder of the board support package project. The main content of the file is shown below.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef __ALTERA_AVALON_PIO_REGS_H__</span>
+<span class="cp">#define __ALTERA_AVALON_PIO_REGS_H__</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;io.h&gt;</span>
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_DATA(base)           __IO_CALC_ADDRESS_NATIVE(base, 0)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_DATA(base)             IORD(base, 0)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_DATA(base, data)       IOWR(base, 0, data)</span>
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_DIRECTION(base)      __IO_CALC_ADDRESS_NATIVE(base, 1)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_DIRECTION(base)        IORD(base, 1)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_DIRECTION(base, data)  IOWR(base, 1, data)</span>
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_IRQ_MASK(base)       __IO_CALC_ADDRESS_NATIVE(base, 2)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_IRQ_MASK(base)         IORD(base, 2)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_IRQ_MASK(base, data)   IOWR(base, 2, data)</span>
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_EDGE_CAP(base)       __IO_CALC_ADDRESS_NATIVE(base, 3)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_EDGE_CAP(base)         IORD(base, 3)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_EDGE_CAP(base, data)   IOWR(base, 3, data)</span>
+
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_SET_BIT(base)       __IO_CALC_ADDRESS_NATIVE(base, 4)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_SET_BITS(base)         IORD(base, 4)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_SET_BITS(base, data)   IOWR(base, 4, data)</span>
+
+<span class="cp">#define IOADDR_ALTERA_AVALON_PIO_CLEAR_BITS(base)       __IO_CALC_ADDRESS_NATIVE(base, 5)</span>
+<span class="cp">#define IORD_ALTERA_AVALON_PIO_CLEAR_BITS(base)         IORD(base, 5)</span>
+<span class="cp">#define IOWR_ALTERA_AVALON_PIO_CLEAR_BITS(base, data)   IOWR(base, 5, data)</span>
+
+
+
+<span class="cm">/* Defintions for direction-register operation with bi-directional PIOs */</span>
+<span class="cp">#define ALTERA_AVALON_PIO_DIRECTION_INPUT  0</span>
+<span class="cp">#define ALTERA_AVALON_PIO_DIRECTION_OUTPUT 1</span>
+
+<span class="cp">#endif </span><span class="cm">/* __ALTERA_AVALON_PIO_REGS_H__ */</span>
+</pre></div>
+</div>
+<p>It makes use of the IORD and IOWR macro functions to define new macro functions that hides the details of the internal register addresses. That is, if you would like to read the PIO module’s data registers, you can use the <em>IORD_ALTERA_AVALON_PIO_DATA(base)</em> macro. Example for accessing the PIO module reading the slide switches:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IORD_ALTERA_AVALON_PIO_DATA</span><span class="p">(</span><span class="n">PIO_SW_BASE</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this case you do not need to know the internal register address of the data registers.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-exercises"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="exercises_nios2_example.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EX5: A basic Nios II system</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="exercises_nios2_interrupt.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EX7: Nios II interrupt handling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-the-pio-cores">Adding the PIO cores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-top-level-hdl">Updating the top level HDL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-the-bsp">Updating the BSP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nios-ii-hal-macro">Nios II HAL macro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-software">Update software</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-register-access-options">Additional register access options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#direct-register-access">Direct register access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pio-macros">PIO macros</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

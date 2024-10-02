@@ -1,0 +1,1054 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2.9. Testbenches &#8212; Real-time and embedded data systems</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/myfile.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'part-vhdl/vhdl_testbenches';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.10. VHDL Process" href="vhdl_process.html" />
+    <link rel="prev" title="2.8. Description styles" href="vhdl_description_models.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/fys4220_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/fys4220_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Welcome
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_agenda.html">Weekly agenda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_content_overview.html">Content and learning objectives</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_tools.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_download_tools.html">Quartus and ModelSim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-information/information_prepare_git.html">Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Other resources</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/FYS4220-2023">Github organization page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.uio.no/orgs/FYS4220-2023/discussions">Discussion forum</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Main content</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-fpga/fpga.html">1. FPGA technology</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/pld_introduction.html">1.1. Programmable logic devices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-fpga/fpga_introduction.html">1.2. Field Programmable Gate Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="vhdl.html">2. VHDL</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="vhdl_history.html">2.2. History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_units.html">2.3. Design units and structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_design_flow.html">2.4. Design flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_objects_data_types.html">2.5. Objects and data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_operators.html">2.6. Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_concurrent_statements.html">2.7. Concurrent statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_description_models.html">2.8. Description styles</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2.9. Testbenches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_process.html">2.10. VHDL Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_metastability.html">2.11. Metastability and synchronization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_generics.html">2.12. Generic map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_state_machines.html">2.13. State machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vhdl_packages_subprograms.html">2.14. Packages and subprograms</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-embedded/embedded_intro.html">3. Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2.html">3.1. Nios II CPU</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_softcore.html">3.2. Soft core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_memory_mapped.html">3.3. Memory mapped interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_hal.html">3.4. Hardware Abstraction Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_nios2_system_development.html">3.5. Nios II system development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-embedded/embedded_interrupt.html">3.6. Interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-rtos/rtos_intro.html">4. RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_ucosii.html">4.1. uC/OS-II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_tasks.html">4.2. Scheduling and task management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-rtos/rtos_latency_jitter.html">4.3. Latency &amp; jitter</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../part-rtos/rtos_intertask_communication.html">4.4. Intertask communication</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_semaphores.html">4.4.1. Semaphores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_priority_inversion.html">4.4.2. Priority inversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../part-rtos/rtos_messages.html">4.4.3. Messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Exercises</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-exercises/exercises_intro.html">Overview</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_vhdl.html">VHDL</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_your_first_fpga_project.html">EX1: Your first FPGA project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_adder.html">EX2: Adder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_counter.html">EX3: 4-bit up-counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_state_machine.html">EX4: State machine</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_embedded.html">Embedded systems</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_example.html">EX5: A basic Nios II system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_memory_mapped_sw.html">EX6: Accessing Nios II memory mapped modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_nios2_interrupt.html">EX7: Nios II interrupt handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../part-exercises/exercises_rtos.html">RTOS</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_basic_example.html">EX8: A basic RTOS application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../part-exercises/exercises_rtos_semaphores_example.html">EX9: Semaphore example</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_intro.html">Project overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_uart.html">P1: UART controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/project_nios2.html">P2: Microcontroller system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../part-project/data_rate.html">P3: RTOS</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/part-vhdl/vhdl_testbenches.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Testbenches</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example-half-adder">2.9.1. Basic example: half adder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-in-modelsim">2.9.2. Simulate in Modelsim</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-testing-testbenches">2.9.3. Self-testing testbenches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert-and-report">2.9.3.1. Assert and report</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-clock-source">2.9.4. Defining a clock source</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-videos">2.9.5. Supporting videos</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="testbenches">
+<span id="vhdl-testbenches"></span><h1><span class="section-number">2.9. </span>Testbenches<a class="headerlink" href="#testbenches" title="Permalink to this heading">#</a></h1>
+<p>For any development it is important to test and verify your solution before it is deployed in the field. This is no different for FPGAs where it is required to simulate your design before downloading and running it on the FPGA. In this section we will introduce the concept of testbenches in VHDL. Testbenches are the standard approach to simulate and verify your HDL design, and are used to apply stimuli to the inputs of a design and observe the outputs to verify correct behaviour. This is illustrated in figure <a class="reference internal" href="#fig-vhdl-testbench"><span class="std std-numref">Fig. 2.15</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-testbench">
+<a class="reference internal image-reference" href="../_images/vhdl_testbench.png"><img alt="../_images/vhdl_testbench.png" src="../_images/vhdl_testbench.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.15 </span><span class="caption-text">A top-level view on testbenches.</span><a class="headerlink" href="#fig-vhdl-testbench" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Testbenches can be written in VHDL. A VHDL testbench is not meant to run on hardware and can therefore take advantage of the full extent of the VHDL language. In contrast, the design under test, which will run on the FPGA, is restricted to VHDL written at the RTL-level level (see section <a class="reference internal" href="vhdl_description_models.html#vhdl-rtl"><span class="std std-ref">Register Transfer Level (RTL)</span></a>).</p>
+<p>For a VHDL testbench it is e.g., possible to write a statement like shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This will force a value to the signal A which first is ‘0’ for 20 ns and then ‘1’ for 20 ns as shown in figure <a class="reference internal" href="#fig-vhdl-testbench-wavedrom-basic"><span class="std std-numref">Fig. 2.16</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-testbench-wavedrom-basic">
+<a class="reference internal image-reference" href="../_images/vhdl_testbench_wavedrom_basic.png"><img alt="../_images/vhdl_testbench_wavedrom_basic.png" src="../_images/vhdl_testbench_wavedrom_basic.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.16 </span><span class="caption-text">A wave diagram of the code block above.</span><a class="headerlink" href="#fig-vhdl-testbench-wavedrom-basic" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>This is a simple example of how e.g., an input stimuli can be described using VHDL. However, the synthesis tool is not able to translate the <code class="docutils literal notranslate"><span class="pre">wait</span> <span class="pre">for</span> <span class="pre">20</span> <span class="pre">ns</span></code> statement into any hardware resource on an FPGA. An FPGA does not have any inherently concept or understanding of time specified in this manner. This can only be done by providing the FPGA with a dedicated external clock signal. E.g., a signal that changes between a low and high value at a fixed regular interval. By connecting this clock signal to the internal registers of an FPGA, your design can now be synchronized to this signal, allowing it to update internal states and values on every internal states and values on every clock cycle.</p>
+<section id="basic-example-half-adder">
+<h2><span class="section-number">2.9.1. </span>Basic example: half adder<a class="headerlink" href="#basic-example-half-adder" title="Permalink to this heading">#</a></h2>
+<p>Consider that you want to verify the correct behaviour of the half adder circuit shown in the code block below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Filename: half_adder.vhd</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="k">entity</span><span class="w"> </span><span class="nc">half_adder</span><span class="w"> </span><span class="k">is</span>
+<span class="k">port</span><span class="p">(</span>
+<span class="w">  </span><span class="n">A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="n">B</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="n">SUM</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="n">COUT</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">std_logic</span>
+<span class="w">  </span><span class="p">);</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">rtl</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">half_adder</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">SUM</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">xor</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+<span class="w">  </span><span class="n">COUT</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">B</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To build a testbench to verify this design you will make use to the structural description style introduced in section <a class="reference internal" href="vhdl_description_models.html#vhdl-structural"><span class="std std-ref">Structural</span></a>. Since we already have described the half adder as a complete component with an entity and related architecture, we can simply reuse this design in a new VHDL file. The first step is to prepare the testbench VHDL-file. To distinguish the two files and entities, it is common to add <em>tb</em> as a prefix or postfix to the name of the design under test, and use this as the name of the testbench file. In this example add <em>tb</em> as a postfix.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Filename: halv_adder_tb.vhd</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- The entity declaration of</span>
+<span class="c1">-- a testbench is empty.</span>
+<span class="k">entity</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+
+<span class="k">begin</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This is the basic skeleton of a general VHDL file. However, different from the VHDL description of the component under test, the testbench has no ports, i.e., the entity declaration is empty. This makes sense if you compare to the diagram in figure <a class="reference internal" href="#fig-vhdl-testbench"><span class="std std-numref">Fig. 2.15</span></a>. While the component under test may have both inputs and outputs, a testbench is not dependent on outside signal to run. All necessary functionality is generated within the architecture of the testbench. The entity declaration can therefore be left empty.</p>
+<p>The testbench can in many ways be compared to a physical test setup on a lab bench, where signal generators are used provide test signals to a component, and an oscilloscope is used to monitor the outputs of the component. The purpose of the VHDL testbench is to act as the signal generator and oscilloscope, and simulate the behaviour of the VHDL design under test.</p>
+<p>To include the VHDL design to be tested in the testbench, we can make use of the <em>component</em> and <em>port map</em> statements as shown in section <a class="reference internal" href="#fig-vhdl-testbench"><span class="std std-numref">Fig. 2.15</span></a>, or we can take advantage of the possibility to do a so called direct instantiation. This uses a slightly different syntax for the <em>port map</em> statement at the benefit of not having to use the <em>component</em> statement.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Filename: half_adder_tb.vhd</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- The entity declaration of</span>
+<span class="c1">-- a testbench is empty.</span>
+<span class="k">entity</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="c1">-- Signals to be connected to the </span>
+<span class="w">  </span><span class="c1">-- design under test.</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">B</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">SUM</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">COUT</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- Direct instantiation of the design under test.</span>
+<span class="w">  </span><span class="c1">-- The statement below means: use the entity half_adder</span>
+<span class="w">  </span><span class="c1">-- which is compiled into the work library, and use the</span>
+<span class="w">  </span><span class="c1">-- architecture named rtl which is found in that entity. </span>
+<span class="w">  </span><span class="c1">-- Then connect the ports of that entity to the corresponding</span>
+<span class="w">  </span><span class="c1">-- signals declared in the testbench. </span>
+<span class="w">  </span><span class="n">dut</span><span class="o">:</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">work</span><span class="p">.</span><span class="n">half_adder</span><span class="p">(</span><span class="n">rtl</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">A</span><span class="p">,</span>
+<span class="w">      </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span>
+<span class="w">      </span><span class="n">SUM</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">SUM</span><span class="p">,</span>
+<span class="w">      </span><span class="n">COUT</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">COUT</span>
+<span class="w">    </span><span class="p">);</span>
+
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If not specified, the design will be compiled into a library called <em>work</em>. To reuse this design, we have to specify the name of the entity and the library where it can be found. An entity can be connected to multiple architectures, if this is the case, we also have to specify the name of the architecture, in this case <em>rtl</em>. Otherwise, it will automatically pick the last architecture which was compiled last. It is therefore a good habit to always specify the architecture, even though only one is available.</p>
+<p>At the testbench level, we also need to declare signals that will be connected to the design under test, and that will provide stimuli to the inputs, and be monitored for expected values on the outputs.</p>
+<p>The next step is to generate the appropriate stimuli to test the design. For this we will make use of the <em>process</em> statement. The process statement is described in more detail in the section <a class="reference internal" href="vhdl_process.html#vhdl-process"><span class="std std-ref">VHDL Process</span></a>. For now you can think of the <em>process</em> as a possibility to describe a sequential behaviour. While all statements inside the architecture of a VHDL file are concurrent statements, including the <em>process</em> statement, statements which are inside a process are read sequentially.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Filename: half_adder_tb.vhd</span>
+<span class="k">library</span><span class="w"> </span><span class="nn">ieee</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="nn">ieee.std_logic_1164.</span><span class="k">all</span><span class="p">;</span>
+
+<span class="c1">-- The entity declaration of</span>
+<span class="c1">-- a testbench is empty.</span>
+<span class="k">entity</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">end</span><span class="w"> </span><span class="k">entity</span><span class="p">;</span>
+
+<span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">half_adder_tb</span><span class="w"> </span><span class="k">is</span>
+
+<span class="w">  </span><span class="c1">-- Signals to be connected to the </span>
+<span class="w">  </span><span class="c1">-- design under test.</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">B</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">SUM</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">COUT</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- Direct instantiation of the design under test.</span>
+<span class="w">  </span><span class="c1">-- The statement below means: use the entity half_adder</span>
+<span class="w">  </span><span class="c1">-- which is compiled into the work library, and use the</span>
+<span class="w">  </span><span class="c1">-- architecture named rtl which is found in that entity. </span>
+<span class="w">  </span><span class="c1">-- Then connect the ports of that entity to the corresponding</span>
+<span class="w">  </span><span class="c1">-- signals declared in the testbench. </span>
+<span class="w">  </span><span class="n">dut</span><span class="o">:</span><span class="w"> </span><span class="k">entity</span><span class="w"> </span><span class="nc">work</span><span class="p">.</span><span class="n">half_adder</span><span class="p">(</span><span class="n">rtl</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="k">port</span><span class="w"> </span><span class="k">map</span><span class="p">(</span>
+<span class="w">      </span><span class="n">A</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">A</span><span class="p">,</span>
+<span class="w">      </span><span class="n">B</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">,</span>
+<span class="w">      </span><span class="n">SUM</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">SUM</span><span class="p">,</span>
+<span class="w">      </span><span class="n">COUT</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">COUT</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1">-- The process is a concurrent</span>
+<span class="w">  </span><span class="c1">-- statement inside the architecture</span>
+<span class="w">  </span><span class="nc">p_stimuli</span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span><span class="w"> </span>
+<span class="w">    </span><span class="c1">-- Inside the process, the statements are</span>
+<span class="w">    </span><span class="c1">-- read sequentially and updated when the</span>
+<span class="w">    </span><span class="c1">-- simulation time progresses.</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">-- Set initial values for the inputs</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Update signal values</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- stop the process</span>
+<span class="w">    </span><span class="k">wait</span><span class="p">;</span><span class="w"> </span><span class="c1">--halts the process forever.</span>
+
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition-how-to-end-a-simulation admonition">
+<p class="admonition-title">How to end a simulation</p>
+<p>The stimuli process in a testbench is meant to run only once. To achieve this the process must use a <em>wait</em> statement at halt the process. Otherwise the process would continue to repeat it self as an infinit loop.</p>
+</div>
+<!--
+However, as long as there is activity on any of the signals the simulation will not end. A clock is in principle a continuously running signal. However, by using a clock enable signal, the clock can easily be disabled. Try to run your simulation without a wait statement or without disabling the clock and see what happens.
+-->
+<div class="admonition-supplementary-suggested-reading admonition">
+<p class="admonition-title">Supplementary suggested reading:</p>
+<p>Chapter 5, section 5.7 in LaMeres <span id="id1">[<a class="reference internal" href="../references.html#id10" title="Brock K. LaMeres. Introduction to Logic Circuits &amp; Logic Design with VHDL. Springer Cham, 2019.">LaM19</a>]</span>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://link-springer-com.ezproxy.uio.no/chapter/10.1007/978-3-030-12489-2_5#Sec">Direct link html-version</a></p></li>
+<li><p><a class="reference external" href="https://link.springer.com/content/pdf/10.1007%2F978-3-030-12489-2_5">Direct link pdf-version</a>
+Chapter 8, section 8.4 in LaMeres <span id="id2">[<a class="reference internal" href="../references.html#id10" title="Brock K. LaMeres. Introduction to Logic Circuits &amp; Logic Design with VHDL. Springer Cham, 2019.">LaM19</a>]</span>.
+<a class="reference external" href="https://link.springer.com/chapter/10.1007/978-3-030-12489-2_8#Sec13">Direct link html-version</a>
+<a class="reference external" href="https://link.springer.com/content/pdf/10.1007/978-3-030-12489-2_8.pdf">Direct link pdf-version</a></p></li>
+</ul>
+</div>
+</section>
+<section id="simulate-in-modelsim">
+<h2><span class="section-number">2.9.2. </span>Simulate in Modelsim<a class="headerlink" href="#simulate-in-modelsim" title="Permalink to this heading">#</a></h2>
+<p>The testbench is now ready to be simulated using Modelsim. A simulation tool like Modelsim can be used to run the test bench and visualize its behaviour in a wave diagram format. Modelsim is a commercial tool, but a free version called <em>Modelsim-Intel FPGA Starter Edition</em> is included when downloading and installing the Quartus Prime Lite Edition. The starter edition is limited to 10000 lines of code. Adding more lines will reduce the performance of the simulator is significantly. An open-source alternative for the VHDL language is <a class="reference external" href="http://ghdl.free.fr">GHDL</a> or <a class="reference external" href="https://github.com/ghdl/ghdl">GHDL on Github</a>. The output of GHDL can be read and viewed by <a class="reference external" href="http://gtkwave.sourceforge.net">GTKWave</a>. Since Modelsim is already included in Quartus Prime Lite, and since it is one of the most used tool in industry, we will continue to use Modelsim in this course.</p>
+<p>In the following description the files are organized as shown below. Design files and testbench files are often separated into different folders. It is also good practice to create a separate folder where the simulations are run.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|--</span> <span class="n">fys4220_half_adder</span>
+    <span class="o">|--</span> <span class="n">src</span>
+        <span class="o">|--</span> <span class="n">half_adder</span><span class="o">.</span><span class="n">vhd</span>
+    <span class="o">|--</span> <span class="n">tb</span>
+        <span class="o">|--</span> <span class="n">half_adder_tb</span><span class="o">.</span><span class="n">vhd</span>
+    <span class="o">|--</span> <span class="n">sim</span>
+        <span class="o">|--</span> <span class="n">half_adder</span><span class="o">.</span><span class="n">mpf</span>  
+
+</pre></div>
+</div>
+<p>A new project called <em>half_adder</em> is create in Modelsim (File-&gt; New -&gt; Project) and the folder <em>sim</em> is used as the Project Location as shown in <a class="reference internal" href="#fig-vhdl-testbench-create-modelsim-project"><span class="std std-numref">Fig. 2.17</span></a></p>
+<figure class="align-center" id="fig-vhdl-testbench-create-modelsim-project">
+<a class="reference internal image-reference" href="../_images/vhdl_testbench_create_modelsim_project.png"><img alt="../_images/vhdl_testbench_create_modelsim_project.png" src="../_images/vhdl_testbench_create_modelsim_project.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.17 </span><span class="caption-text">Create Modelsim project.</span><a class="headerlink" href="#fig-vhdl-testbench-create-modelsim-project" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The source file and testbench file can be added to the project by choosing “Add Existing File” during the setup of the project, or through the menu bar (Project -&gt; Add to Project -&gt; Existing File).</p>
+<p>The files have to be compiled in the correct order. <em>half_adder_tb.vhd</em> is dependent on <em>half_adder.vhd</em>, <em>half_adder.vhd</em> therefore has to be compiled first. To compile right click on the file and choose (Compile -&gt; Compile Selected).</p>
+<p>If Modelsim does not report any errors the simulation can now be started choosing (Simulate -&gt; Start Simulation) from the menu and choosing the test bench unit <em>half_adder_tb.vhd</em> under the work library as shown in figure <a class="reference internal" href="#fig-vhdl-testbenches-vsim-startsim"><span class="std std-numref">Fig. 2.18</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-testbenches-vsim-startsim">
+<a class="reference internal image-reference" href="../_images/vhdl_testbenches_vsim_startsim.png"><img alt="../_images/vhdl_testbenches_vsim_startsim.png" src="../_images/vhdl_testbenches_vsim_startsim.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.18 </span><span class="caption-text">Choose the test bench entity to start the simuliation.</span><a class="headerlink" href="#fig-vhdl-testbenches-vsim-startsim" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>In Modelsim the wave viewer can be used to visualize the values of the input and outputs signals. If the wave viewer is not opened automatically this can be done by choosing (View -&gt; Wave) from the menu bar. At this point no signals are added to the wave viewer. Mark the relevant signals, right click and choose “Add Wave” as shown in figure <a class="reference internal" href="#fig-vhdl-testbench-vsim-add-signal"><span class="std std-numref">Fig. 2.19</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-testbench-vsim-add-signal">
+<a class="reference internal image-reference" href="../_images/vhdl_testbenches_vsim_add_signal.png"><img alt="../_images/vhdl_testbenches_vsim_add_signal.png" src="../_images/vhdl_testbenches_vsim_add_signal.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.19 </span><span class="caption-text">Mark relevant signals to be added to the wave window.</span><a class="headerlink" href="#fig-vhdl-testbench-vsim-add-signal" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The simulation can now be run (Simulate -&gt; Run -&gt; Run -All) and you should see a similar results to the wave diagram shown in figure <a class="reference internal" href="#fig-vhdl-half-adder-simulation"><span class="std std-numref">Fig. 2.20</span></a>.</p>
+<figure class="align-center" id="fig-vhdl-half-adder-simulation">
+<a class="reference internal image-reference" href="../_images/vhdl_half_adder_simulation.png"><img alt="../_images/vhdl_half_adder_simulation.png" src="../_images/vhdl_half_adder_simulation.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2.20 </span><span class="caption-text">The Modelsim wave viewer showing the result of the simulation of the half adder.</span><a class="headerlink" href="#fig-vhdl-half-adder-simulation" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To verify the correct behaviour of the half adder, we need to manually inspect the wave diagrams in the wave viewer. This is a very basic level of verification where only the stimuli on the inputs are automated.</p>
+</section>
+<section id="self-testing-testbenches">
+<h2><span class="section-number">2.9.3. </span>Self-testing testbenches<a class="headerlink" href="#self-testing-testbenches" title="Permalink to this heading">#</a></h2>
+<p>A manual verification of a wave diagram as discussed above will very quickly become impractical and time-consuming as your design’s complexity increases. It is therefore recommended to automate the simulation and verification as much as possible. Ideally, a testbench should run and complete reporting simply if the simulation passed the verification criteria or no. This means that you have to add checking into your testbench. One method is to make use of the assertion and report statements in VHDL.</p>
+<section id="assert-and-report">
+<h3><span class="section-number">2.9.3.1. </span>Assert and report<a class="headerlink" href="#assert-and-report" title="Permalink to this heading">#</a></h3>
+<p><strong>Report</strong></p>
+<p>The basic syntax of the report statement is:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="w"> </span><span class="o">&lt;</span><span class="n">message_string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">[</span><span class="k">severity</span><span class="w"> </span><span class="o">&lt;</span><span class="kt">severity_level</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>There are four severity levels that can be used (error, warning, note, and failure). Using severity level <em>failure</em> will stop the simulation, while the three others will allow the simulation to continue.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- defined in the standard package with is included by default. </span>
+<span class="k">type</span><span class="w"> </span><span class="kt">severity_level</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">(</span><span class="n">note</span><span class="p">,</span><span class="w"> </span><span class="n">warning</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">,</span><span class="w"> </span><span class="n">failure</span><span class="p">);</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>If the severity level is omitted, the report statement is implicitly assumed to be a <em>note</em>.</p>
+<p>Given the following lines:</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="w"> </span><span class="s">&quot;This is a note&quot;</span><span class="p">;</span>
+<span class="n">report</span><span class="w"> </span><span class="s">&quot;This is also a note&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">note</span><span class="p">;</span>
+<span class="n">report</span><span class="w"> </span><span class="s">&quot;This is a warning&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+<span class="n">report</span><span class="w"> </span><span class="s">&quot;This is an error&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">error</span><span class="p">;</span>
+<span class="n">report</span><span class="w"> </span><span class="s">&quot;This is a failure&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">failure</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>a simulation in Modelsim will return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Note: This is a note</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /assert_tb</span>
+<span class="c1"># ** Note: This is also a note</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /assert_tb</span>
+<span class="c1"># ** Warning: This is a warning</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /assert_tb</span>
+<span class="c1"># ** Error: This is an error</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /assert_tb</span>
+<span class="c1"># ** Failure: This is a failure</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Process: /assert_tb/line__17 File: assert_tb.vhd</span>
+<span class="c1"># Break in Process line__17 at assert_tb.vhd line 27</span>
+<span class="c1"># Stopped at assert_tb.vhd line 27</span>
+</pre></div>
+</div>
+<p>Report statements are sequential statements, which means that they can only be used inside a <a class="reference internal" href="vhdl_process.html#vhdl-process"><span class="std std-ref">VHDL Process</span></a> or {ref} <code class="docutils literal notranslate"><span class="pre">vhdl-packages-procedure</span></code> statement.</p>
+<p><strong>Assert</strong></p>
+<p>The most basic syntax of the assert statement is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">condition</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This statement can be used to check if a condition is true or false. If the condition is true, the simulation will continue without prompting a message. If the condition is false, the simulation will prompt a message.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Here the condition is true and the simulation will continue without a prompt</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">true</span><span class="p">;</span>
+<span class="c1">-- Here the condition is false and the simulation will break</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Assertion and report statements can be combined to check if an expected condition is met, or provide feedback in case it is not met.</p>
+<p>The combined syntax is shown below followed by a basic example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">label</span><span class="p">]:</span> <span class="k">assert</span> <span class="n">condition</span>
+         <span class="p">[</span> <span class="n">report</span> <span class="o">&lt;</span><span class="n">message_string</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">severity</span> <span class="o">&lt;</span><span class="n">severity_level</span><span class="o">&gt;</span><span class="p">]];</span>
+</pre></div>
+</div>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;This assert condition is false&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>When used in the half-adder test bench, the assert statement can be used to verify correct behaviour of the half-adder.</p>
+<p>E.g., when the inputs <em>A</em> and <em>B</em> are both ‘0’, we expect the output signal <em>SUM</em> to also be ´0´.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Set the input signals to &#39;0&#39;</span>
+<span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="c1">-- progress simulation to make sure the signal values are updated.</span>
+<span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="c1">-- check if the output signal SUM is &#39;0&#39; as expected.</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Adding the assertion statement checking for the condition <em>SUM = ‘0’</em> will report and error if the condition is not met. You can easily test this by either changing your design or by testing for the condition <em>SUM = ‘1’</em> instead. However, simply testing for the condition will only report the error but not provide any valuable debug information about what has gone wrong expect for the time at which the assertion was activate.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Error: Assertion violation.</span>
+<span class="c1">#    Time: 200 ns  Iteration: 0  Instance: /half_adder_tb</span>
+</pre></div>
+</div>
+<p>To increase the verbosity level you can add a report statement and also the appropriate severity level. To test this you can change the statement <code class="docutils literal notranslate"><span class="pre">SUM</span> <span class="pre">&lt;=</span> <span class="pre">A</span> <span class="pre">xor</span> <span class="pre">B;</span></code> to <code class="docutils literal notranslate"><span class="pre">SUM</span> <span class="pre">&lt;=</span> <span class="pre">A</span> <span class="pre">or</span> <span class="pre">B</span></code> in your half-adder design and demonstrate the assertion statement as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="c1">-- Set the input signals to &#39;0&#39;</span>
+<span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="c1">-- progress simulation to make sure the signal values are updated.</span>
+<span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="c1">-- check if the output signal SUM is &#39;0&#39; as expected and prompt a message if not.</span>
+<span class="k">assert</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span>
+<span class="w">  </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;Incorrect value for signal SUM. Was &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&quot;, expected 0&quot;</span>
+<span class="w">  </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Modelsim will then report the following message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Warning: Incorrect value for signal SUM. Was to 1, expected 0</span>
+<span class="c1">#    Time: 200 ns  Iteration: 0  Instance: /half_adder_tb</span>
+</pre></div>
+</div>
+<p>Assert statements can be used both in the concurrent part of the architecture and inside a process.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">test_tb</span><span class="w"> </span><span class="k">is</span>
+<span class="k">begin</span>
+
+<span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;This is a warning&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">assert</span><span class="w"> </span><span class="n">false</span><span class="w"> </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;This is warning from inside a process&quot;</span><span class="w"> </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition-a-note-on-simulation-time-and-updating-of-signals admonition">
+<p class="admonition-title">A note on simulation time and updating of signals</p>
+<p>You might have noticed that a “<em>wait for 1 ns</em>” statement has been use in the examples above. The purpose of this statement is to allow the simulation time to progress in order for the signal assignments to be updated with their new values. Within a process each signal assignment is scheduled to be updated with its new value only when the process suspends.This can be achieved using a wait statement. When the process hits wait the statement, all the signal assignments up to that point will be updated, triggering the design under test to respond to these events, and eventually leading to that the states and outputs of the design under test also are updated. Adding a “<em>wait for 1 ns</em>” statement therefore allows the output SUM and COUT to be updated before the assertion statement is executed.</p>
+</div>
+<div class="admonition-vhdl-2008-and-type-convertion admonition">
+<p class="admonition-title">VHDL 2008 and type convertion</p>
+<p>VHDL is a strongly type language. For the report statement this means that the value of SUM which is of the type std_logic needs to be convert to a string. If the testbench is compiled with VHDL 2008, it is possible to use the <em>to_string</em> function. For previous versions, the convertion had to be done using the more cryptic statement <code class="docutils literal notranslate"><span class="pre">std_logic'image(SUM)</span></code>. Also, this statement did not support convertion from <em>std_logic_vector</em>. For ease of use, it is therefore recommended to use the <em>to_string</em> function supported in VHDL. This also supports <em>std_logic_vector</em>.</p>
+<p>In Modelsim you can set the appropriate VHDL version in two ways:</p>
+<ul class="simple">
+<li><p>Right click on the file to be compiled (Properties –&gt; VHDL), or</p></li>
+<li><p>through compile options in the menu bar for project wide setting (Compile –&gt; Compile options)</p></li>
+</ul>
+</div>
+<p>The assertion statement also supports composite conditions.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">)</span>
+<span class="w">  </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;Incorrect value for signal SUM and COUT,&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w">    </span>
+<span class="w">  </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="c1">-- or</span>
+
+<span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;10&quot;</span>
+<span class="w">  </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;Incorrect value for signal SUM and COUT,&quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w">    </span>
+<span class="w">  </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A complete stimuli process including assertion statements for the half adder example is shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="c1">-- The process is a concurrent</span>
+<span class="w">  </span><span class="c1">-- statement inside the architecture</span>
+<span class="w">  </span><span class="nc">p_stimuli</span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="c1">-- Inside the process, the statements are</span>
+<span class="w">    </span><span class="c1">-- read sequentially and updated when the</span>
+<span class="w">    </span><span class="c1">-- simulation time progresses.</span>
+<span class="w">    </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;Starting simulation of half_adder&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-- Set initial values for the inputs</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time and check values</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;(COUT &amp; SUM) was &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&quot;, expected 00&quot;</span>
+<span class="w">      </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-- Update signal values</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time and check values</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;(COUT &amp; SUM) was &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&quot;, expected 00&quot;</span>
+<span class="w">      </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-- Update signal values</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time and check values</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;(COUT &amp; SUM) was &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&quot;, expected 00&quot;</span>
+<span class="w">      </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">-- Update signal values</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- Progress simulation time and check values</span>
+<span class="w">    </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">    </span><span class="k">assert</span><span class="w"> </span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">SUM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;(COUT &amp; SUM) was &quot;</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">to_string</span><span class="p">(</span><span class="n">COUT</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">SUM</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="s">&quot;, expected 00&quot;</span>
+<span class="w">      </span><span class="k">severity</span><span class="w"> </span><span class="n">warning</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">report</span><span class="w"> </span><span class="s">&quot;Simulation complete&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- stop the process</span>
+<span class="w">    </span><span class="k">wait</span><span class="p">;</span><span class="w"> </span><span class="c1">--halts the process forever.</span>
+
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>If the half adder design is correct, Modelsim will report the following when running the process above.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Note: Starting simulation of half_adder</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /half_adder_tb</span>
+<span class="c1"># ** Note: Simulation complete</span>
+<span class="c1">#    Time: 250 ns  Iteration: 0  Instance: /half_adder_tb</span>
+</pre></div>
+</div>
+<p>Modifying the half adder design to include and intentional error, e.g., changing the statement <code class="docutils literal notranslate"><span class="pre">SUM</span> <span class="pre">&lt;=</span> <span class="pre">A</span> <span class="pre">xor</span> <span class="pre">B;</span></code> to <code class="docutils literal notranslate"><span class="pre">SUM</span> <span class="pre">&lt;=</span> <span class="pre">A</span> <span class="pre">or</span> <span class="pre">B</span></code>, Modelsim will report the following.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ** Note: Starting simulation of half_adder</span>
+<span class="c1">#    Time: 0 ns  Iteration: 0  Instance: /half_adder_tb</span>
+<span class="c1"># ** Warning: (COUT &amp; SUM) was 11, expected 00</span>
+<span class="c1">#    Time: 250 ns  Iteration: 0  Instance: /half_adder_tb</span>
+<span class="c1"># ** Note: Simulation complete</span>
+<span class="c1">#    Time: 250 ns  Iteration: 0  Instance: /half_adder_tb</span>
+</pre></div>
+</div>
+<p>In this case it catches and reports the design error.</p>
+</section>
+</section>
+<section id="defining-a-clock-source">
+<h2><span class="section-number">2.9.4. </span>Defining a clock source<a class="headerlink" href="#defining-a-clock-source" title="Permalink to this heading">#</a></h2>
+<p>For synchronous designs you need to define a clock source for your testbench. A clock is a signal that changes between ‘0’ and ‘1’ at a fixed interval. This can be described using a simple process as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">process</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="n">clk</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="w">  </span><span class="n">clk</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">&#39;1&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">wait</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+<span class="k">end</span><span class="w"> </span><span class="k">process</span>
+</pre></div>
+</div>
+<p>If the signal is declared with an initial value it can also be described as shown below.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">test</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk</span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="n">clk</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="k">after</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>However, for both of these descriptions the clock will start to run immediately and will never end. A recommended solution is therefore to use and <em>enable</em> signal to turn on and of the clock.</p>
+<div class="highlight-vhdl notranslate"><div class="highlight"><pre><span></span><span class="k">architecture</span><span class="w"> </span><span class="nc">tb</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nc">test</span><span class="w"> </span><span class="k">is</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">std_logic</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk_enable</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">  </span><span class="k">signal</span><span class="w"> </span><span class="n">clk_period</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">time</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="n">ns</span><span class="p">;</span>
+
+<span class="k">begin</span>
+
+<span class="w">  </span><span class="c1">-- invert the value of the signal clk after a certain time (half clock period) when </span>
+<span class="w">  </span><span class="c1">-- the enable signal is true, otherwise the clk signal shall remain 0.</span>
+<span class="w">  </span><span class="c1">-- This creates a signal that changes its value every half clock cycle when the clk_ena</span>
+<span class="w">  </span><span class="c1">-- signal is true, and remains at 0 when the clk_ena signal is false, that is, a clock</span>
+<span class="w">  </span><span class="c1">-- with the frequency equal to 1/clk_period</span>
+<span class="w">  </span><span class="n">clk</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="k">after</span><span class="w"> </span><span class="n">clk_period</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">clk_ena</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="sc">&#39;0&#39;</span><span class="p">;</span>
+<span class="w"> </span>
+<span class="w">  </span><span class="nc">p_stimuli</span><span class="o">:</span><span class="w"> </span><span class="k">process</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">    </span><span class="c1">-- set default values</span>
+
+<span class="w">    </span><span class="c1">-- enable clock</span>
+<span class="w">    </span><span class="n">clk_ena</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">true</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- set sequence of stimuli signals</span>
+
+<span class="w">    </span><span class="c1">-- disable clock</span>
+<span class="w">    </span><span class="n">clk_ena</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="w">    </span><span class="c1">-- stop the process</span>
+<span class="w">    </span><span class="k">wait</span><span class="p">;</span>
+<span class="w">  </span><span class="k">end</span><span class="w"> </span><span class="k">process</span><span class="p">;</span>
+
+<span class="k">end</span><span class="w"> </span><span class="k">architecture</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="supporting-videos">
+<h2><span class="section-number">2.9.5. </span>Supporting videos<a class="headerlink" href="#supporting-videos" title="Permalink to this heading">#</a></h2>
+<p>The following video discusses testbenches in VHDL. The first part of the video until about 14:11, presents some of the basic concepts similar to what has also been introduced in the text on this page. After 14:11 the video continues to cover a few more topics related to more advanced self-testing testbenches. These topics will make more sense as the course progresses and you learn more about VHDL packages and sub-programs. The examples in the video are different from the example shown above – the video was recorded before this page was written. In the future the plan is to update the video to make it more aligned with the content on this page.</p>
+<div class="video-container">
+<iframe width="1920" height="806" src="https://www.youtube.com/embed/spEkb2cXZPg" title="vhdl testbenches" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<p><a class="reference external" href="https://www.uio.no/studier/emner/matnat/fys/FYS4220/h22/lecture-slides/vhdl_testbenches.pdf">Slides</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./part-vhdl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vhdl_description_models.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2.8. </span>Description styles</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="vhdl_process.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.10. </span>VHDL Process</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-example-half-adder">2.9.1. Basic example: half adder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-in-modelsim">2.9.2. Simulate in Modelsim</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-testing-testbenches">2.9.3. Self-testing testbenches</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assert-and-report">2.9.3.1. Assert and report</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-a-clock-source">2.9.4. Defining a clock source</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supporting-videos">2.9.5. Supporting videos</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ketil Røed
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
